@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Albums Ranked | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
+<style>
+body { margin: 0; background: #0b0b0b; font-family: Arial, Helvetica, sans-serif; color: #eaeaea; }
+.rankings-page { max-width: 960px; margin: 2rem auto; padding: 0 1rem 2rem; }
+.rankings-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.page-title { font-size: clamp(22px, 5vw, 32px); line-height: 1.15; margin: 0; color: #eaeaea; }
+.rankings-status { color: #aaa; font-size: 14px; margin: 1rem 0; }
+.rankings-status.is-error { color: #E21C21; }
+.rankings-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.ranking-row { display: grid; grid-template-columns: 58px 72px minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 12px; background: #151515; border: 1px solid #222; border-radius: 8px; }
+.ranking-position { color: #aaa; font-size: 14px; font-weight: 700; }
+.ranking-thumb-link { display: block; width: 72px; height: 72px; border-radius: 8px; overflow: hidden; background: #0f0f0f; }
+.ranking-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ranking-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; justify-content: center; min-height: 72px; border-left: 1px solid #2a2a2a; padding-left: 12px; }
+.ranking-title { color: #eaeaea; text-decoration: none; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.ranking-title:hover, .ranking-title:focus { color: #E21C21; text-decoration: none; }
+.ranking-score { display: inline-flex; align-items: center; justify-content: flex-start; gap: 12px; color: #fff; font-weight: 800; font-size: 17px; line-height: 1; white-space: nowrap; margin-top: 2px; }
+.ranking-score .score-star { margin-right: 3px; font-size: 17px; line-height: 1; }
+.ranking-score .score-value { color: #fff; }
+.ranking-score .emdb-score .score-star { color: #f5c518; }
+.ranking-score .user-inline-score .score-star { color: #E21C21; }
+.ranking-score .user-inline-score.is-empty .score-value { color: #8a8a8a; }
+.ranking-rating-count { color: #9ea0a8; font-size: 14px; line-height: 1.2; }
+@media (max-width: 560px) { .rankings-header { align-items: flex-start; flex-direction: column; gap: 6px; } .ranking-row { grid-template-columns: 44px 64px minmax(0, 1fr); gap: 10px; } .ranking-position { align-self: center; text-align: center; } .ranking-thumb-link { width: 64px; height: 64px; } .ranking-main { align-self: center; min-height: 64px; } }
+</style>
+<script>
+window.EMDbRankingsPage = { type: 'albums', kind: 'albums' };
+</script>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="rankings-page">
+  <div class="rankings-header">
+    <h1 class="page-title">Albums Ranked</h1>
+  </div>
+  <div class="rankings-status" id="rankingsStatus" aria-live="polite">Loading rankings...</div>
+  <ol class="rankings-list" id="rankingsList"></ol>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/rankings.js"></script>
+<script src="/header.js"></script>
+</body>
+</html>

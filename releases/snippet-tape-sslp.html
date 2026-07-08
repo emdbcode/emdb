@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snippet Tape (The Slim Shady LP) | EMDb</title>
+<link rel="stylesheet" href="../style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
+
+<style>
+/* GENERAL BODY */
+body {
+  margin: 0;
+  background: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+/* ALBUM COVER */
+ .album-single {
+  width: 100%;
+  max-width: 292px;
+  aspect-ratio: 1 / 1;
+  cursor: default;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+.album-single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ALBUM COVER + INFO CONTAINER */
+.album-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  background-color: #222;
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+@media(min-width: 768px){
+  .album-container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}
+
+/* ALBUM INFO */
+.album-title {
+  font-family: Arial, sans-serif;
+  line-height: 1.2;
+}
+.album-name {
+  font-size: clamp(20px, 5vw, 30px);
+  color: #ffffff;
+}
+.album-name.nav-trigger {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.album-name.nav-trigger:focus-visible {
+  outline: 2px solid rgba(226,28,33,0.18);
+  outline-offset: 3px;
+}
+.album-artist {
+  font-size: clamp(18px, 5vw, 30px);
+  color: #E21C21;
+  margin-bottom: 3px;
+}
+.album-type {
+  font-size: clamp(13px, 3.5vw, 14px);
+  color: #AAAAAA;
+  margin-bottom: 3px;
+}
+.release-info {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  max-width: 57.5ch;
+  min-width: 0;
+  line-height: 1.5;
+  font-size: clamp(13px, 3.5vw, 14px);
+  margin-top: 1rem;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.release-details {
+  margin-top: 0;
+  padding-left: 0;
+  border-left: none;
+  max-height: none;
+  overflow: visible;
+  transition: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+}
+@media (min-width: 768px) {
+  .release-info {
+    max-width: 68ch;
+    flex: 1 1 auto;
+  }
+  .album-name.nav-trigger {
+    white-space: nowrap;
+  }
+}
+
+/* TRACKLIST */
+.tracklist { max-width: 900px; margin: 2rem auto; padding: 6px 0; }
+.track { border-bottom: 1px solid #333; padding: clamp(8px, 2.5vw, 12px) 0; cursor: default; background: transparent !important; }
+.track-header { display: flex; align-items: center; gap: clamp(8px, 2.5vw, 12px); }
+.track-number {
+  font-size: clamp(13px, 3.5vw, 15px);
+  color: #aaa;
+  min-width: 26px;
+  width: 26px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.track-number-text { transition: opacity 0.15s ease; }
+.track-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #E21C21;
+  font-size: 12px;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+.track-play-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.35); border-radius: 3px; }
+.track:hover .track-play-btn,
+.track:focus-within .track-play-btn { opacity: 1; }
+.track:hover .track-number-text,
+.track:focus-within .track-number-text { opacity: 0; }
+.track.open .track-play-btn,
+.track.playing .track-play-btn { opacity: 1; }
+.track.open .track-number-text,
+.track.playing .track-number-text { opacity: 0; }
+.track-play-btn.playing { color: #E21C21; }
+@media (max-width: 720px){
+  .track-number-text { opacity: 0; }
+  .track-play-btn { opacity: 1; }
+}
+.track-title-container { display: flex; flex-direction: column; flex: 1; }
+.track-title { font-size: clamp(14px, 4vw, 15px); line-height: 1.3; }
+.track-feat { font-size: clamp(12px, 3.5vw, 13px); color: #aaa; margin-top: 2px; }
+.track-length { font-size: clamp(12px, 3.5vw, 13px); color: #999; margin-left: 8px; white-space: nowrap; }
+.arrow { margin-left: 4px; font-size: clamp(10px, 3vw, 11px); color: #777; transition: transform 0.3s ease; }
+.track-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 6px; }
+.track.open .track-details { max-height: 800px; }
+.track.open .arrow { transform: rotate(180deg); }
+.track-note { font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 10px; }
+.total-length { display: flex; justify-content: space-between; padding: clamp(8px, 2.5vw, 12px) 0; border-bottom: 1px solid #333; font-size: clamp(13px, 3.5vw, 14px); color: #aaa; }
+.bonus-btn { margin: 12px 0 8px; padding: clamp(6px, 2.5vw, 8px) clamp(10px, 3vw, 12px); border: 1px solid #444; display: inline-block; cursor: pointer; font-size: clamp(13px, 3.5vw, 14px); }
+.bonus-btn.active { color: #E21C21; border-color: #E21C21; }
+.bonus-tracks { display: none; }
+.track-title a { color: inherit; text-decoration: none; }
+.track-title a:hover,
+.track-title a:focus { color: #E21C21; text-decoration: none; }
+
+
+/* SINGLES SECTION */
+.singles-container {
+  background-color: #151515;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  border-radius: 6px;
+  max-width: 900px;
+  border: 1px solid #222;
+  box-sizing: border-box;
+}
+.playlist-container { max-width: 900px; width: 100%; }
+.single-section-singles { display: flex; align-items: flex-start; gap: clamp(10px, 3vw, 15px); font-family: Arial, sans-serif; color: #fff; margin-bottom: clamp(12px, 3vw, 18px); }
+.single-section-singles img { width: clamp(50px, 12vw, 60px); aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+.single-info-singles { display: flex; flex-direction: column; }
+.song-title-singles { font-size: clamp(14px, 4vw, 16px); color: #fff; line-height: 1.4; }
+a.single-section-singles { text-decoration: none; color: inherit; }
+a.single-section-singles:hover .song-title-singles,
+a.single-section-singles:focus .song-title-singles { color: #E21C21; }
+.song-date-singles { font-size: clamp(13px, 3.5vw, 15px); color: #aaa; line-height: 1.4; }
+.†-promo { font-size: clamp(13px, 3.5vw, 16px); color: #aaa; line-height: 1.4; }
+
+/* MUSIC VIDEOS SECTION */
+.music-videos-container {
+  background-color: #151515;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  border-radius: 6px;
+  max-width: 900px;
+  border: 1px solid #222;
+  box-sizing: border-box;
+}
+.single-section-video { display: flex; align-items: flex-start; gap: clamp(12px, 3vw, 16px); cursor: pointer; max-width: 600px; margin-bottom: clamp(12px,3vw,16px); }
+.single-section-video img { width: clamp(72px, 24vw, 96px); aspect-ratio: 16/9; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: #000; }
+.single-info-video { display: flex; flex-direction: column; }
+.song-title-video { font-size: clamp(14px, 4vw, 16px); line-height: 1.4; }
+.song-date-video { font-size: clamp(13px, 3.5vw, 15px); color: #aaa; line-height: 1.4; }
+.video-player {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.42s cubic-bezier(.2,.9,.2,1), opacity 0.28s ease, margin-bottom 0.28s ease;
+  opacity: 0;
+  margin-top: clamp(12px, 3vw, 16px);
+  margin-bottom: 0;
+  max-width: 100%;
+}
+.video-player.open {
+  max-height: 720px;
+  opacity: 1;
+  margin-bottom: clamp(12px, 3vw, 18px);
+}
+.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
+.video-player iframe:not(.playlist-embed) { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 4px; border: none; }
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.video-play-overlay .play-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.video-play-overlay:focus-visible { outline: 2px solid rgba(226,28,33,0.35); outline-offset: 2px; }
+
+.playlist-panel { display: flex; flex-direction: column; gap: 12px; }
+.playlist-player { width: 100%; }
+.playlist-embed {
+  width: 100%;
+  height: 420px;
+  border-radius: 4px;
+  border: none;
+  position: static;
+  background: #000;
+}
+.now-playing-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-top: 1px solid #222;
+  padding-top: 10px;
+  flex-wrap: nowrap;
+}
+.now-playing-btn {
+  background: transparent;
+  border: none;
+  color: #E21C21;
+  font-size: 22px;
+  line-height: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.now-playing-btn:disabled { opacity: 0.4; cursor: default; }
+.now-playing-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.now-playing-title.expanded {
+  overflow-x: auto;
+  text-overflow: clip;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.now-playing-title.expanded::-webkit-scrollbar { display: none; }
+@media (max-width: 720px){
+  .playlist-embed { height: 320px; }
+  .now-playing-controls { gap: 8px; }
+  .now-playing-btn { font-size: 18px; width: 28px; height: 28px; }
+  .now-playing-title { max-width: 100%; font-size: 14px; }
+}
+
+/* SECTION HEADING */
+.section-heading { font-family: Arial, sans-serif; font-size: clamp(16px, 5vw, 20px); color: #fff; line-height: 1.2; font-weight: 700; margin: 0 0 clamp(12px, 3vw, 20px) 0; }
+.promo-note { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; font-style: italic; margin-top: 6px; }
+.promo-legend { display: block; margin-top: 10px; padding: 10px 12px; border: 1px solid #3a3a3a; border-radius: 8px; background: rgba(255, 255, 255, 0.02); }
+.promo-legend em { margin: 0; color: #b8b8b8; line-height: 1.35; text-align: left; display: block; }
+.info-btn { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; background: transparent; border: none; padding: 0; margin: 0 0 6px 0; cursor: pointer; font-style: normal; line-height: 1; display: inline-block; }
+.info-btn:hover { color: #aaa; }
+.info-btn:active,
+.info-btn[aria-expanded="true"] { color: #E21C21; }
+.info-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+.promo-info { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.32s ease, opacity 0.22s ease; font-style: italic; color: #aaa; margin-top: 8px; font-size: clamp(12px, 3.5vw, 13px); }
+.promo-info.open { max-height: 240px; opacity: 1; }
+
+/* ========================= */
+/* RATINGS SECTION */
+.ratings-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.rating-block {
+  text-align: center;
+  min-width: 0;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rating-label { font-size: 13px; color: #aaa; margin-bottom: 4px; }
+
+.album-header { display: flex; align-items: center; justify-content: flex-start; gap: 8px; }
+.album-nav { position: relative; display: flex; gap: 12px; align-items: center; margin-left: 8px; }
+.nav-toggle { background: transparent; border: 1px solid transparent; color: #aaa; font-size: 20px; line-height: 1; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+.nav-toggle:hover { color: #E21C21; border-color: transparent; box-shadow: none; }
+.nav-popover { position: absolute; top: calc(100% + 6px); left: 0; left: auto; display: none; flex-direction: column; gap: 6px; background: #111; padding: 6px; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.5); min-width: 160px; transform-origin: top right; }
+.nav-popover.open { display: flex; }
+.nav-popover .nav-popover-item { display: flex; align-items: center; gap: 8px; background: transparent; border: none; color: #aaa; font-size: 14px; padding: 8px 10px; text-align: left; border-radius: 4px; cursor: pointer; }
+.nav-popover .nav-popover-item:hover { color: #E21C21; background: rgba(226,28,33,0.03); }
+.nav-popover .pop-icon { font-size: 16px; width: 20px; display: inline-block; }
+.nav-arrow:disabled { opacity: 0.45; cursor: default; }
+
+.rating-star { font-size: 34px; line-height: 1; }
+.overall-star { color: #f5c518; cursor: default; }
+.user-star { color: #666; cursor: pointer; }
+.user-star.active { color: #E21C21; }
+.rating-meta { font-size: 13px; color: #aaa; margin-top: 4px; }
+.critic-box { font-size: 20px; font-weight: bold; color: #fff; margin-top: 4px; }
+
+#emdbVotes {
+  display: block;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.18s ease, max-height 0.18s ease;
+}
+.rating-block:hover #emdbVotes,
+.rating-block:focus-within #emdbVotes {
+  opacity: 1;
+  max-height: 40px;
+}
+
+#criticReviews {
+  display: block;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.18s ease, max-height 0.18s ease;
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.ratings-container.show-votes #emdbVotes,
+.ratings-container.show-votes #criticReviews {
+  opacity: 1;
+  max-height: 40px;
+}
+
+/* USER RATING POPUP */
+.rating-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 92vw;
+  width: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.popup-title { margin-bottom: 10px; font-size: 16px; }
+.popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.popup-stars .star-item { display: flex; flex-direction: column; align-items: center; width: auto; margin: 2px; flex: 0 0 auto; }
+.popup-stars .star { font-size: clamp(18px, 6vw, 30px); cursor: pointer; color: #666; line-height: 1; display: block; pointer-events: auto; }
+.popup-stars .star.active, .popup-stars .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.popup-stars .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+@media (max-width: 420px) {
+  .popup-stars .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .popup-stars { gap: 3px; }
+  .popup-stars .star-number { font-size: 11px; }
+}
+.popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
+
+/* CRITIC SCORE BOX */
+.critic-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.critic-score:link,
+.critic-score:visited,
+.critic-score:hover,
+.critic-score:active {
+  color: #000;
+}
+.critic-red    { background: #E21C21; }
+.critic-orange { background: #FF8C00; }
+.critic-yellow { background: #eadb03; }
+.critic-green  { background: #4CAF50; }
+.critic-gold {
+  background: linear-gradient(180deg, #ffe680 0%, #f0c95a 45%, #d4af37 80%);
+  border: 0px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.25);
+  color: #111;
+}
+.critic-blank { background: #666; cursor: default; }
+
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+  <div class="album-container" data-prev="slim-shady-ep.html" data-next="slim-shady-lp.html" data-charts="">
+    <div class="album-single" id="albumSingleSnippetSSLP">
+      <img src="../images/album-covers/non-album/snippet-sslp-cover.jpg" alt="Snippet Tape cover">
+    </div>
+    <div class="release-info">
+      <div class="album-title">
+        <div class="album-header">
+          <div class="album-name nav-trigger" id="albumNavToggle" role="button" aria-expanded="false" aria-haspopup="true" tabindex="0" title="Snippet Tape (The Slim Shady LP)">
+            Snippet Tape (The Slim Shady LP)
+            <div class="nav-popover" id="albumNavPopover" aria-hidden="true">
+              <button class="nav-popover-item" id="nextAlbum" aria-label="Next release">
+                <span class="pop-icon">ᐳ</span>
+                <span class="pop-label">Next release</span>
+              </button>
+              <button class="nav-popover-item" id="prevAlbum" aria-label="Previous release">
+                <span class="pop-icon">ᐸ</span>
+                <span class="pop-label">Previous release</span>
+              </button>
+              <button class="nav-popover-item" id="userReviewsBtn" aria-label="Add a Review">
+                <span class="pop-icon">✎</span>
+                <span class="pop-label">Add a review</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="album-artist">Eminem</div>
+        <div class="album-type">Snippet Tape</div>
+      </div>
+      <strong>Released:</strong> 1998<br>
+      <strong>Labels:</strong> Aftermath • Interscope<br>
+            <div class="release-details" id="releaseDetails">
+        <strong>Recorded:</strong> 1998<br>
+      </div>
+
+      <div class="ratings-container">
+        <div class="rating-block">
+          <div class="rating-label">EMDb Rating</div>
+          <div class="rating-star overall-star">★</div>
+          <div class="rating-meta"><span id="emdbScore"></span>/10<br><span id="emdbVotes">N/A Ratings</span></div>
+        </div>
+        <div class="rating-block">
+          <div class="rating-label">Your Rating</div>
+          <div class="rating-star user-star" id="userStar">★</div>
+          <div class="rating-meta" id="userRatingText">Rate this album</div>
+        </div>
+        <div class="rating-block">
+          <div class="rating-label">Critic Score</div>
+            <a href="#" class="critic-score critic-blank" data-score="" title="No critic reviews">N/A</a>
+            <div id="criticReviews">N/A Reviews</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tracklist">
+    <div class="track"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/intro-sslp-snippet.html">Intro</a></div></div><div class="track-length">0:30</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-1.html">Record Store 1</a></div></div><div class="track-length">0:46</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/my-name-is.html">My Name Is (Snippet)</a></div></div><div class="track-length">1:53</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-2.html">Record Store 2</a></div></div><div class="track-length">1:34</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-1.html">Verse 1</a></div></div><div class="track-length">1:25</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/nicole.html">Nicole</a></div></div><div class="track-length">1:15</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/brain-damage.html">Brain Damage (Snippet)</a></div></div><div class="track-length">1:47</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">8</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/ariel.html">Ariel</a></div></div><div class="track-length">2:06</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">9</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-2.html">Verse 2</a></div></div><div class="track-length">0:58</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">10</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/brenda.html">Brenda</a></div></div><div class="track-length">2:00</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">11</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/im-shady.html">I’m Shady (Snippet)</a></div></div><div class="track-length">1:21</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/jesse.html">Jesse</a></div></div><div class="track-length">0:56</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/guilty-conscience.html">Guilty Conscience (Snippet)</a></div></div><div class="track-length">0:45</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/junko.html">Junko</a></div></div><div class="track-length">1:31</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">15</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-3.html">Verse 3</a></div></div><div class="track-length">0:48</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">16</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/cock-massage.html">Cock Massage</a></div></div><div class="track-length">0:39</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">17</div><div class="track-title-container"><div class="track-title"><a href="../songs/non-album/scary-movies.html">Scary Movies (Snippet)</a></div></div><div class="track-length">2:02</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">18</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/taj-mahal.html">Taj Mahal</a></div></div><div class="track-length">1:38</div></div></div>
+    <div class="total-length"><span>Total length</span><span>23 minutes</span></div>
+
+    
+  </div>
+
+  <div class="singles-container playlist-container">
+    <div class="section-heading" id="musicPlayerHeading">Music Player</div>
+    <div class="playlist-panel">
+      <div class="video-player open playlist-player">
+        <iframe class="playlist-embed" id="playlistPlayer" src="" title="Snippet Tape (The Slim Shady LP) now playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="now-playing-controls">
+        <button class="now-playing-btn" id="nowPrevBtn" type="button" aria-label="Previous song">⏮</button>
+        <div class="now-playing-title" id="nowPlayingTitle">Loading...</div>
+        <button class="now-playing-btn" id="nowNextBtn" type="button" aria-label="Next song">⏭</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="arReviewsSection" class="ar-section"></div>
+</main>
+
+<div class="rating-popup" id="ratingPopup">
+  <div class="popup-content">
+    <div class="popup-title">Your Rating</div>
+    <div class="popup-stars" id="popupStars"></div>
+    <div class="popup-close" id="removeRatingBtn">Remove rating</div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script>
+  (function setupTrackToggles(){
+    const tracks = document.querySelectorAll('.track');
+    function updateArrows(){
+      tracks.forEach(t => {
+        const arrow = t.querySelector('.arrow');
+        if (!arrow) return;
+        arrow.textContent = t.classList.contains('open') ? '▲' : '▼';
+      });
+    }
+    tracks.forEach(track => {
+      track.addEventListener('click', (event) => {
+        if (event.target && event.target.closest('a')) return;
+        if (event.target && event.target.closest('button')) return;
+        track.classList.toggle('open');
+        updateArrows();
+      });
+    });
+    updateArrows();
+  })();
+
+  
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  (function setupAlbumNav() {
+    const albumContainer = document.querySelector('.album-container');
+    if (!albumContainer) return;
+    const prevUrl = albumContainer.dataset.prev || '';
+    const nextUrl = albumContainer.dataset.next || '';
+    const prevBtn = document.getElementById('prevAlbum');
+    const nextBtn = document.getElementById('nextAlbum');
+    const toggle = document.getElementById('albumNavToggle');
+    const popover = document.getElementById('albumNavPopover');
+
+    if (prevBtn) {
+      if (prevUrl) prevBtn.addEventListener('click', () => { window.location.href = prevUrl; });
+      else prevBtn.disabled = true;
+    }
+    if (nextBtn) {
+      if (nextUrl) nextBtn.addEventListener('click', () => { window.location.href = nextUrl; });
+      else nextBtn.disabled = true;
+    }
+
+    const userReviewsBtn = document.getElementById('userReviewsBtn');
+    if (userReviewsBtn) {
+      const reviewsUrl = albumContainer.dataset.userReviews || albumContainer.dataset.reviews || '';
+      if (reviewsUrl) userReviewsBtn.addEventListener('click', () => { window.location.href = reviewsUrl; });
+      else userReviewsBtn.addEventListener('click', () => {});
+    }
+
+    if (toggle && popover) {
+      toggle.addEventListener('click', (e) => {
+        const open = popover.classList.toggle('open');
+        popover.setAttribute('aria-hidden', String(!open));
+        toggle.setAttribute('aria-expanded', String(open));
+        e.stopPropagation();
+      });
+
+      document.addEventListener('click', (ev) => {
+        if (!popover.classList.contains('open')) return;
+        if (!popover.contains(ev.target) && ev.target !== toggle) {
+          popover.classList.remove('open');
+          popover.setAttribute('aria-hidden', 'true');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+
+  document.querySelectorAll('.single-section-video').forEach(row => {
+    row.addEventListener('click', () => {
+      const videoId = row.dataset.video;
+      const player = row.nextElementSibling;
+
+      function closePlayer(p){
+        if (!p) return;
+        p.classList.remove('open');
+        const onEnd = function(e){
+          if (e.propertyName === 'max-height' && !p.classList.contains('open')){
+            p.innerHTML = '';
+            p.style.display = '';
+            p.removeEventListener('transitionend', onEnd);
+          }
+        };
+        p.addEventListener('transitionend', onEnd);
+      }
+
+      document.querySelectorAll('.video-player.open:not(.playlist-player)').forEach(p => {
+        if (p !== player) closePlayer(p);
+      });
+
+      if (player.classList.contains('open')){
+        closePlayer(player);
+        return;
+      }
+
+      player.innerHTML = `
+  <div class="video-wrapper">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${videoId}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    <button class="video-play-overlay" type="button" aria-label="Play video">
+      <span class="play-icon">▶</span>
+    </button>
+  </div>
+`;
+      const overlay = player.querySelector('.video-play-overlay');
+      const iframe = player.querySelector('iframe');
+      if (overlay && iframe) {
+        overlay.addEventListener('click', () => {
+          if (window.pausePlaylistPlayer) window.pausePlaylistPlayer();
+          iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+          overlay.remove();
+        });
+      }
+      player.style.display = 'block';
+      void player.offsetHeight;
+      player.classList.add('open');
+    });
+  });
+
+  // MUSIC PLAYER — tie tracklist to the player using song pages
+  (function setupMusicPlayer(){
+    const player = document.getElementById('playlistPlayer');
+    const nowTitle = document.getElementById('nowPlayingTitle');
+    const prevBtn = document.getElementById('nowPrevBtn');
+    const nextBtn = document.getElementById('nowNextBtn');
+    const heading = document.getElementById('musicPlayerHeading');
+    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading) return;
+
+    const trackRows = Array.from(document.querySelectorAll('.tracklist .track'));
+    const tracks = trackRows.map((row, index) => {
+      const link = row.querySelector('.track-title a');
+      return {
+        row,
+        link,
+        index,
+        title: (row.querySelector('.track-title') || {}).textContent || '',
+        videoId: ''
+      };
+    });
+
+    let currentIndex = 0;
+    let isPlaying = false;
+    let playlist = [];
+    let ytPlayer = null;
+    const fallbackVideoByPath = {
+      '/songs/non-album/scary-movies.html': 'HgExVxTWUUY',
+      '/songs/slim-shady-lp/guilty-conscience.html': 'V-aBJYpARhA',
+      '/songs/slim-shady-lp/im-shady.html': 'V-aBJYpARhA',
+      '/songs/slim-shady-lp/brain-damage.html': '8Ki09L2M8I8',
+      '/songs/slim-shady-lp/my-name-is.html': '8rVbIsiWWGk'
+    };
+
+    function ensurePlayButtons(){
+      tracks.forEach(track => {
+        const numberEl = track.row.querySelector('.track-number');
+        if (!numberEl) return;
+        if (numberEl.querySelector('.track-play-btn')) return;
+        const numberText = numberEl.textContent;
+        numberEl.textContent = '';
+        const span = document.createElement('span');
+        span.className = 'track-number-text';
+        span.textContent = numberText;
+        const btn = document.createElement('button');
+        btn.className = 'track-play-btn';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', `Play ${track.title}`);
+        btn.textContent = '▶';
+        numberEl.appendChild(span);
+        numberEl.appendChild(btn);
+      });
+    }
+
+    function updateUI(){
+      const current = playlist[currentIndex];
+      heading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
+      if (current) nowTitle.setAttribute('title', current.title || '');
+      tracks.forEach(track => {
+        const btn = track.row.querySelector('.track-play-btn');
+        if (!btn) return;
+        const isCurrent = current && track.videoId === current.videoId;
+        btn.textContent = isCurrent && isPlaying ? '❚❚' : '▶';
+        btn.classList.toggle('playing', isCurrent);
+        track.row.classList.toggle('playing', isCurrent && isPlaying);
+      });
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex >= playlist.length - 1;
+    }
+
+    function setVideo(videoId, autoplay){
+      if (!videoId) return;
+      if (ytPlayer) {
+        if (autoplay) ytPlayer.loadVideoById(videoId);
+        else ytPlayer.cueVideoById(videoId);
+        return;
+      }
+      const autoplayFlag = autoplay ? '1' : '0';
+      player.src = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplayFlag}&enablejsapi=1`;
+    }
+
+    function setIndex(index, autoplay){
+      if (index < 0 || index >= playlist.length) return;
+      currentIndex = index;
+      const current = playlist[currentIndex];
+      nowTitle.textContent = current.title || '';
+      nowTitle.classList.remove('expanded');
+      nowTitle.setAttribute('aria-expanded', 'false');
+      nowTitle.scrollLeft = 0;
+      setVideo(current.videoId, autoplay);
+      updateUI();
+    }
+
+    function closeOpenVideoPlayers(){
+      document.querySelectorAll('.video-player.open:not(.playlist-player)').forEach(p => {
+        p.classList.remove('open');
+        const onEnd = function(e){
+          if (e.propertyName === 'max-height' && !p.classList.contains('open')){
+            p.innerHTML = '';
+            p.style.display = '';
+            p.removeEventListener('transitionend', onEnd);
+          }
+        };
+        p.addEventListener('transitionend', onEnd);
+      });
+    }
+
+    function playAtIndex(index){
+      if (index < 0 || index >= playlist.length) return;
+      closeOpenVideoPlayers();
+      isPlaying = true;
+      setIndex(index, true);
+    }
+
+    function pauseCurrent(){
+      const current = playlist[currentIndex];
+      if (!current) return;
+      isPlaying = false;
+      if (ytPlayer) {
+        ytPlayer.pauseVideo();
+      } else {
+        player.src = `https://www.youtube.com/embed/${current.videoId}?enablejsapi=1`;
+      }
+      updateUI();
+    }
+
+    function bindButtons(){
+      tracks.forEach(track => {
+        const btn = track.row.querySelector('.track-play-btn');
+        if (!btn) return;
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const idx = playlist.findIndex(item => item.videoId === track.videoId);
+          if (idx === -1) return;
+          if (idx === currentIndex && isPlaying) pauseCurrent();
+          else playAtIndex(idx);
+        });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) playAtIndex(currentIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
+      });
+    }
+
+    function initYouTubePlayer(){
+      if (ytPlayer || !window.YT || !window.YT.Player) return;
+      ytPlayer = new YT.Player('playlistPlayer', {
+        events: {
+          onStateChange: (event) => {
+            if (event.data === YT.PlayerState.ENDED) {
+              if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
+            } else if (event.data === YT.PlayerState.PLAYING) {
+              closeOpenVideoPlayers();
+              isPlaying = true;
+              updateUI();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              isPlaying = false;
+              updateUI();
+            }
+          }
+        }
+      });
+    }
+
+    function loadYouTubeApi(){
+      if (window.YT && window.YT.Player) {
+        initYouTubePlayer();
+        return;
+      }
+      if (document.getElementById('ytIframeApi')) return;
+      const script = document.createElement('script');
+      script.id = 'ytIframeApi';
+      script.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(script);
+      window.onYouTubeIframeAPIReady = initYouTubePlayer;
+    }
+
+    async function loadVideoIds(){
+      const fetches = tracks.map(async track => {
+        if (!track.link || !track.link.getAttribute('href')) return;
+        const href = track.link.getAttribute('href');
+        let resolvedPath = '';
+        try {
+          resolvedPath = new URL(href, window.location.href).pathname;
+        } catch (err) {
+          resolvedPath = '';
+        }
+        try {
+          const response = await fetch(href, { credentials: 'same-origin' });
+          if (!response.ok) return;
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const videoEl = doc.querySelector('.song-video[data-video]') || doc.querySelector('#songVideo[data-video]');
+          const videoId = videoEl ? videoEl.getAttribute('data-video') : '';
+          track.videoId = videoId || fallbackVideoByPath[resolvedPath] || '';
+        } catch (err) {
+          track.videoId = fallbackVideoByPath[resolvedPath] || '';
+        }
+      });
+
+      await Promise.all(fetches);
+      playlist = tracks.filter(track => track.videoId).map(track => ({
+        videoId: track.videoId,
+        title: track.title
+      }));
+
+      if (!playlist.length) {
+        nowTitle.textContent = 'No videos available';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      setIndex(0, false);
+      loadYouTubeApi();
+    }
+
+    ensurePlayButtons();
+    bindButtons();
+    nowTitle.setAttribute('role', 'button');
+    nowTitle.setAttribute('tabindex', '0');
+    nowTitle.setAttribute('aria-expanded', 'false');
+    nowTitle.addEventListener('click', () => {
+      const expanded = nowTitle.classList.toggle('expanded');
+      nowTitle.setAttribute('aria-expanded', String(expanded));
+      if (expanded) {
+        nowTitle.scrollTo({ left: nowTitle.scrollWidth, behavior: 'smooth' });
+        window.clearTimeout(nowTitle._collapseTimer);
+        nowTitle._collapseTimer = window.setTimeout(() => {
+          nowTitle.classList.remove('expanded');
+          nowTitle.setAttribute('aria-expanded', 'false');
+          nowTitle.scrollTo({ left: 0, behavior: 'smooth' });
+        }, 2000);
+      } else {
+        window.clearTimeout(nowTitle._collapseTimer);
+        nowTitle.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+    });
+    nowTitle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        nowTitle.click();
+      }
+    });
+    window.pausePlaylistPlayer = () => {
+      if (!playlist.length) return;
+      if (isPlaying) {
+        pauseCurrent();
+      } else if (ytPlayer) {
+        ytPlayer.pauseVideo();
+      }
+    };
+    loadVideoIds();
+  })();
+
+  (function setupHoverCounts(){
+    const ratingsContainer = document.querySelector('.ratings-container');
+    if (!ratingsContainer) return;
+    const blocks = ratingsContainer.querySelectorAll('.rating-block');
+    const emdbBlock = blocks[0];
+    const criticBlock = blocks[2];
+    function enter(){ ratingsContainer.classList.add('show-votes'); }
+    function leave(){ ratingsContainer.classList.remove('show-votes'); }
+    if (emdbBlock){
+      emdbBlock.addEventListener('mouseenter', enter);
+      emdbBlock.addEventListener('mouseleave', leave);
+      emdbBlock.addEventListener('focusin', enter);
+      emdbBlock.addEventListener('focusout', leave);
+    }
+    if (criticBlock){
+      criticBlock.addEventListener('mouseenter', enter);
+      criticBlock.addEventListener('mouseleave', leave);
+      criticBlock.addEventListener('focusin', enter);
+      criticBlock.addEventListener('focusout', leave);
+    }
+  })();
+
+  document.querySelectorAll('.critic-score').forEach(box => {
+    const score = parseInt(box.dataset.score, 10);
+    if (Number.isNaN(score)) {
+      box.classList.add('critic-blank');
+      return;
+    }
+    if (score <= 20) {
+    box.classList.add('critic-red');        // 0–20
+  } else if (score <= 49) {
+    box.classList.add('critic-orange');     // 21–49
+  } else if (score <= 60) {
+    box.classList.add('critic-yellow');     // 50–60
+  } else if (score <= 80) {
+    box.classList.add('critic-green');      // 61–80
+  } else {
+    box.classList.add('critic-gold');       // 81–100
+  }
+});
+</script>
+<script src="../scripts/album-rating.js"></script>
+<script src="../scripts/album-reviews.js"></script>
+<script src="../header.js"></script>
+</body>
+</html>

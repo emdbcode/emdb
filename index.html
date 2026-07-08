@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eminem Music Database</title>
+    <link rel="stylesheet" href="style.css">
+        <style>
+            :root {
+                --slider-bg: #0b0b0b;
+                --slider-border: #1f1f1f;
+                --slider-accent: #E21C21;
+                --slider-gap: 14px;
+                --slider-cards: 5;
+            }
+
+            body {
+                margin: 0;
+                background: var(--slider-bg);
+                color: #eaeaea;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            main {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 32px 16px 48px;
+            }
+
+            .slider-header {
+                display: flex;
+                align-items: baseline;
+                justify-content: flex-start;
+                gap: 8px;
+                margin: 0 0 16px;
+            }
+
+            .slider-eyebrow {
+                font-size: 12px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: #a5a5a5;
+                line-height: 1;
+            }
+
+            .slider-title {
+                margin: 0;
+                font-size: clamp(20px, 3vw, 26px);
+                font-weight: 700;
+            }
+
+            .slider-nav {
+                display: inline-flex;
+                gap: 8px;
+            }
+
+            .slider-btn {
+                width: 38px;
+                height: 38px;
+                border-radius: 8px;
+                border: 1px solid var(--slider-border);
+                background: #111;
+                color: #eaeaea;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+            }
+
+            .slider-btn:hover:not(:disabled) {
+                border-color: var(--slider-accent);
+                background: #161616;
+                transform: translateY(-1px);
+            }
+
+            .slider-btn:disabled {
+                opacity: 0.35;
+                cursor: not-allowed;
+            }
+
+            .slider-viewport {
+                position: relative;
+                overflow: hidden;
+                border-radius: 14px;
+                border: 1px solid var(--slider-border);
+                background: linear-gradient(135deg, #121212, #0c0c0c);
+            }
+
+            .slider-track {
+                display: flex;
+                gap: var(--slider-gap);
+                padding: 14px;
+                box-sizing: border-box;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-padding-inline: 14px;
+                scroll-behavior: smooth;
+                cursor: grab;
+                user-select: none;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .slider-track::-webkit-scrollbar { display: none; }
+
+            .slider-track.is-dragging {
+                cursor: grabbing;
+            }
+
+            .slide {
+                flex: 0 0 calc((100% - (var(--slider-cards) - 1) * var(--slider-gap)) / var(--slider-cards));
+                max-width: 240px;
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-radius: 12px;
+                padding: 12px;
+                box-sizing: border-box;
+                scroll-snap-align: start;
+                display: grid;
+                gap: 10px;
+                justify-items: center;
+                text-align: center;
+                transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            }
+
+            .slide a {
+                text-decoration: none;
+                color: inherit;
+                width: 100%;
+            }
+
+            .slide img {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                border-radius: 10px;
+                background: #0f0f0f;
+                border: 1px solid var(--slider-border);
+                box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+                transition: transform 0.18s ease, box-shadow 0.18s ease;
+            }
+
+            .slide a:hover img,
+            .slide a:focus-visible img {
+                transform: translateY(-2px) scale(1.01);
+                box-shadow: 0 14px 30px rgba(0,0,0,0.5);
+            }
+
+            .slide:hover {
+                border-color: var(--slider-accent);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+            }
+
+            .slide-title {
+                margin: 4px 0 2px;
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            .slide-subtitle {
+                margin: 0;
+                font-size: 13px;
+                color: #b5b5b5;
+            }
+
+            .slide--placeholder {
+                background: #111;
+            }
+
+            .slide--placeholder:hover {
+                border-color: var(--slider-accent);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+            }
+
+            .slide-media-placeholder {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                border-radius: 10px;
+                border: 1px solid var(--slider-border);
+                background: #0f0f0f;
+                box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+            }
+
+            @media (max-width: 1100px) {
+                :root { --slider-cards: 4; }
+            }
+            @media (max-width: 900px) {
+                :root { --slider-cards: 3; }
+            }
+            @media (max-width: 680px) {
+                :root {
+                    --slider-cards: 2.4;
+                    --slider-gap: 12px;
+                }
+            }
+            @media (max-width: 480px) {
+                :root {
+                    --slider-cards: 2.2;
+                    --slider-gap: 10px;
+                }
+            }
+
+            @media (max-width: 900px), (pointer: coarse) {
+                .slider-arrow { display: none !important; }
+            }
+
+            .slider-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 2;
+                width: 38px;
+                height: 38px;
+                border-radius: 8px;
+                border: 1px solid var(--slider-border);
+                background: rgba(17, 17, 17, 0.9);
+                color: #eaeaea;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+            }
+
+            .slider-arrow:hover:not(:disabled) {
+                border-color: var(--slider-accent);
+                background: rgba(22, 22, 22, 0.95);
+                transform: translateY(-50%) translateY(-1px);
+            }
+
+            .slider-arrow:disabled {
+                opacity: 0.35;
+                cursor: not-allowed;
+            }
+
+            .slider-arrow--prev { left: 10px; }
+            .slider-arrow--next { right: 10px; }
+
+            .articles {
+                margin-top: 48px;
+                padding: 12px 14px 8px;
+                border-top: 1px solid var(--slider-border);
+            }
+
+            .news {
+                margin-top: 32px;
+                padding: 12px 14px 8px;
+                border-top: 1px solid var(--slider-border);
+            }
+
+            .discogs {
+                margin-top: 32px;
+                padding: 12px 14px 8px;
+                border-top: 1px solid var(--slider-border);
+            }
+
+            .articles-header {
+                display: flex;
+                align-items: baseline;
+                gap: 10px;
+                margin: 0 0 16px;
+            }
+
+            .articles-eyebrow {
+                font-size: 12px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: #a5a5a5;
+            }
+
+            .articles-title {
+                margin: 0;
+                font-size: clamp(20px, 3vw, 26px);
+                font-weight: 700;
+            }
+
+            .articles-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 18px;
+            }
+
+            .article-card {
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            }
+
+            .article-card a {
+                color: inherit;
+                text-decoration: none;
+                display: grid;
+                grid-template-rows: 1fr auto;
+                height: 100%;
+            }
+
+            .article-thumb {
+                position: relative;
+                padding-top: 60%;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                transition: transform 0.9s ease-out;
+                will-change: transform;
+            }
+
+            .article-meta {
+                padding: 8px 10px 10px;
+                display: grid;
+                gap: 6px;
+            }
+
+            .article-title {
+                margin: 0;
+                font-weight: 700;
+                font-size: 16px;
+            }
+
+            .article-tag {
+                margin: 0;
+                font-size: 12px;
+                color: #b5b5b5;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+
+            /* Discography card overrides */
+            .discogs .article-card a {
+                display: block;
+                position: relative;
+                height: 100%;
+            }
+
+            .discogs .article-thumb {
+                padding-top: 60%;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .discogs .article-thumb::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.9) 75%, rgba(0,0,0,1) 100%);
+                transition: opacity 0.18s ease;
+            }
+
+            .discogs .article-meta {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 12px 12px 14px;
+                gap: 4px;
+                background: transparent;
+            }
+
+            .discogs .article-title {
+                color: #fff;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+            }
+
+            .article-card:hover {
+                border-color: var(--slider-accent);
+                box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+            }
+
+            .article-card:hover .article-thumb {
+                transform: scale(1.04);
+            }
+
+            .articles-cta {
+                display: flex;
+                justify-content: center;
+                margin-top: 18px;
+            }
+
+            .articles-cta a {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+                border-radius: 10px;
+                border: 1px solid var(--slider-border);
+                background: #151515;
+                color: #eaeaea;
+                text-decoration: none;
+                font-weight: 700;
+                transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+            }
+
+            .articles-cta a:hover {
+                border-color: var(--slider-accent);
+                background: #191919;
+                transform: translateY(-1px);
+            }
+
+            @media (max-width: 960px) {
+                .articles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            }
+
+            @media (max-width: 640px) {
+                .articles-grid { grid-template-columns: 1fr; }
+                .article-card--mobile-hide { display: none; }
+            }
+        </style>
+</head>
+<body>
+    <div id="site-header"></div>
+
+    <main>
+                <section aria-label="Featured releases">
+                    <div class="slider-header">
+                        <span class="slider-eyebrow">Explore & Rate</span>
+                        <h1 class="slider-title">Featured Albums</h1>
+                    </div>
+                    <div class="slider-viewport" id="albumsViewport">
+                        <button class="slider-arrow slider-arrow--prev" type="button" id="sliderPrev" aria-label="Scroll left">‹</button>
+                        <button class="slider-arrow slider-arrow--next" type="button" id="sliderNext" aria-label="Scroll right">›</button>
+                        <div class="slider-track" id="sliderTrack">
+                            <article class="slide">
+                                <a href="releases/stans-soundtrack.html">
+                                    <img src="images/album-covers/non-album/stans-cover.jpg" alt="STANS (Soundtrack) cover">
+                                    <p class="slide-title">STANS (Soundtrack)</p>
+                                    <p class="slide-subtitle">Latest release • Compilation</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/death-of-slim-shady.html">
+                                    <img src="images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+                                    <p class="slide-title">The Death Of Slim Shady</p>
+                                    <p class="slide-subtitle">Studio Album • 2024</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/curtain-call-2.html">
+                                    <img src="images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Curtain Call 2 cover">
+                                    <p class="slide-title">Curtain Call 2</p>
+                                    <p class="slide-subtitle">Compilation • 2022</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/music-to-be-murdered-by.html">
+                                    <img src="images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+                                    <p class="slide-title">Music To Be Murdered By</p>
+                                    <p class="slide-subtitle">Studio Album • 2020</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/kamikaze.html">
+                                    <img src="images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+                                    <p class="slide-title">Kamikaze</p>
+                                    <p class="slide-subtitle">Studio Album • 2018</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/revival.html">
+                                    <img src="images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+                                    <p class="slide-title">Revival</p>
+                                    <p class="slide-subtitle">Studio Album • 2017</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/southpaw-soundtrack.html">
+                                    <img src="images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw Soundtrack cover">
+                                    <p class="slide-title">Southpaw (Soundtrack)</p>
+                                    <p class="slide-subtitle">Compilation • 2015</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/shadyxv.html">
+                                    <img src="images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Shady XV cover">
+                                    <p class="slide-title">SHADYXV</p>
+                                    <p class="slide-subtitle">Compilation • 2014</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/marshall-mathers-lp-2.html">
+                                    <img src="images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+                                    <p class="slide-title">The Marshall Mathers LP 2</p>
+                                    <p class="slide-subtitle">Studio Album • 2013</p>
+                                </a>
+                            </article>
+                             <article class="slide">
+                                <a href="releases/hell-the-sequel.html">
+                                    <img src="images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+                                    <p class="slide-title">Hell: The Sequel</p>
+                                    <p class="slide-subtitle">Extended Play • 2011</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/recovery.html">
+                                    <img src="images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+                                    <p class="slide-title">Recovery</p>
+                                    <p class="slide-subtitle">Studio Album • 2010</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/relapse.html">
+                                    <img src="images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+                                    <p class="slide-title">Relapse</p>
+                                    <p class="slide-subtitle">Studio Album • 2009</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/re-up.html">
+                                    <img src="images/album-covers/re-up/re-up-cover.jpg" alt="The Re-Up cover">
+                                    <p class="slide-title">The Re-Up</p>
+                                    <p class="slide-subtitle">Compilation • 2006</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/curtain-call.html">
+                                    <img src="images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
+                                    <p class="slide-title">Curtain Call: The Hits</p>
+                                    <p class="slide-subtitle">Compilation • 2005</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/encore.html">
+                                    <img src="images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+                                    <p class="slide-title">Encore</p>
+                                    <p class="slide-subtitle">Studio album • 2004</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/d12-world.html">
+                                    <img src="images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+                                    <p class="slide-title">D12 World</p>
+                                    <p class="slide-subtitle">Studio Album • 2004</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/8-mile-soundtrack.html">
+                                    <img src="images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+                                    <p class="slide-title">8 Mile (Soundtrack)</p>
+                                    <p class="slide-subtitle">Compilation • 2002</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/eminem-show.html">
+                                    <img src="images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+                                    <p class="slide-title">The Eminem Show</p>
+                                    <p class="slide-subtitle">Studio Album • 2002</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/devils-night.html">
+                                    <img src="images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil's Night cover">
+                                    <p class="slide-title">Devil’s Night</p>
+                                    <p class="slide-subtitle">Studio Album • 2001</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/marshall-mathers-lp.html">
+                                    <img src="images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover">
+                                    <p class="slide-title">The Marshall Mathers LP</p>
+                                    <p class="slide-subtitle">Studio Album • 2000</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/slim-shady-lp.html">
+                                    <img src="images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="The Slim Shady LP cover">
+                                    <p class="slide-title">The Slim Shady LP</p>
+                                    <p class="slide-subtitle">Studio Album • 1999</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/slim-shady-ep.html">
+                                    <img src="images/album-covers/slim-shady-ep/slim-shady-ep-cover.jpg" alt="The Slim Shady EP cover">
+                                    <p class="slide-title">Slim Shady EP</p>
+                                    <p class="slide-subtitle">Extended Play • 1997</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="releases/infinite.html">
+                                    <img src="images/album-covers/infinite/infinite-cover.jpg" alt="Infinite cover">
+                                    <p class="slide-title">Infinite</p>
+                                    <p class="slide-subtitle">Studio Album • 1996</p>
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="articles" aria-label="Latest articles">
+                    <div class="articles-header">
+                        <span class="articles-eyebrow">Latest Articles</span>
+                        <h2 class="articles-title">Marshall Matters</h2>
+                    </div>
+                    <div class="articles-grid">
+                        <article class="article-card">
+                            <a href="/articles/5-album-theory.html">
+                                <div class="article-thumb" style="background-image: url('/images/article-images/5-album-theory-small.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Does This Pattern in Eminem’s Discography Tell Us What’s Next?</p>
+                                    <p class="article-tag">Theory</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card">
+                            <a href="#" aria-label="Placeholder article card">
+                                <div class="article-thumb"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">We’re new. More articles coming soon.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card">
+                            <a href="#" aria-label="Placeholder article card">
+                                <div class="article-thumb"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">We’re new. More articles coming soon.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="#" aria-label="Placeholder article card">
+                                <div class="article-thumb"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">We’re new. More articles coming soon.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="#" aria-label="Placeholder article card">
+                                <div class="article-thumb"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">We’re new. More articles coming soon.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="#" aria-label="Placeholder article card">
+                                <div class="article-thumb"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">We’re new. More articles coming soon.</p>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                    <div class="articles-cta">
+                        <a href="/articles/articles-index.html" aria-label="View more articles">View more</a>
+                    </div>
+                </section>
+
+                <section class="news" aria-label="News slider">
+                    <div class="slider-header">
+                        <span class="slider-eyebrow">Latest News</span>
+                        <h1 class="slider-title">Shady Times</h1>
+                    </div>
+                    <div class="slider-viewport" id="newsViewport">
+                        <button class="slider-arrow slider-arrow--prev" type="button" id="newsPrev" aria-label="Scroll left">‹</button>
+                        <button class="slider-arrow slider-arrow--next" type="button" id="newsNext" aria-label="Scroll right">›</button>
+                        <div class="slider-track" id="newsTrack">
+                            <article class="slide">
+                                <a href="/news/my-dads-gone-crazy-fathers-day-single.html">
+                                    <img src="images/news-images/my-dads-gone-crazy-single-thumb.jpg" alt="Father's Day the Shady Way">
+                                    <p class="slide-title">Father’s Day The Shady Way</p>
+                                    <p class="slide-subtitle">June 28, 2026</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="/news/d12-thank-eminem-d12-forever.html">
+                                    <img src="images/news-images/d12-thank-shady.jpg" alt="D12 Thank Eminem Following New Album">
+                                    <p class="slide-title">D12 Thank Eminem Following New Album</p>
+                                    <p class="slide-subtitle">June 19, 2026</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                            <article class="slide slide--placeholder">
+                                <a href="#" aria-label="Placeholder news card">
+                                    <div class="slide-media-placeholder" aria-hidden="true"></div>
+                                    <p class="slide-title">We’re new. More news as it happens</p>
+                                    <p class="slide-subtitle">&nbsp;</p>
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="articles-cta">
+                        <a href="/news/news-index.html" aria-label="View more news">View more</a>
+                    </div>
+                </section>
+
+                <section class="articles discogs" aria-label="Discography promos">
+                    <div class="articles-header">
+                        <span class="articles-eyebrow">Explore</span>
+                        <h2 class="articles-title">Eminem Discographies</h2>
+                    </div>
+                    <div class="articles-grid">
+                        <article class="article-card">
+                            <a href="collections/non-album-tracks.html">
+                                <div class="article-thumb" style="background-image: url('images/home/non-album-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Non-Album Tracks</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card">
+                            <a href="collections/songs-featuring-eminem.html">
+                                <div class="article-thumb" style="background-image: url('images/home/songs-feat-eminem-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Songs Featuring Eminem</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card">
+                            <a href="collections/production-discography.html">
+                                <div class="article-thumb" style="background-image: url('images/home/production-discography-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Production Discography</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="collections/albums-discography.html">
+                                <div class="article-thumb" style="background-image: url('images/home/albums-discography-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Albums Discography</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="collections/singles-discography.html">
+                                <div class="article-thumb" style="background-image: url('images/home/singles-discography-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Singles Discography</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card article-card--mobile-hide">
+                            <a href="collections/songs-with-dr-dre.html">
+                                <div class="article-thumb" style="background-image: url('images/home/songs-with-dr-dre-cover.jpg');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Songs with Dr. Dre</p>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                    <div class="articles-cta">
+                        <a href="/releases/releases-index.html" aria-label="View more discographies">View more</a>
+                    </div>
+                </section>
+
+    </main>
+
+        <div id="site-footer"></div>
+
+<script src="/header.js"></script>
+<script>
+    (() => {
+        const initSlider = ({ viewportId, trackId, prevId, nextId }) => {
+            const viewport = document.getElementById(viewportId);
+            const track = document.getElementById(trackId);
+            const prev = document.getElementById(prevId);
+            const next = document.getElementById(nextId);
+
+            if (!viewport || !track || !prev || !next) return;
+
+            const scrollStep = () => Math.max(viewport.clientWidth * 0.8, 280);
+
+            let isDragging = false;
+            let startX = 0;
+            let startScroll = 0;
+
+            const updateButtons = () => {
+                prev.disabled = track.scrollLeft <= 4;
+                const maxScroll = track.scrollWidth - track.clientWidth - 4;
+                next.disabled = track.scrollLeft >= maxScroll;
+            };
+
+            prev.addEventListener('click', () => {
+                track.scrollBy({ left: -scrollStep(), behavior: 'smooth' });
+            });
+            next.addEventListener('click', () => {
+                track.scrollBy({ left: scrollStep(), behavior: 'smooth' });
+            });
+
+            track.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startScroll = track.scrollLeft;
+                track.classList.add('is-dragging');
+            });
+
+            track.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const x = e.clientX;
+                const delta = startX - x;
+                track.scrollLeft = startScroll + delta;
+                updateButtons();
+                e.preventDefault();
+            });
+
+            const endDrag = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                track.classList.remove('is-dragging');
+            };
+
+            track.addEventListener('pointerup', endDrag);
+            track.addEventListener('pointercancel', endDrag);
+            track.addEventListener('pointerleave', endDrag);
+
+            track.addEventListener('scroll', () => updateButtons());
+            window.addEventListener('resize', () => updateButtons());
+            updateButtons();
+        };
+
+        initSlider({ viewportId: 'albumsViewport', trackId: 'sliderTrack', prevId: 'sliderPrev', nextId: 'sliderNext' });
+        initSlider({ viewportId: 'newsViewport', trackId: 'newsTrack', prevId: 'newsPrev', nextId: 'newsNext' });
+    })();
+</script>
+</body>
+</html>

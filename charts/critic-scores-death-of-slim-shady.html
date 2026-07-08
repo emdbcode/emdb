@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Death of Slim Shady (Coup De Grâce) | Critic Scores | EMDb</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+  overflow-x: hidden;
+}
+
+
+.charts-page {
+  max-width: 920px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .charts-box {
+    padding: clamp(12px, 4vw, 16px) clamp(12px, 4vw, 18px);
+  }
+  .grid-2,
+  .grid-3 {
+    gap: clamp(10px, 4vw, 14px);
+  }
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0;
+  color: #eaeaea;
+  line-height: 1.2;
+  text-align: left;
+  font-weight: 700;
+}
+
+.page-title a { color: inherit; text-decoration: none; transition: color .12s ease; }
+.page-title a:hover,
+.page-title a:focus,
+.page-title a:active { color: #E21C21 !important; }
+
+
+.title-row {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: clamp(12px, 3vw, 18px);
+  padding-left: clamp(16px, 4vw, 24px);
+  padding-right: clamp(16px, 4vw, 24px);
+  box-sizing: border-box;
+}
+
+.title-main {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: clamp(10px, 2.5vw, 14px);
+  flex-wrap: nowrap;
+}
+
+.cover-thumb {
+  width: auto;
+  height: calc(3 * clamp(22px, 5vw, 32px) * 1.2);
+  max-height: 180px;
+  min-height: 64px;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  border: 1px solid #222;
+}
+
+.overall-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.overall-label {
+  font-size: clamp(12px, 3.5vw, 14px);
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.charts-box {
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid #222;
+  background: #151515;
+  padding: clamp(16px, 4vw, 22px) clamp(16px, 4vw, 24px);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.grid-critic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(80px, 22vw, 120px);
+  gap: clamp(12px, 4vw, 18px);
+  align-items: center;
+}
+
+.critic-header {
+  font-size: clamp(14px, 4vw, 16px);
+  color: #aaa;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.critic-row {
+  padding: clamp(6px, 2vw, 8px) 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+
+.critic-row:last-of-type { border-bottom: none; }
+
+.overall-row {
+  margin-top: clamp(12px, 4vw, 18px);
+  padding-top: clamp(12px, 4vw, 18px);
+  border-top: none;
+}
+
+.critic-name {
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.4;
+  color: #eaeaea;
+}
+
+.critic-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.critic-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: default;
+}
+.critic-score:link,
+.critic-score:visited,
+.critic-score:hover,
+.critic-score:active {
+  color: #000;
+}
+.critic-red    { background: #E21C21; }
+.critic-orange { background: #FF8C00; }
+.critic-yellow { background: #eadb03; }
+.critic-green  { background: #4CAF50; }
+.critic-gold {
+  background: linear-gradient(180deg, #ffe680 0%, #f0c95a 45%, #d4af37 80%);
+  border: 0px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.25);
+  color: #111;
+}
+
+.critic-link {
+  color: #aaa;
+  font-size: clamp(13px, 3.6vw, 15px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.critic-link:hover,
+.critic-link:focus { color: #E21C21; }
+
+.critic-link.muted { color: #777; cursor: default; }
+.critic-link.muted:hover { color: #777; }
+
+.info-note {
+  font-size: clamp(12px, 3.5vw, 13px);
+  color: #aaa;
+  font-style: italic;
+  margin-top: 10px;
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+  padding-left: clamp(12px, 3vw, 18px);
+  padding-right: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.info-btn {
+  font-family: Arial, sans-serif;
+  font-size: clamp(12px, 3.5vw, 13px);
+  color: #aaa;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-style: normal;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transform: translateY(0);
+}
+.info-btn:hover { color: #aaa; }
+.info-btn:active,
+.info-btn[aria-expanded="true"] { color: #E21C21; }
+.info-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+
+.promo-info {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.32s ease, opacity 0.22s ease;
+  font-style: italic;
+  color: #aaa;
+  margin-top: 8px;
+  font-size: clamp(12px, 3.5vw, 13px);
+  width: 100%;
+  max-width: 700px;
+  padding-left: clamp(12px, 3vw, 18px);
+  padding-right: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+.promo-info.open { max-height: 240px; opacity: 1; }
+
+@media (max-width: 520px) {
+  .title-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .title-main { flex-wrap: nowrap; gap: clamp(8px, 2.5vw, 12px); align-items: flex-start; flex: 1; min-width: 0; }
+  .page-title { white-space: normal; word-break: break-word; }
+  .overall-score { align-items: flex-start; }
+  .overall-score .critic-score { margin-left: 0; }
+
+  .grid-critic {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(10px, 3vw, 14px);
+    align-items: center;
+  }
+  .critic-row { border-bottom: 1px solid #2f2f2f; }
+  .critic-row > *:not(:last-child) { margin-bottom: 0; }
+  .critic-link { justify-content: flex-start; }
+  .critic-score { justify-self: end; }
+}
+</style>
+</head>
+
+<body>
+<div id="site-header"></div>
+
+<main class="charts-page">
+<div class="title-row">
+  <div class="title-main">
+    <img class="cover-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+    <h1 class="page-title">Eminem<br><a href="../releases/death-of-slim-shady.html">The Death Of Slim Shady<br>(Coup De Grâce)</a><br><a href="../charts/index-critic-scores.html">Critic Scores</a></h1>
+  </div>
+</div>
+
+<div class="charts-box">
+  <div class="critic-header grid-critic">
+    <span>Outlet</span>
+    <span>Score</span>
+  </div>
+
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Consumer Guide</span><a class="critic-link" href="https://www.robertchristgau.com/get_artist.php?name=eminem" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.robertchristgau.com/get_artist.php?name=eminem" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Daily Vault</span><a class="critic-link" href="https://dailyvault.com/toc.php5?review=11514" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://dailyvault.com/toc.php5?review=11514" target="_blank" rel="noopener">9.5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Telegraph</span><a class="critic-link" href="https://www.telegraph.co.uk/music/news/eminem-the-death-of-slim-shady-review-woke-ideology/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.telegraph.co.uk/music/news/eminem-the-death-of-slim-shady-review-woke-ideology/" target="_blank" rel="noopener">8</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Detroit Free Press</span><a class="critic-link" href="https://eu.freep.com/story/entertainment/music/brian-mccollum/2024/07/12/eminem-death-of-slim-shady-review/74376974007/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://eu.freep.com/story/entertainment/music/brian-mccollum/2024/07/12/eminem-death-of-slim-shady-review/74376974007/" target="_blank" rel="noopener">7.4</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Sputnikmusic</span><a class="critic-link" href="https://www.sputnikmusic.com/review/88788/Eminem-The-Death-of-Slim-Shady-Coup-De-Gr%C3%A2ce/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.sputnikmusic.com/review/88788/Eminem-The-Death-of-Slim-Shady-Coup-De-Gr%C3%A2ce/" target="_blank" rel="noopener">7.4</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Irish Times</span><a class="critic-link" href="https://www.irishtimes.com/culture/music/review/2024/07/18/eminem-the-death-of-slim-shady-review-lyrical-dexterity-live-and-kicking-on-this-uneasy-funeral-for-his-world-beating-alter-ego/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.irishtimes.com/culture/music/review/2024/07/18/eminem-the-death-of-slim-shady-review-lyrical-dexterity-live-and-kicking-on-this-uneasy-funeral-for-his-world-beating-alter-ego/" target="_blank" rel="noopener">7</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">RapReviews</span><a class="critic-link" href="https://www.rapreviews.com/2024/07/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.rapreviews.com/2024/07/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">7</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Spectrum Pulse</span><a class="critic-link" href="https://www.youtube.com/watch?v=ZK2DXtrBhYU" target="_blank" rel="noopener">Watch this review</a></div><a class="critic-score critic-green" href="https://www.youtube.com/watch?v=ZK2DXtrBhYU" target="_blank" rel="noopener">7</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Financial Times</span><a class="critic-link" href="https://www.ft.com/content/e95d3549-3735-4e58-ba49-8085533e7e3c" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://www.ft.com/content/e95d3549-3735-4e58-ba49-8085533e7e3c" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Shatter The Standards</span><a class="critic-link" href="https://www.shatterthestandards.com/p/album-review-the-death-of-slim-shady" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://www.shatterthestandards.com/p/album-review-the-death-of-slim-shady" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">NME</span><a class="critic-link" href="https://www.nme.com/reviews/album/eminem-the-death-of-slim-shady-coup-de-grace-album-review-3774875" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://www.nme.com/reviews/album/eminem-the-death-of-slim-shady-coup-de-grace-album-review-3774875" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Clash Music</span><a class="critic-link" href="https://www.clashmusic.com/reviews/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://www.clashmusic.com/reviews/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">NFR Podcast</span><a class="critic-link" href="https://www.youtube.com/watch?v=h_h5hOUDcEA" target="_blank" rel="noopener">Watch this review</a></div><a class="critic-score critic-yellow" href="https://www.youtube.com/watch?v=h_h5hOUDcEA" target="_blank" rel="noopener">5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Needle Drop</span><a class="critic-link" href="https://www.youtube.com/watch?v=4LxN191W7GI" target="_blank" rel="noopener">Watch this review</a></div><a class="critic-score critic-yellow" href="https://www.youtube.com/watch?v=4LxN191W7GI" target="_blank" rel="noopener">5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Variety</span><a class="critic-link" href="https://variety.com/2024/music/news/eminem-the-death-of-slim-shady-album-review-1236069531/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://variety.com/2024/music/news/eminem-the-death-of-slim-shady-album-review-1236069531/" target="_blank" rel="noopener">5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Guardian</span><a class="critic-link" href="https://pitchfork.com/reviews/albums/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://pitchfork.com/reviews/albums/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Pitchfork</span><a class="critic-link" href="https://pitchfork.com/reviews/albums/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://pitchfork.com/reviews/albums/eminem-the-death-of-slim-shady-coup-de-grace/" target="_blank" rel="noopener">4.8</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Spin</span><a class="critic-link" href="https://www.spin.com/2024/07/eminem-the-death-of-slim-shady-coup-de-grace-review/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://www.spin.com/2024/07/eminem-the-death-of-slim-shady-coup-de-grace-review/" target="_blank" rel="noopener">4.3</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Consequence</span><a class="critic-link" href="https://consequence.net/2024/07/eminem-death-of-slim-shady-album-review/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://consequence.net/2024/07/eminem-death-of-slim-shady-album-review/" target="_blank" rel="noopener">4.2</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Rolling Stone</span><a class="critic-link" href="https://www.rollingstone.com/music/music-album-reviews/eminems-the-death-of-slim-shady-coup-de-grace-review-1235060317/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-orange" href="https://www.rollingstone.com/music/music-album-reviews/eminems-the-death-of-slim-shady-coup-de-grace-review-1235060317/" target="_blank" rel="noopener">4</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">AllMusic</span><a class="critic-link" href="https://www.allmusic.com/album/the-death-of-slim-shady-coup-de-gr%C3%A2ce-mw0004292366" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-orange" href="https://www.allmusic.com/album/the-death-of-slim-shady-coup-de-gr%C3%A2ce-mw0004292366" target="_blank" rel="noopener">3</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">HipHopDX</span><a class="critic-link" href="https://hiphopdx.com/reviews/eminem-death-slim-shady-review/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-red" href="https://hiphopdx.com/reviews/eminem-death-slim-shady-review/" target="_blank" rel="noopener">2.6</a></div>
+  <div class="critic-row grid-critic overall-row"><div class="critic-name-block"><span class="critic-name">Overall</span></div><span class="critic-score critic-yellow" aria-label="Overall score 5.9">5.9</span></div>
+
+</div>
+
+<div id="infoNotePanel" class="info-note">
+  <em>Some scores are adjusted to a 10-point scale for consistency. Color scale: 0–2 red; 2.1–4 orange; 4.1–6 yellow; 6.1–8 green; 8.1–10 gold.</em>
+</div>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+
+</body>
+</html>

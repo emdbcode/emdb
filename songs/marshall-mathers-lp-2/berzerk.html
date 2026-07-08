@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berzerk | EMDb</title>
+  <meta property="og:title" content="Berzerk – EMDb">
+  <meta property="og:description" content="Every Eminem release — explore, rate, review.">
+  <meta property="og:image" content="https://emdb.pro/images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg">
+  <meta property="og:url" content="https://emdb.pro/songs/marshall-mathers-lp-2/berzerk">
+  <meta property="og:type" content="music.song">
+  <meta property="og:site_name" content="EMDb">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Berzerk – EMDb">
+  <meta name="twitter:description" content="Details, credits, and ratings for ’Berzerk’.">
+  <meta name="twitter:image" content="https://emdb.pro/images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg">
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
+
+<style>
+/* GENERAL BODY */
+body {
+  margin: 0;
+  background: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --written-by-max: 70ch;
+}
+
+
+/* ALBUM COVER */
+.album-single {
+  width: 100%;
+  max-width: 292px;
+  aspect-ratio: 1 / 1;
+      cursor: pointer;
+  margin-top: 18px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+.album-single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* inline song video matching cover width */
+.song-video {
+  width: 100%;
+  max-width: 292px; /* match .album-single max-width */
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.song-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+/* collapsed / expand behaviour for inline song video */
+.song-video { max-height: 0; opacity: 0; transition: max-height 0.42s ease, opacity 0.28s ease; }
+.song-video.open { max-height: 720px; opacity: 1; }
+
+.play-btn {
+  display: block;
+  background: transparent;
+  color: #E21C21;
+  border: 1px solid #E21C21;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  width: 100%;
+  max-width: 292px;
+  box-sizing: border-box;
+}
+.play-btn:hover { background: #E21C21; color: #fff; border-color: #E21C21; }
+.play-btn:focus:not(:hover) { outline: 2px solid rgba(226,28,33,0.12); outline-offset: 2px; }
+/* keep play button visually 'active' when video is opened */
+.play-btn.open { background: #E21C21; color: #fff; border-color: #E21C21; }
+
+/* ALBUM COVER + INFO CONTAINER */
+.album-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  background-color: #222; /* match singles */
+  padding: 1rem 1.5rem 1.5rem;         /* spacing inside the container */
+  border-radius: 6px;      /* rounded corners like singles */
+}
+/* make header a positioning context for the permalink */
+.album-container { position: relative; }
+@media(min-width: 768px){
+  .album-container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}
+
+/* left media column (cover + video) */
+.media-col { display: flex; flex-direction: column; gap: 8px; }
+.media-col .album-single,
+.media-col .song-video { width: 100%; max-width: 292px; }
+.media-col .ratings-container {
+  width: 100%;
+  max-width: 292px;
+  box-sizing: border-box;
+  align-self: stretch;
+}
+@media(max-width:767px){
+  .media-col {
+    width: 100%;
+    gap: 6px;
+    align-items: center;
+  }
+  .media-col .album-single,
+  .media-col .song-video,
+  .media-col .play-btn,
+  .media-col .ratings-container,
+  .media-col .release-info,
+  .media-col .song-meta-section {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .media-col .release-info {
+    width: 100%;
+    margin-top: 6px;
+    text-align: center;
+  }
+  .media-col .release-info .album-title,
+  .media-col .release-info .album-header,
+  .media-col .release-info .album-artist,
+  .media-col .release-info .from-album,
+  .media-col .release-info .album-type {
+    width: 100%;
+    text-align: center;
+  }
+  .media-col .release-info .album-header { justify-content: center; }
+  .media-col .performers-list {
+    align-items: center;
+    text-align: center;
+  }
+  .media-col .ratings-container { margin-top: 2px !important; margin-bottom: 2px !important; }
+  .media-col .song-meta { width: 100%; margin-top: 4px; text-align: left; }
+  .song-meta-section { margin: 6px auto; padding: 0.6rem 0.9rem; width: 100%; }
+  .song-meta-section .song-meta p { margin-bottom: 6px; }
+.song-meta p.written-by .meta-value { max-width: var(--written-by-max); }
+}
+
+/* (removed earlier divider rule to avoid duplicate/incorrect line placement) */
+
+@media (max-width: 767px) {
+  /* place divider at the bottom of the song-info so it visually sits between the blocks */
+  .media-col .release-info {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 8px; /* space below info so divider sits centered */
+    margin-bottom: 8px;
+  }
+
+  /* ensure ratings itself doesn't add an extra top border */
+  .media-col .ratings-container { border-top: none; padding-top: 0; margin-top: 0; }
+  /* add extra gap above song-meta so it isn't too close to the divider; reduce bottom blank space */
+  .media-col .song-meta-section {
+    margin-top: 6px; /* bring song-meta closer to the divider */
+    padding-top: 4px;
+    margin-bottom: 6px;
+    padding-bottom: 0;
+  }
+  /* lift ratings block slightly higher so it appears closer to the song-info */
+  .media-col .ratings-container { margin-top: -8px !important; }
+}
+@media(min-width:768px){ .media-col { flex: 0 0 auto; } .release-info { flex: 1 1 0; } }
+
+.song-extra { background-color: #151515; padding: 1.5rem; margin: 1.25rem auto; max-width: 900px; border-radius: 6px; border: 1px solid #222; color: #ddd; }
+.song-samples { background-color: #151515; padding: 1.5rem; margin: 1.25rem auto; max-width: 900px; border-radius: 6px; border: 1px solid #222; color: #ddd; }
+
+/* mobile-only song-meta section (created dynamically) — unboxed on mobile */
+.song-meta-section {
+  background: transparent;
+  padding: 0;
+  margin: 0.5rem auto;
+  max-width: 900px;
+  border-radius: 0;
+  border: none;
+  color: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.song-meta-section .song-meta { margin: 0; }
+
+/* permalink button (top-right of header) - show only the icon without a box */
+.permalink {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  text-decoration: none;
+  line-height: 0;
+}
+.permalink img { display: block; width: 18px; height: 18px; }
+.permalink:hover img,
+.permalink:focus img { filter: brightness(1.15); transform: scale(1.06); transition: transform 0.12s ease, filter 0.12s ease; }
+/* remove visible focus/active box on click/tap */
+.permalink:focus, .permalink:active { outline: none; box-shadow: none; }
+.permalink:focus img, .permalink:active img { transform: scale(1.06); filter: brightness(1.15); }
+
+/* smaller share icon and tighter positioning on narrow screens to avoid overlap */
+@media (max-width: 520px) {
+  .permalink { top: 6px; right: 6px; padding: 2px; }
+  .permalink img { width: 14px; height: 14px; }
+}
+
+/* share menu popover (opened from .permalink) */
+.share-menu {
+  position: absolute;
+  top: 46px;
+  right: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: #0f0f0f;
+  border: 1px solid #222;
+  padding: 8px;
+  border-radius: 6px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  z-index: 1200;
+}
+.permalink-info {
+  position: absolute;
+  top: 36px;
+  right: 10px;
+  background: transparent;
+  border: 0;
+  color: #aaa;
+  font-size: 14px;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+.permalink-info:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+.share-menu.open { display: flex; }
+.share-menu a,
+.share-menu button.share-action {
+  color: #eaeaea;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  text-align: left;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.share-menu a:hover,
+.share-menu button.share-action:hover { color: #E21C21; background: rgba(226,28,33,0.04); }
+.share-menu .share-label { margin-left: 6px; }
+
+/* mobile divider element (inserted by JS) */
+.mobile-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0; display: none; width: 100%; align-self: stretch; }
+@media (max-width: 767px) { .mobile-divider { display: block; } }
+
+/* desktop: remove boxed wrapper — keep song-meta unboxed on desktop */
+@media (min-width: 768px) {
+  .release-info .song-meta {
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+    border-radius: 0;
+    border: none;
+    color: inherit;
+  }
+  .release-info .song-meta p { margin: 0 0 8px 0; }
+}
+
+.sample-entry { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.sample-entry img.sample-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+.sample-entry a { color: inherit; text-decoration: none; }
+.sample-entry a:hover { color: #E21C21; }
+/* add space between section heading and first sample entry */
+.song-samples h3 { margin-bottom: 20px !important; }
+/* performers: compact flex row on desktop, stacked on mobile */
+.performers-list { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
+.performer { padding:0 6px 2px 0; display:flex; flex-direction:column; align-items: flex-start; }
+.performer-divider {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,0.18);
+  margin: 0 2px;
+  align-self: stretch;
+}
+.performers-list .role-break { display: none; }
+.performer .meta-name { font-weight:normal; color: #ddd; }
+.performer .meta-role { color:#AAA; }
+.performer.note { color:#aaa; font-size:13px; padding-left:0; }
+/* info icon button (no background/box). toggles the note text and turns red when active */
+.info-btn { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; font-style: normal; line-height: 1; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transform: translateY(0); align-self: flex-start; }
+.info-btn:hover { color: #aaa; }
+.info-btn:active,
+.info-btn[aria-expanded="true"] { color: #E21C21; }
+.info-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+.performer-info { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.32s ease, opacity 0.22s ease; font-style: italic; color: #aaa; margin-top: 8px; font-size: clamp(12px, 3.5vw, 13px); }
+.performer-info.open { max-height: 240px; opacity: 1; }
+@media (max-width:767px) {
+  .performers-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+  .performer {
+    padding: 0 6px 2px 0;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .performer-divider {
+    display: inline-block;
+    width: 1px;
+    height: 22px;
+    background: rgba(255,255,255,0.18);
+    margin: 0 2px;
+    align-self: stretch;
+  }
+  .performer .meta-name { margin-bottom: 4px; }
+  .performer .meta-role { margin-top: 0; color:#AAA; }
+  .performers-list .role-break {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+  .performers-list .role-break + .performer-divider { display: none; }
+}
+
+/* Add margin below performers-list on desktop to match my-name-is.html spacing */
+.performers-list { margin-bottom: 6px; }
+.song-extra .fancy-quote { position: relative; padding: 2.6rem 1rem 2.4rem 1rem; margin: 0 auto 1rem auto; max-width: 700px; background: transparent; border-left: none; text-align: left; }
+.song-extra .fancy-quote .quote-mark { position: absolute; left: -20px; top: 32px; font-size: 68px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
+.song-extra .fancy-quote .quote-text { margin: 0; color: #ddd; font-size: 15px; line-height: 1.5; }
+.song-extra .fancy-quote .quote-attrib { position: absolute; right: 12px; bottom: 8px; color: #aaa; font-size: 13px; }
+.song-extra .quote-divider { width: min(700px, calc(100% - 1rem)); height: 1px; margin: 0.25rem auto 0.9rem auto; background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%); }
+@media (max-width: 480px) { .song-extra .fancy-quote .quote-mark { font-size: 40px; left: -8px; top: 12px; } .song-extra .fancy-quote { padding: 1rem 1rem 2rem 1rem; max-width: 100%; } .song-extra .fancy-quote .quote-text { font-size: 15px; line-height: 1.5; margin-bottom: 0.6rem; } }
+
+/* color for ellipsis bracketed text */
+.ellipsis { color: #565656; display: none !important; }
+
+/* from-album link: inherit page color, no underline; highlight red on hover/focus */
+.from-album a,
+.from-album a:link,
+.from-album a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.from-album a:hover,
+.from-album a:focus {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+/* ALBUM INFO */
+.album-title {
+  font-family: Arial, sans-serif;
+  line-height: 1.2;
+}
+.album-name {
+  font-size: clamp(20px, 5vw, 30px);
+  color: #ffffff;
+}
+.album-name.nav-trigger {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.album-name.nav-trigger:focus-visible {
+  outline: 2px solid rgba(226,28,33,0.18);
+  outline-offset: 3px;
+}
+.album-artist {
+  font-size: clamp(18px, 5vw, 30px);
+  color: #E21C21;
+  margin-bottom: 3px;
+}
+
+.album-artist .feat-artists {
+  font-size: 0.72em;
+  color: #E21C21;
+  font-weight: normal;
+}
+/* small from-album line under artist on song pages */
+.from-album {
+  font-size: clamp(13px, 3.5vw, 14px);
+  color: #AAA;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.album-type {
+  font-size: clamp(13px, 3.5vw, 14px);
+  color: #AAAAAA;
+  margin-bottom: 3px;
+}
+
+/* Stronger mobile spacing overrides to ensure visual balance regardless of DOM moves */
+@media (max-width: 767px) {
+  .song-meta-section,
+  .media-col .song-meta-section {
+    margin-top: 6px !important;
+    padding-top: 4px !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .media-col .ratings-container,
+  .ratings-container {
+    margin-top: -8px !important;
+    padding-top: 0 !important;
+  }
+
+  .media-col .release-info,
+  .release-info {
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* song-meta label/value spacing */
+.song-meta p { margin: 0 0 8px 0; }
+.song-meta p strong { display: block; font-weight: bold; }
+.song-meta .meta-value { display: block; margin-top: 6px; color: #ddd; }
+.song-meta .meta-value.no-gap { margin-top: 0; }
+.song-meta .meta-value .meta-name { display: block; color: #ddd; }
+.song-meta .meta-value .meta-role { display: block; margin-top: 0; color: #AAA; }
+.credits-collapsible p:last-of-type { margin-bottom: 0; }
+.credits-collapsible .performers-list:last-of-type { margin-bottom: 8px; }
+/* inline meta for copyright line */
+.song-meta p.meta-inline { margin: 0 0 8px 0; color: #ddd; }
+.credits-collapsible p.meta-inline:last-of-type { margin-bottom: 0; }
+.song-meta p.meta-inline strong { display: inline; margin-right: 6px; }
+.release-info {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  /* limit line length using character units so edits wrap predictably
+     '72ch' approximates the current longest line; capped by 800px for large screens */
+  max-width: 57.5ch;
+  min-width: 0;    
+  line-height: 1.5;
+  font-size: clamp(13px, 3.5vw, 14px);
+  margin-top: 1rem;
+}
+
+/* credits collapse for long lists */
+.credits-block {
+  position: relative;
+  width: 100%;
+  margin-top: 0;
+}
+.credits-collapsible {
+  position: relative;
+  max-height: none;
+  overflow: visible;
+  margin-right: -129px;
+  padding-right: 12px;
+
+  padding-bottom: 0;}
+.credits-collapsible.is-scrollable {
+  max-height: 350px;
+  overflow: auto;
+  scrollbar-color: #222 #181818;
+  scrollbar-width: thin;
+  cursor: grab;
+
+  padding-bottom: 0;}
+.credits-collapsible.is-scrollable.dragging { cursor: grabbing; }
+.credits-block::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: -60px;
+  bottom: 0;
+  height: 92px;
+  background: linear-gradient(180deg, rgba(34,34,34,0) 0%, rgba(34,34,34,0.6) 30%, #222 80%, #222 100%);
+  pointer-events: none;
+  opacity: 0;
+  display: none;
+}
+.credits-block.has-scroll::after { opacity: 1; }
+.credits-block.has-scroll.at-bottom::after { opacity: 0; }
+.credits-collapsible::-webkit-scrollbar { width: 8px; }
+.credits-collapsible::-webkit-scrollbar-track { background: #1e1e1e; border-radius: 12px; }
+.credits-collapsible::-webkit-scrollbar-thumb { background: #222; border-radius: 12px; }
+.credits-collapsible::-webkit-scrollbar-thumb:hover { background: #2d2d2d; }
+
+@media (max-width: 1100px) {
+  .credits-collapsible { margin-right: 0; padding-right: 0; }
+  .credits-block::after { right: 0; }
+}
+@media (max-width: 767px) {
+  .credits-collapsible.is-scrollable {
+    max-height: none;
+    overflow: visible;
+    cursor: default;
+    scrollbar-width: none;
+  }
+  .credits-collapsible.is-scrollable::-webkit-scrollbar {
+    display: none;
+  }
+  .credits-block::after,
+  .credits-block.has-scroll::after,
+  .credits-block.at-bottom::after {
+    display: none !important;
+    opacity: 0 !important;
+  }
+
+  #creditsContent {
+    --credits-title-gap: 10px;
+    --credits-section-gap: 14px;
+  }
+  #creditsContent > p.credit-label {
+    margin: 0 0 var(--credits-title-gap) 0;
+  }
+  #creditsContent > .performers-list {
+    margin: 0 0 var(--credits-section-gap) 0;
+  }
+  #creditsContent > p.credit-pair {
+    margin: 0 0 var(--credits-section-gap) 0;
+  }
+  #creditsContent > p.credit-pair strong {
+    display: block;
+    margin-bottom: var(--credits-title-gap);
+  }
+  #creditsContent > p.credit-pair.released-row strong {
+    margin-bottom: 4px;
+  }
+  #creditsContent > p.credit-pair .meta-value {
+    margin-top: 0;
+  }
+  #creditsContent > p.meta-inline  { margin-top: 0; margin-bottom: 0; }
+}
+
+
+/* prevent long edited text from expanding the album header layout
+   - allow the release-info to shrink inside the flex row
+   - force long words/URLs to wrap to the next line */
+.release-info { min-width: 0; box-sizing: border-box; overflow-wrap: break-word; word-wrap: break-word; }
+.release-details { overflow-wrap: break-word; word-wrap: break-word; white-space: normal; }
+
+/* COLLAPSIBLE DETAILS */
+.release-details {
+  margin-top: 6px;
+  padding-left: 10px;
+  border-left: 2px solid #555;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.release-details.open {
+  max-height: 500px;
+}
+.toggle-details {
+  margin-top: 6px;
+  color: #E21C21;
+  cursor: pointer;
+}
+
+/* MUSIC VIDEOS SECTION */
+.music-videos-container { background-color: #151515; padding: 1.5rem; margin: 2rem auto; border-radius: 6px; max-width: 900px;  border: 1px solid #222;
+}
+.single-section-video { display: flex; align-items: flex-start; gap: clamp(12px, 3vw, 16px); cursor: pointer; max-width: 600px; margin-bottom: clamp(12px,3vw,16px); }
+.single-section-video img { width: clamp(72px, 24vw, 96px); aspect-ratio: 16/9; object-fit: cover; border-radius: 4px; flex-shrink: 0; background: #000; }
+.single-info-video { display: flex; flex-direction: column; }
+.song-title-video { font-size: clamp(14px, 4vw, 16px); line-height: 1.4; }
+.single-section-video:hover .song-title-video { color: #E21C21; }
+.single-section-video.active .song-title-video { color: #E21C21; }
+.song-date-video { font-size: clamp(13px, 3.5vw, 15px); color: #aaa; line-height: 1.4; }
+/* Video Player - smooth open/close */
+.video-player {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.42s cubic-bezier(.2,.9,.2,1), opacity 0.28s ease, margin-bottom 0.28s ease;
+  opacity: 0;
+  margin-top: clamp(12px, 3vw, 16px);
+  margin-bottom: 0;
+  max-width: 100%;
+}
+.video-player.open {
+  max-height: 720px; /* big enough for responsive iframe */
+  opacity: 1;
+  margin-bottom: clamp(12px, 3vw, 18px);
+}
+.video-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
+.video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 4px; border: none; }
+
+/* SECTION HEADING */
+.section-heading { font-family: Arial, sans-serif; font-size: clamp(16px, 5vw, 20px); color: #fff; line-height: 1.2; margin: 0 0 clamp(12px, 3vw, 20px) 0; font-weight: 700; }
+.promo-note { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; font-style: italic; margin-top: 6px; }
+
+/* ========================= */
+/* RATINGS SECTION */
+.ratings-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.rating-block {
+  text-align: center;
+  min-width: 0;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rating-label {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+/* Album title navigation arrows */
+.album-header { display: flex; align-items: center; justify-content: flex-start; gap: 8px; }
+.album-nav { position: relative; display: flex; gap: 12px; align-items: center; margin-left: 8px; }
+.nav-toggle { background: transparent; border: 1px solid transparent; color: #aaa; font-size: 20px; line-height: 1; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+.nav-toggle:hover { color: #E21C21; border-color: transparent; box-shadow: none; }
+.nav-popover { position: absolute; top: calc(100% + 8px); left: 0; right: auto; transform: none; display: none; flex-direction: column; gap: 6px; background: #111; padding: 6px; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.5); min-width: 160px; transform-origin: top left; }
+.nav-popover.open { display: flex; }
+.nav-popover .nav-popover-item { display: flex; align-items: center; gap: 8px; background: transparent; border: none; color: #aaa; font-size: 14px; padding: 8px 10px; text-align: left; border-radius: 4px; cursor: pointer; }
+.nav-popover .nav-popover-item:hover { color: #E21C21; background: rgba(226,28,33,0.03); }
+.nav-popover .pop-icon { font-size: 16px; width: 20px; display: inline-block; }
+.nav-arrow:disabled { opacity: 0.45; cursor: default; }
+
+.rating-star {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.overall-star { color: #f5c518; cursor: default; } /* EMDb rating yellow */
+.user-star { color: #666; cursor: pointer; }
+.user-star.active { color: #E21C21; }
+.rating-meta { font-size: 13px; color: #aaa; margin-top: 4px; }
+.critic-box { font-size: 20px; font-weight: bold; color: #fff; margin-top: 4px; }
+
+/* Hide vote count by default; reveal on hover */
+#emdbVotes {
+  display: block;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.18s ease, max-height 0.18s ease;
+}
+.rating-block:hover #emdbVotes,
+.rating-block:focus-within #emdbVotes {
+  opacity: 1;
+  max-height: 40px;
+}
+
+/* allow explicit 'tap' class to reveal votes on touch devices */
+.rating-block.show-votes-tap #emdbVotes {
+  opacity: 1;
+  max-height: 40px;
+}
+
+/* critic reviews count (hidden by default). We'll reveal both counts
+   when hovering EMDb or Critic via JS toggling `.ratings-container.show-votes`. */
+#criticReviews {
+  display: block;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.18s ease, max-height 0.18s ease;
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.ratings-container.show-votes #emdbVotes,
+.ratings-container.show-votes #criticReviews {
+  opacity: 1;
+  max-height: 40px;
+}
+
+/* USER RATING POPUP */
+.rating-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 92vw;
+  width: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.popup-title { margin-bottom: 10px; font-size: 16px; }
+.popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.popup-stars .star-item { display: flex; flex-direction: column; align-items: center; width: auto; margin: 2px; flex: 0 0 auto; }
+.popup-stars .star { font-size: clamp(18px, 6vw, 30px); cursor: pointer; color: #666; line-height: 1; display: block; pointer-events: auto; }
+.popup-stars .star.active, .popup-stars .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.popup-stars .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+@media (max-width: 420px) {
+  .popup-stars .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .popup-stars { gap: 3px; }
+  .popup-stars .star-number { font-size: 11px; }
+}
+.popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
+/* CRITIC SCORE BOX */
+.critic-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Colour ranges */
+.critic-red    { background: #E21C21; }
+.critic-orange { background: #FF8C00; }
+.critic-yellow { background: #eadb03; }
+.critic-green  { background: #4CAF50; }
+.critic-gold {
+  background: linear-gradient(180deg, #ffe680 0%, #f0c95a 45%, #d4af37 80%);
+  border: 0px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.25);
+  color: #111;
+}
+
+/* STREAMING BUTTONS */
+.streaming-buttons { display:flex; gap:12px; justify-content:center; align-items:center; margin: 18px auto 0; max-width:900px; padding: 0 6px; }
+.stream-btn { display:inline-flex; align-items:center; gap:10px; padding:10px 12px; background:#111; border:1px solid #333; border-radius:6px; text-decoration:none; color:#eaeaea; font-size:14px; transition:transform .12s ease, border-color .12s ease; }
+.stream-btn img { width:32px; height:auto; display:block; }
+.stream-btn:hover { border-color:#E21C21; transform:translateY(-2px); }
+.stream-btn span { display:inline-block; line-height:1; }
+
+@media (max-width:520px){
+  .streaming-buttons { display:none; }
+  .stream-btn { padding:8px 10px; font-size:13px; }
+  .stream-btn img { width:26px; }
+}
+
+
+/* written-by width */
+.song-meta p.written-by .meta-value { max-width: var(--written-by-max); }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main>
+  <!-- SONG HEADER -->
+  <div class="album-container" data-prev="/songs/feat/symphony-in-h.html" data-next="/songs/marshall-mathers-lp-2/survival.html" data-single-nav="true" data-charts="../../charts/charts-berzerk.html">
+    <a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
+      <img src="/images/logos/share_white.png" alt="Share">
+    </a>
+    <div class="share-menu" id="shareMenu" aria-hidden="true">
+      <a id="wa-share" href="#" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+      <a id="x-share" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>
+      <a id="fb-share" href="#" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+      <button class="share-action" id="copy-share">Copy link</button>
+    </div>
+    <div class="media-col">
+      <div class="album-single" id="songCover">
+        <img src="/images/album-covers/marshall-mathers-lp-2/bezerk-cover.jpg" alt="Berzerk cover">
+      </div>
+      <button class="play-btn" id="playBtn" aria-expanded="false" aria-controls="songVideo">▶︎ Play</button>
+      <div class="song-video" id="songVideo" data-video="hO0TuYMIsGg" aria-hidden="true"></div>
+      <div class="ratings-container" style="margin-top:0px;">
+        <div class="rating-block">
+          <div class="rating-label">EMDb Rating</div>
+          <div class="rating-star overall-star">★</div>
+          <div class="rating-meta"><span id="emdbScore"></span>/10<br><span id="emdbVotes">N/A Ratings</span></div>
+        </div>
+        <div class="rating-block">
+          <div class="rating-label">Your Rating</div>
+          <div class="rating-star user-star" id="userStar">★</div>
+          <div class="rating-meta" id="userRatingText">Rate this song</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="release-info">
+      <div class="album-title">
+        <div class="album-header">
+          <div class="album-name nav-trigger" id="songNavToggle" role="button" aria-expanded="false" aria-haspopup="true" tabindex="0">
+            Berzerk
+            <div class="nav-popover" id="songNavPopover" aria-hidden="true">
+                <button class="nav-popover-item" id="nextSong" aria-label="Next song">
+                  <span class="pop-icon">ᐳ</span>
+                  <span class="pop-label">Next song</span>
+                </button>
+                <button class="nav-popover-item" id="prevSong" aria-label="Previous song">
+                  <span class="pop-icon">ᐸ</span>
+                  <span class="pop-label">Previous song</span>
+                </button>
+                <a class="nav-popover-item" id="chartsBtn" href="../../charts/charts-berzerk.html" aria-label="Charts">
+                  <span class="pop-icon">≡</span>
+                  <span class="pop-label">Charts</span>
+                </a>
+
+                
+
+                
+            </div>
+          </div>
+        </div>
+          <div class="album-artist">Eminem</div>
+          <div class="from-album"><a href="/releases/marshall-mathers-lp-2.html">The Marshall Mathers LP 2</a> • 2013</div>
+      </div>
+      <div class="credits-block" id="creditsBlock" style="margin-top: 0;">
+
+      <div class="song-meta credits-collapsible" id="creditsContent">
+        <p class="credit-label"><strong>Performers</strong></p>
+        <div class="performers-list">
+          <div class="performer"><span class="meta-name">Eminem</span><span class="meta-role">Vocals</span></div>
+          <span class="role-break" aria-hidden="true"></span>
+          <span class="performer-divider"></span>
+          <div class="performer"><span class="meta-name">Luis Resto</span><span class="meta-role">Additional Keyboards</span></div>
+          <span class="role-break" aria-hidden="true"></span>
+          <span class="performer-divider"></span>
+          <div class="performer"><span class="meta-name">Jason Lader</span><span class="meta-role">Guitar, Keyboards</span></div>
+          <span class="role-break" aria-hidden="true"></span>
+          <span class="performer-divider"></span>
+          <div class="performer"><span class="meta-name">Mike Strange</span><span class="meta-role">Additional Guitar</span></div>
+        </div>
+        <p class="credit-label"><strong>Produced by</strong></p>
+        <div class="performers-list">
+          <div class="performer"><span class="meta-name">Rick Rubin</span></div>
+        </div>
+        <p class="credit-pair"><strong>Mixed by</strong><span class="meta-value">Dr. Dre, Mauricio “Veto” Iragorri</span></p>
+        <p class="written-by credit-pair"> <strong>Written by</strong><span class="meta-value">Eminem, Rick Rubin, Billy Squier, Naughty By Nature, Art Neville, Cyril Neville, Joseph Modeliste, Adam Yauch, Adam Horovitz</span></p>
+        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">August 27, 2013</span></p>
+        <p class="meta-inline"><strong>℗</strong> Aftermath Records</p>
+        
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="song-samples" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Samples and Interpolations</h3>
+    <div class="sample-entry">
+      <img class="sample-thumb" src="/images/sample-covers/berzerk-sample.jpg" alt="The Stroke cover">
+      <div>
+        <a href="/samples/the-stroke-billy-squier.html">The Stroke - Billy Squier</a>
+        <div style="color:#aaa;font-size:13px;">Sample</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="music-videos-container">
+    <div class="section-heading">Music Video</div>
+
+    <div class="video-item">
+      <div class="single-section-video" data-video="ab9176Srb5Y">
+        <img src="https://img.youtube.com/vi/ab9176Srb5Y/hqdefault.jpg" alt="Berzerk video thumbnail">
+        <div class="single-info-video">
+          <span class="song-title-video">Berzerk (Official Video)</span>
+          <span class="song-date-video">Directed by Syndrome</span>
+        </div>
+      </div>
+      <div class="video-player"></div>
+    </div>
+  </div>
+
+   <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Trivia</h3>
+    <ul style="margin:0 0.5rem 0; padding-left:1.1rem; font-size:15px; line-height:1.5;">
+      <li>“Berzerk” was released as the album’s lead single, peaking at No. 3 on the Billboard Hot 100 and No. 2 on the UK Singles Chart.</li>
+      <li>The track was originally built around a different sample suggested by <button type="button" class="credit-name-search-global" data-search-term="Paul Rosenberg">Paul Rosenberg</button>, which the sampled artist ultimately rejected. In its place, Rosenberg proposed <button type="button" class="credit-name-search-global" data-search-term="Billy Squier">Billy Squier</button>’s “The Stroke” — a track Eminem already sampled in a separate, unreleased track.</li>
+    </ul>
+  </div>
+
+  <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from Rick Rubin and Paul Rosenberg</h3>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <p class="quote-text">That was a case where Eminem said, “Let’s make one of those old records that we grew up on.” We recorded it around a sample he made of someone on the news saying “go berserk.” We built the beat first, and he wrote to the beat, all starting with that little clip of “go berserk.” That was his inspiration. Then we programmed it on an 808 drum machine and used [Billy Squier’s] “The Stroke” sample liberally. I played guitar, and we programmed everything else. It was a good one.<br><br>It was another one where he did the vocals by himself with no one watching in the room. Once he raps to a beat, you can’t change anything. It’s almost like all the drops, all the moves in the song have to happen before he writes to it because he writes into the music in a way that makes it hard to change anything after he raps. He uses his voice as another instrument that plays off of all the different rhythms going on in the track.<br><br>He’s a real, unbelievable student of hip-hop. He’s maybe the most obsessive artist I’ve ever worked with in terms of someone who just full-time is writing rhymes. It’s what he does.</p>
+      <footer class="quote-attrib">— Rick Rubin, Rolling Stone, 2016</footer>
+    </blockquote>
+    <div class="quote-divider" aria-hidden="true"></div>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <p class="quote-text">The thing I think is so awesome about “Berzerk,” it really sounds like something that could have been pulled from the License To Ill sessions from The Beastie Boys, especially with the way that the beat changes and these sort of random breakdowns and variations in the beat. It reminds you of something like “Hold It Now, Hit It” or “Slow And Low” or something like that.</p>
+      <footer class="quote-attrib">— Paul Rosenberg, XXL, 2013</footer>
+    </blockquote>
+  </div>
+
+<div
+  id="arReviewsSection"
+  class="ar-section"
+  style="max-width:900px;margin:1.25rem auto;box-sizing:content-box;"
+  data-review-kind="song"
+  data-review-title="User Thoughts"
+  data-min-length="0"
+  data-max-length="100"
+></div>
+
+
+
+  <!-- LYRICS SECTION -->
+  <div class="song-extra lyrics-section" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#000;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Lyrics</h3>
+    <div id='rg_embed_link_210094' class='rg_embed_link' data-song-id='210094'>Read <a href='https://genius.com/Eminem-berzerk-lyrics'>“Berzerk” by Eminem</a> on Genius</div>
+    <script crossorigin src='//genius.com/songs/210094/embed.js'></script>
+  </div>
+    <!-- USER RATING POPUP -->
+  <div class="rating-popup" id="ratingPopup">
+    <div class="popup-content">
+      <div class="popup-title">Your Rating</div>
+      <div class="popup-stars" id="popupStars"></div>
+      <div class="popup-close" id="removeRatingBtn">Remove rating</div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+  
+
+  // Album cover rotator for song header (click to cycle covers)
+  (function setupSongCoverRotator(){
+    const albumUrls = [
+      '/images/album-covers/marshall-mathers-lp-2/bezerk-cover.jpg',
+      '/images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg'
+    ];
+    let currentIndex = 0;
+    const albumDiv = document.getElementById('songCover');
+    if (!albumDiv) return;
+    const albumImg = albumDiv.querySelector('img');
+    if (!albumImg) return;
+    albumDiv.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % albumUrls.length;
+      albumImg.src = albumUrls[currentIndex];
+    });
+  })();
+
+  // TRACKLIST TOGGLE — toggle open class and update arrow glyphs
+  (function setupTrackToggles(){
+    const tracks = document.querySelectorAll('.track');
+    function updateArrows(){
+      tracks.forEach(t => {
+        const arrow = t.querySelector('.arrow');
+        if (!arrow) return;
+        arrow.textContent = t.classList.contains('open') ? '▲' : '▼';
+      });
+    }
+
+    tracks.forEach(track => {
+      track.addEventListener('click', () => {
+        track.classList.toggle('open');
+        updateArrows();
+      });
+    });
+
+    // initial state
+    updateArrows();
+  })();
+
+  const bonusBtn = document.getElementById('bonusToggle');
+  const bonusTracks = document.getElementById('bonusTracks');
+  if (bonusBtn && bonusTracks) {
+    bonusBtn.addEventListener('click', () => {
+      bonusTracks.style.display = bonusTracks.style.display === 'block' ? 'none' : 'block';
+      bonusBtn.classList.toggle('active');
+    });
+  }
+
+  // Back-to-top button
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Album prev/next navigation (set URLs via data-prev / data-next on .album-container)
+  (function setupAlbumNav() {
+    const albumContainer = document.querySelector('.album-container');
+    if (!albumContainer) return;
+    const prevUrl = albumContainer.dataset.prev || '';
+    const nextUrl = albumContainer.dataset.next || '';
+    const prevBtn = document.getElementById('prevSong') || document.getElementById('prevAlbum');
+    const nextBtn = document.getElementById('nextSong') || document.getElementById('nextAlbum');
+    const toggle = document.getElementById('songNavToggle') || document.getElementById('albumNavToggle');
+    const popover = document.getElementById('songNavPopover') || document.getElementById('albumNavPopover');
+
+    // wire prev/next actions
+    if (prevBtn) {
+      if (prevUrl) prevBtn.addEventListener('click', () => { window.location.href = prevUrl; });
+      else prevBtn.disabled = true;
+    }
+    if (nextBtn) {
+      if (nextUrl) nextBtn.addEventListener('click', () => { window.location.href = nextUrl; });
+      else nextBtn.disabled = true;
+    }
+
+    // charts button
+    const chartsBtn = document.getElementById('chartsBtn');
+    if (chartsBtn) {
+      const chartsUrl = albumContainer.dataset.charts || '';
+      if (chartsUrl) chartsBtn.addEventListener('click', () => { window.location.href = chartsUrl; });
+      else chartsBtn.addEventListener('click', () => { /* no-op until data-charts provided */ });
+    }
+
+    // user reviews button
+    const userReviewsBtn = document.getElementById('userReviewsBtn');
+    if (userReviewsBtn) {
+      const reviewsUrl = albumContainer.dataset.userReviews || albumContainer.dataset.reviews || '';
+      if (reviewsUrl) userReviewsBtn.addEventListener('click', () => { window.location.href = reviewsUrl; });
+      else userReviewsBtn.addEventListener('click', () => { /* no-op until data-user-reviews provided */ });
+    }
+
+    // toggle popover
+    if (toggle && popover) {
+      toggle.addEventListener('click', (e) => {
+        const open = popover.classList.toggle('open');
+        popover.setAttribute('aria-hidden', String(!open));
+        toggle.setAttribute('aria-expanded', String(open));
+        e.stopPropagation();
+      });
+
+      // close when clicking outside
+      document.addEventListener('click', (ev) => {
+        if (!popover.classList.contains('open')) return;
+        if (!popover.contains(ev.target) && ev.target !== toggle) {
+          popover.classList.remove('open');
+          popover.setAttribute('aria-hidden', 'true');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+
+
+    // CREDITS SCROLLER: only enable when content exceeds max height
+  (function syncCreditsScroller(){
+    function ensureCreditsStructure(){
+      let creditsContent = document.getElementById('creditsContent');
+      let creditsBlock = document.getElementById('creditsBlock');
+
+      if (!creditsContent) {
+        creditsContent = document.querySelector('.credits-collapsible') || document.querySelector('.song-meta');
+      }
+      if (creditsContent) {
+        creditsContent.classList.add('credits-collapsible');
+        if (!creditsContent.id) creditsContent.id = 'creditsContent';
+      }
+
+      if (!creditsBlock) {
+        creditsBlock = document.querySelector('.credits-block') || (creditsContent ? creditsContent.closest('.credits-block') : null);
+      }
+      if (creditsBlock) {
+        creditsBlock.classList.add('credits-block');
+        if (!creditsBlock.id) creditsBlock.id = 'creditsBlock';
+      }
+
+      if (!creditsBlock && creditsContent) {
+        creditsBlock = document.createElement('div');
+        creditsBlock.className = 'credits-block';
+        creditsBlock.id = 'creditsBlock';
+        creditsContent.parentElement.insertBefore(creditsBlock, creditsContent);
+        creditsBlock.appendChild(creditsContent);
+      }
+
+      return { creditsContent, creditsBlock };
+    }
+
+    const { creditsContent, creditsBlock } = ensureCreditsStructure();
+    if (!creditsContent) return;
+    const maxHeight = 350;
+    let rafId = 0;
+
+    function sync(){
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (isMobile) {
+        creditsContent.classList.remove('is-scrollable', 'at-bottom', 'dragging');
+        if (creditsBlock) {
+          creditsBlock.classList.remove('has-scroll', 'at-bottom');
+        }
+        return;
+      }
+
+      const needsScroll = creditsContent.scrollHeight > maxHeight + 4;
+      creditsContent.classList.toggle('is-scrollable', needsScroll);
+      if (creditsBlock) {
+        creditsBlock.classList.toggle('has-scroll', needsScroll);
+      }
+      if (!needsScroll) {
+        creditsContent.classList.remove('at-bottom');
+        if (creditsBlock) creditsBlock.classList.remove('at-bottom');
+        return;
+      }
+      const atBottom = creditsContent.scrollTop + creditsContent.clientHeight >= creditsContent.scrollHeight - 1;
+      creditsContent.classList.toggle('at-bottom', atBottom);
+      if (creditsBlock) creditsBlock.classList.toggle('at-bottom', atBottom);
+    }
+
+    function scheduleSync(){
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        sync();
+      });
+    }
+
+    sync();
+    requestAnimationFrame(sync);
+    window.addEventListener('resize', () => {
+      clearTimeout(window.__creditsResize);
+      window.__creditsResize = setTimeout(sync, 150);
+    });
+    creditsContent.addEventListener('scroll', scheduleSync, { passive: true });
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => sync());
+      ro.observe(creditsContent);
+    }
+  })();
+
+  // CREDITS DRAG SCROLL (mouse)
+  (function setupCreditsDragScroll(){
+    const creditsContent = document.getElementById('creditsContent');
+    if (!creditsContent) return;
+    let isDragging = false;
+    let startY = 0;
+    let startScrollTop = 0;
+
+    creditsContent.addEventListener('mousedown', (e) => {
+      if (!creditsContent.classList.contains('is-scrollable')) return;
+      if (e.button !== 0) return;
+      const interactive = e.target.closest('a, button');
+      if (interactive) return;
+      isDragging = true;
+      startY = e.clientY;
+      startScrollTop = creditsContent.scrollTop;
+      creditsContent.classList.add('dragging');
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaY = e.clientY - startY;
+      creditsContent.scrollTop = startScrollTop - deltaY;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      creditsContent.classList.remove('dragging');
+    });
+  })();
+
+  // INFO COLLAPSE TOGGLE (guarded)
+  const infoToggle = document.getElementById("toggleDetails");
+  const infoDetails = document.getElementById("releaseDetails");
+  if (infoToggle && infoDetails) {
+    infoToggle.addEventListener("click", () => {
+      infoDetails.classList.toggle("open");
+      infoToggle.textContent = infoDetails.classList.contains("open") ? "Show Less" : "Show More";
+    });
+  }
+
+  // MUSIC VIDEO PLAYER — smoother expand/collapse
+  document.querySelectorAll('.single-section-video').forEach(row => {
+    row.addEventListener('click', () => {
+      const videoId = row.dataset.video;
+      const item = row.closest('.video-item');
+      const player = item ? item.querySelector('.video-player') : null;
+
+      function closePlayer(p){
+        if (!p) return;
+        p.classList.remove('open');
+        // clear content after transition completes
+        const onEnd = function(e){
+          if (e.propertyName === 'max-height' && !p.classList.contains('open')){
+            p.innerHTML = '';
+            p.style.display = '';
+            p.removeEventListener('transitionend', onEnd);
+          }
+        };
+        p.addEventListener('transitionend', onEnd);
+      }
+
+      // close other players smoothly
+      document.querySelectorAll('.video-player.open').forEach(p => {
+        if (p !== player) closePlayer(p);
+      document.querySelectorAll('.single-section-video.active').forEach(activeRow => {
+        if (activeRow !== row) activeRow.classList.remove('active');
+      });
+      });
+
+      if (!player) return; // nothing to open
+
+      if (player.classList.contains('open')){
+        closePlayer(player);
+        row.classList.remove('active');
+        return;
+      }
+
+      // populate and open
+      player.innerHTML = `
+  <div class="video-wrapper">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${videoId}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+`;
+      // ensure it participates in layout before starting transition
+      player.style.display = 'block';
+      // force reflow
+      void player.offsetHeight;
+      player.classList.add('open');
+      row.classList.add('active');
+    });
+  });
+  /* Show both vote/review counts when hovering EMDb or Critic blocks */
+  (function setupHoverCounts(){
+    const ratingsContainer = document.querySelector('.ratings-container');
+    if (!ratingsContainer) return;
+    const blocks = ratingsContainer.querySelectorAll('.rating-block');
+    const emdbBlock = blocks[0];
+    const criticBlock = blocks[2];
+    let hideTimer = null;
+    let visibleByTap = false;
+    function enter(){
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      ratingsContainer.classList.add('show-votes');
+      if (emdbBlock) emdbBlock.classList.add('show-votes-tap');
+    }
+    function leave(){
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      ratingsContainer.classList.remove('show-votes');
+      if (emdbBlock) emdbBlock.classList.remove('show-votes-tap');
+    }
+    if (emdbBlock){
+      emdbBlock.addEventListener('mouseenter', enter);
+      emdbBlock.addEventListener('mouseleave', leave);
+      emdbBlock.addEventListener('focusin', enter);
+      emdbBlock.addEventListener('focusout', leave);
+      // on mobile: toggle votes on tap; second tap closes immediately
+      emdbBlock.addEventListener('click', (e) => {
+        if (!window.matchMedia('(max-width: 767px)').matches) return; // desktop uses hover/focus
+        // allow normal behaviour for links/buttons inside
+        if (e.target && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON')) return;
+
+        if (visibleByTap) {
+          // second tap -> close immediately
+          if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+          visibleByTap = false;
+          leave();
+          return;
+        }
+
+        // first tap -> open and schedule auto-close
+        visibleByTap = true;
+        enter();
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+        hideTimer = setTimeout(() => { visibleByTap = false; leave(); hideTimer = null; }, 1000);
+      });
+    }
+    if (criticBlock){
+      criticBlock.addEventListener('mouseenter', enter);
+      criticBlock.addEventListener('mouseleave', leave);
+      criticBlock.addEventListener('focusin', enter);
+      criticBlock.addEventListener('focusout', leave);
+    }
+  })();
+
+  /* ========================= */
+/* CRITIC SCORE COLOUR LOGIC */
+/* ========================= */
+document.querySelectorAll('.critic-score').forEach(box => {
+  const score = parseInt(box.dataset.score, 10);
+
+  if (score <= 20) box.classList.add('critic-red');
+  else if (score <= 40) box.classList.add('critic-orange');
+  else if (score <= 60) box.classList.add('critic-yellow');
+  else if (score <= 80) box.classList.add('critic-green');
+  else box.classList.add('critic-gold');
+});
+
+// SONG VIDEO PLAY BUTTON — lazy-load iframe into .song-video
+(function setupSongVideo(){
+  const playBtn = document.getElementById('playBtn');
+  const songVideo = document.getElementById('songVideo');
+  if (!playBtn || !songVideo) return;
+  const videoId = songVideo.dataset.video;
+  let iframeEl = null;
+
+    function openVideo(){
+    if (!iframeEl){
+      iframeEl = document.createElement('iframe');
+      iframeEl.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+      iframeEl.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframeEl.setAttribute('allowfullscreen','');
+      iframeEl.title = 'Berzerk';
+      songVideo.appendChild(iframeEl);
+    }
+    songVideo.classList.add('open');
+    songVideo.setAttribute('aria-hidden','false');
+    playBtn.setAttribute('aria-expanded','true');
+    playBtn.textContent = 'Close';
+    playBtn.classList.add('open');
+  }
+
+  function closeVideo(){
+    songVideo.classList.remove('open');
+    songVideo.setAttribute('aria-hidden','true');
+    playBtn.setAttribute('aria-expanded','false');
+    playBtn.textContent = '▶︎ Play';
+    playBtn.classList.remove('open');
+    if (iframeEl){ iframeEl.remove(); iframeEl = null; }
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (songVideo.classList.contains('open')) closeVideo();
+    else openVideo();
+  });
+})();
+
+// Wrap bracketed ellipsis occurrences in a span so they can be styled
+(function highlightBracketEllipsis(){
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) {
+    if (n.nodeValue && n.nodeValue.includes('[…]')) nodes.push(n);
+  }
+  nodes.forEach(t => {
+    const parts = t.nodeValue.split('[…]');
+    if (parts.length < 2) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < parts.length; i++){
+      frag.appendChild(document.createTextNode(parts[i]));
+      if (i < parts.length - 1){
+        const s = document.createElement('span');
+        s.className = 'ellipsis';
+        s.textContent = '[…]';
+        frag.appendChild(s);
+      }
+    }
+    t.parentNode.replaceChild(frag, t);
+  });
+})();
+
+// Move `.release-info` below the inline song video on small screens, restore on desktop
+(function mobilePlaceReleaseInfo(){
+  const albumContainer = document.querySelector('.album-container');
+  if (!albumContainer) return;
+  const mediaCol = albumContainer.querySelector('.media-col');
+  const releaseInfo = albumContainer.querySelector('.release-info');
+  const playBtn = document.getElementById('playBtn');
+  const songVideo = document.getElementById('songVideo');
+  if (!mediaCol || !releaseInfo || !playBtn) return;
+
+  function place() {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      if (releaseInfo.parentElement !== mediaCol) {
+        // move releaseInfo into media column (after inline song video)
+        mediaCol.insertBefore(releaseInfo, songVideo ? songVideo.nextSibling : playBtn.nextSibling);
+      }
+    } else {
+      if (releaseInfo.parentElement !== albumContainer) {
+        albumContainer.appendChild(releaseInfo);
+      }
+    }
+  }
+
+  // initial placement
+  place();
+
+  // debounce resize handling
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(place, 150);
+  });
+})();
+
+// Move `.song-meta` beneath the ratings block on small screens, restore on desktop
+(function mobilePlaceSongMeta(){
+  const albumContainer = document.querySelector('.album-container');
+  if (!albumContainer) return;
+  const mediaCol = albumContainer.querySelector('.media-col');
+  const ratings = mediaCol ? mediaCol.querySelector('.ratings-container') : null;
+  const releaseInfo = albumContainer.querySelector('.release-info');
+  const songMeta = releaseInfo ? releaseInfo.querySelector('.song-meta') : null;
+  const creditsBlock = releaseInfo ? releaseInfo.querySelector('.credits-block') : null;
+  const metaContainer = creditsBlock || songMeta;
+  if (!mediaCol || !ratings || !releaseInfo || !metaContainer) return;
+
+  function place() {
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    if (isMobile) {
+      // ensure wrapper exists
+      let wrapper = mediaCol.querySelector('.song-meta-section');
+      if (!wrapper) {
+        wrapper = document.createElement('div');
+        wrapper.className = 'song-meta-section';
+        // insert after ratings container
+        mediaCol.insertBefore(wrapper, ratings.nextSibling);
+      }
+
+      // ensure divider always exists between ratings and the wrapper
+      let divider = mediaCol.querySelector('.mobile-divider');
+      if (!divider) {
+        divider = document.createElement('div');
+        divider.className = 'mobile-divider';
+      }
+      // keep divider directly before wrapper to preserve consistent spacing
+      mediaCol.insertBefore(divider, wrapper);
+
+      if (metaContainer.parentElement !== wrapper) {
+        wrapper.appendChild(metaContainer);
+      }
+    } else {
+      // desktop: move back into release-info and remove wrapper if empty
+      if (metaContainer.parentElement !== releaseInfo) {
+        releaseInfo.appendChild(metaContainer);
+      }
+      const wrapper = mediaCol.querySelector('.song-meta-section');
+      if (wrapper && wrapper.childElementCount == 0) wrapper.remove();
+      const divider = mediaCol.querySelector('.mobile-divider');
+      if (divider) divider.remove();
+    }
+  }
+
+  // initial placement
+  place();
+
+  // debounce resize handling
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(place, 150);
+  });
+})();
+
+// share button: use Web Share API, fallback to clipboard copy
+(function setupShareMenu(){
+  const btn = document.getElementById('pagePermalink');
+  const menu = document.getElementById('shareMenu');
+  const wa = document.getElementById('wa-share');
+  const x = document.getElementById('x-share');
+  const fb = document.getElementById('fb-share');
+  const copyBtn = document.getElementById('copy-share');
+  if (!btn || !menu) return;
+
+  function closeMenu(){
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title || 'EMDb');
+    // populate links
+    if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+    if (x) x.href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (menu.classList.contains('open')) return closeMenu();
+    openMenu();
+  });
+
+  // copy link action
+  if (copyBtn) copyBtn.addEventListener('click', async (e) => {
+    const url = window.location.href;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => { copyBtn.textContent = 'Copy link'; closeMenu(); }, 1200);
+        return;
+      }
+    } catch (err) {
+      // fallthrough
+    }
+    // fallback: open url in new tab
+    window.open(url, '_blank');
+    closeMenu();
+  });
+
+  // close on outside click or Escape
+  document.addEventListener('click', (ev) => {
+    if (!menu.classList.contains('open')) return;
+    if (btn.contains(ev.target) || menu.contains(ev.target)) return;
+    closeMenu();
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
+})();
+
+</script>
+<script>
+  window.songId = 297;</script>
+<script src="/scripts/album-reviews.js"></script>
+<script src="/scripts/song-rating.js"></script>
+<script src="/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Awards | EMDb</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      margin: 0;
+      background: #0b0b0b;
+      color: #eaeaea;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .awards-page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .page-title {
+      font-size: clamp(26px, 4vw, 36px);
+      margin: 0 0 0.5rem;
+      color: #fff;
+    }
+
+    .page-subtitle {
+      margin: 0 0 1.2rem;
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 10px;
+      background: #151515;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+
+    .filter-group select,
+    .filter-group button {
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #111;
+      color: #eaeaea;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .filter-group select:focus-visible,
+    .filter-group button:focus-visible {
+      outline: 2px solid rgba(226, 28, 33, 0.35);
+      outline-offset: 2px;
+    }
+
+    #clearFiltersBtn {
+      cursor: pointer;
+      border-color: #e21c21;
+      color: #e21c21;
+      background: transparent;
+      transition: background-color 0.14s ease, color 0.14s ease;
+    }
+
+    #clearFiltersBtn:hover {
+      background: #e21c21;
+      color: #fff;
+    }
+
+    .results-meta {
+      margin: 0 0 10px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .table-shell {
+      border: 1px solid #222;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #101010;
+    }
+
+    .awards-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .awards-table thead th {
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #aaa;
+      background: #141414;
+      border-bottom: 1px solid #242424;
+      padding: 10px;
+    }
+
+    .awards-table tbody td {
+      padding: 10px;
+      border-bottom: 1px solid #1f1f1f;
+      font-size: 14px;
+      line-height: 1.4;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    .awards-table tbody tr:hover {
+      background: rgba(226, 28, 33, 0.05);
+    }
+
+    .year-cell {
+      width: 88px;
+      color: #ddd;
+      white-space: nowrap;
+    }
+
+    .award-cell {
+      width: 230px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .work-cell {
+      color: #eaeaea;
+    }
+
+    .work-cell a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .work-cell a:hover,
+    .work-cell a:focus-visible {
+      color: #e21c21;
+      text-decoration: none;
+    }
+
+    .category-cell {
+      width: 290px;
+      color: #bdbdbd;
+    }
+
+    .anchor-offset {
+      display: block;
+      position: relative;
+      top: -90px;
+      visibility: hidden;
+      height: 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #aaa;
+      padding: 20px;
+      border-top: 1px solid #1f1f1f;
+    }
+
+    @media (max-width: 980px) {
+      .filters {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .table-shell {
+        overflow: visible;
+        border: none;
+        background: transparent;
+      }
+
+      .awards-table,
+      .awards-table tbody,
+      .awards-table tr,
+      .awards-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .awards-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .awards-table tbody tr {
+        background: #101010;
+        border: 1px solid #222;
+        border-radius: 8px;
+        margin: 0 0 10px;
+        padding: 6px 0;
+      }
+
+      .awards-table tbody td {
+        border-bottom: 1px solid #1f1f1f;
+        padding: 8px 10px 8px 132px;
+        min-height: 34px;
+        position: relative;
+      }
+
+      .awards-table tbody td:last-child {
+        border-bottom: none;
+      }
+
+      .awards-table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        width: 112px;
+        color: #aaa;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .year-cell,
+      .award-cell,
+      .category-cell {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="awards-page">
+    <h1 class="page-title">Awards</h1>
+
+    <section class="filters" aria-label="Awards filters">
+      <div class="filter-group">
+        <label for="awardFilter">Award</label>
+        <select id="awardFilter">
+          <option value="">All awards</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="workFilter">Recipient / Work</label>
+        <select id="workFilter">
+          <option value="">All recipients / works</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="yearFilter">Year</label>
+        <select id="yearFilter">
+          <option value="">All years</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="clearFiltersBtn">Reset</label>
+        <button type="button" id="clearFiltersBtn">Clear filters</button>
+      </div>
+    </section>
+
+    <p class="results-meta" id="resultsMeta">Loading awards...</p>
+
+    <section class="table-shell" aria-label="Awards results">
+      <table class="awards-table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Award</th>
+            <th>Recipient / Work</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody id="awardsTbody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" hidden>No awards match the current filters.</div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    const rawAwardsData = `
+MTV Video Music Awards
+1999
+"My Name Is"
+Best New Artist in a Video
+
+Teen Choice Awards
+1999
+"My Name Is"
+Choice Rap Track
+
+MTV Europe Music Awards
+1999
+Eminem
+Best Hip-Hop Act
+
+MTV Video Music Awards
+2000
+"Forgot About Dre" (Dr. Dre feat. Eminem)
+Best Rap Video
+
+Grammy Awards
+2000
+"My Name Is"
+Best Rap Solo Performance
+
+Billboard Music Awards
+2000
+"The Real Slim Shady"
+Maximum Vision Video
+
+Billboard Music Awards
+2000
+"The Real Slim Shady"
+Best Rap/Hip-Hop Clip of the Year
+
+MTV Video Music Awards
+2000
+"The Real Slim Shady"
+Video of the Year
+
+MTV Video Music Awards
+2000
+"The Real Slim Shady"
+Best Male Video
+
+Blockbuster Entertainment Awards
+2000
+Eminem
+Favorite New Male Artist
+
+MOBO Awards
+2000
+Eminem
+Best Hip Hop Act
+
+MTV Europe Music Awards
+2000
+Eminem
+Best Hip-Hop Act
+
+MTV Europe Music Awards
+2000
+The Marshall Mathers LP
+Best Album
+
+Grammy Awards
+2000
+The Slim Shady LP
+Best Rap Album
+
+Grammy Awards
+2001
+"Forgot About Dre" (Dr. Dre feat. Eminem)
+Best Rap Performance by a Duo or Group
+
+Detroit Music Awards
+2001
+"The Real Slim Shady"
+Outstanding National Single
+
+Grammy Awards
+2001
+"The Real Slim Shady"
+Best Rap Solo Performance
+
+Blockbuster Entertainment Awards
+2001
+Eminem
+Favorite Male Artist
+
+Blockbuster Entertainment Awards
+2001
+Eminem
+Favorite Rap Artist
+
+Brit Awards
+2001
+Eminem
+International Male Solo Artist
+
+Japan Radio Popular Disc Awards
+2001
+Eminem
+Best Male Vocalist
+
+MTV Europe Music Awards
+2001
+Eminem
+Best Hip-Hop Act
+
+World Music Awards
+2001
+Eminem
+World's Best-Selling Rap/Hip-Hop Artist
+
+ECHO Awards
+2001
+The Marshall Mathers LP
+Best Hip-Hop/Urban Artist (International)
+
+Detroit Music Awards
+2001
+The Marshall Mathers LP
+Outstanding National Album
+
+Grammy Awards
+2001
+The Marshall Mathers LP
+Best Rap Album
+
+Juno Awards
+2001
+The Marshall Mathers LP
+Best-Selling Album
+
+MTV Video Music Awards
+2002
+"Without Me"
+Video of the Year
+
+MTV Video Music Awards
+2002
+"Without Me"
+Best Male Video
+
+MTV Video Music Awards
+2002
+"Without Me"
+Best Rap Video
+
+MTV Video Music Awards
+2002
+"Without Me"
+Best Direction in a Video
+
+ECHO Awards
+2002
+Devil's Night (D12)
+Best Hip-Hop/Urban Artist (International)
+
+Mnet Asian Music Awards
+2002
+Eminem
+Best International Artist
+
+MTV Europe Music Awards
+2002
+Eminem
+Best Hip-Hop Act
+
+MTV Europe Music Awards
+2002
+Eminem
+Best Male Act
+
+Billboard Music Awards
+2002
+The Eminem Show
+Album of the Year
+
+Billboard Music Awards
+2002
+The Eminem Show
+R&B/Hip-Hop Album of the Year
+
+Billboard Music Awards
+2002
+The Eminem Show
+Top 200 Billboard Album
+
+MTV Europe Music Awards
+2002
+The Eminem Show
+Best Album
+
+MTV Movie Awards
+2003
+Eminem
+Best Male Performance
+
+MTV Movie Awards
+2003
+Eminem
+Best Breakthrough Male
+
+BMI Film/TV Awards
+2003
+"Lose Yourself"
+Best Music
+
+BMI Film/TV Awards
+2003
+"Lose Yourself"
+Most Performed Song From A Film
+
+Detroit Music Awards
+2003
+"Lose Yourself"
+Outstanding National Single
+
+MTV Video Music Awards
+2003
+"Lose Yourself"
+Best Video from a Film
+
+Much Music Video Awards
+2003
+"Lose Yourself"
+People's Choice: Favorite international artist
+
+Academy Award
+2003
+"Lose Yourself"
+Best Original Song
+
+Grammy Awards
+2003
+"Without Me"
+Best Music Video
+
+American Music Awards
+2003
+Eminem
+Favorite Hip-Hop/R&B Male Artist
+
+American Music Awards
+2003
+Eminem
+Favorite Pop/Rock Male Artist
+
+Brit Awards
+2003
+Eminem
+International Male Solo Artist
+
+MTV Europe Music Awards
+2003
+Eminem
+Best Hip-Hop Act
+
+People's Choice Awards
+2003
+Eminem
+Favorite Male Musical Performer
+
+Teen Choice Awards
+2003
+Eminem
+Choice Movie: Actor Drama/Action Adventure
+
+Teen Choice Awards
+2003
+Eminem
+Choice Movie: Breakout Star - Male
+
+Teen Choice Awards
+2003
+Eminem
+Choice Music: Male Artist
+
+Teen Choice Awards
+2003
+Eminem
+Choice Music: Rap Artist
+
+World Music Awards
+2003
+Eminem
+World's Best-Selling Pop/Rock Artist
+
+World Music Awards
+2003
+Eminem
+World's Best-Selling American Male Artist
+
+American Music Awards
+2003
+The Eminem Show
+Favorite Hip-Hop/R&B Album
+
+American Music Awards
+2003
+The Eminem Show
+Favorite Pop/Rock Album
+
+Brit Awards
+2003
+The Eminem Show
+International Album
+
+ECHO Awards
+2003
+The Eminem Show
+Best Hip-Hop/Urban Artist (International)
+
+Grammy Awards
+2003
+The Eminem Show
+Best Rap Album
+
+Juno Awards
+2003
+The Eminem Show
+International Album of the Year
+
+Grammy Awards
+2004
+"Lose Yourself"
+Best Male Rap Solo Performance
+
+Grammy Awards
+2004
+"Lose Yourself"
+Best Rap Song
+
+Teen Choice Awards
+2005
+"Mockingbird"
+Choice Music: Rap Track
+
+American Music Awards
+2005
+Eminem
+Favorite Rap/Hip-Hop Male Artist
+
+Brit Awards
+2005
+Eminem
+International Male Solo Artist
+
+Teen Choice Awards
+2005
+Eminem
+Choice Music: Rap Artist
+
+World Music Awards
+2005
+Eminem
+World's Best-Selling Pop/Rock Artist
+
+World Music Awards
+2005
+Eminem
+World's Best-Selling Rap/Hip-Hop Artist
+
+Detroit Music Awards
+2005
+Encore
+Outstanding National Major Label Recording
+
+ECHO Awards
+2005
+Encore
+Best Hip-Hop/Urban Artist (International)
+
+Detroit Music Awards
+2006
+Curtain Call: The Hits
+Outstanding Anthology/Compilation/Reissue
+
+IFPI Hong Kong Top Sales Music Award
+2006
+Curtain Call: The Hits
+Ten Best Sales Releases, Foreign
+
+American Music Awards
+2006
+Eminem
+Favorite Rap/Hip-Hop Male Artist
+
+ECHO Awards
+2007
+Curtain Call: The Hits
+Best Hip-Hop/Urban Artist (International)
+
+Vibe Magazine Special Awards
+2008
+Eminem
+Best Rapper Alive
+
+MTV Video Music Awards
+2009
+"We Made You"
+Best Hip-Hop Video
+
+Billboard Music Awards
+2009
+Eminem
+Artist of the Decade
+
+MTV Europe Music Awards
+2009
+Eminem
+Best Male Act
+
+Grammy Awards
+2010
+"Crack A Bottle" (feat. Dr. Dre & 50 Cent)
+Best Rap Performance by a Duo or Group
+
+GAFFA Awards (Sweden)
+2010
+"Love The Way You Lie" (feat. Rihanna)
+Best Foreign Song
+
+Soul Train Music Awards
+2010
+"Love The Way You Lie" (feat. Rihanna)
+Best Hip-Hop Song of the Year
+
+Teen Choice Awards
+2010
+"Love The Way You Lie" (feat. Rihanna)
+Choice Music: Rap/Hip-Hop Track
+
+MTV Video Music Awards
+2010
+"Not Afraid"
+Best Hip-Hop Video
+
+MTV Video Music Awards
+2010
+"Not Afraid"
+Best Male Video
+
+American Music Awards
+2010
+Eminem
+Favorite Rap/Hip-Hop Male Artist
+
+BET Hip Hop Awards
+2010
+Eminem
+Lyricist of the Year
+
+Billboard Music Awards
+2010
+Eminem
+Male Artist of the Year
+
+MOBO Awards
+2010
+Eminem
+Best International Act
+
+MTV Africa Music Awards
+2010
+Eminem
+Best International Artist
+
+MTV Europe Music Awards
+2010
+Eminem
+Best Hip-Hop Act
+
+People's Choice Awards
+2010
+Eminem
+Favorite Hip-Hop Artist
+
+Teen Choice Awards
+2010
+Eminem
+Choice Music: Best Rap Artist
+
+American Music Awards
+2010
+Recovery
+Favorite Rap/Hip-Hop Album
+
+Grammy Awards
+2010
+Relapse
+Best Rap Album
+
+Teen Choice Awards
+2010
+Relapse
+Choice Music: Best Rap Album
+
+Barbados Music Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Best Collaboration
+
+Billboard Music Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Top Rap Song
+
+BMI Pop Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Award-Winning Songs
+
+BMI Urban Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Award-Winning Songs
+
+People's Choice Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Favorite Song
+
+People's Choice Awards
+2011
+"Love The Way You Lie" (feat. Rihanna)
+Favorite Music Video
+
+BMI Urban Awards
+2011
+"Not Afraid"
+Award-Winning Songs
+
+Detroit Music Awards
+2011
+"Not Afraid"
+Outstanding National Single
+
+Detroit Music Awards
+2011
+"Not Afraid"
+Outstanding Video / Major Budget
+
+Grammy Awards
+2011
+"Not Afraid"
+Best Rap Solo Performance
+
+Billboard Music Awards
+2011
+Bad Meets Evil
+Top Social Artist
+
+Billboard Music Awards
+2011
+Eminem
+Top Artist
+
+Billboard Music Awards
+2011
+Eminem
+Top Male Artist
+
+Billboard Music Awards
+2011
+Eminem
+Top Rap Artist
+
+Billboard Music Awards
+2011
+Eminem
+Top Streaming Artist
+
+MTV Europe Music Awards
+2011
+Eminem
+Best Hip-Hop Act
+
+People's Choice Awards
+2011
+Eminem
+Favorite Hip-Hop Artist
+
+People's Choice Awards
+2011
+Eminem
+Favorite Male Artist
+
+Teen Choice Awards
+2011
+Eminem
+Choice Music: R&B/Hip-Hop Artist
+
+Billboard Music Awards
+2011
+Recovery
+Top Billboard 200 Album
+
+Billboard Music Awards
+2011
+Recovery
+Top Rap Album
+
+Detroit Music Awards
+2011
+Recovery
+Outstanding National Major Label Recording
+
+ECHO Awards
+2011
+Recovery
+Best Hip-Hop/Urban Artist (International)
+
+Grammy Awards
+2011
+Recovery
+Best Rap Album
+
+People's Choice Awards
+2012
+Eminem
+Favorite Hip-Hop Artist
+
+MTV Europe Music Awards
+2013
+Eminem
+Global Icon Award
+
+MTV Europe Music Awards
+2013
+Eminem
+Best Hip-Hop Act
+
+YouTube Music Awards
+2013
+Eminem
+Artist of the Year
+
+Detroit Music Awards
+2014
+"Berzerk"
+Outstanding Video / Major Budget
+
+MTV Video Music Awards
+2014
+"Rap God"
+Best Editing
+
+BMI R&B/Hip-Hop Awards
+2014
+"The Monster" (feat. Rihanna)
+Most Performed Songs
+
+Billboard Music Awards
+2014
+Eminem
+Top Rap Artist
+
+World Music Awards
+2014
+Eminem
+World's Best-Selling Artist
+
+World Music Awards
+2014
+Eminem
+World's Best-Selling Rap/Hip-Hop Artist
+
+World Music Awards
+2014
+Eminem
+World's Best-Selling American Artist
+
+Billboard Music Awards
+2014
+The Marshall Mathers LP 2
+Top Rap Album
+
+Detroit Music Awards
+2014
+The Marshall Mathers LP 2
+Outstanding National Major Label Recording
+
+ECHO Awards
+2014
+The Marshall Mathers LP 2
+Best Hip-Hop/Urban Artist (International)
+
+Swiss Music Awards
+2014
+The Marshall Mathers LP 2
+Best Album Urban International
+
+BMI Pop Awards
+2015
+"The Monster" (feat. Rihanna)
+Award-Winning Songs
+
+Grammy Awards
+2015
+"The Monster" (feat. Rihanna)
+Best Rap/Sung Collaboration
+
+Grammy Awards
+2015
+The Marshall Mathers LP 2
+Best Rap Album
+
+MTV Europe Music Awards
+2017
+Eminem
+Best Hip-Hop
+
+Swiss Music Awards
+2019
+Eminem
+Best International Solo Act
+
+Detroit Music Awards
+2021
+Music To Be Murdered By
+Outstanding National Major Label Recording
+
+Primetime Emmy Awards
+2022
+The Pepsi Super Bowl LVI Halftime Show (Shawn Carter, Desiree Perez, Jesse Collins, Dionne Harmon, Dave Meyers, Aaron B. Cooke, Dr. Dre, Snoop Dogg, Mary J. Blige, Eminem, Kendrick Lamar & 50 Cent)
+Outstanding Variety Special (Live)
+
+MTV Video Music Awards
+2024
+"Houdini"
+Best Hip-Hop
+
+MTV Video Music Awards
+2024
+"Houdini"
+Best Visual Effects
+
+MTV Europe Music Awards
+2024
+Eminem
+Best Hip-Hop
+
+American Music Awards
+2025
+Eminem
+Favorite Rap/Hip-Hop Artist
+
+American Music Awards
+2025
+The Death Of Slim Shady (Coup De Grace)
+Favorite Rap/Hip-Hop Album
+`;
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function slugify(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/['"]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    }
+
+    function sortKeyIgnoreLeadingThe(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/^["'“”‘’\s]+/, '')
+        .replace(/^the\s+/, '');
+    }
+
+    function compareAlphaIgnoreLeadingThe(a, b) {
+      const aKey = sortKeyIgnoreLeadingThe(a);
+      const bKey = sortKeyIgnoreLeadingThe(b);
+      return aKey.localeCompare(bKey) || String(a).localeCompare(String(b));
+    }
+
+    function toCurlyTypography(value) {
+      let text = String(value || '');
+      // Opening/closing double quotes around phrases.
+      text = text.replace(/"([^"]*)"/g, '“$1”');
+      // Apostrophes between letters, e.g. World's, Devil's.
+      text = text.replace(/([A-Za-z])'([A-Za-z])/g, '$1’$2');
+      return text;
+    }
+
+    function getWorkFilterLabel(work) {
+      // Keep filter compact by stripping descriptive parenthetical contributor blocks.
+      return String(work || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
+    }
+
+    const artistLastWorks = new Set([
+      'Bad Meets Evil',
+      'Eminem'
+    ]);
+
+    const albumWorks = new Set([
+      'The Slim Shady LP',
+      'The Marshall Mathers LP',
+      "Devil's Night (D12)",
+      'The Eminem Show',
+      'Encore',
+      'Curtain Call: The Hits',
+      'Recovery',
+      'Relapse',
+      'The Marshall Mathers LP 2',
+      'Music To Be Murdered By',
+      'The Death Of Slim Shady (Coup De Grace)'
+    ]);
+
+    const workLinks = new Map([
+      ['"My Name Is"', '/songs/slim-shady-lp/my-name-is.html'],
+      ['"Forgot About Dre" (Dr. Dre feat. Eminem)', '/songs/feat/forgot-about-dre.html'],
+      ['"The Real Slim Shady"', '/songs/marshall-mathers-lp/real-slim-shady.html'],
+      ['"Without Me"', '/songs/eminem-show/without-me.html'],
+      ['"Lose Yourself"', '/songs/8-mile-soundtrack/lose-yourself.html'],
+      ['"Mockingbird"', '/songs/encore/mockingbird.html'],
+      ['"We Made You"', '/songs/relapse/we-made-you.html'],
+      ['"Crack A Bottle" (feat. Dr. Dre & 50 Cent)', '/songs/relapse/crack-a-bottle.html'],
+      ['"Love The Way You Lie" (feat. Rihanna)', '/songs/recovery/love-the-way-you-lie.html'],
+      ['"Not Afraid"', '/songs/recovery/not-afraid.html'],
+      ['"Berzerk"', '/songs/marshall-mathers-lp-2/berzerk.html'],
+      ['"Rap God"', '/songs/marshall-mathers-lp-2/rap-god.html'],
+      ['"The Monster" (feat. Rihanna)', '/songs/marshall-mathers-lp-2/monster.html'],
+      ['"Houdini"', '/songs/death-of-slim-shady/houdini.html'],
+      ['The Slim Shady LP', '/releases/slim-shady-lp.html'],
+      ['The Marshall Mathers LP', '/releases/marshall-mathers-lp.html'],
+      ["Devil's Night (D12)", '/releases/devils-night.html'],
+      ['The Eminem Show', '/releases/eminem-show.html'],
+      ['Encore', '/releases/encore.html'],
+      ['Curtain Call: The Hits', '/releases/curtain-call.html'],
+      ['Recovery', '/releases/recovery.html'],
+      ['Relapse', '/releases/relapse.html'],
+      ['The Marshall Mathers LP 2', '/releases/marshall-mathers-lp-2.html'],
+      ['Music To Be Murdered By', '/releases/music-to-be-murdered-by.html'],
+      ['The Death Of Slim Shady (Coup De Grace)', '/releases/death-of-slim-shady.html']
+    ]);
+
+    function isAlbumWork(work) {
+      return albumWorks.has(String(work || '').trim());
+    }
+
+    function compareWorkFilterValues(a, b) {
+      const aArtistLast = artistLastWorks.has(a);
+      const bArtistLast = artistLastWorks.has(b);
+      if (aArtistLast && !bArtistLast) return 1;
+      if (!aArtistLast && bArtistLast) return -1;
+      return compareAlphaIgnoreLeadingThe(getWorkFilterLabel(a), getWorkFilterLabel(b));
+    }
+
+    function parseAwards(text) {
+      const lines = String(text || '')
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .filter((line) => !/^\[(\d+)\](\[(\d+)\])*$/.test(line));
+
+      const records = [];
+      for (let i = 0; i < lines.length; i += 4) {
+        const award = lines[i] || '';
+        const year = lines[i + 1] || '';
+        const work = lines[i + 2] || '';
+        const category = lines[i + 3] || '';
+        if (!award || !year || !work || !category) continue;
+        records.push({
+          award,
+          year,
+          work,
+          category
+        });
+      }
+      return records;
+    }
+
+    const allAwards = parseAwards(rawAwardsData);
+
+    const awardFilter = document.getElementById('awardFilter');
+    const workFilter = document.getElementById('workFilter');
+    const yearFilter = document.getElementById('yearFilter');
+    const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+    const awardsTbody = document.getElementById('awardsTbody');
+    const emptyState = document.getElementById('emptyState');
+    const resultsMeta = document.getElementById('resultsMeta');
+
+    function getSelectedFilters() {
+      return {
+        award: awardFilter.value,
+        work: workFilter.value,
+        year: yearFilter.value
+      };
+    }
+
+    function passesFilters(item, selected, excludeKey) {
+      if (excludeKey !== 'award' && selected.award && item.award !== selected.award) return false;
+      if (excludeKey !== 'work' && selected.work && item.work !== selected.work) return false;
+      if (excludeKey !== 'year' && selected.year && item.year !== selected.year) return false;
+      return true;
+    }
+
+    function resetSelectWithDefault(selectEl) {
+      const defaults = {
+        awardFilter: 'All awards',
+        workFilter: 'All recipients / works',
+        yearFilter: 'All years'
+      };
+      const id = selectEl.id;
+      const label = defaults[id] || 'All';
+      selectEl.innerHTML = `<option value="">${label}</option>`;
+    }
+
+    function populateSingleFilter(selectEl, key, selected) {
+      const values = Array.from(new Set(
+        allAwards
+          .filter((item) => passesFilters(item, selected, key))
+          .map((item) => item[key])
+      ));
+
+      if (key === 'year') {
+        values.sort((a, b) => Number(a) - Number(b));
+      } else if (key === 'work') {
+        values.sort(compareWorkFilterValues);
+      } else {
+        values.sort(compareAlphaIgnoreLeadingThe);
+      }
+
+      resetSelectWithDefault(selectEl);
+
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        if (key === 'work') {
+          option.textContent = toCurlyTypography(getWorkFilterLabel(value));
+          if (isAlbumWork(value)) option.style.fontStyle = 'italic';
+        } else {
+          option.textContent = toCurlyTypography(value);
+        }
+        selectEl.appendChild(option);
+      });
+
+      const currentValue = selected[key] || '';
+      if (currentValue && values.includes(currentValue)) {
+        selectEl.value = currentValue;
+      } else {
+        selectEl.value = '';
+      }
+    }
+
+    function refreshFilterOptions() {
+      const selected = getSelectedFilters();
+      populateSingleFilter(awardFilter, 'award', selected);
+      populateSingleFilter(workFilter, 'work', selected);
+      populateSingleFilter(yearFilter, 'year', selected);
+    }
+
+    function getFilteredAwards() {
+      const award = awardFilter.value;
+      const work = workFilter.value;
+      const year = yearFilter.value;
+
+      const filtered = allAwards.filter((item) => {
+        if (award && item.award !== award) return false;
+        if (work && item.work !== work) return false;
+        if (year && item.year !== year) return false;
+        return true;
+      });
+
+      const allFiltersReset = !award && !work && !year;
+      if (!allFiltersReset) return filtered;
+
+      return filtered.slice().sort((a, b) => (
+        Number(a.year) - Number(b.year)
+        || compareAlphaIgnoreLeadingThe(a.award, b.award)
+        || compareAlphaIgnoreLeadingThe(a.category, b.category)
+        || compareAlphaIgnoreLeadingThe(a.work, b.work)
+      ));
+    }
+
+    function renderAwards() {
+      const filtered = getFilteredAwards();
+      const firstWorkAnchorSeen = new Set();
+
+      awardsTbody.innerHTML = filtered.map((item, idx) => {
+        const workSlug = slugify(item.work);
+        const awardSlug = slugify(item.award);
+        const rowAnchor = `award-${item.year}-${workSlug}-${awardSlug}-${idx + 1}`;
+        const firstWorkAnchor = `recipient-work-${workSlug}`;
+        const includeFirstWorkAnchor = !firstWorkAnchorSeen.has(firstWorkAnchor);
+        if (includeFirstWorkAnchor) firstWorkAnchorSeen.add(firstWorkAnchor);
+
+        return `
+          <tr>
+            <td class="year-cell" data-label="Year">${escapeHtml(item.year)}</td>
+            <td class="award-cell" data-label="Award">${escapeHtml(toCurlyTypography(item.award))}</td>
+            <td class="work-cell" data-label="Recipient / Work">
+              <span class="anchor-offset" id="${escapeHtml(rowAnchor)}"></span>
+              ${includeFirstWorkAnchor ? `<span class="anchor-offset" id="${escapeHtml(firstWorkAnchor)}"></span>` : ''}
+              ${(() => {
+                const formattedWork = isAlbumWork(item.work)
+                  ? `<em>${escapeHtml(toCurlyTypography(item.work))}</em>`
+                  : escapeHtml(toCurlyTypography(item.work));
+                const href = workLinks.get(item.work);
+                return href ? `<a href="${escapeHtml(href)}">${formattedWork}</a>` : formattedWork;
+              })()}
+            </td>
+            <td class="category-cell" data-label="Category">${escapeHtml(toCurlyTypography(item.category))}</td>
+          </tr>
+        `;
+      }).join('');
+
+      emptyState.hidden = filtered.length !== 0;
+      resultsMeta.textContent = `${filtered.length} award entr${filtered.length === 1 ? 'y' : 'ies'} shown (${allAwards.length} total)`;
+    }
+
+    const handleFilterChange = () => {
+      refreshFilterOptions();
+      renderAwards();
+    };
+
+    awardFilter.addEventListener('change', handleFilterChange);
+    workFilter.addEventListener('change', handleFilterChange);
+    yearFilter.addEventListener('change', handleFilterChange);
+
+    clearFiltersBtn.addEventListener('click', () => {
+      awardFilter.value = '';
+      workFilter.value = '';
+      yearFilter.value = '';
+      refreshFilterOptions();
+      renderAwards();
+    });
+
+    refreshFilterOptions();
+    renderAwards();
+  </script>
+
+  <script src="/header.js"></script>
+</body>
+</html>

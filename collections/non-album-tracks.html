@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Non-Album Tracks | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0rem 0;
+}
+
+.page-header {
+  display: grid;
+  grid-template-columns: auto 24px;
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  align-items: start;
+}
+
+/* Make the info details act like its children belong to the grid */
+.page-header .promo-info {
+  display: contents;
+}
+
+.page-header .page-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.page-header .promo-summary {
+  grid-column: 2;
+  grid-row: 1;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.page-header .promo-note {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  margin: 0;
+}
+
+.page-note {
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  color: #c8c8c8;
+  font-style: italic;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.track-card:focus-visible {
+  border-color: #E21C21;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  min-width: 0;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-title a,
+.track-title a:visited {
+  display: inline;
+  color: #eaeaea;
+  text-decoration: none;
+}
+
+.track-title a:hover,
+.track-title a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.track-artist,
+.track-producer,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-album {
+  font-size: 13px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.track-album a,
+.track-album a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* active/open/hover state */
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+/* when the details is closed but the summary is focused, keep it white */
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.promo-note a,
+.promo-note a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.promo-note a:hover,
+.promo-note a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 6px 0;
+}
+
+.filter-btn {
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.filter-btn:hover,
+.filter-btn:focus-visible {
+  color: #eaeaea;
+  border-color: #444;
+  outline: none;
+}
+
+.filter-btn.is-active {
+  color: #eaeaea;
+  border-color: #E21C21;
+}
+
+.track-card[hidden] {
+  display: none !important;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+  font-size: 13px;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+/* hide producer credits site-local to this page */
+.track-card .track-producer {
+  display: block;
+}
+
+
+
+@media (max-width: 520px) {
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+  .track-meta {
+    min-height: 64px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <div class="page-header">
+      <h1 class="page-title">Non-Album Tracks</h1>
+      <details class="promo-info" aria-label="Page information">
+        <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+        <p class="promo-note">Includes non-album tracks later added to deluxe editions or solo compilations; excludes songs that debuted on those releases. Only official remixes are listed.</p>
+      </details>
+    </div>
+  </header>
+
+  <div class="filter-bar" aria-label="Filter tracklist">
+    <button class="filter-btn is-active" data-filter="songs" type="button">Solo / Collab</button>
+    <button class="filter-btn" data-filter="d12" type="button">with D12</button>
+    <button class="filter-btn" data-filter="bme" type="button">Bad Meets Evil</button>
+    <button class="filter-btn" data-filter="transitions" type="button">Transitions (†)</button>
+    <button class="filter-btn" data-filter="all" type="button">All</button>
+  </div>
+
+  <section class="track-list" aria-label="Non-album tracklist">
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="Nuttin’ To Do cover">
+      <div class="track-meta">
+        <h2 class="track-title">Nuttin’ To Do</h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Reef</p>
+        <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+        <p class="track-release">October 1, 1998</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="Scary Movies cover">
+      <div class="track-meta">
+        <h2 class="track-title">Scary Movies</h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Reef</p>
+        <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+        <p class="track-release">October 1, 1998</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/three-verses-cover.jpg" alt="Three Verses cover">
+      <div class="track-meta">
+        <h2 class="track-title">Three Verses</h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Three Verses [MP3]</p>
+        <p class="track-release">1999</p>
+      </div>
+    </article>
+    
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/pick-it-up-live-cover.jpg" alt="Pick It Up (Live) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Pick It Up (Live)</h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Pick It Up (Live) [MP3]</p>
+        <p class="track-release">1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/just-rhymin-with-proof-cover.jpg" alt="Just Rhymin’ With Proof cover">
+      <div class="track-meta">
+        <h2 class="track-title">Just Rhymin’ With Proof</h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Just Rhymin’ With Proof [MP3]</p>
+        <p class="track-release">1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/my-name-is-rock-remix-cover.jpg" alt="My Name Is Rock Star Remix cover">
+      <div class="track-meta">
+        <h2 class="track-title">My Name Is (Rock Star Remix)</h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Stretch Armstrong</p>
+        <p class="track-album">My Name Is (Rock Star Remix) [MP3]</p>
+        <p class="track-release">May 17, 1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/any-man_2-cover.jpg" alt="Any Man cover">
+      <div class="track-meta">
+        <h2 class="track-title">Any Man</h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Da Beatminerz</p>
+        <p class="track-album">Rawkus Presents: Soundbombing II</p>
+        <p class="track-release">May 18, 1999</p>
+      </div>
+    </article>
+    
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/bad-guys-always-die-cover.jpg" alt="Bad Guys Always Die cover">
+      <div class="track-meta">
+        <h2 class="track-title">Bad Guys Always Die</h2>
+        <p class="track-artist">Eminem & Dr. Dre</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+        <p class="track-album">Wild Wild West (Soundtrack)</p>
+        <p class="track-release">June 15, 1999</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/slim-shady-lp.html">The Slim Shady LP</a> (Expanded Edition).</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/bad-influence-cover.jpg" alt="Bad Influence cover">
+      <div class="track-meta">
+        <h2 class="track-title">Bad Influence</h2>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">End Of Days (Soundtrack)</p>
+        <p class="track-release">November 2, 1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/my-fault-pizza-remix-cover.jpg" alt="My Fault (Pizza Mix) cover">
+      <div class="track-meta">
+        <h2 class="track-title">My Fault (Pizza Mix)</h2>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">MTV Celebrity Deathmatch (Soundtrack)</p>
+        <p class="track-release">November 2, 1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/murder-murder-remix-cover.jpg" alt="Murder Murder cover">
+      <div class="track-meta">
+        <h2 class="track-title">Murder Murder</h2>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">Next Friday (Soundtrack)</p>
+        <p class="track-release">December 14, 1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/devils-night/shit-on-you-cover.jpg" alt="I Remember (Dedication To Whitey Ford) cover">
+      <div class="track-meta">
+        <h2 class="track-title">I Remember (Dedication To Whitey Ford)</h2>
+        <p class="track-producer">Produced by Eminem &amp; F.B.T.</p>
+        <p class="track-album">Shit On You [Single]</p>
+        <p class="track-release">December 5, 2000</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/d12-freestyle-cover.jpg" alt="Pistol Pistol cover">
+        <div class="track-meta">
+          <h2 class="track-title">Freestyle</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Freestyle [Promo Single]</p>
+          <p class="track-release">June 2001</p>
+        </div>
+      </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/devils-night/purple-hills-cover.jpg" alt="8 Mile cover">
+      <div class="track-meta">
+        <h2 class="track-title">Purple Hills</h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Purple Hills [Single]</p>
+        <p class="track-release">June 5, 2001</p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">The clean version of “Purple Pills,” containing altered lyrics. A clean version of D12’s album <a href="/releases/devils-night.html">Devil’s Night</a> was planned but ultimately went unreleased.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+        <a class="track-link" href="/songs/devils-night/freestyle-b-side.html"><img class="track-thumb" src="../images/album-covers/devils-night/fight-music-cover.jpg" alt="Fight Music cover"></a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/freestyle-b-side.html">Freestyle [B-side Version]</a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Denaun Porter</p>
+          <p class="track-album">Devil’s Night (Expanded Edition)</p>
+          <p class="track-release">November 27, 2001</p>
+        </div>
+      </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/eminem-show/cleanin-out-my-closet-cover.jpg" alt="Stimulate cover">
+      <div class="track-meta">
+        <h2 class="track-title">Stimulate</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album">Cleanin’ Out My Closet [Single]</p>
+        <p class="track-release">July 29, 2002</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/eminem-show.html">The Eminem Show</a> (Expanded Edition).</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/business-green-lantern-mega-mix-cover.jpg" alt="Business (Green Lantern Mega Mix) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Business (Green Lantern Mega Mix)</h2>
+        <p class="track-producer">Produced N/A</p>
+        <p class="track-album">The Anger Management Tour Mixtape</p>
+        <p class="track-release">August, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/8-mile/lose-yourself-cover.jpg" alt="8 Mile cover">
+      <div class="track-meta">
+        <h2 class="track-title">Lose Yourself</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album">8 Mile (Soundtrack)</p>
+        <p class="track-release">October 29, 2002</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/curtain-call.html">Curtain Call: The Hits</a>.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Love Me cover">
+      <div class="track-meta">
+        <h2 class="track-title">Love Me</h2>
+        <p class="track-artist">Eminem, Obie Trice & 50 Cent</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">8 Mile (Soundtrack)</p>
+        <p class="track-release">October 29, 2002</p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Released as a single under Obie Trice’s catalog.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile cover">
+      <div class="track-meta">
+        <h2 class="track-title">8 Mile</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">8 Mile (Soundtrack)</p>
+        <p class="track-release">October 29, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile cover">
+      <div class="track-meta">
+        <h2 class="track-title">Rap Game</h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">8 Mile (Soundtrack)</p>
+        <p class="track-release">October 29, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Rabbit Run cover">
+      <div class="track-meta">
+        <h2 class="track-title">Rabbit Run</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">8 Mile (Soundtrack)</p>
+        <p class="track-release">October 29, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-cover.jpg" alt="Invasion cover">
+      <div class="track-meta">
+        <h2 class="track-title">Invasion</h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Invasion: The Shady Records Mixtape</p>
+        <p class="track-release">November 21, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-cover.jpg" alt="The Sauce cover">
+      <div class="track-meta">
+        <h2 class="track-title">The Sauce</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Invasion: The Shady Records Mixtape</p>
+        <p class="track-release">November 21, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-cover.jpg" alt="Nail In The Coffin cover">
+      <div class="track-meta">
+        <h2 class="track-title">Nail In The Coffin</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Invasion: The Shady Records Mixtape</p>
+        <p class="track-release">November 21, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers-tn/non-album/invasion-cover.jpg" alt="Lose Yourself (Green Lantern Rmx) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Lose Yourself (Green Lantern Rmx)</h2>
+        <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Invasion: The Shady Records Mixtape</p>
+        <p class="track-release">November 21, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <a class="track-thumb-link" href="/songs/non-album/real-slim-shady-live-farmclub.html"><img class="track-thumb" src="../images/album-covers-tn/non-album/farmclub-cover.jpg" alt="The Real Slim Shady (Live) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/real-slim-shady-live-farmclub.html">The Real Slim Shady (Live)</a></h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Live & Unreleased From Farmclub.com</p>
+        <p class="track-release">2002</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <a class="track-thumb-link" href="/songs/non-album/shit-on-you-live-farmclub.html"><img class="track-thumb" src="../images/album-covers-tn/non-album/farmclub-cover.jpg" alt="Shit On You (Live) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/shit-on-you-live-farmclub.html">Shit On You (Live)</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Live & Unreleased From Farmclub.com</p>
+        <p class="track-release">2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/go-to-sleep-cover.jpg" alt="Go To Sleep cover">
+      <div class="track-meta">
+        <h2 class="track-title">Go To Sleep</h2>
+        <p class="track-artist">Eminem, DMX &amp; Obie Trice</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Cradle 2 The Grave (Soundtrack)</p>
+        <p class="track-release">February 18, 2003</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="The Conspiracy Freestyle cover">
+      <div class="track-meta">
+        <h2 class="track-title">The Conspiracy Freestyle</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/eminem-show.html">The Eminem Show</a> (Expanded Edition).</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Bump Heads cover">
+      <div class="track-meta">
+        <h2 class="track-title">Bump Heads</h2>
+        <p class="track-artist">Eminem, 50 Cent, Tony Yayo &amp; Lloyd Banks</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">An alternate version featuring additional vocals by DJ Green Lantern, used for the Shady Records Mixtape-CD and “Business” single, was later included on <em><a href="/releases/eminem-show.html">The Eminem Show</a></em> (Expanded Edition), crediting 50 Cent, Tony Yayo, and Lloyd Banks as featured artists.</p>
+        </details>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Hail Mary cover">
+      <div class="track-meta">
+        <h2 class="track-title">Hail Mary </h2>
+        <p class="track-artist">Eminem, 50 Cent &amp; Busta Rhymes</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Doe Ray Me cover">
+      <div class="track-meta">
+        <h2 class="track-title">Doe Ray Me </h2>
+        <p class="track-artist">Eminem, D12 &amp; Obie Trice</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Keep Talkin cover">
+      <div class="track-meta">
+        <h2 class="track-title">Keep Talkin’ </h2>
+        <p class="track-artist">Eminem &amp; D12</p>
+        <p class="track-producer">Produced by Night & Day</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p> 
+    <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/d12-world.html">D12 World</a>, featuring added production by Eminem & Luis Resto, and credited solely to D12.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/wanksta-cover.jpg" alt="Wanksta (Eminem’s Version) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Wanksta (Eminem’s Version)</h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">The Singles [Boxset]</p>
+        <p class="track-release">December 15, 2003</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <a class="track-thumb-link" href="/songs/non-album/bully.html"><img class="track-thumb" src="../images/album-covers/non-album/bully-cover.jpg" alt="Bully cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/bully.html">Bully</a></h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">SWAT: Global Mixtape Strike Team</p>
+        <p class="track-release">December 2003</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Leaked in November 2003, leading to its inclusion on DJ Whoo Kid’s mixtape the following month in association with the video game <em>SWAT: Global Strike Team</em>.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <a class="track-thumb-link" href="/songs/non-album/freestyle-armageddon.html"><img class="track-thumb" src="../images/album-covers/non-album/invasion-3-cover.jpg" alt="Freestyle [Armageddon] cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/freestyle-armageddon.html">Freestyle</a></h2>
+        <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Invasion Part 3: Countdown to Armageddon [Mixtape]</p>
+        <p class="track-release">January 2004</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/d12-world/40-oz-remix-lil-john-cover.jpg" alt="40 Oz. (Remix by Lil John) cover">
+      <div class="track-meta">
+        <h2 class="track-title">40 Oz. (Remix by Lil Jon)</h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Lil Jon</p>
+        <p class="track-album">40 Oz. (Remix by Lil Jon) [Promo Single]</p>
+        <p class="track-release">March 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/d12-world/how-come-cover.jpg" alt="How Come (Extended Verses) cover">
+      <div class="track-meta">
+        <h2 class="track-title">How Come (Extended Verses)</h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Witt & Pep</p>
+        <p class="track-album">How Come [Single]</p>
+        <p class="track-release">June 8, 2004</p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Features additional verses from Swift and Bizarre not present on the album version. First released in June 2004 on the “How Come” promotional single, it was later issued commercially in Europe as track 1 on the “How Come” single without the “Extended Verses” subtitle.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Intro cover">
+      <div class="track-meta">
+        <h2 class="track-title">Intro <span class="fn-mark">†</span></h2>
+        <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Shade 45: Sirius Bizness [Mixtape]</p>
+        <p class="track-release">October 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Shade 45 Invasion cover">
+      <div class="track-meta">
+        <h2 class="track-title">Shade 45 Invasion</h2>
+        <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Shade 45: Sirius Bizness [Mixtape]</p>
+        <p class="track-release">October 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Just Lose It (Remix) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Just Lose It (Remix)</h2>
+        <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Shade 45: Sirius Bizness [Mixtape]</p>
+        <p class="track-release">October 2004</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Leave Dat Boy Alone (Green Mix) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Leave Dat Boy Alone (Green Mix)</h2>
+        <p class="track-artist">D12</p>
+       <p class="track-producer">Produced by DJ Green Lantern</p>
+        <p class="track-album">Shade 45: Sirius Bizness [Mixtape]</p>
+        <p class="track-release">October 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Intro cover">
+      <div class="track-meta">
+        <h2 class="track-title">Outro <span class="fn-mark">†</span></h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Shade 45: Sirius Bizness [Mixtape]</p>
+        <p class="track-release">October 2004</p>
+      </div>
+    </article>
+
+      <article class="track-card" data-force-d12="false">
+        <img class="track-thumb" src="../images/album-covers/feat/d12-my-ballz-cover.jpg" alt="My Ballz cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Ballz</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Longest Yard (Soundtrack)</p>
+          <p class="track-release">May 24, 2005</p>
+        </div>
+      </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/encore/ass-like-that-cover.jpg" alt="Business (Live) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Business (Live)</h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Ass Like That [Single]</p>
+        <p class="track-release">June 7, 2005</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Anger Management cover">
+      <div class="track-meta">
+        <h2 class="track-title">Anger Management</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Anger Management 3 [Mixtape]</p>
+        <p class="track-release">July 12, 2005</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Fubba U Cubba Cubba cover">
+      <div class="track-meta">
+        <h2 class="track-title">Fubba U Cubba Cubba</h2>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Anger Management 3 [Mixtape]</p>
+        <p class="track-release">July 12, 2005</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Dirty Steve (Skit) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Dirty Steve (Skit) <span class="fn-mark">†</span></h2>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Anger Management 3 [Mixtape]</p>
+        <p class="track-release">July 12, 2005</p>
+      </div>
+    </article>
+
+     <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/you-don't-know-cover.jpeg" alt="You Don’t Know cover">
+        <div class="track-meta">
+          <h2 class="track-title">You Don’t Know </h2>
+          <p class="track-artist">Eminem, 50 Cent, Ca$his &amp; Lloyd Banks</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">October 26, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Shady Narcotics cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shady Narcotics (Intro) <span class="fn-mark">†</span></h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="We’re Back cover">
+        <div class="track-meta">
+          <h2 class="track-title">We’re Back</h2>
+          <p class="track-artist">Eminem, Obie Trice, Stat Quo, Bobby Creekwater &amp; Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Re-Up</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Jimmy Crack Corn cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy Crack Corn</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Public Enemy #1 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Public Enemy #1</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="No Apologies cover">
+        <div class="track-meta">
+          <h2 class="track-title">No Apologies</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Jimmy Crack Corn (Vocal Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy Crack Corn (Vocal Remix)</h2>
+          <p class="track-artist">Eminem feat. Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Jimmy Crack Corn (Vocal Remix) [Single]</p>
+          <p class="track-release">March 6, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/im-having-a-relapse-cover.jpg" alt="I’m Having A Relapse cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m Having A Relapse </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">October 16, 2008</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/3am-travis-barker-remix-cover.jpg" alt="3 a.m. (Travis Barker Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">3 a.m. (Travis Barker Remix)</h2>
+          <p class="track-producer">Produced by Travis Barker</p>
+          <p class="track-album">3 a.m. (Travis Barker Remix) [Single]</p>
+          <p class="track-release">May 29, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/the-warning-despicable-cover.jpg" alt="The Warning cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Warning</h2>
+          <p class="track-artist">Eminem feat. Mariah Carey</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">The Warning [Radio Single]</p>
+          <p class="track-release">July 30, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/dj-hero-cover.jpg" alt="Taking My Ball cover">
+      <div class="track-meta">
+        <h2 class="track-title">Taking My Ball</h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album">DJ Hero (Renegade Edition)</p>
+        <p class="track-release">October 27, 2009</p> 
+    <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/relapse.html">Relapse: Refill</a>.</p>
+        </details>
+      </div>
+    </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/the-warning-despicable-cover.jpg" alt="Despicable (Freestyle) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Despicable (Freestyle)</h2>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Despicable (Freestyle) [Promo Single]</p>
+          <p class="track-release">April 27, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/recovery/love-the-way-you-lie-cover.jpg" alt="Not Afraid (Live At T In The Park) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Not Afraid (Live At T In The Park)</h2>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Love The Way You Lie [Single]</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/guts-over-fear-cover.jpg" alt="Guts Over Fear cover">
+        <div class="track-meta">
+          <h2 class="track-title">Guts Over Fear </h2>
+          <p class="track-artist">Eminem feat. Sia</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; John Hill</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">August 25, 2014</p>
+        </div>
+      </article>
+    
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/detroit-vs-everybody-cover.jpg" alt="Detroit Vs. Everybody cover">
+        <div class="track-meta">
+          <h2 class="track-title">Detroit Vs. Everybody</h2>
+          <p class="track-artist">Eminem, Royce Da 5’9”, Big Sean, Danny Brown, Dej Loaf &amp; Trick Trick</p>
+          <p class="track-producer">Produced by Eminem &amp; Statik Selektah</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 11, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-cxvpher-cover.jpg" alt="Vevo Presents: Shady CXVPHER cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shady CXVPHER </h2>
+          <p class="track-artist"> Eminem, Slaughterhouse &amp; Yelawolf</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Vevo Presents: Shady CXVPHER [Music Video]</p>
+          <p class="track-release">November 11, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Eminem, Paul Rosenberg Intro <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Quitter </h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by Eminem & F.B.T.</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Leaked November 2000.</p>
+        </details>
+      </div>
+    </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hit ’Em Up </h2>
+          <p class="track-artist"> Eminem feat. D12</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Leaked November 2000 as part of “Quitter.”</p>
+        </details>
+      </div>
+    </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Eminem Skit [1] <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+        <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">2009 BET Hip Hop Awards Freestyle </h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by DJ Premier</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Eminem Skit [2] <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">ShadyXV Shoutout <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+       <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Alchemist Freestyle </h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+       <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">Eminem Skit [3] <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+       <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+        <div class="track-meta">
+          <h2 class="track-title">ShadyXV Outro <span class="fn-mark">†</span></h2>
+          <p class="track-artist"> Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Shady Classics Mixtape</p>
+          <p class="track-release">November 22, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">ShadyXV</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Vegas cover">
+        <div class="track-meta">
+          <h2 class="track-title">Vegas</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Die Alone cover">
+        <div class="track-meta">
+          <h2 class="track-title">Die Alone</h2>
+          <p class="track-artist">Eminem feat. Kobe</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Fine Line cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fine Line</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Right For Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Right For Me</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Lose Yourself (Original Demo Version) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lose Yourself (Original Demo Version)</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Jeff Bass</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/southpaw/phenomenal-cover.jpg" alt="Phenomenal cover">
+        <div class="track-meta">
+          <h2 class="track-title">Phenomenal</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">June 2, 2015</p>
+          <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/curtain-call-2.html">Curtain Call 2</a>.</p>
+        </details>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/southpaw/kings-never-die-cover.jpg" alt="Kings Never Die cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kings Never Die</h2>
+          <p class="track-artist">Eminem feat. Gwen Stefani</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 10, 2015</p>
+          <details class="promo-info">
+          <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+          <p class="promo-note">Later included on <a href="/releases/curtain-call-2.html">Curtain Call 2</a>.</p>
+        </details>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Raw cover">
+        <div class="track-meta">
+          <h2 class="track-title">Raw</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Jay CertiFYD & Raymond Diaz</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 24, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="All I Think About cover">
+        <div class="track-meta">
+          <h2 class="track-title">All I Think About</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 24, 2015</p>
+        </div>
+      </article>
+    
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/campaign-speech-cover.jpg" alt="Campaign Speech cover">
+        <div class="track-meta">
+          <h2 class="track-title">Campaign Speech</h2>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Campaign Speech [Single]</p>
+          <p class="track-release">October 19, 2016</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/infinite-fbt-remix-cover.jpg" alt="Infinite (F.B.T. Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Infinite (F.B.T. Remix)</h2>
+          <p class="track-producer">Produced by F.B.T.</p>
+          <p class="track-album">Infinite (F.B.T. Remix) [Single]</p>
+          <p class="track-release">November 18, 2016</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/chloraseptic-remix-cover.jpg" alt="Chloraseptic (Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Chloraseptic (Remix)</h2>
+          <p class="track-artist">Eminem feat. 2 Chainz &amp; Phresher</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Chloraseptic (Remix) [Single]</p>
+          <p class="track-release">January 8, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/killshot-cover.jpg" alt="Killshot cover">
+        <div class="track-meta">
+          <h2 class="track-title">Killshot</h2>
+          <p class="track-producer">Produced by Illadaproducer</p>
+          <p class="track-album">Killshot [Single]</p>
+          <p class="track-release">September 14, 2018</p>
+        </div>
+      </article>
+    
+      <!-- Inserted after Killshot -->
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/killer-remix-cover.jpg" alt="Killer (Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Killer (Remix)</h2>
+          <p class="track-artist">Eminem feat. Jack Harlow &amp; Cordae</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-album">Killer (Remix) [Single]</p>
+          <p class="track-release">May 28, 2021</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/feat/skylar-grey-last-one-standing-cover.jpg" alt="Venom (Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Venom (Remix)</h2>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-album">Last One Standing [Single]</p>
+          <p class="track-release">October 5, 2021</p>
+        </div>
+      </article>
+
+      <article class="track-card">
+        <img class="track-thumb" src="../images/album-covers/non-album/king-&-i-cover.jpg" alt="The King And I cover">
+        <div class="track-meta">
+          <h2 class="track-title">The King And I</h2>
+          <p class="track-artist">Eminem feat. CeeLo Green</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Eminem</p>
+          <p class="track-album">Elvis (Soundtrack)</p>
+          <p class="track-release">June 16, 2022</p>
+          <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Later included on <a href="/releases/curtain-call-2.html">Curtain Call 2</a>.</p>
+          </details>
+        </div>
+      </article>
+        </div>
+      </article>
+      <p class="footnote"><a href="songs-featuring-eminem.html">Click here for songs featuring Eminem.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+// ensure every track-card shows a track-artist element; insert 'Eminem' when missing
+(function ensureTrackArtist() {
+  const metas = Array.from(document.querySelectorAll('.track-meta'));
+  metas.forEach((meta) => {
+    if (!meta.querySelector('.track-artist')) {
+      const p = document.createElement('p');
+      p.className = 'track-artist';
+      p.textContent = 'Eminem';
+      const ref = meta.querySelector('.track-producer') || meta.firstElementChild.nextSibling;
+      meta.insertBefore(p, ref);
+    }
+  });
+})();
+
+(function setupTrackLinks(){
+  const linkMap = {
+    "Nuttin' To Do": '/songs/non-album/nuttin-to-do.html',
+    'Nuttin’ To Do': '/songs/non-album/nuttin-to-do.html',
+    'Scary Movies': '/songs/non-album/scary-movies.html',
+    'My Name Is (Album Version)': '/songs/slim-shady-lp/my-name-is.html',
+    'My Name Is (Slim Shady Radio Edit)': '/songs/slim-shady-lp/my-name-is.html',
+    'My Name Is (Rock Star Remix)': '/songs/non-album/my-name-is-rock-star-remix.html',
+    'Any Man': '/songs/non-album/any-man.html',
+    'Guilty Conscience (Radio Extra Clean w/ New Hook)': '/songs/slim-shady-lp/guilty-conscience.html',
+    'Guilty Conscience (Album Version w/ New Hook)': '/songs/slim-shady-lp/guilty-conscience.html',
+    'Bad Guys Always Die': '/songs/slim-shady-lp/bad-guys-always-die.html',
+    'Bad Influence': '/songs/non-album/bad-influence.html',
+    'My Fault (Pizza Mix)': '/songs/non-album/my-fault-pizza-mix.html',
+    'Murder Murder [Remix]': '/songs/non-album/murder-murder-remix.html',
+    'Murder Murder': '/songs/non-album/murder-murder-remix.html',
+    'Three Verses': '/songs/non-album/three-verses.html',
+    'Pick It Up (Live)': '/songs/non-album/pick-it-up-live.html',
+    'Just Rhymin’ With Proof': '/songs/non-album/just-rhymin-with-proof.html',
+    'I Remember (Dedication To Whitey Ford)': '/songs/non-album/i-remember.html',
+    'Freestyle': '/songs/non-album/freestyle-d12-promo-version.html',
+    'Purple Hills': '/songs/devils-night/purple-pills.html',
+    'Cleanin’ Out My Closet': '/songs/eminem-show/cleanin-out-my-closet.html',
+    'Stimulate': '/songs/eminem-show/stimulate.html',
+    'Business (Green Lantern Mega Mix)': '/songs/non-album/business-mega-mix.html',
+    'Lose Yourself': '/songs/8-mile-soundtrack/lose-yourself.html',
+    'Love Me': '/songs/8-mile-soundtrack/love-me.html',
+    '8 Mile': '/songs/8-mile-soundtrack/8-mile.html',
+    'Rap Game': '/songs/8-mile-soundtrack/rap-game.html',
+    'Rabbit Run': '/songs/8-mile-soundtrack/rabbit-run.html',
+    'Invasion': '/songs/non-album/invasion.html',
+    'The Sauce': '/songs/non-album/sauce.html',
+    'Nail In The Coffin': '/songs/non-album/nail-in-the-coffin.html',
+    'Lose Yourself (Green Lantern Rmx)': '/songs/non-album/lose-youself-remix.html',
+    'Go To Sleep': '/songs/non-album/go-to-sleep.html',
+    'The Conspiracy Freestyle': '/songs/eminem-show/conspiracy-freestyle.html',
+    'Hail Mary': '/songs/non-album/hail-mary.html',
+    'Bump Heads': '/songs/eminem-show/bump-heads.html',
+    'Doe Ray Me': '/songs/non-album/doe-rae-me.html',
+    'Keep Talkin [Mixtape Version]': '/songs/d12-world/keep-talkin.html',
+    'Keep Talkin’': '/songs/d12-world/keep-talkin.html',
+    'Wanksta (Eminem’s Version)': '/songs/non-album/wanksta-eminems-version.html',
+    'Freestyle [Armageddon]': '/songs/non-album/freestyle-armageddon.html',
+    'How Come (Extended Verses)': '/songs/d12-world/how-come.html',
+    '40 Oz. (Remix by Lil Jon)': '/songs/non-album/40-oz-lil-jon-remix.html',
+    'Intro': '/songs/non-album/intro-shade-45.html',
+    'Shade 45 Invasion': '/songs/non-album/shade-45-invasion.html',
+    'Just Lose It (Remix)': '/songs/non-album/just-lose-it-remix.html',
+    'Leave Dat Boy Alone (Green Mix)': '/songs/non-album/leave-dat-boy-alone-green-mix.html',
+    'Outro': '/songs/non-album/outro-shade-45.html',
+    'My Ballz': '/songs/non-album/my-ballz.html',
+    'Business (Live)': '/songs/non-album/business-live-detroit.html',
+    'Anger Management': '/songs/non-album/anger-management.html',
+    'Fubba U Cubba Cubba': '/songs/non-album/fubba-u-cubba-cubba.html',
+    'Dirty Steve (Skit)': '/songs/non-album/dirty-steve-skit.html',
+    'You Don’t Know': '/songs/re-up/you-dont-know.html',
+    'Shady Narcotics (Intro)': '/songs/re-up/shady-narcotics-intro.html',
+    'We’re Back': '/songs/re-up/were-back.html',
+    'The Re-Up': '/songs/re-up/re-up-song.html',
+    'Jimmy Crack Corn': '/songs/re-up/jimmy-crack-corn.html',
+    'Public Enemy #1': '/songs/re-up/public-enemy-number-1.html',
+    'No Apologies': '/songs/re-up/no-apologies.html',
+    'Jimmy Crack Corn (Vocal Remix)': '/songs/non-album/jimmy-crack-corn-remix.html',
+    'I’m Having A Relapse': '/songs/non-album/im-having-a-relapse.html',
+    '3 a.m. (Travis Barker Remix)': '/songs/non-album/3-am-travis-barker-remix.html',
+    'The Warning': '/songs/non-album/warning.html',
+    'Taking My Ball': '/songs/relapse/taking-my-ball.html',
+    'Despicable (Freestyle)': '/songs/non-album/despicable-freestyle.html',
+    'Not Afraid (Live At T In The Park)': '/songs/non-album/not-afraid-live-at-t-in-the-park.html',
+    'Guts Over Fear': '/songs/shadyxv/guts-over-fear.html',
+    'Shady CXVPHER': '/songs/non-album/shady-cxvpher.html',
+    'Detroit Vs. Everybody': '/songs/shadyxv/detroit-vs-everybody.html',
+    'Eminem, Paul Rosenberg Intro': '/songs/non-album/eminem-paul-rosenberg-intro.html',
+    'Quitter': '/songs/non-album/quitter.html',
+    "Hit 'Em Up": '/songs/non-album/hit-em-up.html',
+    'Hit ’Em Up': '/songs/non-album/hit-em-up.html',
+    'Eminem Skit [1]': '/songs/non-album/eminem-skit-1.html',
+    '2009 BET Hip Hop Awards Freestyle': '/songs/non-album/2009-bet-freestyle.html',
+    'Eminem Skit [2]': '/songs/non-album/eminem-skit-2.html',
+    'ShadyXV Shoutout': '/songs/non-album/shadyxv-shoutout.html',
+    'Alchemist Freestyle': '/songs/non-album/alchemist-freestyle.html',
+    'Eminem Skit [3]': '/songs/non-album/eminem-skit-3.html',
+    'ShadyXV Outro': '/songs/non-album/shadyxv-outro.html',
+    'ShadyXV': '/songs/shadyxv/shadyxv-song.html',
+    'Vegas': '/songs/shadyxv/vegas.html',
+    'Die Alone': '/songs/shadyxv/die-alone.html',
+    'Fine Line': '/songs/shadyxv/fine-line.html',
+    'Right For Me': '/songs/shadyxv/right-for-me.html',
+    'Lose Yourself (Original Demo Version)': '/songs/shadyxv/lose-youself-original-demo-version.html',
+    'Phenomenal': '/songs/southpaw-soundtrack/phenomenal.html',
+    'Kings Never Die': '/songs/southpaw-soundtrack/kings-never-die.html',
+    'Raw': '/songs/southpaw-soundtrack/raw.html',
+    'All I Think About': '/songs/southpaw-soundtrack/all-i-think-about.html',
+    'Campaign Speech': '/songs/non-album/campaign-speech.html',
+    'Infinite (F.B.T. Remix)': '/songs/non-album/infinite-fbt-remix.html',
+    'Chloraseptic (Remix)': '/songs/non-album/chloraseptic-remix.html',
+    'Nowhere Fast (Extended Version)': '/songs/revival/nowhere-fast.html',
+    'Killshot': '/songs/non-album/killshot.html',
+    'Killer (Remix)': '/songs/non-album/killer-remix.html',
+    'Venom (Remix)': '/songs/non-album/venom-remix.html',
+    'The King And I': '/songs/curtain-call-2/king-and-i.html'
+  };
+
+  const albumLinkMap = {
+    'Ass Like That [Single]': '/songs/encore/ass-like-that.html',
+    'Shit On You [Single]': '/songs/devils-night/shit-on-you.html',
+    'Love The Way You Lie [Single]': '/songs/recovery/love-the-way-you-lie.html',
+    'Vevo Presents: Shady CXVPHER [Music Video]': '/songs/non-album/shady-cxvpher.html#songVideo',
+    'Last One Standing [Single]': '/songs/feat/last-one-standing.html',
+    'The Warning [Radio Single]': '/songs/non-album/warning.html'
+  };
+
+  const releaseLinkMap = {
+    'Infinite': '/releases/infinite.html',
+    'Slim Shady EP': '/releases/slim-shady-ep.html',
+    'The Slim Shady LP': '/releases/slim-shady-lp.html',
+    'The Marshall Mathers LP': '/releases/marshall-mathers-lp.html',
+    "Devil's Night": '/releases/devils-night.html',
+    'The Eminem Show': '/releases/eminem-show.html',
+    '8 Mile (Soundtrack)': '/releases/8-mile-soundtrack.html',
+    'D12 World': '/releases/d12-world.html',
+    'Encore': '/releases/encore.html',
+    'Curtain Call: The Hits': '/releases/curtain-call.html',
+    'The Re-Up': '/releases/re-up.html',
+    'Relapse': '/releases/relapse.html',
+    'Recovery': '/releases/recovery.html',
+    'Hell: The Sequel': '/releases/hell-the-sequel.html',
+    'The Marshall Mathers LP 2': '/releases/marshall-mathers-lp-2.html',
+    'SHADYXV': '/releases/shadyxv.html',
+    'Southpaw (Soundtrack)': '/releases/southpaw-soundtrack.html',
+    'Revival': '/releases/revival.html',
+    'Kamikaze': '/releases/kamikaze.html',
+    'Music To Be Murdered By': '/releases/music-to-be-murdered-by.html',
+    'Curtain Call 2': '/releases/curtain-call-2.html',
+    'Fortnite Radio': '/releases/fortnite-radio.html',
+    'The Death Of Slim Shady': '/releases/death-of-slim-shady.html',
+    'STANS (Soundtrack)': '/releases/stans-soundtrack.html',
+    'Underground EP': '/releases/underground-ep.html'
+  };
+
+  const releaseAliasMap = {
+    'Eminem Presents: The Re-Up': '/releases/re-up.html'
+  };
+
+  const normalizeTitle = (value) =>
+    (value || '')
+      .replace(/†/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  document.querySelectorAll('.track-card').forEach((card) => {
+    const titleEl = card.querySelector('.track-title');
+    if (!titleEl) return;
+    const key = normalizeTitle(titleEl.textContent);
+    const href = linkMap[key];
+    if (!href) return;
+
+    const thumb = card.querySelector('img.track-thumb');
+    if (thumb && (!thumb.parentElement || thumb.parentElement.tagName !== 'A')) {
+      const thumbLink = document.createElement('a');
+      thumbLink.href = href;
+      thumbLink.className = 'track-thumb-link';
+      thumbLink.setAttribute('aria-label', key);
+      thumb.parentNode.insertBefore(thumbLink, thumb);
+      thumbLink.appendChild(thumb);
+    }
+
+    if (!titleEl.querySelector('a')) {
+      const titleLink = document.createElement('a');
+      titleLink.href = href;
+      const nodes = Array.from(titleEl.childNodes);
+      nodes.forEach((node) => titleLink.appendChild(node));
+      titleEl.appendChild(titleLink);
+    }
+
+    const albumEl = card.querySelector('.track-album');
+    if (!albumEl || albumEl.querySelector('a')) return;
+    const albumText = albumEl.textContent || '';
+    const isMixtape = albumText.includes('[Mixtape]') || albumText.includes('Mixtape');
+    const isSingle = albumText.includes('[Promo Single]') || albumText.includes('[Promo Singles]') || albumText.includes('[Single]') || albumText.includes('[MP3]');
+    const albumBase = albumText.replace(/\s*\[[^\]]+\]\s*/g, '').trim();
+    const releaseHref =
+      releaseLinkMap[albumText] ||
+      releaseLinkMap[albumBase] ||
+      releaseAliasMap[albumText] ||
+      releaseAliasMap[albumBase];
+    const albumHref = albumText === "Nuttin' To Do / Scary Movies [Single]"
+      ? null
+      : albumLinkMap[albumText] || (isSingle ? (linkMap[albumBase] || href) : (releaseHref || null));
+    if (!albumHref) return;
+    const albumLink = document.createElement('a');
+    albumLink.href = albumHref;
+    const albumNodes = Array.from(albumEl.childNodes);
+    albumNodes.forEach((node) => albumLink.appendChild(node));
+    albumEl.appendChild(albumLink);
+  });
+})();
+
+(() => {
+  const filterButtons = Array.from(document.querySelectorAll('.filter-btn[data-filter]'));
+  const trackCards = Array.from(document.querySelectorAll('.track-card'));
+
+  if (!filterButtons.length || !trackCards.length) return;
+
+  const hasFnMark = (card) => Boolean(card.querySelector('.fn-mark'));
+
+  const normalizeText = (text) => (text || '').toLowerCase();
+
+  trackCards.forEach((card) => {
+    const artistEl = card.querySelector('.track-artist');
+    const artistText = normalizeText(artistEl ? artistEl.textContent : '');
+    const forcedD12 = card.dataset.forceD12;
+    const forcedBme = card.dataset.forceBme;
+    const isD12 =
+      forcedD12 === 'true'
+        ? true
+        : forcedD12 === 'false'
+          ? false
+          : artistText.includes('d12') && !artistText.includes('feat');
+    const isBme =
+      forcedBme === 'true'
+        ? true
+        : forcedBme === 'false'
+          ? false
+          : artistText.includes('bad meets evil');
+
+    card.dataset.filterType = hasFnMark(card) ? 'transitions' : 'songs';
+    card.dataset.isD12 = String(isD12);
+    card.dataset.isBme = String(isBme);
+    card.setAttribute('data-filter-type', card.dataset.filterType);
+  });
+
+  const applyFilter = (filter) => {
+    filterButtons.forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.filter === filter);
+    });
+
+    trackCards.forEach((card) => {
+      const type = card.dataset.filterType || 'songs';
+      const isD12 = card.dataset.isD12 === 'true';
+      const isBme = card.dataset.isBme === 'true';
+      const show =
+        filter === 'all' ||
+        (filter === 'transitions' && type === 'transitions') ||
+        (filter === 'songs' && type === 'songs' && !isD12 && !isBme) ||
+        (filter === 'd12' && isD12) ||
+        (filter === 'bme' && isBme);
+
+      card.hidden = !show;
+      card.classList.toggle('is-hidden-by-filter', !show);
+    });
+  };
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter || 'all'));
+  });
+
+  const setupTrackDropdowns = () => {
+    trackCards.forEach((card) => {
+      const meta = card.querySelector('.track-meta');
+      const title = meta ? meta.querySelector('.track-title') : null;
+      if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+      const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+      promoBlocks.forEach((block) => {
+        const note = block.querySelector('.promo-note');
+        if (!note) {
+          block.remove();
+          return;
+        }
+        const inlineNote = document.createElement('p');
+        inlineNote.className = 'promo-note';
+        inlineNote.innerHTML = note.innerHTML;
+        block.replaceWith(inlineNote);
+      });
+
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'track-toggle';
+      toggle.setAttribute('aria-label', 'Toggle track details');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = '▾';
+
+      const titleRow = document.createElement('div');
+      titleRow.className = 'track-title-row';
+      title.parentNode.insertBefore(titleRow, title);
+      titleRow.appendChild(title);
+      titleRow.appendChild(toggle);
+
+      const details = document.createElement('div');
+      details.className = 'track-details';
+      const detailNodes = Array.from(meta.children).filter((el) => (
+        el !== titleRow
+        && (el.classList.contains('track-producer')
+          || el.classList.contains('track-release')
+          || el.classList.contains('promo-note'))
+      ));
+      detailNodes.forEach((node) => details.appendChild(node));
+      meta.appendChild(details);
+    });
+  };
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  const initTrackToggles = () => {
+    trackCards.forEach((card) => {
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      card.setAttribute('aria-pressed', 'false');
+
+      const toggle = card.querySelector('.track-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', (event) => {
+          event.stopPropagation();
+          toggleDetails(card);
+        });
+        toggle.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.stopPropagation();
+          }
+        });
+      }
+
+      card.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.closest('.track-thumb') || target.closest('details') || target.closest('a')) return;
+        toggleDetails(card);
+      });
+
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          card.click();
+        }
+      });
+    });
+  };
+
+  setupTrackDropdowns();
+  initTrackToggles();
+  applyFilter('songs');
+})();
+</script>
+</body>
+</html>

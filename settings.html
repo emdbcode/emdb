@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings | EMDb</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+  <style>
+    .auth-page {
+      max-width: 640px;
+      margin: 80px auto 140px;
+      padding: 0 20px;
+    }
+    .auth-card {
+      background: #111117;
+      border: 1px solid #1f1f24;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 16px 38px rgba(0,0,0,0.35);
+    }
+    .auth-title {
+      font-size: 28px;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.01em;
+    }
+    .auth-subtitle {
+      margin: 0 0 22px 0;
+      color: #bdbdbd;
+      line-height: 1.5;
+    }
+    .settings-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .settings-card {
+      border: 1px solid #1f1f24;
+      background: #0e0e14;
+      border-radius: 12px;
+      padding: 18px 18px 12px;
+    }
+    .settings-card h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+    }
+    .settings-note {
+      margin: 4px 0 12px;
+      color: #9ea0a8;
+      font-size: 14px;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0;
+    }
+    .form-field label {
+      font-size: 13px;
+      color: #d8d8d8;
+    }
+    .form-field input {
+      border: 1px solid #2a2a32;
+      background: #0e0e14;
+      color: #f1f1f1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-field input:focus {
+      outline: none;
+      border-color: #E21C21;
+      box-shadow: 0 0 0 2px rgba(226, 28, 33, 0.2);
+    }
+    .form-field select {
+      border: 1px solid #2a2a32;
+      background: #0e0e14;
+      color: #f1f1f1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-field select:focus {
+      outline: none;
+      border-color: #E21C21;
+      box-shadow: 0 0 0 2px rgba(226, 28, 33, 0.2);
+    }
+    .avatar-dropdown {
+      position: relative;
+    }
+    .avatar-dropdown-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid #2a2a32;
+      background: #0e0e14;
+      color: #f1f1f1;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .avatar-dropdown-toggle:focus {
+      outline: none;
+      border-color: #E21C21;
+      box-shadow: 0 0 0 2px rgba(226, 28, 33, 0.2);
+    }
+    .avatar-dropdown-selected {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .avatar-dropdown-selected img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid #262632;
+      background: #0d0d12;
+      flex: 0 0 auto;
+    }
+    .avatar-dropdown-selected span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .avatar-dropdown-caret {
+      color: #a9abb2;
+      flex: 0 0 auto;
+    }
+    .avatar-dropdown-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      background: #12121a;
+      border: 1px solid #2a2a32;
+      border-radius: 12px;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.42);
+      z-index: 30;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .avatar-search {
+      width: 100%;
+      border: 1px solid #2a2a32;
+      background: #0e0e14;
+      color: #f1f1f1;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
+      margin: 0 0 8px;
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+    .avatar-options-list {
+      max-height: 270px;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-right: 2px;
+    }
+    .avatar-option-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #242430;
+      background: #0f0f17;
+      color: #e6e7eb;
+      border-radius: 9px;
+      padding: 7px 9px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .avatar-option-item:hover {
+      border-color: #b51616;
+    }
+    .avatar-option-item.is-selected {
+      border-color: #E21C21;
+      box-shadow: 0 0 0 1px rgba(226, 28, 33, 0.25) inset;
+    }
+    .avatar-option-item img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #0d0d12;
+      border: 1px solid #262632;
+      flex: 0 0 auto;
+    }
+    .avatar-option-item span {
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .avatar-empty {
+      color: #9ea0a8;
+      font-size: 13px;
+      padding: 10px 6px;
+    }
+    .primary-btn {
+      background: #0e0e14;
+      border: 1px solid #2a2a32;
+      color: #eaeaea;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      margin: 18px 0 0 0;
+      transition: border-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+    }
+    .primary-btn:hover {
+      border-color: #E21C21;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .ghost-btn {
+      background: transparent;
+      border: 1px solid #2a2a32;
+      color: #eaeaea;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .ghost-btn:hover {
+      border-color: #E21C21;
+      color: #fff;
+    }
+    .auth-message {
+      margin: 6px 0 0 0;
+      font-size: 14px;
+      color: #cfd0d4;
+      min-height: 0;
+    }
+    .auth-message[data-tone="error"] { color: #ff6b6b; }
+    .auth-message[data-tone="success"] { color: #7bd88a; }
+    .auth-message[data-tone="neutral"] { color: #cfd0d4; }
+    #avatarMessage {
+      margin-top: 10px;
+    }
+    .avatar-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 6px 0 0;
+    }
+    .avatar-preview img {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      object-fit: cover;
+      background: #0d0d12;
+      border: 1px solid #1f1f24;
+    }
+    .signout-row {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 18px 12px;
+    }
+    @media (max-width: 520px) {
+      .auth-card { padding: 22px; }
+      .auth-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="auth-page" aria-labelledby="settingsTitle">
+    <section class="auth-card">
+      <h1 class="auth-title" id="settingsTitle">Account Settings</h1>
+      <div id="settingsStatus" class="auth-message" role="status" aria-live="polite"></div>
+
+      <div class="settings-stack">
+        <div class="settings-card">
+          <h2>Change username</h2>
+          <form id="usernameForm" novalidate>
+            <div class="form-field">
+              <input type="text" id="newUsername" name="newUsername" minlength="3" maxlength="32" autocomplete="nickname" required>
+            </div>
+            <button type="submit" class="primary-btn">Save username</button>
+            <p id="usernameMessage" class="auth-message" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="settings-card">
+          <h2>Change avatar</h2>
+          <form id="avatarForm" novalidate>
+            <div class="form-field">
+              <label for="avatarPath">Choose avatar</label>
+              <div class="avatar-dropdown" id="avatarDropdown">
+                <button type="button" class="avatar-dropdown-toggle" id="avatarDropdownToggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="avatarDropdownMenu">
+                  <span class="avatar-dropdown-selected">
+                    <img id="avatarDropdownThumb" src="/images/avatars/avatar-1.jpg" alt="Selected avatar">
+                    <span id="avatarDropdownLabel">avatar-1 (default)</span>
+                  </span>
+                  <span class="avatar-dropdown-caret" aria-hidden="true">▼</span>
+                </button>
+                <div class="avatar-dropdown-menu" id="avatarDropdownMenu" hidden>
+                  <input type="text" id="avatarSearch" class="avatar-search" placeholder="Search avatars..." autocomplete="off">
+                  <div id="avatarOptionsList" class="avatar-options-list" role="listbox" aria-label="Avatar options"></div>
+                </div>
+                <input type="hidden" id="avatarPath" name="avatarPath" value="/images/avatars/avatar-1.jpg">
+              </div>
+              <div class="avatar-preview">
+                <img id="avatarPreview" src="/images/avatars/avatar-1.jpg" alt="Avatar preview">
+                <span class="settings-note">Choose from the list and preview before saving.</span>
+              </div>
+            </div>
+            <button type="submit" class="primary-btn">Save avatar</button>
+            <p id="avatarMessage" class="auth-message" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="signout-row">
+        <button type="button" class="primary-btn" id="profileSignOut">Sign out</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/header.js"></script>
+  <script src="/settings.js"></script>
+</body>
+</html>

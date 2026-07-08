@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Albums Discography | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+.albums-discography-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+}
+
+.track-thumb {
+  width: 84px;
+  height: 84px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+  min-width: 0;
+  min-height: 84px;
+}
+
+.album-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.album-title a,
+.album-title a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.album-title a:hover,
+.album-title a:focus {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.album-artist,
+.album-type,
+.album-release,
+.album-label,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* active/open/hover state */
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+/* when the details is closed but the summary is focused, keep it white */
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 6px 0;
+}
+
+.filter-btn {
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.filter-btn:hover,
+.filter-btn:focus-visible {
+  color: #eaeaea;
+  border-color: #444;
+  outline: none;
+}
+
+.filter-btn.is-active {
+  color: #eaeaea;
+  border-color: #E21C21;
+}
+
+.track-card[hidden] {
+  display: none !important;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+  font-size: 13px;
+}
+
+.fn-mark {
+  color: #aaa;
+  font-weight: 400;
+}
+
+@media (max-width: 520px) {
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 70px;
+    height: 70px;
+  }
+  .track-meta {
+    min-height: 70px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="albums-discography-page">
+  <header>
+    <h1 class="page-title">Albums Discography</h1>
+  </header>
+
+  <div class="filter-bar" aria-label="Filter albums">
+    <button class="filter-btn is-active" data-filter="studio" type="button">Studio Albums</button>
+    <button class="filter-btn" data-filter="compilations" type="button">Compilations</button>
+    <button class="filter-btn" data-filter="eps" type="button">EPs</button>
+    •
+    <button class="filter-btn" data-filter="d12" type="button">with D12</button>
+    <button class="filter-btn" data-filter="bad-meets-evil" type="button">Bad Meets Evil</button>
+    <button class="filter-btn" data-filter="shady-compilations" type="button">Shady Compilations</button>
+    <button class="filter-btn" data-filter="all" type="button">All</button>
+  </div>
+
+  <section class="track-list" aria-label="Albums discography tracklist">
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Infinite cover">
+      <div class="track-meta">
+        <h2 class="album-title">Infinite</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (1st)</p>
+        <p class="album-label">WEB Entertainment</p>
+        <p class="album-release">November 12, 1996
+</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/slim-shady-ep/slim-shady-ep-cover.jpg" alt="The Slim Shady EP cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Slim Shady EP</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Extended Play</p>
+        <p class="album-label">WEB Entertainment</p>
+        <p class="album-release">December 10, 1997</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="The Slim Shady LP cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Slim Shady LP</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (2nd)</p>
+        <p class="album-label">Aftermath • Interscope</p>
+        <p class="album-release">February 23, 1999</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Marshall Mathers LP</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (3rd)</p>
+        <p class="album-label">Aftermath • Interscope</p>
+        <p class="album-release">May 23, 2000</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil’s Night cover">
+      <div class="track-meta">
+        <h2 class="album-title">Devil’s Night</h2>
+        <p class="album-artist">D12</p>
+        <p class="album-type">Studio Album (1st)</p>
+        <p class="album-label">Shady • Interscope</p>
+        <p class="album-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Eminem Show</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (4th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">May 26, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <a class="track-thumb-link" href="/releases/8-mile-soundtrack.html">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile (Soundtrack) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="album-title"><a href="/releases/8-mile-soundtrack.html">8 Mile (Soundtrack)</a></h2>
+        <p class="album-artist">Various Artists</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Shady • Interscope • UMG Soundtracks</p>
+        <p class="album-release">October 29, 2002</p>
+      </div>
+    </article>
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+      <div class="track-meta">
+        <h2 class="album-title">D12 World</h2>
+        <p class="album-artist">D12</p>
+        <p class="album-type">Studio Album (2nd)</p>
+        <p class="album-label">Shady • Interscope</p>
+        <p class="album-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+      <div class="track-meta">
+        <h2 class="album-title">Encore</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (5th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">November 12, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
+      <div class="track-meta">
+        <h2 class="album-title">Curtain Call: The Hits</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">December 6, 2005</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+      <div class="track-meta">
+        <h2 class="album-title">Eminem Presents: The Re-Up</h2>
+        <p class="album-artist">Various Artists</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Shady • Interscope</p>
+        <p class="album-release">December 5, 2006</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+      <div class="track-meta">
+        <h2 class="album-title">Relapse</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (6th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">May 15, 2009</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+      <div class="track-meta">
+        <h2 class="album-title">Recovery</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (7th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">June 18, 2010</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+      <div class="track-meta">
+        <h2 class="album-title">Hell: The Sequel</h2>
+        <p class="album-artist">Bad Meets Evil</p>
+        <p class="album-type">Extended Play</p>
+        <p class="album-label">Shady • Interscope</p>
+        <p class="album-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Marshall Mathers LP 2</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (8th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">November 5, 2013</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+      <div class="track-meta">
+        <h2 class="album-title">SHADYXV</h2>
+        <p class="album-artist">Various Artists</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Shady • Interscope</p>
+        <p class="album-release">November 24, 2014</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <a class="track-thumb-link" href="/releases/southpaw-soundtrack.html">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw (Soundtrack) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="album-title"><a href="/releases/southpaw-soundtrack.html">Southpaw (Soundtrack)</a></h2>
+        <p class="album-artist">Various Artists</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Shady • Interscope • Sony Classical</p>
+        <p class="album-release">July 24, 2015</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+      <div class="track-meta">
+        <h2 class="album-title">Revival</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (9th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">December 15, 2017</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+      <div class="track-meta">
+        <h2 class="album-title">Kamikaze</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (10th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">August 31, 2018</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music to Be Murdered By cover">
+      <div class="track-meta">
+        <h2 class="album-title">Music to Be Murdered By</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (11th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">January 17, 2020</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Curtain Call 2 cover">
+      <div class="track-meta">
+        <h2 class="album-title">Curtain Call 2</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">August 5, 2022</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/fortnite-radio-cover.jpg" alt="Fortnite Radio cover">
+      <div class="track-meta">
+        <h2 class="album-title">Fortnite Radio</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">March 15, 2024</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death of Slim Shady (Coup de Grâce) cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Death of Slim Shady (Coup de Grâce)</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Studio Album (12th)</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">July 12, 2024</p>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <a class="track-thumb-link" href="/releases/stans-soundtrack.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/stans-cover.jpg" alt="STANS (Soundtrack) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="album-title"><a href="/releases/stans-soundtrack.html">STANS (Soundtrack)</a></h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Compilation Album</p>
+        <p class="album-label">Aftermath • Shady • Interscope</p>
+        <p class="album-release">August 26, 2025</p>
+      </div>
+    </article>
+
+      <p class="footnote"><a href="singles-discography.html">Click here for Eminem’s singles discography.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+(() => {
+  const filterButtons = Array.from(document.querySelectorAll('.filter-btn[data-filter]'));
+  const trackCards = Array.from(document.querySelectorAll('.track-card'));
+
+  if (!filterButtons.length || !trackCards.length) return;
+
+  const releaseAlbumLinks = [
+    { pattern: /\bInfinite\b/i, href: '/releases/infinite.html' },
+    { pattern: /\bThe\s+Slim\s+Shady\s+EP\b/i, href: '/releases/slim-shady-ep.html' },
+    { pattern: /\bThe\s+Slim\s+Shady\s+LP\b/i, href: '/releases/slim-shady-lp.html' },
+    { pattern: /\bThe\s+Marshall\s+Mathers\s+LP\s*2\b/i, href: '/releases/marshall-mathers-lp-2.html' },
+    { pattern: /\bThe\s+Marshall\s+Mathers\s+LP\b/i, href: '/releases/marshall-mathers-lp.html' },
+    { pattern: /\bThe\s+Eminem\s+Show\b/i, href: '/releases/eminem-show.html' },
+    { pattern: /\b8\s*Mile\s*\(Soundtrack\)\b/i, href: '/releases/8-mile-soundtrack.html' },
+    { pattern: /\bDevil['’]s\s+Night\b/i, href: '/releases/devils-night.html' },
+    { pattern: /\bD12\s+World\b/i, href: '/releases/d12-world.html' },
+    { pattern: /\bEncore\b/i, href: '/releases/encore.html' },
+    { pattern: /\bCurtain\s+Call\s*:?\s*The\s+Hits\b/i, href: '/releases/curtain-call.html' },
+    { pattern: /\bEminem\s+Presents:?\s+The\s+Re\-Up\b/i, href: '/releases/re-up.html' },
+    { pattern: /\bRelapse\b/i, href: '/releases/relapse.html' },
+    { pattern: /\bRecovery\b/i, href: '/releases/recovery.html' },
+    { pattern: /\bHell\s*:?\s*The\s+Sequel\b/i, href: '/releases/hell-the-sequel.html' },
+    { pattern: /\bShady\s*XV\b/i, href: '/releases/shadyxv.html' },
+    { pattern: /\bSouthpaw\s*\(Soundtrack\)\b/i, href: '/releases/southpaw-soundtrack.html' },
+    { pattern: /\bRevival\b/i, href: '/releases/revival.html' },
+    { pattern: /\bKamikaze\b/i, href: '/releases/kamikaze.html' },
+    { pattern: /\bMusic\s+To\s+Be\s+Murdered\s+By\b/i, href: '/releases/music-to-be-murdered-by.html' },
+    { pattern: /\bCurtain\s+Call\s*2\b/i, href: '/releases/curtain-call-2.html' },
+    { pattern: /\bFortnite\s+Radio\b/i, href: '/releases/fortnite-radio.html' },
+    { pattern: /\bThe\s+Death\s+of\s+Slim\s+Shady\b/i, href: '/releases/death-of-slim-shady.html' },
+    { pattern: /\bSTANS\s*\(Soundtrack\)\b/i, href: '/releases/stans-soundtrack.html' }
+  ];
+
+  const linkAlbumCards = () => {
+    trackCards.forEach((card) => {
+      const titleEl = card.querySelector('.album-title');
+      if (!titleEl) return;
+      const titleText = titleEl.textContent || '';
+      const match = releaseAlbumLinks.find((entry) => entry.pattern.test(titleText));
+      if (!match) return;
+
+      if (!titleEl.querySelector('a')) {
+        const titleLink = document.createElement('a');
+        titleLink.href = match.href;
+        const nodes = Array.from(titleEl.childNodes);
+        nodes.forEach((node) => titleLink.appendChild(node));
+        titleEl.appendChild(titleLink);
+      }
+
+      const thumb = card.querySelector('.track-thumb');
+      if (thumb && !thumb.closest('a')) {
+        const thumbLink = document.createElement('a');
+        thumbLink.href = match.href;
+        thumbLink.className = 'track-thumb-link';
+        thumb.parentNode.insertBefore(thumbLink, thumb);
+        thumbLink.appendChild(thumb);
+      }
+    });
+  };
+
+  // determine category for each album card
+  trackCards.forEach((card) => {
+    const title = card.querySelector('.album-title')?.textContent?.trim() || '';
+    const artist = card.querySelector('.album-artist')?.textContent?.trim() || '';
+    const typeText = card.querySelector('.album-type')?.textContent?.trim() || '';
+    const label = card.querySelector('.album-label')?.textContent?.trim() || '';
+
+    let category = 'other';
+
+    // explicit exceptions: put these specific releases into 'compilations'
+    if (/^(Curtain Call: The Hits|Curtain Call 2|STANS( \(Soundtrack\))?|Fortnite Radio)$/i.test(title)) {
+      category = 'compilations';
+    }
+    // priority categories
+    else if (/^D12$/i.test(artist)) category = 'd12';
+    else if (/^Bad Meets Evil$/i.test(artist)) category = 'bad-meets-evil';
+    else if (/compilation/i.test(typeText) && /shady/i.test(label)) category = 'shady-compilations';
+    else if (/studio album/i.test(typeText)) category = 'studio';
+    else if (/compilation/i.test(typeText)) category = 'compilations';
+    else if (/extended play|ep/i.test(typeText)) category = 'eps';
+
+    card.dataset.filterType = category;
+    card.setAttribute('data-filter-type', category);
+  });
+
+  const applyFilter = (filter) => {
+    filterButtons.forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.filter === filter);
+    });
+
+    trackCards.forEach((card) => {
+      const type = card.dataset.filterType || 'other';
+      const albumArtist = card.querySelector('.album-artist');
+      const show =
+        filter === 'all' ||
+        (filter === 'studio' && type === 'studio') ||
+        (filter === 'compilations' && type === 'compilations') ||
+        (filter === 'eps' && type === 'eps') ||
+        (filter === 'd12' && type === 'd12') ||
+        (filter === 'bad-meets-evil' && type === 'bad-meets-evil') ||
+        (filter === 'shady-compilations' && type === 'shady-compilations');
+
+      card.hidden = !show;
+      card.classList.toggle('is-hidden-by-filter', !show);
+      if (albumArtist) {
+        albumArtist.style.display = filter === 'all' ? '' : 'none';
+      }
+    });
+  };
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter || 'all'));
+  });
+
+  linkAlbumCards();
+  applyFilter('studio');
+})();
+</script>
+</body>
+</html>

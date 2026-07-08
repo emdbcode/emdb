@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News | EMDb</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #eaeaea;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .news-page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem 2rem;
+      box-sizing: border-box;
+    }
+
+    .news-shell {
+      background: #151515;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    .news-shell h1 {
+      margin: 0 0 1rem 0;
+      color: #fff;
+      font-size: clamp(24px, 4vw, 34px);
+      line-height: 1.25;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .news-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .news-card a {
+      color: inherit;
+      text-decoration: none;
+      display: grid;
+      grid-template-rows: auto auto;
+      height: 100%;
+    }
+
+    .news-card:hover,
+    .news-card:focus-within {
+      border-color: #E21C21;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      transform: translateY(-1px);
+    }
+
+    .news-card img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid #222;
+    }
+
+    .news-card h2 {
+      margin: 0;
+      padding: 0.9rem 1rem 0.3rem;
+      color: #fff;
+      font-size: clamp(16px, 2.4vw, 20px);
+      line-height: 1.35;
+    }
+
+    .news-card .news-date {
+      margin: 0;
+      padding: 0 1rem 1rem;
+      color: #b8b8b8;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 900px) {
+      .news-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="news-page">
+    <section class="news-shell">
+      <h1>News</h1>
+
+      <div class="news-grid">
+        <article class="news-card">
+          <a href="/news/my-dads-gone-crazy-fathers-day-single.html">
+            <img src="/images/news-images/my-dads-gone-crazy-single-thumb.jpg" alt="Father's Day The Shady Way">
+            <h2>Father’s Day The Shady Way</h2>
+            <p class="news-date">June 28, 2026</p>
+          </a>
+        </article>
+        <article class="news-card">
+          <a href="/news/d12-thank-eminem-d12-forever.html">
+            <img src="/images/news-images/d12-thank-shady.jpg" alt="D12 Thank Eminem Following New Album">
+            <h2>D12 Thank Eminem Following New Album</h2>
+            <p class="news-date">June 19, 2026</p>
+          </a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+</body>
+</html>

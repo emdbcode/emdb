@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Songs with Royce Da 5’9“ (Bad Meets Evil) | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.track-card:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 3px;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-title a,
+.track-title a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-title a:hover,
+.track-title a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+  border-radius: 8px;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-album a,
+.track-album a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+
+.track-card .track-producer {
+  display: none;
+}
+
+.track-card.show-credits .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+
+  .filter-btn[data-filter="addl"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Songs with Royce Da 5’9“ (Bad Meets Evil)</h1>
+    <div class="filter-bar" role="group" aria-label="Filter by role or collaborator">
+      <button class="filter-btn active" data-filter="all" type="button"><span class="filter-label">Performed with Royce Da 5’9“</span></button>
+      <button class="filter-btn" data-filter="more" type="button"><span class="filter-label">Other Credits</span></button>
+    </div>
+  </header>
+
+  <section class="track-list" aria-label="Songs with Royce Da 5’9&quot; (Bad Meets Evil)">
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Nuttin’ To Do</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Reef</p>
+          <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+          <p class="track-release">October 1, 1998</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Scary Movies</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Reef</p>
+          <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+          <p class="track-release">October 1, 1998</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-obie">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bad Meets Evil</h2>
+          <p class="track-artist">Eminem feat. Royce Da 5’9“</p>
+          <p class="track-producer">Produced by The Bass Brothers</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Slim Shady LP</p>
+          <p class="track-release">February 23, 1999</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/dj-clue-what-the-beat-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">What The Beat</h2>
+          <p class="track-artist">DJ Clue feat. Eminem, Method Man &amp; Royce Da 5’9“</p>
+          <p class="track-producer">Produced by DJ Clue &amp; Duro</p>
+          <p class="track-album">The Professional 2</p>
+          <p class="track-release">February 27, 2001</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-rock-city-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rock City</h2>
+          <p class="track-artist">Royce Da 5’9“ feat. Eminem</p>
+          <p class="track-producer">Produced by Red Spyda</p>
+          <p class="track-album">Rock City</p>
+          <p class="track-release">January 5, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-renegades-she's-the-one-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">She’s The One</h2>
+          <p class="track-artist">Royce Da 5’9“ with Eminem</p>
+          <p class="track-producer">Produced by The Neptunes</p>
+          <p class="track-album">Build And Destroy [Mixtape]</p>
+          <p class="track-release">June 3, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-renegades-she's-the-one-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Renegades</h2>
+          <p class="track-artist">Royce Da 5’9“ feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Build And Destroy [Mixtape]</p>
+          <p class="track-release">June 3, 2003</p>
+          <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">This is the original version of “Renegade” by JAY-Z.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-writer's-block-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Writer’s Block</h2>
+          <p class="track-artist">Royce Da 5’9“ feat. Eminem</p>
+          <p class="track-producer">Produced by Streetrunner &amp; Sarom</p>
+          <p class="track-album">Success Is Certain</p>
+          <p class="track-release">March 29, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fast Lane</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Supa Dups</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Jason Gilbert</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">May 3, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Welcome 2 Hell</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Havoc</p>
+          <p class="track-producer">Co-Produced by Magnedo7</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Reunion</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Sid Roams</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Above The Law</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m On Everything</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">A Kiss</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Bangladesh</p>
+          <p class="track-producer">Additional Production by branNu</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lighters</h2>
+          <p class="track-artist">Bad Meets Evil feat. Bruno Mars</p>
+          <p class="track-producer">Produced by Eminem, The Smeezingtons &amp; Battle Roy</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Take From Me</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Co-Produced by 56</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Loud Noises</h2>
+          <p class="track-artist">Bad Meets Evil feat. Slaughterhouse</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel_2-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Living Proof</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Hell: The Sequel (Deluxe Edition)</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel_2-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Echo</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-album">Hell: The Sequel (Deluxe Edition)</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+       <article class="track-card collab">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">Throw That</h2>
+        <p class="track-artist">Slaughterhouse feat. Eminem</p>
+        <p class="track-producer">Produced by T-Minus</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 21, 2012</p>
+      </div>
+    </article>
+     <article class="track-card collab">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House (Deluxe) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Our House</h2>
+        <p class="track-artist">Slaughterhouse feat. Eminem &amp; Skylar Grey</p>
+        <p class="track-producer">Produced by Alex da kid</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+     <article class="track-card collab">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house_2-cover.jpg" alt="Welcome To: Our House (Deluxe) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Asylum</h2>
+        <p class="track-artist">Slaughterhouse feat. Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+        <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/trick-trick-twerk-dat-pop-that-cover.jpg" alt="Twerk Dat Pop That cover">
+          <div class="track-meta">
+            <h2 class="track-title">Twerk Dat Pop That</h2>
+            <p class="track-artist">Trick Trick feat. Eminem &amp; Royce Da 5’9“</p>
+            <p class="track-producer">Produced by Antt Beatz</p>
+            <p class="track-album">Twerk Dat Pop That [Single]</p>
+            <p class="track-release">July 4, 2014</p>
+          </div>
+        </article>
+        <article class="track-card collab">
+          <img class="track-thumb" src="../images/album-covers/shady-xv/detroit-vs-everybody-cover.jpg" alt="SHADYXV cover">
+          <div class="track-meta">
+            <h2 class="track-title">Detroit Vs. Everybody</h2>
+            <p class="track-artist">Eminem, Royce Da 5’9”, Big Sean, Danny Brown, Dej Loaf &amp; Trick Trick</p>
+            <p class="track-producer">Produced by Eminem &amp; Statik Selektah</p>
+            <p class="track-album">SHADYXV</p>
+            <p class="track-release">November 11, 2014</p>
+          </div>
+        </article>
+         <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/shady-cxvpher-cover.jpg" alt="Vevo Presents: Shady CXVPHER cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shady CXVPHER </h2>
+          <p class="track-artist"> Eminem,Slaughterhouse &amp; Yelawolf</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Vevo Presents: Shady CXVPHER [Music Video]</p>
+          <p class="track-release">November 11, 2014</p>
+        </div>
+      </article>
+       <article class="track-card collab">
+      <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="Psychopath Killer cover">
+      <div class="track-meta">
+        <h2 class="track-title">Psychopath Killer</h2>
+        <p class="track-artist">Slaughterhouse feat. Eminem &amp; Yelawolf</p>
+        <p class="track-producer">Produced by Boi-1da</p>
+        <p class="track-producer">Co-Produced by Just Blaze</p>
+        <p class="track-album">SHADYXV</p>
+        <p class="track-release">November 24, 2014</p>
+      </div>
+    </article>
+        <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw cover">
+          <div class="track-meta">
+            <h2 class="track-title">Vegas</h2>
+            <p class="track-artist">Bad Meets Evil</p>
+            <p class="track-producer">Produced by Eminem</p>
+            <p class="track-producer">Additional Production by Luis Resto</p>
+            <p class="track-album">SHADYXV</p>
+            <p class="track-release">November 24, 2014</p>
+          </div>
+        </article>
+        <article class="track-card collab">
+          <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw cover">
+          <div class="track-meta">
+            <h2 class="track-title">Raw</h2>
+            <p class="track-artist">Bad Meets Evil</p>
+            <p class="track-producer">Produced by Jay CertiFYD &amp; Raymond Diaz</p>
+            <p class="track-album">Southpaw (Soundtrack)</p>
+            <p class="track-release">July 24, 2015</p>
+          </div>
+        </article>
+        <article class="track-card collab">
+          <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw cover">
+          <div class="track-meta">
+            <h2 class="track-title">All I Think About</h2>
+            <p class="track-artist">Bad Meets Evil</p>
+            <p class="track-producer">Produced by Eminem</p>
+            <p class="track-producer">Additional Production by Luis Resto</p>
+            <p class="track-album">Southpaw (Soundtrack)</p>
+            <p class="track-release">July 24, 2015</p>
+          </div>
+        </article>
+        <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers-tn/feat/caterpillar-single-cover.jpg" alt="Caterpillar cover">
+          <div class="track-meta">
+            <h2 class="track-title">Caterpillar</h2>
+            <p class="track-artist">Royce Da 5’9” feat. Eminem &amp; King Green</p>
+            <p class="track-producer">Produced by S1 &amp; Epikh Pro</p>
+            <p class="track-album">Book Of Ryan</p>
+            <p class="track-release">May 3, 2018</p>
+          </div>
+        </article>
+        <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+          <div class="track-meta">
+            <h2 class="track-title">Not Alike</h2>
+            <p class="track-artist">Eminem feat. Royce Da 5’9”</p>
+            <p class="track-producer">Produced by Tay Keith (Part 1) • Ronny J (Part 2)</p>
+            <p class="track-producer">Additional Production by Eminem (Part 1)</p>
+            <p class="track-album">Kamikaze</p>
+            <p class="track-release">August 31, 2018</p>
+          </div>
+        </article>
+        <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+          <div class="track-meta">
+            <h2 class="track-title">You Gon’ Learn</h2>
+            <p class="track-artist">Eminem feat. Royce Da 5’9” &amp; White Gold</p>
+            <p class="track-producer">Produced by Royce Da 5’9”</p>
+            <p class="track-producer">Co-Produced by Eminem</p>
+            <p class="track-producer">Additional Production by Luis Resto</p>
+            <p class="track-album">Music To Be Murdered By</p>
+            <p class="track-release">January 17, 2020</p>
+          </div>
+        </article>
+        <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+          <div class="track-meta">
+            <h2 class="track-title">Yah Yah</h2>
+            <p class="track-artist">Eminem feat. Royce Da 5’9”, Black Thought, Q-Tip &amp; Denaun</p>
+            <p class="track-producer">Produced by Mr. Porter</p>
+            <p class="track-album">Music To Be Murdered By</p>
+            <p class="track-release">January 17, 2020</p>
+          </div>
+        </article>
+        <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+          <div class="track-meta">
+            <h2 class="track-title">I Will</h2>
+            <p class="track-artist">Eminem feat. KXNG Crooked, Royce Da 5’9” &amp; Joell Ortiz</p>
+            <p class="track-producer">Produced by Eminem</p>
+            <p class="track-producer">Additional Production by Luis Resto</p>
+            <p class="track-album">Music To Be Murdered By</p>
+            <p class="track-release">January 17, 2020</p>
+          </div>
+        </article>
+         <article class="track-card feat-eminem">
+          <img class="track-thumb" src="../images/album-covers/feat/big-sean-friday-night-cypher-cover.jpg" alt="Music To Be Murdered By cover">
+          <div class="track-meta">
+            <h2 class="track-title">Friday Night Cypher</h2>
+            <p class="track-artist">Big Sean feat. Tee Grizzley, Kash Doll, Cash Kidd, Payroll, 42 Dugg, Boldy James, Drego, Sada Baby, Royce Da 5’9” & Eminem</p>
+            <p class="track-producer">Produced by Helluva, Hit-Boy, Jay John Henry & Key Wane</p>
+            <p class="track-album">Detroit 2</p>
+            <p class="track-release">September 4, 2020</p>
+          </div>
+        </article>
+        <!-- Other credits (shown only via "Other Credits" filter) -->
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="Soap (Skit) cover">
+          <div class="track-meta">
+            <h2 class="track-title">Soap (Skit)</h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-album">The Slim Shady LP</p>
+            <p class="track-release">February 23, 1999</p>
+          </div>
+        </article>
+
+         <article class="track-card more produced-only">
+      <a class="track-link" href="/songs/produced-only/legendary.html"><img class="track-thumb" src="../images/album-covers/feat/royce-da-5’9-legendary-cover.jpg" alt="Success Is Certain cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/produced-only/legendary.html">Legendary</a></h2>
+        <p class="track-artist">Royce Da 5’9” feat. Travis Barker</p>
+        <p class="track-producer">Produced by Mike &amp; Keys &amp; Eminem</p>
+        <p class="track-album">Success Is Certain</p>
+        <p class="track-release">July 19, 2011</p>
+      </div>
+    </article>
+
+        <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">Coffin</h2>
+        <p class="track-artist">Slaughterhouse feat. Busta Rhymes</p>
+        <p class="track-producer">Produced by Hit-Boy</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+      <article class="track-card more produced-only">
+    <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+    <div class="track-meta">
+        <h2 class="track-title">Hammer Dance</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by AraabMuzik</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+      <article class="track-card more produced-only">
+    <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+    <div class="track-meta">
+        <h2 class="track-title">Get Up</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by No I.D.</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">My Life</h2>
+        <p class="track-artist">Slaughterhouse feat. CeeLo Green</p>
+        <p class="track-producer">Produced by StreetRunner &amp; Sarom</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">Flip A Bird</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by Black Key Beats &amp; Zukhan</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">Frat House</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by T-Minus</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+     <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+      <div class="track-meta">
+        <h2 class="track-title">Park It Sideways</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by Kane Beatz</p>
+        <p class="track-producer">Co-Produced by Ashanti Floyd &amp; JMIKE</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+     <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House (Deluxe) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Our Way (Outro)</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by Boi-1da</p>
+        <p class="track-producer">Co-Produced by Eminem &amp; The Maven Boys</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house_2-cover.jpg" alt="Welcome To: Our House (Deluxe) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Walk Of Shame</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by StreetRunner &amp; Sarom</p>
+        <p class="track-producer">Co-Produced by I.L.O. &amp; Eminem</p>
+        <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house_2-cover.jpg" alt="Welcome To: Our House (Deluxe) cover">
+      <div class="track-meta">
+        <h2 class="track-title">Place To Be</h2>
+        <p class="track-artist">Slaughterhouse feat. B.o.B</p>
+        <p class="track-producer">Produced by Kane Beatz &amp; JMIKE</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+        <p class="track-release">August 28, 2012</p>
+      </div>
+    </article>
+
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-perspective-skit-cover.jpg" alt="Perspective (Skit) cover">
+          <div class="track-meta">
+            <h2 class="track-title">Perspective (Skit)</h2>
+            <p class="track-artist">Royce Da 5’9”</p>
+            <p class="track-producer">Produced by Royce Da 5’9”</p>
+            <p class="track-album">The Allegory</p>
+            <p class="track-release">February 21, 2020</p>
+          </div>
+        </article>
+
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+          <div class="track-meta">
+            <h2 class="track-title">Darkness</h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-producer">Produced by Royce Da 5’9” &amp; Eminem</p>
+            <p class="track-producer">Additional Production by Luis Resto</p>
+            <p class="track-album">Music To Be Murdered By</p>
+            <p class="track-release">January 17, 2020</p>
+          </div>
+        </article>
+
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="Brain Damage (Live from Tramps, New York / 1999) cover">
+          <div class="track-meta">
+            <h2 class="track-title">Brain Damage (Live From Tramps, New York / 1999)</h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-producer">Produced by N/A</p>
+            <p class="track-album">The Eminem Show (Expanded Edition)</p>
+            <p class="track-release">May 26, 2022</p>
+          </div>
+        </article>
+
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="Brain Damage (Live from Tramps, New York / 1999) cover">
+          <div class="track-meta">
+            <h2 class="track-title">Freestyle #2 (Live From Tramps, New York / 1999)</h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-producer">Produced by N/A</p>
+            <p class="track-album">The Eminem Show (Expanded Edition)</p>
+            <p class="track-release">May 26, 2022</p>
+          </div>
+        </article>
+
+        <article class="track-card more produced-only">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="Just Don’t Give A Fuck (Live from Tramps, New York / 1999) cover">
+          <div class="track-meta">
+            <h2 class="track-title">Just Don’t Give A Fuck (Live From Tramps, New York / 1999)</h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-producer">Produced by N/A</p>
+            <p class="track-album">The Eminem Show (Expanded Edition)</p>
+            <p class="track-release">May 26, 2022</p>
+          </div>
+        </article>
+
+    <p class="footnote"><a href="songs-with-skylar-grey.html">Click here for songs with Skylar Grey.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const yearGroups = new Map();
+    const normalizeTitle = (text) =>
+      (text || '')
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+    const trackSongHrefMap = new Map([
+      ["nuttin' to do", '/songs/non-album/nuttin-to-do.html'],
+      ['scary movies', '/songs/non-album/scary-movies.html'],
+      ['bad meets evil', '/songs/slim-shady-lp/bad-meets-evil.html'],
+      ['what the beat', '/songs/feat/what-the-beat.html'],
+      ['rock city', '/songs/feat/rock-city.html'],
+      ["she's the one", '/songs/feat/shes-the-one.html'],
+      ['renegades', '/songs/feat/renegades.html'],
+      ["writer's block", '/songs/feat/writers-block.html'],
+      ['fast lane', '/songs/hell-the-sequel/fastlane.html'],
+      ['welcome 2 hell', '/songs/hell-the-sequel/welcome-2-hell.html'],
+      ['the reunion', '/songs/hell-the-sequel/reunion.html'],
+      ['above the law', '/songs/hell-the-sequel/above-the-law.html'],
+      ["i'm on everything", '/songs/hell-the-sequel/im-on-everything.html'],
+      ['a kiss', '/songs/hell-the-sequel/a-kiss.html'],
+      ['lighters', '/songs/hell-the-sequel/lighters.html'],
+      ['take from me', '/songs/hell-the-sequel/take-from-me.html'],
+      ['loud noises', '/songs/hell-the-sequel/loud-noises.html'],
+      ['living proof', '/songs/hell-the-sequel/living-proof.html'],
+      ['echo', '/songs/hell-the-sequel/echo.html'],
+      ['throw that', '/songs/feat/throw-that.html'],
+      ['our house', '/songs/feat/our-house.html'],
+      ['asylum', '/songs/feat/asylum.html'],
+      ['twerk dat pop that', '/songs/feat/twerk-dat-pop-dat.html'],
+      ['detroit vs. everybody', '/songs/shadyxv/detroit-vs-everybody.html'],
+      ['shady cxvpher', '/songs/non-album/shady-cxvpher.html'],
+      ['psychopath killer', '/songs/shadyxv/psychopath-killer.html'],
+      ['vegas', '/songs/shadyxv/vegas.html'],
+      ['raw', '/songs/southpaw-soundtrack/raw.html'],
+      ['all i think about', '/songs/southpaw-soundtrack/all-i-think-about.html'],
+      ['caterpillar', '/songs/feat/caterpillar.html'],
+      ['not alike', '/songs/kamikaze/not-alike.html'],
+      ["you gon' learn", '/songs/music-to-be-murdered-by/you-gon-learn.html'],
+      ['yah yah', '/songs/music-to-be-murdered-by/yah-yah.html'],
+      ['i will', '/songs/music-to-be-murdered-by/i-will.html'],
+      ['friday night cypher', '/songs/feat/friday-night-cypher.html'],
+      ['soap (Skit)', '/songs/slim-shady-lp/soap-skit.html'],
+      ['coffin', '/songs/produced-only/coffin.html'],
+      ['hammer dance', '/songs/produced-only/hammer-dance.html'],
+      ['get up', '/songs/produced-only/get-up.html'],
+      ['my life', '/songs/produced-only/my-life.html'],
+      ['flip a bird', '/songs/produced-only/flip-a-bird.html'],
+      ['frat house', '/songs/produced-only/frat-house.html'],
+      ['park it sideways', '/songs/produced-only/park-it-sideways.html'],
+      ['our way (outro)', '/songs/produced-only/our-way-outro.html'],
+      ['walk of shame', '/songs/produced-only/walk-of-shame.html'],
+      ['place to be', '/songs/produced-only/place-to-be.html'],
+      ['perspective (Skit)', '/songs/feat/perspective-skit.html'],
+      ['darkness', '/songs/music-to-be-murdered-by/darkness.html'],
+      ['brain damage (live from tramps, new york / 1999)', '/songs/eminem-show/brain-damage-live-tramps-1999.html'],
+      ['freestyle #2 (live from tramps, new york / 1999)', '/songs/eminem-show/freestyle-2-live-tramps-1999.html'],
+      ["just don't give a fuck (live from tramps, new york / 1999)", '/songs/eminem-show/just-dont-give-a-fuck-live-tramps-1999.html']
+    ]);
+    const releaseLinkMap = new Map([
+      ['infinite', '/releases/infinite.html'],
+      ['the slim shady ep', '/releases/slim-shady-ep.html'],
+      ['the slim shady lp', '/releases/slim-shady-lp.html'],
+      ['the marshall mathers lp', '/releases/marshall-mathers-lp.html'],
+      ['the marshall mathers lp (tour edition)', '/releases/marshall-mathers-lp.html'],
+      ['the marshall mathers lp 2', '/releases/marshall-mathers-lp-2.html'],
+      ['the marshall mathers lp 2 (deluxe edition)', '/releases/marshall-mathers-lp-2.html'],
+      ["devil's night", '/releases/devils-night.html'],
+      ["devil's night (special edition)", '/releases/devils-night.html'],
+      ['the eminem show', '/releases/eminem-show.html'],
+      ['the eminem show (expanded edition)', '/releases/eminem-show.html'],
+      ['d12 world', '/releases/d12-world.html'],
+      ['encore', '/releases/encore.html'],
+      ['eminem presents: the re-up', '/releases/re-up.html'],
+      ['the re-up', '/releases/re-up.html'],
+      ['relapse', '/releases/relapse.html'],
+      ['relapse: refill', '/releases/relapse.html'],
+      ['recovery', '/releases/recovery.html'],
+      ['hell: the sequel', '/releases/hell-the-sequel.html'],
+      ['hell: the sequel (deluxe edition)', '/releases/hell-the-sequel.html'],
+      ['shadyxv', '/releases/shadyxv.html'],
+      ['shady xv', '/releases/shadyxv.html'],
+      ['southpaw (soundtrack)', '/releases/southpaw-soundtrack.html'],
+      ['8 mile (soundtrack)', '/releases/8-mile-soundtrack.html'],
+      ['revival', '/releases/revival.html'],
+      ['kamikaze', '/releases/kamikaze.html'],
+      ['music to be murdered by', '/releases/music-to-be-murdered-by.html'],
+      ['music to be murdered by - side b (deluxe edition)', '/releases/music-to-be-murdered-by.html'],
+      ['curtain call: the hits', '/releases/curtain-call.html'],
+      ['curtain call 2', '/releases/curtain-call-2.html'],
+      ['the death of slim shady', '/releases/death-of-slim-shady.html'],
+      ['the death of slim shady (coup de grace)', '/releases/death-of-slim-shady.html'],
+      ['stans (soundtrack)', '/releases/stans-soundtrack.html']
+    ]);
+
+    const linkReleaseAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = normalizeTitle(albumEl.textContent || '');
+        const releaseHref = releaseLinkMap.get(albumText);
+        if (!releaseHref) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = releaseHref;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const linkTrackSongs = () => {
+      cards.forEach((card) => {
+        const titleEl = card.querySelector('.track-title');
+        const thumbEl = card.querySelector('.track-thumb');
+        if (!titleEl || !thumbEl) return;
+
+        const titleText = normalizeTitle(titleEl.textContent || '');
+        const songHref = trackSongHrefMap.get(titleText);
+        if (!songHref) return;
+
+        if (!titleEl.querySelector('a')) {
+          const titleLink = document.createElement('a');
+          titleLink.href = songHref;
+          const nodes = Array.from(titleEl.childNodes);
+          nodes.forEach((node) => titleLink.appendChild(node));
+          titleEl.appendChild(titleLink);
+        }
+
+        if (!thumbEl.closest('a')) {
+          const thumbLink = document.createElement('a');
+          thumbLink.href = songHref;
+          thumbLink.className = 'track-thumb-link';
+          thumbEl.parentNode.insertBefore(thumbLink, thumbEl);
+          thumbLink.appendChild(thumbEl);
+        }
+      });
+    };
+
+    const initCreditToggles = () => {
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.track-thumb');
+
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-pressed', card.classList.contains('show-credits') ? 'true' : 'false');
+
+        const toggleCredits = () => {
+          const isShown = card.classList.toggle('show-credits');
+          card.setAttribute('aria-pressed', isShown ? 'true' : 'false');
+        };
+
+        card.addEventListener('click', (evt) => {
+          if (evt.target.closest('a')) return;
+          if (thumb && (evt.target === thumb || evt.target.closest('.track-thumb'))) return;
+          if (evt.target.closest('details')) return;
+          toggleCredits();
+        });
+
+        card.addEventListener('keydown', (evt) => {
+          if (evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            toggleCredits();
+          }
+        });
+      });
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        // Attach the year id and a marker class to the first track card
+        // in the group instead of inserting an empty anchor element which
+        // becomes a flex item and creates extra spacing.
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+      // Jump-to-year navigation removed — year anchors are attached
+      // directly to the first card of each year group.
+    };
+
+    const applyFilter = (filter) => {
+      cards.forEach((card) => {
+        const isFeatObie = card.classList.contains('feat-obie');
+        const isFeatEminem = card.classList.contains('feat-eminem');
+        const isCollab = card.classList.contains('collab');
+        const isMore = card.classList.contains('more');
+
+        let show = false;
+        if (filter === 'more') {
+          show = isMore;
+        } else if (isMore) {
+          show = false;
+        } else {
+          switch (filter) {
+            case 'feat-obie':
+              show = isFeatObie;
+              break;
+            case 'feat-eminem':
+              show = isFeatEminem;
+              break;
+            case 'collab':
+              show = isCollab;
+              break;
+            case 'all':
+            default:
+              show = true;
+              break;
+          }
+        }
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        if (!group.anchor) return;
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+
+        if (firstVisible) {
+          group.anchor.style.display = 'block';
+          trackList.insertBefore(group.anchor, firstVisible);
+        } else {
+          group.anchor.style.display = 'none';
+        }
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    linkTrackSongs();
+    linkReleaseAlbums();
+    initCreditToggles();
+    initYearAnchors();
+    applyFilter('all');
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

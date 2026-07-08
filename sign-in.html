@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | EMDb</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+  <script>
+    const supabaseClient = window.supabase && typeof window.supabase.createClient === 'function'
+      ? window.supabase.createClient(
+          "https://lbxpucsgwgtamolvjuep.supabase.co",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY"
+        )
+      : null;
+
+    if (!supabaseClient) {
+      console.error('Supabase SDK failed to load or initialize.');
+    }
+  </script>
+  <style>
+    .auth-page {
+      max-width: 520px;
+      margin: 80px auto 120px;
+      padding: 0 20px;
+    }
+    .auth-card {
+      background: #111117;
+      border: 1px solid #1f1f24;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 16px 38px rgba(0,0,0,0.35);
+    }
+    .auth-title {
+      font-size: 28px;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.01em;
+    }
+    .auth-subtitle {
+      margin: 0 0 22px 0;
+      color: #bdbdbd;
+      line-height: 1.5;
+    }
+    .auth-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .primary-btn {
+      border: 1px solid #2a2a32;
+      background: #fff;
+      color: #111117;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      width: 100%;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(255,255,255,0.14);
+      border-color: #d9d9d9;
+    }
+    .ghost-btn {
+      background: transparent;
+      border: 1px solid #2a2a32;
+      color: #eaeaea;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+      width: 100%;
+    }
+    .ghost-btn:hover {
+      border-color: #E21C21;
+      color: #fff;
+    }
+    .google-mark {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+    }
+    .auth-footnote {
+      margin: 18px 0 0 0;
+      font-size: 13px;
+      color: #b3b3b3;
+      line-height: 1.5;
+    }
+    .auth-message {
+      margin: 12px 0 0 0;
+      font-size: 14px;
+      color: #cfd0d4;
+      min-height: 18px;
+    }
+    .auth-message[data-tone="error"] {
+      color: #ff6b6b;
+    }
+    .auth-message[data-tone="success"] {
+      color: #7bd88a;
+    }
+    .auth-message[data-tone="neutral"] {
+      color: #cfd0d4;
+    }
+    @media (max-width: 520px) {
+      .auth-card {
+        padding: 22px;
+      }
+      .auth-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="auth-page" aria-labelledby="authTitle">
+    <section class="auth-card">
+      <h1 class="auth-title" id="authTitle">Sign in to EMDb</h1>
+      <p class="auth-subtitle">Sign in with your Google account to rate and review.</p>
+      <div class="auth-actions">
+        <button type="button" class="primary-btn" id="googleSignInBtn">
+          <img class="google-mark" src="/images/logos/google-logo.png" alt="">
+          <span>Continue with Google</span>
+        </button>
+        <button type="button" class="ghost-btn" id="backBtn">Back</button>
+      </div>
+      <p id="login-message" class="auth-message" role="status" aria-live="polite"></p>
+      <p class="auth-footnote">Authentication is handled by Supabase using Google OAuth. If this is your first time signing in, your EMDb profile will be created automatically.</p>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+  <script>
+    (function setupAuthPage() {
+      const googleBtn = document.getElementById('googleSignInBtn');
+      const backBtn = document.getElementById('backBtn');
+      const messageEl = document.getElementById('login-message');
+      const STORAGE_KEY = 'emdb_logged_in';
+      const STORAGE_USER_ID = 'emdb_user_id';
+      const STORAGE_USER_EMAIL = 'emdb_user_email';
+      const nextParam = new URLSearchParams(window.location.search).get('next');
+      let isFinalizing = false;
+
+      const deriveUsername = (email) => {
+        if (!email) return 'listener';
+        return (email.split('@')[0] || 'listener').toLowerCase().slice(0, 32);
+      };
+
+      const getRedirectTarget = () => {
+        if (!nextParam) return '/';
+        if (!nextParam.startsWith('/')) return '/';
+        if (nextParam.startsWith('//')) return '/';
+        return nextParam;
+      };
+
+      const getOAuthRedirectTo = () => {
+        const here = new URL(window.location.href);
+        here.searchParams.delete('next');
+        if (nextParam) here.searchParams.set('next', getRedirectTarget());
+        return here.toString();
+      };
+
+      const ensureProfileRow = async (user) => {
+        if (!user || !supabaseClient) return;
+        const { data: existing, error: fetchError } = await supabaseClient
+          .from('profiles')
+          .select('id')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+          console.error('Profile fetch error:', fetchError);
+          return;
+        }
+
+        if (!existing) {
+          const username = deriveUsername(user.email);
+          const { error: insertError } = await supabaseClient.from('profiles').insert({
+            id: user.id,
+            username,
+            avatar_url: '/images/avatars/avatar_1.jpg',
+            joined_at: user.created_at,
+            updated_at: new Date().toISOString(),
+          });
+          if (insertError) {
+            console.error('Profile insert error:', insertError);
+          }
+        }
+      };
+
+      const setMessage = (text, tone = 'neutral') => {
+        if (!messageEl) return;
+        messageEl.textContent = text;
+        messageEl.dataset.tone = tone;
+      };
+
+      const setLoading = (isLoading) => {
+        if (!googleBtn) return;
+        googleBtn.disabled = isLoading;
+        googleBtn.innerHTML = isLoading
+          ? '<span>Connecting to Google...</span>'
+          : '<img class="google-mark" src="/images/logos/google-logo.png" alt=""><span>Continue with Google</span>';
+      };
+
+      const finishSignedInState = async (user) => {
+        if (isFinalizing) return;
+        isFinalizing = true;
+        localStorage.setItem(STORAGE_KEY, 'true');
+        if (user && user.id) {
+          localStorage.setItem(STORAGE_USER_ID, user.id);
+        }
+        if (user && user.email) {
+          localStorage.setItem(STORAGE_USER_EMAIL, user.email);
+        }
+        await ensureProfileRow(user);
+        setMessage('Signed in as ' + (user && user.email ? user.email : 'user') + '. Redirecting...', 'success');
+        window.location.href = getRedirectTarget();
+      };
+
+      const tryExchangeOAuthCode = async () => {
+        if (!supabaseClient) return;
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get('code');
+        if (!code) return;
+
+        setLoading(true);
+        setMessage('Finalizing sign-in...', 'neutral');
+        const { error } = await supabaseClient.auth.exchangeCodeForSession(code);
+        if (error) {
+          console.error('OAuth code exchange failed:', error);
+          setMessage('Google sign-in failed: ' + error.message, 'error');
+          setLoading(false);
+          return;
+        }
+
+        // Clean OAuth params from URL once session is stored.
+        url.searchParams.delete('code');
+        url.searchParams.delete('state');
+        window.history.replaceState({}, '', url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : ''));
+      };
+
+      const hydrateSession = async () => {
+        if (!supabaseClient) {
+          setMessage('Supabase SDK not available. Please refresh and try again.', 'error');
+          return;
+        }
+
+        await tryExchangeOAuthCode();
+
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error) {
+          console.error('Session lookup failed:', error);
+          setLoading(false);
+          return;
+        }
+
+        const user = data && data.session ? data.session.user : null;
+        if (user) {
+          setLoading(true);
+          await finishSignedInState(user);
+          return;
+        }
+
+        setLoading(false);
+      };
+
+      if (googleBtn) {
+        googleBtn.addEventListener('click', async () => {
+          if (!window.supabase || !supabaseClient) {
+            setMessage('Supabase SDK not available. Please refresh and try again.', 'error');
+            return;
+          }
+
+          setLoading(true);
+          setMessage('Redirecting to Google...', 'neutral');
+
+          const { error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+              redirectTo: getOAuthRedirectTo()
+            }
+          });
+
+          if (error) {
+            console.error('Google sign-in failed:', error);
+            setMessage('Google sign-in failed: ' + error.message, 'error');
+            setLoading(false);
+          }
+        });
+      }
+
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          window.history.length > 1 ? window.history.back() : window.location.assign('/');
+        });
+      }
+
+      if (supabaseClient && supabaseClient.auth && typeof supabaseClient.auth.onAuthStateChange === 'function') {
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+          if (event === 'SIGNED_IN' && session && session.user) {
+            await finishSignedInState(session.user);
+          }
+        });
+      }
+
+      hydrateSession();
+    })();
+  </script>
+</body>
+</html>

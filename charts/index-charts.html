@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Charts | EMDb</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body{margin:0;background:#0b0b0b;color:#E21C21;font-family:Arial,Helvetica,sans-serif}
+    .releases-page{max-width:980px;margin:2rem auto;padding:1rem}
+    .page-title{font-size:clamp(24px,4vw,34px);margin:0 0 1rem;color:#eaeaea}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:1rem;align-items:stretch;grid-template-areas:"albums songs" "third songs"}
+    .card{background:#151515;border:1px solid #222;padding:14px;border-radius:8px}
+    .card h3{margin:0 0 .5rem;font-size:15px}
+    .card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+    .card a{color:#eaeaea;text-decoration:none}
+    .card a:hover{color:#E21C21}
+    .card h3 + ul + h3{margin-top:12px}
+    .col{display:flex;flex-direction:column;gap:1rem}
+    .card-albums{grid-area:albums}
+    .card-third{grid-area:third}
+    .col{grid-area:songs}
+
+    @media (max-width: 720px){
+      .grid{grid-template-columns:1fr;grid-template-areas:"albums" "songs" "third"}
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="releases-page">
+    <h1 class="page-title">Charts</h1>
+
+    <div class="grid">
+      <section class="card card-albums">
+        <ul>
+          <li><a href="charts-slim-shady-lp.html">The Slim Shady LP</a></li>
+          <li><a href="charts-marshall-mathers-lp.html">The Marshall Mathers LP</a></li>
+          <li><a href="charts-devils-night.html">Devil’s Night</a></li>
+          <li><a href="charts-eminem-show.html">The Eminem Show</a></li>
+          <li><a href="charts-8-mile-soundtrack.html">8 Mile (Soundtrack)</a></li>
+          <li><a href="charts-d12-world.html">D12 World</a></li>
+          <li><a href="charts-encore.html">Encore</a></li>
+          <li><a href="charts-curtain-call.html">Curtain Call: The Hits</a></li>
+          <li><a href="charts-re-up.html">The Re-Up</a></li>
+          <li><a href="charts-relapse.html">Relapse</a></li>
+          <li><a href="charts-recovery.html">Recovery</a></li>
+          <li><a href="charts-hell-the-sequel.html">Hell: The Sequel</a></li>
+          <li><a href="charts-marshall-mathers-lp-2.html">The Marshall Mathers LP 2</a></li>
+          <li><a href="charts-shadyxv.html">SHADYXV</a></li>
+          <li><a href="charts-southpaw-soundtrack.html">Southpaw (Soundtrack)</a></li>
+          <li><a href="charts-revival.html">Revival</a></li>
+          <li><a href="charts-kamikaze.html">Kamikaze</a></li>
+          <li><a href="charts-music-to-be-murdered-by.html">Music To Be Murdered By</a></li>
+          <li><a href="charts-curtain-call-2.html">Curtain Call 2</a></li>
+          <li><a href="charts-fortnite-radio.html">Fortnite Radio</a></li>
+          <li><a href="charts-death-of-slim-shady.html">The Death Of Slim Shady</a></li>
+          <li><a href="charts-stans-soundtrack.html">STANS (Soundtrack)</a></li>
+        </ul>
+      </section>
+
+      <div class="col">
+        <section class="card">
+          <ul>
+            <li><a href="../charts/charts-nuttin-to-do.html">Nuttin’ To Do</a></li>
+            <li><a href="../charts/charts-scary-movies.html">Scary Movies</a></li>
+            <li><a href="../charts/charts-just-dont-give-a-fuck.html">Just Don’t Give A Fuck</a></li>
+            <li><a href="../charts/charts-my-name-is.html">My Name Is</a></li>
+            <li><a href="../charts/charts-role-model.html">Role Model</a></li>
+            <li><a href="../charts/charts-guilty-conscience.html">Guilty Conscience</a></li>
+            <li><a href="../charts/charts-any-man.html">Any Man</a></li>
+            <li><a href="../charts/charts-the-real-slim-shady.html">The Real Slim Shady</a></li>
+            <li><a href="../charts/charts-bitch-please-ii.html">Bitch Please II</a></li>
+            <li><a href="../charts/charts-the-way-i-am.html">The Way I Am</a></li>
+            <li><a href="../charts/charts-stan.html">Stan</a></li>
+            <li><a href="../charts/charts-shit-on-you.html">Shit On You</a></li>
+            <li><a href="../charts/charts-im-back.html">I’m Back</a></li>
+            <li><a href="../charts/charts-purple-pills.html">Purple Pills</a></li>
+            <li><a href="../charts/charts-aint-nuttin-but-music.html">Ain’t Nuttin’ But Music</a></li>
+            <li><a href="../charts/charts-fight-music.html">Fight Music</a></li>
+            <li><a href="../charts/charts-without-me.html">Without Me</a></li>
+            <li><a href="../charts/charts-cleanin-out-my-closet.html">Cleanin’ Out My Closet</a></li>
+            <li><a href="../charts/charts-lose-yourself.html">Lose Yourself</a></li>
+            <li><a href="../charts/charts-8-mile.html">8 Mile</a></li>
+            <li><a href="../charts/charts-superman.html">Superman</a></li>
+            <li><a href="../charts/charts-sing-for-the-moment.html">Sing For The Moment</a></li>
+            <li><a href="../charts/charts-hail-mary.html">Hail Mary</a></li>
+            <li><a href="../charts/charts-business.html">Business</a></li>
+            <li><a href="../charts/charts-my-band.html">My Band</a></li>
+            <li><a href="../charts/charts-how-come.html">How Come</a></li>
+            <li><a href="../charts/charts-just-lose-it.html">Just Lose It</a></li>
+            <li><a href="../charts/charts-mosh.html">Mosh</a></li>
+            <li><a href="../charts/charts-encore-song.html">Encore</a></li>
+            <li><a href="../charts/charts-like-toy-soldiers.html">Like Toy Soldiers</a></li>
+            <li><a href="../charts/charts-mockingbird.html">Mockingbird</a></li>
+            <li><a href="../charts/charts-ass-like-that.html">Ass Like That</a></li>
+            <li><a href="../charts/charts-when-im-gone.html">When I’m Gone</a></li>
+            <li><a href="../charts/charts-shake-that.html">Shake That</a></li>
+            <li><a href="../charts/charts-you-dont-know.html">You Don’t Know</a></li>
+            <li><a href="../charts/charts-jimmy-crack-corn.html">Jimmy Crack Corn</a></li>
+            <li><a href="../charts/charts-crack-a-bottle.html">Crack A Bottle</a></li>
+            <li><a href="../charts/charts-we-made-you.html">We Made You</a></li>
+            <li><a href="../charts/charts-3-am.html">3 a.m.</a></li>
+            <li><a href="../charts/charts-old-times-sake.html">Old Times Sake</a></li>
+            <li><a href="../charts/charts-the-warning.html">The Warning</a></li>
+            <li><a href="../charts/charts-beautiful.html">Beautiful</a></li>
+            <li><a href="../charts/charts-hell-breaks-loose.html">Hell Breaks Loose</a></li>
+            <li><a href="../charts/charts-elevator.html">Elevator</a></li>
+            <li><a href="../charts/charts-not-afraid.html">Not Afraid</a></li>
+            <li><a href="../charts/charts-love-the-way-you-lie.html">Love The Way You Lie</a></li>
+            <li><a href="../charts/charts-no-love.html">No Love</a></li>
+            <li><a href="../charts/charts-fast-lane.html">Fast Lane</a></li>
+            <li><a href="../charts/charts-space-bound.html">Space Bound</a></li>
+            <li><a href="../charts/charts-lighters.html">Lighters</a></li>
+            <li><a href="../charts/charts-berzerk.html">Berzerk</a></li>
+            <li><a href="../charts/charts-survival.html">Survival</a></li>
+            <li><a href="../charts/charts-rap-god.html">Rap God</a></li>
+            <li><a href="../charts/charts-the-monster.html">The Monster</a></li>
+            <li><a href="../charts/charts-headlights.html">Headlights</a></li>
+            <li><a href="../charts/charts-guts-over-fear.html">Guts Over Fear</a></li>
+            <li><a href="../charts/charts-detriot-vs-everybody.html">Detroit Vs. Everybody</a></li>
+            <li><a href="../charts/charts-phenomenal.html">Phenomenal</a></li>
+            <li><a href="../charts/charts-infinite-fbt-remix.html">Infinite (F.B.T. Remix)</a></li>
+            <li><a href="../charts/charts-walk-on-water.html">Walk On Water</a></li>
+            <li><a href="../charts/charts-untouchable.html">Untouchable</a></li>
+            <li><a href="../charts/charts-river.html">River</a></li>
+            <li><a href="../charts/charts-nowhere-fast.html">Nowhere Fast</a></li>
+            <li><a href="../charts/charts-remind-me.html">Remind Me</a></li>
+            <li><a href="../charts/charts-fall.html">Fall</a></li>
+            <li><a href="../charts/charts-killshot.html">Killshot</a></li>
+            <li><a href="../charts/charts-venom.html">Venom</a></li>
+            <li><a href="../charts/charts-lucky-you.html">Lucky You</a></li>
+            <li><a href="../charts/charts-darkness.html">Darkness</a></li>
+            <li><a href="../charts/charts-godzilla.html">Godzilla</a></li>
+            <li><a href="../charts/charts-killer-remix.html">Killer (Remix)</a></li>
+            <li><a href="../charts/charts-the-king-and-i.html">The King And I</a></li>
+            <li><a href="../charts/charts-from-the-d-2-the-lbc.html">From The D 2 The LBC</a></li>
+            <li><a href="../charts/charts-houdini.html">Houdini</a></li>
+            <li><a href="../charts/charts-tobey.html">Tobey</a></li>
+            <li><a href="../charts/charts-somebody-save-me.html">Somebody Save Me</a></li>
+            <li><a href="../charts/charts-fuel.html">Fuel</a></li>
+
+          </ul>
+        </section>
+
+      </div>
+
+      <section class="card card-third">
+        <ul>
+          <li><a href="../charts/charts-dead-wrong.html">Dead Wrong</a></li>
+          <li><a href="../charts/charts-forgot-about-dre.html">Forgot About Dre</a></li>
+          <li><a href="../charts/charts-rap-superstar.html">(Rap) Superstar</a></li>
+          <li><a href="../charts/charts-the-watcher.html">The Watcher</a></li>
+          <li><a href="../charts/charts-rock-city.html">Rock City</a></li>
+          <li><a href="../charts/charts-hellbound.html">Hellbound</a></li>
+          <li><a href="../charts/charts-one-day-at-a-time.html">One Day At A Time [Em’s Version]</a></li>
+          <li><a href="../charts/charts-drama-setter.html">Drama Setter</a></li>
+          <li><a href="../charts/charts-welcome-2-detroit.html">Welcome 2 Detroit</a></li>
+          <li><a href="../charts/charts-smack-that.html">Smack That</a></li>
+          <li><a href="../charts/charts-forever.html">Forever</a></li>
+          <li><a href="../charts/charts-drop-the-world.html">Drop The World</a></li>
+          <li><a href="../charts/charts-i-need-a-doctor.html">I Need A Doctor</a></li>
+          <li><a href="../charts/charts-throw-that.html">Throw That</a></li>
+          <li><a href="../charts/charts-my-life.html">My Life</a></li>
+          <li><a href="../charts/charts-cmon-let-me-ride.html">C’mon Let Me Ride</a></li>
+          <li><a href="../charts/charts-calm-down.html">Calm Down</a></li>
+          <li><a href="../charts/charts-best-friend.html">Best Friend</a></li>
+          <li><a href="../charts/charts-caterpillar.html">Caterpillar</a></li>
+          <li><a href="../charts/charts-homicide.html">Homicide</a></li>
+          <li><a href="../charts/charts-remember-the-name.html">Remember The Name</a></li>
+          <li><a href="../charts/charts-the-adventures-of-moon-man-and-slim-shady.html">The Adventures Of Moon Man &amp; Slim Shady</a></li>
+          <li><a href="../charts/charts-last-one-standing.html">Last One Standing</a></li>
+          <li><a href="../charts/charts-gospel.html">Gospel</a></li>
+          <li><a href="../charts/charts-realest.html">Realest</a></li>
+          <li><a href="../charts/charts-lace-it.html">Lace It</a></li>
+          <li><a href="../charts/charts-murdergram-deux.html">Murdergram Deux</a></li>
+          <li><a href="../charts/charts-gunz-n-smoke.html">Gunz N Smoke</a></li>
+          <li><a href="../charts/charts-animals-pt-i.html">Animals (Pt. I)</a></li>
+          <li><a href="../charts/charts-hello-operator-till-i-collapse.html">Hello Operator / ’Till I Collapse (Live)</a></li>
+        </ul>
+      </section>
+    </div>
+
+  </main>
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+</body>
+</html>

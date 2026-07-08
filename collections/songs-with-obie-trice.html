@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Songs with Obie Trice | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.track-card:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 3px;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-title a,
+.track-title a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-title a:hover,
+.track-title a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+  border-radius: 8px;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-album a,
+.track-album a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+
+.track-card .track-producer {
+  display: none;
+}
+
+.track-card.show-credits .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+
+  .filter-btn[data-filter="addl"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Songs with Obie Trice</h1>
+    <div class="filter-bar" role="group" aria-label="Filter by role or collaborator">
+      <button class="filter-btn active" data-filter="all" type="button"><span class="filter-label">Permormed with Obie Trice</span></button>
+      <button class="filter-btn" data-filter="more" type="button"><span class="filter-label">Other Credits</span></button>
+    </div>
+  </header>
+
+  <section class="track-list" aria-label="Songs with Obie Trice">
+
+     <article class="track-card feat-obie">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="Love Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Drips</h2>
+          <p class="track-artist">Eminem feat. Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Love Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Love Me</h2>
+          <p class="track-artist">Eminem, Obie Trice &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/go-to-sleep-cover.jpg" alt="Cradle 2 The Grave soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">Go To Sleep</h2>
+          <p class="track-artist">Eminem, DMX &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cradle 2 The Grave (Soundtrack)</p>
+          <p class="track-release">February 18, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-obie">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Invasion Part II cover">
+        <div class="track-meta">
+          <h2 class="track-title">Doe Ray Me</h2>
+          <p class="track-artist">Eminem, D12 &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Denaun Porter</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+          <p class="track-release">April 15, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card producer">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Invasion Part II: Conspiracy Theory cover">
+        <div class="track-meta">
+          <h2 class="track-title">We All Die One Day</h2>
+          <p class="track-artist">DJ Muggs feat. Eminem, 50 Cent, Lloyd Banks, Tony Yayo &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory</p>
+          <p class="track-release">April 15, 2003</p>
+         <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Originally recorded for DJ Muggs’ album, the track later appeared on Obie Trice’s album Cheers, following the project’s delay.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-shit-hits-the-fan-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shit Hits The Fan</h2>
+          <p class="track-artist">Obie Trice feat. Dr. Dre</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">July 22, 2003</p>
+          <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Although uncredited, Eminem performs the chorus.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lady</h2>
+          <p class="track-artist">Obie Trice feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hands On You</h2>
+          <p class="track-artist">Obie Trice feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Outro</h2>
+          <p class="track-artist">Obie Trice feat. D12 &amp; Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/dj-kay-slay-streetsweeper,-vol.-2-cover.jpg" alt="The Streetsweeper, Vol. 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m Gone</h2>
+          <p class="track-artist">DJ Kay Slay feat. Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Streetsweeper, Vol. 2: The Pain From The Game</p>
+          <p class="track-release">March 30, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-obie">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Spend Some Time</h2>
+          <p class="track-artist">Eminem feat. Obie Trice, Stat Quo &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Anger Management 3 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Emulate</h2>
+          <p class="track-artist">Obie Trice &amp; Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Anger Management 3 [Mixtape]</p>
+          <p class="track-release">July 12, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/tony-yayo-thoughts-of-a-predicate-felon-cover.jpg" alt="Thoughts Of A Predicate Felon cover">
+        <div class="track-meta">
+          <h2 class="track-title">Drama Setter</h2>
+          <p class="track-artist">Tony Yayo feat. Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto &amp; Jeff Bass</p>
+          <p class="track-album">Thoughts Of A Predicate Felon</p>
+          <p class="track-release">August 30, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/feat/notorious-big-it-has-been-said-cover.jpg" alt="Duets: The Final Chapter cover">
+        <div class="track-meta">
+          <h2 class="track-title">It Has Been Said</h2>
+          <p class="track-artist">The Notorious B.I.G. feat. Diddy, Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Duets: The Final Chapter</p>
+          <p class="track-release">December 20, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Wake Up</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+          <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Although uncredited, Eminem performs on the chorus.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">There They Go</h2>
+          <p class="track-artist">Obie Trice feat. Big Herk, Eminem &amp; Trick-Trick</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">We’re Back</h2>
+          <p class="track-artist">Eminem, Obie Trice, Stat Quo, Bobby Creekwater &amp; Cashis</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-obie">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shake That (Remix)</h2>
+          <p class="track-artist">Eminem, Nate Dogg, Obie Trice &amp; Bobby Creekwater</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bottoms-up-cover.jpg" alt="Bottoms Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Richard</h2>
+          <p class="track-artist">Obie Trice feat. Eminem</p>
+          <p class="track-producer">Produced by Statik Selektah</p>
+          <p class="track-album">Bottoms Up</p>
+          <p class="track-release">March 30, 2012</p>
+        </div>
+      </article>
+
+      <!-- Other credits (shown only via "Other Credits" filter) -->
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-rap-name-cover.jpg" alt="Rap Name cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rap Name</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Rap Name [Single]</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-got-some-teeth-cover.jpg" alt="Got Some Teeth cover">
+        <div class="track-meta">
+          <h2 class="track-title">Got Some Teeth</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">August 12, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Average Man</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Cheers</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Don’t Come Down</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Follow My Life</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Fredwreck</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hoodrats</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Emile</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Never Forget Ya</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-is-open-cover.jpg" alt="The Bar Is Open cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bartender Intro</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">The Bar Is Open [Mixtape]</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-is-open-cover.jpg" alt="The Bar Is Open cover">
+        <div class="track-meta">
+          <h2 class="track-title">Funk Flex Interlude</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">The Bar Is Open [Mixtape]</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+      <div class="track-meta">
+        <h2 class="track-title">Loyalty</h2>
+        <p class="track-artist">D12 feat. Obie Trice</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hennessey</h2>
+          <p class="track-artist">2Pac feat. Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Anger Management 3 cover">
+        <div class="track-meta">
+          <h2 class="track-title">2nd Round Freestyle</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Anger Management 3 [Mixtape]</p>
+          <p class="track-release">July 12, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-snitch-cover.jpg" alt="Snitch cover">
+        <div class="track-meta">
+          <h2 class="track-title">Snitch</h2>
+          <p class="track-artist">Obie Trice feat. Akon</p>
+          <p class="track-producer">Produced by Akon</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">March 26, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Violent</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lay Down</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ballad Of Obie Trice</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jamaican Girl</h2>
+          <p class="track-artist">Obie Trice feat. Brick &amp; Lace</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kill Me A Mutha</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Out Of State</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Swinga</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">All Of My Life</h2>
+          <p class="track-artist">Obie Trice feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Trell</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Everywhere I Go</h2>
+          <p class="track-artist">Obie Trice feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fuck Obie Skit</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">DJ Whoo Kid Presents: Bar Shots [Mixtape]</p>
+          <p class="track-release">August 12, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Public Service Announcement</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">DJ Whoo Kid Presents: Bar Shots [Mixtape]</p>
+          <p class="track-release">August 12, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">They Wanna Kill Me</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">DJ Whoo Kid Presents: Bar Shots [Mixtape]</p>
+          <p class="track-release">August 12, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Whoo Kid Skit</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">DJ Whoo Kid Presents: Bar Shots [Mixtape]</p>
+          <p class="track-release">August 12, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+        <div class="track-meta">
+          <h2 class="track-title">Sadapop Outro</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">DJ Whoo Kid Presents: Bar Shots [Mixtape]</p>
+          <p class="track-release">August 12, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Pistol Pistol (Obie Trice Remix)</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more produced-only">
+      <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bottoms-up-cover.jpg" alt="Bottoms Up cover">
+      <div class="track-meta">
+        <h2 class="track-title">Going No Where</h2>
+        <p class="track-artist">Obie Trice</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Bottoms Up</p>
+        <p class="track-release">April 3, 2012</p>
+      </div>
+    </article>
+
+    <p class="footnote"><a href="songs-with-50-cent.html">Click here for songs with 50 Cent.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const yearGroups = new Map();
+    const normalizeTitle = (text) =>
+      (text || '')
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+    const trackSongHrefMap = new Map([
+      ['drips', '/songs/eminem-show/drips.html'],
+      ['love me', '/songs/8-mile-soundtrack/love-me.html'],
+      ['go to sleep', '/songs/non-album/go-to-sleep.html'],
+      ['doe ray me', '/songs/non-album/doe-rae-me.html'],
+      ['we all die one day', '/songs/feat/we-all-die-one-day.html'],
+      ['shit hits the fan', '/songs/feat/shit-hits-the-fan.html'],
+      ['lady', '/songs/feat/lady.html'],
+      ['hands on you', '/songs/feat/hands-on-you.html'],
+      ['outro', '/songs/feat/outro-cheers.html'],
+      ["i'm gone", '/songs/feat/im-gone.html'],
+      ['spend some time', '/songs/encore/spend-some-time.html'],
+      ['emulate', '/songs/feat/emulate.html'],
+      ['drama setter', '/songs/feat/drama-setter.html'],
+      ['it has been said', '/songs/feat/it-has-been-said.html'],
+      ['wake up', '/songs/produced-only/wake-up.html'],
+      ['there they go', '/songs/feat/there-they-go.html'],
+      ["we're back", '/songs/re-up/were-back.html'],
+      ['shake that (remix)', '/songs/re-up/shake-that-remix.html'],
+      ['richard', '/songs/feat/richard.html'],
+      ['rap name', '/songs/produced-only/rap-name.html'],
+      ['got some teeth', '/songs/produced-only/got-some-teeth.html'],
+      ['average man', '/songs/produced-only/average-man.html'],
+      ['cheers', '/songs/produced-only/cheers.html'],
+      ["don't come down", '/songs/produced-only/dont-come-down.html'],
+      ['follow my life', '/songs/produced-only/follow-my-life.html'],
+      ['hoodrats', '/songs/produced-only/hoodrats.html'],
+      ['never forget ya', '/songs/produced-only/never-forget-ya.html'],
+      ['bartender intro', '/songs/feat/bartender-intro.html'],
+      ['funk flex interlude', '/songs/feat/funk-flex-interlude.html'],
+      ['loyalty', '/songs/d12-world/loyalty.html'],
+      ['hennessey', '/songs/produced-only/hennessey.html'],
+      ['2nd round freestyle', '/songs/produced-only/2nd-round-freestyle.html'],
+      ['snitch', '/songs/feat/snitch.html'],
+      ['violent', '/songs/produced-only/violent.html'],
+      ['lay down', '/songs/produced-only/lay-down.html'],
+      ['ballad of obie trice', '/songs/produced-only/ballad-of-obie-trice.html'],
+      ['jamaican girl', '/songs/produced-only/jamaican-girl.html'],
+      ['kill me a mutha', '/songs/produced-only/kill-me-a-mutha.html'],
+      ['out of state', '/songs/produced-only/out-of-state.html'],
+      ['all of my life', '/songs/produced-only/all-of-my-life.html'],
+      ['everywhere i go', '/songs/produced-only/everywhere-i-go.html'],
+      ['fuck obie skit', '/songs/feat/fuck-obie-skit.html'],
+      ['public service announcement', '/songs/feat/public-service-announcement-obie-trice.html'],
+      ['they wanna kill me', '/songs/produced-only/they-wanna-kill-me.html'],
+      ['whoo kid skit', '/songs/feat/whoo-kid-skit.html'],
+      ['sadapop outro', '/songs/feat/sadapop-outro.html'],
+      ['pistol pistol (obie trice remix)', '/songs/re-up/pistol-pistol-remix.html'],
+      ['going no where', '/songs/produced-only/going-no-where.html']
+    ]);
+    const releaseLinkMap = new Map([
+      ['infinite', '/releases/infinite.html'],
+      ['the slim shady ep', '/releases/slim-shady-ep.html'],
+      ['the slim shady lp', '/releases/slim-shady-lp.html'],
+      ['the marshall mathers lp', '/releases/marshall-mathers-lp.html'],
+      ['the marshall mathers lp (tour edition)', '/releases/marshall-mathers-lp.html'],
+      ['the marshall mathers lp 2', '/releases/marshall-mathers-lp-2.html'],
+      ['the marshall mathers lp 2 (deluxe edition)', '/releases/marshall-mathers-lp-2.html'],
+      ["devil's night", '/releases/devils-night.html'],
+      ["devil's night (special edition)", '/releases/devils-night.html'],
+      ['the eminem show', '/releases/eminem-show.html'],
+      ['the eminem show (expanded edition)', '/releases/eminem-show.html'],
+      ['d12 world', '/releases/d12-world.html'],
+      ['encore', '/releases/encore.html'],
+      ['eminem presents: the re-up', '/releases/re-up.html'],
+      ['the re-up', '/releases/re-up.html'],
+      ['relapse', '/releases/relapse.html'],
+      ['relapse: refill', '/releases/relapse.html'],
+      ['recovery', '/releases/recovery.html'],
+      ['hell: the sequel', '/releases/hell-the-sequel.html'],
+      ['hell: the sequel (deluxe edition)', '/releases/hell-the-sequel.html'],
+      ['shadyxv', '/releases/shadyxv.html'],
+      ['shady xv', '/releases/shadyxv.html'],
+      ['southpaw (soundtrack)', '/releases/southpaw-soundtrack.html'],
+      ['8 mile (soundtrack)', '/releases/8-mile-soundtrack.html'],
+      ['revival', '/releases/revival.html'],
+      ['kamikaze', '/releases/kamikaze.html'],
+      ['music to be murdered by', '/releases/music-to-be-murdered-by.html'],
+      ['music to be murdered by - side b (deluxe edition)', '/releases/music-to-be-murdered-by.html'],
+      ['curtain call: the hits', '/releases/curtain-call.html'],
+      ['curtain call 2', '/releases/curtain-call-2.html'],
+      ['the death of slim shady', '/releases/death-of-slim-shady.html'],
+      ['the death of slim shady (coup de grace)', '/releases/death-of-slim-shady.html'],
+      ['stans (soundtrack)', '/releases/stans-soundtrack.html']
+    ]);
+
+    const linkReleaseAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = normalizeTitle(albumEl.textContent || '');
+        const releaseHref = releaseLinkMap.get(albumText);
+        if (!releaseHref) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = releaseHref;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const linkTrackSongs = () => {
+      cards.forEach((card) => {
+        const titleEl = card.querySelector('.track-title');
+        const thumbEl = card.querySelector('.track-thumb');
+        if (!titleEl || !thumbEl) return;
+
+        const titleText = normalizeTitle(titleEl.textContent || '');
+        const songHref = trackSongHrefMap.get(titleText);
+        if (!songHref) return;
+
+        if (!titleEl.querySelector('a')) {
+          const titleLink = document.createElement('a');
+          titleLink.href = songHref;
+          const nodes = Array.from(titleEl.childNodes);
+          nodes.forEach((node) => titleLink.appendChild(node));
+          titleEl.appendChild(titleLink);
+        }
+
+        if (!thumbEl.closest('a')) {
+          const thumbLink = document.createElement('a');
+          thumbLink.href = songHref;
+          thumbLink.className = 'track-thumb-link';
+          thumbEl.parentNode.insertBefore(thumbLink, thumbEl);
+          thumbLink.appendChild(thumbEl);
+        }
+      });
+    };
+
+    const initCreditToggles = () => {
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.track-thumb');
+
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-pressed', card.classList.contains('show-credits') ? 'true' : 'false');
+
+        const toggleCredits = () => {
+          const isShown = card.classList.toggle('show-credits');
+          card.setAttribute('aria-pressed', isShown ? 'true' : 'false');
+        };
+
+        card.addEventListener('click', (evt) => {
+          if (evt.target.closest('a')) return;
+          if (thumb && (evt.target === thumb || evt.target.closest('.track-thumb'))) return;
+          if (evt.target.closest('details')) return;
+          toggleCredits();
+        });
+
+        card.addEventListener('keydown', (evt) => {
+          if (evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            toggleCredits();
+          }
+        });
+      });
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        // Attach the year id and a marker class to the first track card
+        // in the group instead of inserting an empty anchor element which
+        // becomes a flex item and creates extra spacing.
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+      // Jump-to-year navigation removed — year anchors are attached
+      // directly to the first card of each year group.
+    };
+
+    const applyFilter = (filter) => {
+      cards.forEach((card) => {
+        const isFeatObie = card.classList.contains('feat-obie');
+        const isFeatEminem = card.classList.contains('feat-eminem');
+        const isCollab = card.classList.contains('collab');
+        const isMore = card.classList.contains('more');
+
+        let show = false;
+        if (filter === 'more') {
+          show = isMore;
+        } else if (isMore) {
+          show = false;
+        } else {
+          switch (filter) {
+            case 'feat-obie':
+              show = isFeatObie;
+              break;
+            case 'feat-eminem':
+              show = isFeatEminem;
+              break;
+            case 'collab':
+              show = isCollab;
+              break;
+            case 'all':
+            default:
+              show = true;
+              break;
+          }
+        }
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        if (!group.anchor) return;
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+
+        if (firstVisible) {
+          group.anchor.style.display = 'block';
+          trackList.insertBefore(group.anchor, firstVisible);
+        } else {
+          group.anchor.style.display = 'none';
+        }
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    linkTrackSongs();
+    linkReleaseAlbums();
+    initCreditToggles();
+    initYearAnchors();
+    applyFilter('all');
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Instrumentals | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+}
+
+.track-body {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-thumb-btn {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.track-thumb-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+.track-toggle-title {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.track-toggle-title:hover,
+.track-toggle-title:focus-visible {
+  color: #E21C21;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: underline;
+  color: #E21C21;
+}
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* active/open/hover state */
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+/* when the details is closed but the summary is focused, keep it white */
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 6px 0;
+}
+
+.filter-btn {
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.filter-btn:hover,
+.filter-btn:focus-visible {
+  color: #eaeaea;
+  border-color: #444;
+  outline: none;
+}
+
+.filter-btn.is-active {
+  color: #eaeaea;
+  border-color: #E21C21;
+}
+
+.track-card[hidden] {
+  display: none !important;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+  font-size: 13px;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+/* hide producer credits site-local to this page by default; toggled per-track in JS */
+.track-producer {
+  display: none;
+}
+
+.track-producer.is-visible {
+  display: block;
+}
+
+.track-video {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 84px;
+}
+
+.track-video[hidden] {
+  display: none !important;
+}
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 16 / 9;
+  background: #0f0f0f;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+  .track-video {
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Instrumentals</h1>
+  </header>
+
+  <div class="filter-bar" aria-label="Filter tracklist">
+    <button class="filter-btn is-active" data-filter="eminem" type="button">Solo / Collab</button>
+    <button class="filter-btn" data-filter="group" type="button">Group</button>
+    <button class="filter-btn" data-filter="feat" type="button">Feature</button>
+    <button class="filter-btn" data-filter="other" type="button">Other</button>
+    <button class="filter-btn" data-filter="all" type="button">All</button>
+  </div>
+
+  <section class="track-list" aria-label="Non-album tracklist">
+    <article class="track-card" id="track-3hree6ix5ive">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-3hree6ix5ive" data-video-toggle="3hree6ix5ive">
+          <img class="track-thumb" src="../images/album-covers/feat/oldworldisorder-3hree6ix5ive-cover.jpg" alt="3hree6ix5ive (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-3hree6ix5ive" data-video-toggle="3hree6ix5ive">3hree6ix5ive (Instrumental)</button>
+          </h2>
+          <p class="track-artist">OldWorlDisorder feat. Eminem</p>
+          <p class="track-producer" hidden>Produced by DJ Spinna</p>
+          <p class="track-release">Shyhalüde / 3hree6ix5ive [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-3hree6ix5ive" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/uUhMLFNI6IU" title="3hree6ix5ive (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-5stargenerals">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-5stargenerals" data-video-toggle="5stargenerals">
+          <img class="track-thumb" src="../images/album-covers/feat/shabaam-sahdeeq-5-star-generals-cover.jpg" alt="5 Star Generals (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-5stargenerals" data-video-toggle="5stargenerals">5 Star Generals (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Shabaam Sahdeeq feat. Eminem, Skam, Kwest &amp; A.L.</p>
+          <p class="track-producer" hidden>Produced by DJ Spinna</p>
+          <p class="track-release">Sound Clash / 5 Star Generals [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-5stargenerals" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/dJKHV045NFs" title="5 Star Generals (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+    
+    <article class="track-card" id="track-jdgaf">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-jdgaf" data-video-toggle="jdgaf">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-ep/just-don't-give-a-fuck-ep-single-cover.jpg" alt="Just Don’t Give A Fuck (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-jdgaf" data-video-toggle="jdgaf">Just Don’t Give A Fuck (Instrumental) [EP Version]</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Denaun Porter</p>
+          <p class="track-album">Just Don’t Give A Fuck [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-jdgaf" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/oUvh6J9YTEg?si=9dXHMpV8liusE7OP" title="Just Don’t Give A Fuck (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-ntd">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-ntd" data-video-toggle="ntd">
+          <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="Nuttin’ To Do (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-ntd" data-video-toggle="ntd">Nuttin’ To Do (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Reef</p>
+          <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-ntd" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/ot2Vq59V1e4?si=N6NZsteC-nPzxW5t" title="Nuttin’ To Do (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-sm">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-sm" data-video-toggle="sm">
+          <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="Scary Movies (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-sm" data-video-toggle="sm">Scary Movies (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Reef</p>
+          <p class="track-album">Nuttin’ To Do / Scary Movies [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-sm" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Q8yb7_vEP8I?si=v0fUBpKSOCyzdfdP" title="Scary Movies (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+      <article class="track-card" id="track-jdgaf-lp">
+        <div class="track-body">
+          <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-jdgaf-lp" data-video-toggle="jdgaf-lp">
+            <img class="track-thumb" src="../images/album-covers/slim-shady-lp/just-don't-give-a-fuck-cover.jpg" alt="Just Don’t Give A Fuck (Instrumental) LP cover">
+          </button>
+          <div class="track-meta">
+            <h2 class="track-title">
+              <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-jdgaf-lp" data-video-toggle="jdgaf-lp">Just Don’t Give A Fuck (Instrumental) [LP Version]</button>
+            </h2>
+            <p class="track-artist">Eminem</p>
+            <p class="track-producer">Produced by F.B.T.</p>
+            <p class="track-album">The Slim Shady LP (Expanded Edition)</p>
+          </div>
+        </div>
+        <div class="track-video" id="video-jdgaf-lp" hidden>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/_TrLr7zhMCo?si=6amZHiTzW55cOT2C" title="Just Don’t Give A Fuck (Instrumental) [LP Version]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </article>
+
+    <article class="track-card" id="track-mni">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-mni" data-video-toggle="mni">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/my-name-is-cover.jpg" alt="My Name Is (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-mni" data-video-toggle="mni">My Name Is (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">The Slim Shady LP (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-mni" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/2hmvy7w8JFg?si=8sfUF55f5EwMfP4T" title="My Name Is (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+    
+    <article class="track-card" id="track-anyman">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-anyman" data-video-toggle="anyman">
+          <img class="track-thumb" src="../images/album-covers/non-album/any-man-cover.jpg" alt="Any Man (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-anyman" data-video-toggle="anyman">Any Man (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Da Beatminerz</p>
+          <p class="track-album">Any Man [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-anyman" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/kbq-QW5OjhI?si=WPyd1D6niZ1BJKDD" title="Any Man (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rolemodel">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rolemodel" data-video-toggle="rolemodel">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/role-model-instrumental-cover.jpg" alt="Role Model (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rolemodel" data-video-toggle="rolemodel">Role Model (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">Role Model [UK Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rolemodel" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/02dSE1tnWmk?si=K-dur8HeXhu4i2as" title="Role Model (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-gc">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-gc" data-video-toggle="gc">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/guilty-conscience-cover.jpg" alt="Guilty Conscience (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-gc" data-video-toggle="gc">Guilty Conscience (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Eminem</p>
+          <p class="track-album">The Slim Shady LP (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-gc" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/sJuilL3thRA?si=SUkRV5TG6AbTaojC" title="Guilty Conscience (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-imshady">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-imshady" data-video-toggle="imshady">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/i'm-shady-cover.jpg" alt="I’m Shady (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-imshady" data-video-toggle="imshady">I’m Shady (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by F.B.T.</p>
+          <p class="track-album">I’m Shady [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-imshady" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/gdgOsVzM5yo?si=zubF5bOjdN857zsc" title="I’m Shady (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-macosa">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-macosa" data-video-toggle="macosa">
+          <img class="track-thumb" src="../images/album-covers/feat/outsidaz-macosa-cover.jpeg" alt="Macosa (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-macosa" data-video-toggle="macosa">Macosa (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Outsidaz feat. Eminem</p>
+          <p class="track-producer">Produced by Pace One</p>
+          <p class="track-album">Macosa / Do It With A Passion [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-macosa" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/MRN4oC0XwS8?si=3iFJngkGLCn170A3" title="Macosa (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-weshine">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-weshine" data-video-toggle="weshine">
+          <img class="track-thumb" src="../images/album-covers/feat/da-ruckus-we-shine-(radio-remix)-cover.jpg" alt="We Shine (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-weshine" data-video-toggle="weshine">We Shine (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Da Ruckus feat. Eminem</p>
+          <p class="track-producer">Produced by Hush</p>
+          <p class="track-album">We Shine [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-weshine" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/vZ34-yyZgC0?si=nAqMsO2KOor_OJfk" title="We Shine (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-getyoumad">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-getyoumad" data-video-toggle="getyoumad">
+          <img class="track-thumb" src="../images/album-covers/feat/sway-&-king-tech-get-you-mad-cover.jpeg" alt="Get You Mad (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-getyoumad" data-video-toggle="getyoumad">Get You Mad (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Sway &amp; King Tech feat. Eminem</p>
+          <p class="track-producer">Produced by DJ Revolution &amp; King Tech</p>
+          <p class="track-album">Get You Mad [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-getyoumad" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/euO1tbjYH_o?si=2t67feeX2AopJerb" title="Get You Mad (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-anthem">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-anthem" data-video-toggle="anthem">
+          <img class="track-thumb" src="../images/album-covers/feat/sway-&-king-tech-the-anthem-single-cover.jpg" alt="The Anthem (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-anthem" data-video-toggle="anthem">The Anthem (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Sway &amp; King Tech feat. RZA, Tech N9ne, Eminem, Xzibit, Pharoahe Monch, Kool G Rap, Jayo Felony, Chino XL &amp; KRS-One</p>
+          <p class="track-producer">Produced by King Tech</p>
+          <p class="track-album">The Anthem [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-anthem" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/euO1tbjYH_o?si=2t67feeX2AopJerb" title="The Anthem (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-deadwrong">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-deadwrong" data-video-toggle="deadwrong">
+          <img class="track-thumb" src="../images/album-covers/feat/notorious-big-dead-wrong_2-cover.jpg" alt="Dead Wrong (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-deadwrong" data-video-toggle="deadwrong">Dead Wrong (Instrumental)</button>
+          </h2>
+          <p class="track-artist">The Notorious B.I.G. feat. Eminem</p>
+          <p class="track-producer">Produced by Mario Winans &amp; Chucky Thompson</p>
+          <p class="track-album">Dead Wrong [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-deadwrong" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/q7T0vWdM-6c?si=x6MCjwqfmRDFV0WI" title="Dead Wrong (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-watcher">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-watcher" data-video-toggle="watcher">
+          <img class="track-thumb" src="../images/album-covers/feat/dr.-dre-2001-instrumentals-cover.jpg" alt="The Watcher (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-watcher" data-video-toggle="watcher">The Watcher (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Dr. Dre</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">2001 (Instrumentals Only)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-watcher" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/CRpAhbrkzE4?si=2qNjX5mcSAkIEPCJ" title="The Watcher (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-wtd">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-wtd" data-video-toggle="wtd">
+          <img class="track-thumb" src="../images/album-covers/feat/dr.-dre-2001-instrumentals-cover.jpg" alt="What’s The Difference (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-wtd" data-video-toggle="wtd">What’s The Difference (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Dr. Dre feat. Eminem &amp; Xzibit</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">2001 (Instrumentals Only)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-wtd" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/vR03uaPetxc?si=RjwLAlyXcQrGnSU2" title="What’s The Difference (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-fad">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-fad" data-video-toggle="fad">
+          <img class="track-thumb" src="../images/album-covers/feat/dr.-dre-2001-instrumentals-cover.jpg" alt="Forgot About Dre (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-fad" data-video-toggle="fad">Forgot About Dre (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Dr. Dre feat. Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">2001 (Instrumentals Only)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-fad" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/4Hs8GDo-Vk0?si=kIlJZaHzbYTC13wu" title="Forgot About Dre (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-trss">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-trss" data-video-toggle="trss">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/real-slim-shady-cover.jpg" alt="The Real Slim Shady (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-trss" data-video-toggle="trss">The Real Slim Shady (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">The Marshall Mathers LP (Tour Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-trss" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/MRrFaWNYxlg?si=rJpfleybLzOHvrEv" title="The Real Slim Shady (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-bp2">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-bp2" data-video-toggle="bp2">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/bitch-please-ii-cover.jpg" alt="Bitch Please II (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-bp2" data-video-toggle="bp2">Bitch Please II (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Bitch Please II [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-bp2" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/IIAgKyAw_ZI?si=qIJJnDmEv2DG4qT0" title="Bitch Please II (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-twia">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-twia" data-video-toggle="twia">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/way-i-am-cover.jpg" alt="The Way I Am (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-twia" data-video-toggle="twia">The Way I Am (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP (Tour Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-twia" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/PZA6EWbibOE?si=eNCpy6RB3mN8nsem" title="The Way I Am (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-stan">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-stan" data-video-toggle="stan">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/stan-cover.jpg" alt="Stan (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-stan" data-video-toggle="stan">Stan (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by The 45 King<br>Co-Produced by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP (Tour Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-stan" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/NMgaTiKPdV0?si=fAjHRfXATp2661rf" title="Stan (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-soy">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-soy" data-video-toggle="soy">
+          <img class="track-thumb" src="../images/album-covers/devils-night/shit-on-you-cover.jpg" alt="Shit On You (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-soy" data-video-toggle="soy">Shit On You (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by DJ Head</p>
+          <p class="track-album">Devil’s Night (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-soy" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/HnVYmPGE_Lc?si=g7NbT-KhQ1SHgH8B" title="Shit On You (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-iremember">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-iremember" data-video-toggle="iremember">
+          <img class="track-thumb" src="../images/album-covers/devils-night/shit-on-you-cover.jpg" alt="I Remember (Dedicated To Whitey Ford) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-iremember" data-video-toggle="iremember">I Remember (Dedicated To Whitey Ford)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Shit On You [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-iremember" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/F6xbwuS1yVI?si=w2NejZ_4ZzL5PCcS" title="I Remember (Dedicated To Whitey Ford)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-ppills">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-ppills" data-video-toggle="ppills">
+          <img class="track-thumb" src="../images/album-covers/devils-night/purple-pills-cover.jpg" alt="Purple Pills (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-ppills" data-video-toggle="ppills">Purple Pills (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Jeff Bass</p>
+          <p class="track-album">Devil’s Night (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-ppills" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Me1ci3kacNI?si=RuQk1-KIBbRtB3RU" title="Purple Pills (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-pistol">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-pistol" data-video-toggle="pistol">
+          <img class="track-thumb" src="../images/album-covers/devils-night/pistol-pistol-cover.jpg" alt="Pistol Pistol (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-pistol" data-video-toggle="pistol">Pistol Pistol (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Denaun Porter</p>
+          <p class="track-album">Pistol Pistol [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-pistol" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/wqT8_xLCUow?si=th4zT7-9hN6rvyXW" title="Pistol Pistol (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-fightmusic">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-fightmusic" data-video-toggle="fightmusic">
+          <img class="track-thumb" src="../images/album-covers/devils-night/fight-music-cover.jpg" alt="Fight Music (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-fightmusic" data-video-toggle="fightmusic">Fight Music (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Devil’s Night (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-fightmusic" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Jn9RPCrdfxU?si=SDFi7EvNyt-npgvW" title="Fight Music (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-buzz">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-buzz" data-video-toggle="buzz">
+          <img class="track-thumb" src="../images/album-covers/devils-night/blow-my-buzz-cover.jpeg" alt="Blow My Buzz (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-buzz" data-video-toggle="buzz">Blow My Buzz (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem<br>Co-Produced by Jeff Bass</p>
+          <p class="track-album">Devil’s Night (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-buzz" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/nzzzvcdXfJk?si=Pc3h7c_mYNGUDw6c" title="Blow My Buzz (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-withoutme">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-withoutme" data-video-toggle="withoutme">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/without-me-cover-edit.jpg" alt="Without Me (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-withoutme" data-video-toggle="withoutme">Without Me (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Co-Produced by Jeff Bass<br>Additional Production by DJ Head</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-withoutme" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/IcW7s5sryUc?si=p_mraWe_FYDYDVwK" title="Without Me (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rockcity">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rockcity" data-video-toggle="rockcity">
+          <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-rock-city-cover.jpg" alt="Rock City (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rockcity" data-video-toggle="rockcity">Rock City (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Royce Da 5’9“ feat. Eminem</p>
+          <p class="track-producer">Produced by Red Spyda</p>
+          <p class="track-album">Rock City [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rockcity" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/fkntE0q6R18?si=W4QsVMZtn6kRXNzN" title="Rock City (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-closet">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-closet" data-video-toggle="closet">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/cleanin-out-my-closet-cover.jpg" alt="Cleanin’ Out My Closet (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-closet" data-video-toggle="closet">Cleanin’ Out My Closet (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem &amp; Jeff Bass</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-closet" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/nnpBgJjUYX0?si=kbF6-T6fsx8wzdrn" title="Cleanin’ Out My Closet (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-collapse">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-collapse" data-video-toggle="collapse">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/til-i-collapse-cover.jpg" alt="Till I Collapse (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-collapse" data-video-toggle="collapse">’Till I Collapse (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-collapse" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/HGnpwvw3cwM?si=bCyx8_LQRGWDlkkX" title="Till I Collapse (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-superman">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-superman" data-video-toggle="superman">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/superman-cover.jpg" alt="Superman (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-superman" data-video-toggle="superman">Superman (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Jeff Bass</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-superman" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/6TJg2EEdsYg?si=NY0k33Zzw4X0V5tj" title="Superman (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-sftm">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-sftm" data-video-toggle="sftm">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/sing-for-the-moment-cover.jpg" alt="Sing For The Moment (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-sftm" data-video-toggle="sftm">Sing For The Moment (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Co-Produced by Jeff Bass</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-sftm" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/sxMN0Aq0YbU?si=QmM03uIlDSOldUgC" title="Sing For The Moment (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-business">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-business" data-video-toggle="business">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/business-cover.jpg" alt="Business (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-business" data-video-toggle="business">Business (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-business" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/4VYZW-lkkDU?si=FAu5eRJ9l3JENm27" title="Business (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-squaredance">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-squaredance" data-video-toggle="squaredance">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="Square Dance (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-squaredance" data-video-toggle="squaredance">Square Dance (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-squaredance" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/yLqIqPWDBcM?si=lyPVwL5N1EbaMkOt" title="Square Dance (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-swys">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-swys" data-video-toggle="swys">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="Say What You Say (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-swys" data-video-toggle="swys">Say What You Say (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-swys" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/5z7QuhQHo4A?si=sUo0BXiHlgCX44ib" title="Say What You Say (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-loseyourself">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-loseyourself" data-video-toggle="loseyourself">
+          <img class="track-thumb" src="../images/album-covers/8-mile/lose-yourself-cover.jpg" alt="Lose Yourself (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-loseyourself" data-video-toggle="loseyourself">Lose Yourself (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Jeff Bass</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-loseyourself" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/BETUM7WsWjE?si=KC6oiJs6oQgUKtqZ" title="Lose Yourself (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-loveme">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-loveme" data-video-toggle="loveme">
+          <img class="track-thumb" src="../images/album-covers/8-mile/8-mile_2-cover.jpg" alt="Love Me (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-loveme" data-video-toggle="loveme">Love Me (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem, Obie Trice &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-loveme" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/m650FOTSrcA?si=iM-PGRCuQezOBkNT" title="Love Me (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-8mile">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-8mile" data-video-toggle="8mile">
+          <img class="track-thumb" src="../images/album-covers/8-mile/8-mile_2-cover.jpg" alt="8 Mile (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-8mile" data-video-toggle="8mile">8 Mile (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-8mile" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/uC6bzQzrfuw?si=zsoTSgdd7nDzoP8L" title="8 Mile (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rapgame">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rapgame" data-video-toggle="rapgame">
+          <img class="track-thumb" src="../images/album-covers/8-mile/8-mile_2-cover.jpg" alt="Rap Game (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rapgame" data-video-toggle="rapgame">Rap Game (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem &amp; Denaun Porter</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rapgame" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/qdTeuIiCZnU?si=mfLRfWYaEFM0xnsB" title="Rap Game (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+     <article class="track-card" id="track-8milesandrunnin">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-8milesandrunnin" data-video-toggle="8milesandrunnin">
+          <img class="track-thumb" src="../images/album-covers/8-mile/8-mile_2-cover.jpg" alt="8 Miles And Runnin’ (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-8milesandrunnin" data-video-toggle="8milesandrunnin">8 Miles And Runnin’ (Instrumental)</button>
+          </h2>
+          <p class="track-artist">JAY-Z feat. Freeway</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-8milesandrunnin" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/4Nu3wIxu0wE?si=ycK43Qocd6HUT-vF" title="8 Miles And Runnin’ (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rabbitrun">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rabbitrun" data-video-toggle="rabbitrun">
+          <img class="track-thumb" src="../images/album-covers/8-mile/8-mile_2-cover.jpg" alt="Rabbit Run (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rabbitrun" data-video-toggle="rabbitrun">Rabbit Run (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (20th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rabbitrun" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/QJMglCT1K5k?si=eqYHYRpsW22FEEIF" title="Rabbit Run (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rapname">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rapname" data-video-toggle="rapname">
+          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-rap-name-cover.jpg" alt="Rap Name (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rapname" data-video-toggle="rapname">Rap Name (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Rap Name [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rapname" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/pfainrz2R0g?si=bZ1awKL2FB1KasES" title="Rap Name (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-cross">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-cross" data-video-toggle="cross">
+          <img class="track-thumb" src="../images/album-covers/feat/nas-the-cross_2-cover.jpg" alt="The Cross (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-cross" data-video-toggle="cross">The Cross (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Nas</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">G.O.D. / The Cross [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-cross" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/RHhZ-8_XdVQ?si=mqjMtSBJjTUDLmNe" title="The Cross (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-shtfan">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-shtfan" data-video-toggle="shtfan">
+          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-shit-hits-the-fan-cover.jpg" alt="Shit Hits The Fan (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-shtfan" data-video-toggle="shtfan">Shit Hits The Fan (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Obie Trice feat. Dr. Dre</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">Shit Hits The Fan [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-shtfan" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/nSEapPYctNw?si=f5vvtmqVcnw_-KYI" title="Shit Hits The Fan (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-gotsometeeth">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-gotsometeeth" data-video-toggle="gotsometeeth">
+          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-got-some-teeth-cover.jpg" alt="Got Some Teeth (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-gotsometeeth" data-video-toggle="gotsometeeth">Got Some Teeth (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Got Some Teeth [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-gotsometeeth" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/MDkOx3pNzbE?si=uEa36QCml2gjyL-9" title="Got Some Teeth (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-runnin-dtl">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-runnin-dtl" data-video-toggle="runnin-dtl">
+          <img class="track-thumb" src="../images/album-covers/feat/2pac-runnin'-cover.jpg" alt="Runnin’ [Dying To Live] (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-runnin-dtl" data-video-toggle="runnin-dtl">Runnin’ [Dying To Live] (Instrumental)</button>
+          </h2>
+          <p class="track-artist">2Pac feat. The Notorious B.I.G.</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Runnin’ [Dying To Live] (Single)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-runnin-dtl" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/2ff4kYOJwg0?si=DRT_6w8m-Rznmx5A" title="Runnin’ [Dying To Live] (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-onedayems">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-onedayems" data-video-toggle="onedayems">
+          <img class="track-thumb" src="../images/album-covers/feat/2pac-one-day-at-a-time-cover.jpg" alt="One Day At A Time (Em’s Version) (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-onedayems" data-video-toggle="onedayems">One Day At A Time [Em’s Version] (Instrumental)</button>
+          </h2>
+          <p class="track-artist">2Pac with Eminem feat. Outlawz</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">One Day At A Time (Em’s Version) [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-onedayems" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/NsjaM59B9Ys?si=kmrZ1a3cDPxkiK1Y" title="One Day At A Time [Em’s Version] (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-dontcomedown">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-dontcomedown" data-video-toggle="dontcomedown">
+          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-dont-come-down-cover.jpg" alt="Don’t Come Down (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-dontcomedown" data-video-toggle="dontcomedown">Don’t Come Down (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem &amp; Emile Haynie</p>
+          <p class="track-album">Don’t Come Down [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-dontcomedown" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/XWbyGUwAi0I?si=PWDR-CPWez3qZlXg" title="Don’t Come Down (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-myband">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-myband" data-video-toggle="myband">
+          <img class="track-thumb" src="../images/album-covers/d12-world/my-band-cover.jpg" alt="My Band (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-myband" data-video-toggle="myband">My Band (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">My Band [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-myband" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/bd3YD5jJZIM?si=zS63jMx_mhN4y8_6" title="My Band (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-40oz">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-40oz" data-video-toggle="40oz">
+          <img class="track-thumb" src="../images/album-covers/d12-world/40-oz-cover.jpg" alt="40 Oz. (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-40oz" data-video-toggle="40oz">40 Oz. (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Track Boyz</p>
+          <p class="track-album">40 Oz. [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-40oz" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/m32U12gliRQ?si=QkU8KrHNXoUndReY" title="40 Oz. (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-40oz-remix">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-40oz-remix" data-video-toggle="40oz-remix">
+          <img class="track-thumb" src="../images/album-covers/d12-world/40-oz-remix-lil-john-cover.jpg" alt="40 Oz. (Remix by Lil Jon) [Instrumental] cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-40oz-remix" data-video-toggle="40oz-remix">40 Oz. (Remix by Lil Jon) [Instrumental]</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Lil Jon</p>
+          <p class="track-album">40 Oz. (Remix by Lil Jon) [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-40oz-remix" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/-CHRNLMe6g8?si=tCmPq5M5shUnj4Zn" title="40 Oz. (Remix by Lil Jon) [Instrumental]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-ap2">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-ap2" data-video-toggle="ap2">
+          <img class="track-thumb" src="../images/album-covers/d12-world/american-psycho-2-cover.jpg" alt="American Psycho II (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-ap2" data-video-toggle="ap2">American Psycho II (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">American Psycho II [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-ap2" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Dlz7A0msmG4?si=L9EXHL4uOC5D1QyZ" title="American Psycho II (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+     <article class="track-card" id="track-onfire">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-onfire" data-video-toggle="onfire">
+          <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-on-fire-cover.jpg" alt="On Fire (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-onfire" data-video-toggle="onfire">On Fire (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Lloyd Banks</p>
+          <p class="track-producer" hidden>Produced by K1 Mil<br>Co-Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">On Fire [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-onfire" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/BgTzEuIkEH4?si=RDnER8azv2Ax0HfM" title="On Fire (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-howcome">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-howcome" data-video-toggle="howcome">
+          <img class="track-thumb" src="../images/album-covers/d12-world/how-come-cover.jpg" alt="How Come (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-howcome" data-video-toggle="howcome">How Come (Instrumental)</button>
+          </h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Witt &amp; Pep</p>
+          <p class="track-album">How Come [UK Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-howcome" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/QytCNHfvtNs?si=5fYYElwkAFRdXI5F" title="How Come (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-warriorpt2">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-warriorpt2" data-video-toggle="warriorpt2">
+          <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-warrior-pt-2-cover.jpg" alt="Warrior, Pt. 2 (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-warriorpt2" data-video-toggle="warriorpt2">Warrior, Pt. 2 (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Lloyd Banks feat. Eminem, 50 Cent &amp; Nate Dogg</p>
+          <p class="track-producer" hidden>Produced by Eminem</p>
+          <p class="track-album">Warrior, Pt. 2 [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-warriorpt2" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/vVee514NoWI?si=mzrqNB52OCT9_AH3" title="Warrior, Pt. 2 (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-warriorpt2">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-warriorpt2" data-video-toggle="warriorpt2">
+          <img class="track-thumb" src="../images/album-covers/feat/dj-kay-slay-im-gone-cover.jpg" alt="Warrior, Pt. 2 (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-warriorpt2" data-video-toggle="warriorpt2">I’m Gone (Instrumental)</button>
+          </h2>
+          <p class="track-artist">DJ Kay Slay feat. Eminem &amp; Obie Trice</p>
+          <p class="track-producer" hidden>Produced by Eminem</p>
+          <p class="track-producer" hidden>Additional Production by Luis Resto</p>
+          <p class="track-album">I’m Gone [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-warriorpt2" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/vVee514NoWI?si=mzrqNB52OCT9_AH3" title="Warrior, Pt. 2 (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-thugsgetlonely">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-thugsgetlonely" data-video-toggle="thugsgetlonely">
+          <img class="track-thumb" src="../images/album-covers/feat/2pac-thugs-get-lonely-too-cover.jpg" alt="Thugs Get Lonely Too (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-thugsgetlonely" data-video-toggle="thugsgetlonely">Thugs Get Lonely Too (Instrumental)</button>
+          </h2>
+          <p class="track-artist">2Pac feat. Nate Dogg</p>
+          <p class="track-producer" hidden>Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Thugs Get Lonely Too [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-thugsgetlonely" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/0hffEeRjKF8?si=eYJbRtsfYa6DA6AZ" title="Thugs Get Lonely Too (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-justloseit">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-justloseit" data-video-toggle="justloseit">
+          <img class="track-thumb" src="../images/album-covers/encore/just-lose-it-cover.jpg" alt="Just Lose It (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-justloseit" data-video-toggle="justloseit">Just Lose It (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">Just Lose It [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-justloseit" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/L8bmucIIWnI?si=ApAH7qa5z7iiK8e-" title="Just Lose It (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-encore">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-encore" data-video-toggle="encore">
+          <img class="track-thumb" src="../images/album-covers/encore/encore-single-cover.jpg" alt="Encore (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-encore" data-video-toggle="encore">Encore (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+          <p class="track-album">Encore [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-encore" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/BesnbGa6YXY?si=BGOLax8iYq5EM_TX" title="Encore (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+     <article class="track-card" id="track-ghettogospel">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-ghettogospel" data-video-toggle="ghettogospel">
+          <img class="track-thumb" src="../images/album-covers/feat/2pac-ghetto-gospel-cover.jpg" alt="Ghetto Gospel (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-ghettogospel" data-video-toggle="ghettogospel">Ghetto Gospel (Instrumental)</button>
+          </h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer" hidden>Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Ghetto Gospel [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-ghettogospel" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/3UhRC6L8Vpw?si=KLQFMvOH8Ie5Czzo" title="Ghetto Gospel (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-lts">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-lts" data-video-toggle="lts">
+          <img class="track-thumb" src="../images/album-covers/encore/like-toy-soldiers-cover.jpg" alt="Like Toy Soldiers (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-lts" data-video-toggle="lts">Like Toy Soldiers (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Like Toy Soldiers [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-lts" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/nrp-ac-s-ek?si=tWtciObT4p2S3abG" title="Like Toy Soldiers (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-mockingbird">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-mockingbird" data-video-toggle="mockingbird">
+          <img class="track-thumb" src="../images/album-covers/encore/mockingbird-cover.jpeg" alt="Mockingbird (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-mockingbird" data-video-toggle="mockingbird">Mockingbird (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Mockingbird [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-mockingbird" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/ANKcI9f_j9A?si=sSubSqjmRevoPLuq" title="Mockingbird (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rockstar">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rockstar" data-video-toggle="rockstar">
+          <img class="track-thumb" src="../images/album-covers/feat/bizarre-rock-star-cover.jpg" alt="Rockstar (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rockstar" data-video-toggle="rockstar">Rockstar (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Bizarre</p>
+          <p class="track-producer" hidden>Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Rockstar [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rockstar" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/-ahffmQpYgU?si=jhdye_IFMnTznFl9" title="Rockstar (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-alt">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-alt" data-video-toggle="alt">
+          <img class="track-thumb" src="../images/album-covers/encore/ass-like-that-cover.jpg" alt="Ass Like That (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-alt" data-video-toggle="alt">Ass Like That (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">Ass Like That [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-alt" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/2W2BS5I3hfQ?si=xXniLVDW90lDt0Uq" title="Ass Like That (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-welcome2detroit">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-welcome2detroit" data-video-toggle="welcome2detroit">
+          <img class="track-thumb" src="../images/album-covers/feat/trick-trick-welcome-2-detroit_2-cover.jpg" alt="Welcome 2 Detroit (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-welcome2detroit" data-video-toggle="welcome2detroit">Welcome 2 Detroit (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Trick Trick feat. Eminem</p>
+          <p class="track-producer" hidden>Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Welcome 2 Detroit [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-welcome2detroit" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/4RVAXR7q92o?si=00ReNVdd75shh3OY" title="Welcome 2 Detroit (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-whenimgone">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-whenimgone" data-video-toggle="whenimgone">
+          <img class="track-thumb" src="../images/album-covers/curtain-call/when-i'm-gone-cover.jpg" alt="When I’m Gone (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-whenimgone" data-video-toggle="whenimgone">When I’m Gone (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">When I’m Gone [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-whenimgone" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/_92tZ38iyBY?si=W9Lq_GTmbnaT9x8I" title="When I’m Gone (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-shakethat">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-shakethat" data-video-toggle="shakethat">
+          <img class="track-thumb" src="../images/album-covers/curtain-call/shake-that-cover.jpg" alt="Shake That (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-shakethat" data-video-toggle="shakethat">Shake That (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Shake That [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-shakethat" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/KeTwUq4xP04?si=iIPFE8w_iMJy62ZN" title="Shake That (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-handsup">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-handsup" data-video-toggle="handsup">
+          <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-hands-up-cover.jpg" alt="Hands Up (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-handsup" data-video-toggle="handsup">Hands Up (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Lloyd Banks feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem, Chris Styles &amp; Bang Out<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Hands Up [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-handsup" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/FGcHsLoVHV4?si=Oovuty_GGr8Nbrjx" title="Hands Up (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-jamaicangirl">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-jamaicangirl" data-video-toggle="jamaicangirl">
+          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-jamaican-girl-cover.jpg" alt="Jamaican Girl (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-jamaicangirl" data-video-toggle="jamaicangirl">Jamaican Girl (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Obie Trice feat. Brick &amp; Lace</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Jamaican Girl [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-jamaicangirl" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/g5Yk7H8rAfs?si=MVw01fJ8ADFI9SFE" title="Jamaican Girl (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-smackthat">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-smackthat" data-video-toggle="smackthat">
+          <img class="track-thumb" src="../images/album-covers/feat/akon-smack-that-cover.jpg" alt="Smack That (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-smackthat" data-video-toggle="smackthat">Smack That (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Akon feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Smack That [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-smackthat" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/g5Yk7H8rAfs?si=vEXf8_TfG6Wv-kP1" title="Smack That (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-ydk">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-ydk" data-video-toggle="ydk">
+          <img class="track-thumb" src="../images/album-covers/re-up/you-don't-know-cover.jpeg" alt="You Don’t Know (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-ydk" data-video-toggle="ydk">You Don’t Know (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem, 50 Cent, Lloyd Banks &amp; Ca$his</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">You Don’t Know [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-ydk" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/XqRc9vDPhO0?si=4rqNZNlTxqmQK3-C" title="You Don’t Know (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-jcc">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-jcc" data-video-toggle="jcc">
+          <img class="track-thumb" src="../images/album-covers/non-album/jimmy-crack-corn-(vocal-remix)-cover.jpg" alt="Jimmy Crack Corn (Vocal Remix) [Instrumental] cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-jcc" data-video-toggle="jcc">Jimmy Crack Corn (Vocal Remix) [Instrumental]</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Jimmy Crack Corn (Vocal Remix) [Promo Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-jcc" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/-nQQttbqcuY?si=tWkgQzKpdUQoOsf-" title="Jimmy Crack Corn (Vocal Remix) [Instrumental]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-lacmotion">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-lacmotion" data-video-toggle="lacmotion">
+          <img class="track-thumb" src="../images/album-covers/feat/ca$his-lac-motion-cover.jpg" alt="’Lac Motion (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-lacmotion" data-video-toggle="lacmotion">’Lac Motion (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">’Lac Motion [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-lacmotion" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/q5UBlfyiyhI?si=Wt62wctKMvfHULX0" title="’Lac Motion (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-cab">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-cab" data-video-toggle="cab">
+          <img class="track-thumb" src="../images/album-covers/relapse/crack-a-bottle-cover.jpg" alt="Crack A Bottle (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-cab" data-video-toggle="cab">Crack A Bottle (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Crack A Bottle [Promo]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-cab" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/LpQDUcvU8mw?si=k53jNZG5W5o5vaIB" title="Crack A Bottle (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-wmy">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-wmy" data-video-toggle="wmy">
+          <img class="track-thumb" src="../images/album-covers/relapse/we-made-you-cover.jpg" alt="We Made You (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-wmy" data-video-toggle="wmy">We Made You (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Eminem<br>Additional Production by Doc Ish</p>
+          <p class="track-album">We Made You [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-wmy" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Yv8wvS7NkAA?si=0z-o8wckUhlvlLlz" title="We Made You (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-beautiful">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-beautiful" data-video-toggle="beautiful">
+          <img class="track-thumb" src="../images/album-covers/relapse/beautiful-cover.jpg" alt="Beautiful (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-beautiful" data-video-toggle="beautiful">Beautiful (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem<br>Co-Produced by Jeff Bass</p>
+          <p class="track-album">Beautiful [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-beautiful" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Cf-JIBg-tNU?si=MM9oHJ7kBN8D2Ttj" title="Beautiful (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-notafraid">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-notafraid" data-video-toggle="notafraid">
+          <img class="track-thumb" src="../images/album-covers/recovery/not-afraid-cover.jpg" alt="Not Afraid (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-notafraid" data-video-toggle="notafraid">Not Afraid (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Boi-1da<br>Additional Production by Eminem, Jordan Evans &amp; Matthew Burnett</p>
+          <p class="track-album">Not Afraid [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-notafraid" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/v6QZKcMkOZE?si=R8rvJzUba7f7_kGR" title="Not Afraid (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-survival">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-survival" data-video-toggle="survival">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_3-cover.jpg" alt="Survival (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-survival" data-video-toggle="survival">Survival (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-album">The Marshall Mathers LP 2 (10th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-survival" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/-CKeWBT3W2E?si=HwWomMphNDSJIcMR" title="Survival (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-berzerk">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-berzerk" data-video-toggle="berzerk">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_3-cover.jpg" alt="Berzerk (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-berzerk" data-video-toggle="berzerk">Berzerk (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Rick Rubin</p>
+          <p class="track-album">The Marshall Mathers LP 2 (10th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-berzerk" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/MKwPL10C3nQ?si=-l4PWx9B8wWA0myy" title="Berzerk (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-rapgod">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-rapgod" data-video-toggle="rapgod">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_3-cover.jpg" alt="Rap God (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-rapgod" data-video-toggle="rapgod">Rap God (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by DVLP<br>Co-Produced by Filthy</p>
+          <p class="track-album">The Marshall Mathers LP 2 (10th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-rapgod" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Jnkcey_YwEk?si=OF9D0bnah0sIIei8" title="Rap God (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-monster">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-monster" data-video-toggle="monster">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_3-cover.jpg" alt="The Monster (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-monster" data-video-toggle="monster">The Monster (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Frequency<br>Co-Produced by Aalias</p>
+          <p class="track-album">The Marshall Mathers LP 2 (10th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-monster" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Z3qoCcIQ6dQ?si=D5u3ppC5vqvkqu1T" title="The Monster (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-headlights">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-headlights" data-video-toggle="headlights">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_3-cover.jpg" alt="Headlights (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-headlights" data-video-toggle="headlights">Headlights (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; Jeff Bhasker<br>Additional Production by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP 2 (10th Anniversary Edition)</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-headlights" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/-IBVqB_kFHE?si=4xJ05UGgOY5-gShi" title="Headlights (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card" id="track-godzilla">
+
+    <article class="track-card" id="track-calmdown">
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-calmdown" data-video-toggle="calmdown">
+          <img class="track-thumb" src="../images/album-covers/feat/busta-rhymes-calm-down_2-cover.jpg" alt="Calm Down (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-calmdown" data-video-toggle="calmdown">Calm Down (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Busta Rhymes feat. Eminem</p>
+          <p class="track-producer">Produced by Scoop Deville<br>Additional Production by Eminem</p>
+          <p class="track-album">Calm Down: The Clash EP</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-calmdown" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/jPxBW_FwF0g?si=nkbKOV91omxGtDeB" title="Calm Down (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+      <div class="track-body">
+        <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-godzilla" data-video-toggle="godzilla">
+          <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/godzilla-cover.jpg" alt="Godzilla (Instrumental) cover">
+        </button>
+        <div class="track-meta">
+          <h2 class="track-title">
+            <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-godzilla" data-video-toggle="godzilla">Godzilla (Instrumental)</button>
+          </h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Royce Da 5’9“ &amp; Eminem<br>Additional Production by Luis Resto</p>
+          <p class="track-album">Godzilla [Single]</p>
+        </div>
+      </div>
+      <div class="track-video" id="video-godzilla" hidden>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/kkjYT0rR6ic?si=euy9enjsOJF0BwJi" title="Godzilla (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </article>
+
+    <p class="promo-note">This list contains officially released instrumentals only.
+</p>
+
+      
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+// ensure every track-card shows a track-artist element; insert 'Eminem' when missing
+(function ensureTrackArtist() {
+  const metas = Array.from(document.querySelectorAll('.track-meta'));
+  metas.forEach((meta) => {
+    if (!meta.querySelector('.track-artist')) {
+      const p = document.createElement('p');
+      p.className = 'track-artist';
+      p.textContent = 'Eminem';
+      const ref = meta.querySelector('.track-producer') || meta.firstElementChild.nextSibling;
+      meta.insertBefore(p, ref);
+    }
+  });
+})();
+
+(() => {
+  const filterButtons = Array.from(document.querySelectorAll('.filter-btn[data-filter]'));
+  const trackCards = Array.from(document.querySelectorAll('.track-card'));
+
+  if (!filterButtons.length || !trackCards.length) return;
+
+  const getFilterType = (card) => {
+    const artistEl = card.querySelector('.track-artist');
+    const artist = (artistEl?.textContent || '').toLowerCase();
+    // explicit override for Godzilla: always treat as Eminem
+    if (card.id === 'track-godzilla') return 'eminem';
+    if (artist.includes('feat. eminem') || artist.includes('featuring eminem') || artist.includes('feat eminem') || artist.includes('with eminem')) {
+      return 'feat';
+    }
+    // explicit overrides for tracks that should appear under "feat. Eminem"
+    if (card.id === 'track-watcher' || card.id === 'track-shtfan' || card.id === 'track-anthem') {
+      return 'feat';
+    }
+    if (artist.includes('bad meets evil') || artist.includes('d12')) {
+      return 'group';
+    }
+    if (artist.includes('eminem')) {
+      return 'eminem';
+    }
+    return 'other';
+  };
+
+  trackCards.forEach((card) => {
+    const type = getFilterType(card);
+    card.dataset.filterType = type;
+    card.setAttribute('data-filter-type', type);
+  });
+
+  const applyFilter = (filter) => {
+    filterButtons.forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.filter === filter);
+    });
+
+    trackCards.forEach((card) => {
+      const type = card.dataset.filterType || 'other';
+      const show = filter === 'all' || type === filter;
+
+      card.hidden = !show;
+      card.classList.toggle('is-hidden-by-filter', !show);
+    });
+  };
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter || 'all'));
+  });
+
+  applyFilter('eminem');
+})();
+
+// Toggle track videos and optionally reveal producer credits
+(() => {
+  const toggleRegistry = [];
+
+  const ensureJsApiEnabled = (iframe) => {
+    if (!iframe) return;
+    const src = iframe.getAttribute('src') || '';
+    if (src.includes('enablejsapi=1')) return;
+    const separator = src.includes('?') ? '&' : '?';
+    iframe.setAttribute('src', `${src}${separator}enablejsapi=1`);
+  };
+
+  const pauseIframe = (videoEl) => {
+    const iframe = videoEl.querySelector('iframe');
+    if (!iframe) return;
+    ensureJsApiEnabled(iframe);
+    try {
+      iframe.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    } catch (_) {
+      /* no-op: best-effort pause */
+    }
+  };
+
+  const closeOthers = (keepId) => {
+    toggleRegistry.forEach(({ video, producer, toggles }) => {
+      const isTarget = video.id === keepId;
+      if (isTarget) return;
+      if (!video.hidden) {
+        video.hidden = true;
+        if (producer) {
+          producer.hidden = true;
+          producer.classList.remove('is-visible');
+        }
+        toggles.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
+      }
+      pauseIframe(video);
+    });
+  };
+
+  const setupTrackToggle = ({ cardId, videoId, toggleKey }) => {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const video = card.querySelector(`#${videoId}`);
+    const producer = card.querySelector('.track-producer');
+    const toggles = Array.from(card.querySelectorAll(`[data-video-toggle="${toggleKey}"]`));
+    if (!video || !toggles.length) return;
+
+    toggleRegistry.push({ video, producer, toggles });
+
+    const resetClosed = () => {
+      video.hidden = true;
+      if (producer) {
+        producer.hidden = true;
+        producer.classList.remove('is-visible');
+      }
+      toggles.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
+      pauseIframe(video);
+    };
+
+    const setExpanded = (isOpen) => {
+      toggles.forEach((btn) => btn.setAttribute('aria-expanded', String(isOpen)));
+    };
+
+    resetClosed();
+
+    toggles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const willOpen = video.hidden;
+        if (willOpen) {
+          closeOthers(video.id);
+        }
+        video.hidden = !willOpen;
+        if (producer) {
+          producer.hidden = !willOpen;
+          producer.classList.toggle('is-visible', willOpen);
+        }
+        if (!willOpen) {
+          pauseIframe(video);
+        }
+        setExpanded(willOpen);
+      });
+    });
+  };
+
+  setupTrackToggle({ cardId: 'track-jdgaf', videoId: 'video-jdgaf', toggleKey: 'jdgaf' });
+  setupTrackToggle({ cardId: 'track-3hree6ix5ive', videoId: 'video-3hree6ix5ive', toggleKey: '3hree6ix5ive' });
+  setupTrackToggle({ cardId: 'track-5stargenerals', videoId: 'video-5stargenerals', toggleKey: '5stargenerals' });
+  setupTrackToggle({ cardId: 'track-ntd', videoId: 'video-ntd', toggleKey: 'ntd' });
+  setupTrackToggle({ cardId: 'track-sm', videoId: 'video-sm', toggleKey: 'sm' });
+  setupTrackToggle({ cardId: 'track-jdgaf-lp', videoId: 'video-jdgaf-lp', toggleKey: 'jdgaf-lp' });
+  setupTrackToggle({ cardId: 'track-mni', videoId: 'video-mni', toggleKey: 'mni' });
+  setupTrackToggle({ cardId: 'track-anyman', videoId: 'video-anyman', toggleKey: 'anyman' });
+  setupTrackToggle({ cardId: 'track-rolemodel', videoId: 'video-rolemodel', toggleKey: 'rolemodel' });
+  setupTrackToggle({ cardId: 'track-gc', videoId: 'video-gc', toggleKey: 'gc' });
+  setupTrackToggle({ cardId: 'track-imshady', videoId: 'video-imshady', toggleKey: 'imshady' });
+  setupTrackToggle({ cardId: 'track-macosa', videoId: 'video-macosa', toggleKey: 'macosa' });
+  setupTrackToggle({ cardId: 'track-weshine', videoId: 'video-weshine', toggleKey: 'weshine' });
+  setupTrackToggle({ cardId: 'track-getyoumad', videoId: 'video-getyoumad', toggleKey: 'getyoumad' });
+  setupTrackToggle({ cardId: 'track-anthem', videoId: 'video-anthem', toggleKey: 'anthem' });
+  setupTrackToggle({ cardId: 'track-deadwrong', videoId: 'video-deadwrong', toggleKey: 'deadwrong' });
+  setupTrackToggle({ cardId: 'track-watcher', videoId: 'video-watcher', toggleKey: 'watcher' });
+  setupTrackToggle({ cardId: 'track-wtd', videoId: 'video-wtd', toggleKey: 'wtd' });
+  setupTrackToggle({ cardId: 'track-fad', videoId: 'video-fad', toggleKey: 'fad' });
+  setupTrackToggle({ cardId: 'track-trss', videoId: 'video-trss', toggleKey: 'trss' });
+  setupTrackToggle({ cardId: 'track-bp2', videoId: 'video-bp2', toggleKey: 'bp2' });
+  setupTrackToggle({ cardId: 'track-twia', videoId: 'video-twia', toggleKey: 'twia' });
+  setupTrackToggle({ cardId: 'track-stan', videoId: 'video-stan', toggleKey: 'stan' });
+  setupTrackToggle({ cardId: 'track-soy', videoId: 'video-soy', toggleKey: 'soy' });
+  setupTrackToggle({ cardId: 'track-rockcity', videoId: 'video-rockcity', toggleKey: 'rockcity' });
+  setupTrackToggle({ cardId: 'track-iremember', videoId: 'video-iremember', toggleKey: 'iremember' });
+  setupTrackToggle({ cardId: 'track-ppills', videoId: 'video-ppills', toggleKey: 'ppills' });
+  setupTrackToggle({ cardId: 'track-pistol', videoId: 'video-pistol', toggleKey: 'pistol' });
+  setupTrackToggle({ cardId: 'track-fightmusic', videoId: 'video-fightmusic', toggleKey: 'fightmusic' });
+  setupTrackToggle({ cardId: 'track-buzz', videoId: 'video-buzz', toggleKey: 'buzz' });
+  setupTrackToggle({ cardId: 'track-withoutme', videoId: 'video-withoutme', toggleKey: 'withoutme' });
+  setupTrackToggle({ cardId: 'track-closet', videoId: 'video-closet', toggleKey: 'closet' });
+  setupTrackToggle({ cardId: 'track-collapse', videoId: 'video-collapse', toggleKey: 'collapse' });
+  setupTrackToggle({ cardId: 'track-superman', videoId: 'video-superman', toggleKey: 'superman' });
+  setupTrackToggle({ cardId: 'track-sftm', videoId: 'video-sftm', toggleKey: 'sftm' });
+  setupTrackToggle({ cardId: 'track-business', videoId: 'video-business', toggleKey: 'business' });
+  setupTrackToggle({ cardId: 'track-squaredance', videoId: 'video-squaredance', toggleKey: 'squaredance' });
+  setupTrackToggle({ cardId: 'track-swys', videoId: 'video-swys', toggleKey: 'swys' });
+  setupTrackToggle({ cardId: 'track-loseyourself', videoId: 'video-loseyourself', toggleKey: 'loseyourself' });
+  setupTrackToggle({ cardId: 'track-loveme', videoId: 'video-loveme', toggleKey: 'loveme' });
+  setupTrackToggle({ cardId: 'track-8mile', videoId: 'video-8mile', toggleKey: '8mile' });
+  setupTrackToggle({ cardId: 'track-rapgame', videoId: 'video-rapgame', toggleKey: 'rapgame' });
+  setupTrackToggle({ cardId: 'track-8milesandrunnin', videoId: 'video-8milesandrunnin', toggleKey: '8milesandrunnin' });
+  setupTrackToggle({ cardId: 'track-rabbitrun', videoId: 'video-rabbitrun', toggleKey: 'rabbitrun' });
+  setupTrackToggle({ cardId: 'track-rapname', videoId: 'video-rapname', toggleKey: 'rapname' });
+  setupTrackToggle({ cardId: 'track-cross', videoId: 'video-cross', toggleKey: 'cross' });
+  setupTrackToggle({ cardId: 'track-shtfan', videoId: 'video-shtfan', toggleKey: 'shtfan' });
+  setupTrackToggle({ cardId: 'track-gotsometeeth', videoId: 'video-gotsometeeth', toggleKey: 'gotsometeeth' });
+  setupTrackToggle({ cardId: 'track-runnin-dtl', videoId: 'video-runnin-dtl', toggleKey: 'runnin-dtl' });
+  setupTrackToggle({ cardId: 'track-onedayems', videoId: 'video-onedayems', toggleKey: 'onedayems' });
+  setupTrackToggle({ cardId: 'track-myband', videoId: 'video-myband', toggleKey: 'myband' });
+
+  setupTrackToggle({ cardId: 'track-dontcomedown', videoId: 'video-dontcomedown', toggleKey: 'dontcomedown' });
+  setupTrackToggle({ cardId: 'track-40oz', videoId: 'video-40oz', toggleKey: '40oz' });
+  setupTrackToggle({ cardId: 'track-40oz-remix', videoId: 'video-40oz-remix', toggleKey: '40oz-remix' });
+  setupTrackToggle({ cardId: 'track-ap2', videoId: 'video-ap2', toggleKey: 'ap2' });
+  setupTrackToggle({ cardId: 'track-onfire', videoId: 'video-onfire', toggleKey: 'onfire' });
+  setupTrackToggle({ cardId: 'track-warriorpt2', videoId: 'video-warriorpt2', toggleKey: 'warriorpt2' });
+  setupTrackToggle({ cardId: 'track-thugsgetlonely', videoId: 'video-thugsgetlonely', toggleKey: 'thugsgetlonely' });
+  setupTrackToggle({ cardId: 'track-ghettogospel', videoId: 'video-ghettogospel', toggleKey: 'ghettogospel' });
+  setupTrackToggle({ cardId: 'track-howcome', videoId: 'video-howcome', toggleKey: 'howcome' });
+  setupTrackToggle({ cardId: 'track-justloseit', videoId: 'video-justloseit', toggleKey: 'justloseit' });
+  setupTrackToggle({ cardId: 'track-encore', videoId: 'video-encore', toggleKey: 'encore' });
+  setupTrackToggle({ cardId: 'track-lts', videoId: 'video-lts', toggleKey: 'lts' });
+  setupTrackToggle({ cardId: 'track-mockingbird', videoId: 'video-mockingbird', toggleKey: 'mockingbird' });
+  setupTrackToggle({ cardId: 'track-rockstar', videoId: 'video-rockstar', toggleKey: 'rockstar' });
+  setupTrackToggle({ cardId: 'track-alt', videoId: 'video-alt', toggleKey: 'alt' });
+  setupTrackToggle({ cardId: 'track-whenimgone', videoId: 'video-whenimgone', toggleKey: 'whenimgone' });
+  setupTrackToggle({ cardId: 'track-shakethat', videoId: 'video-shakethat', toggleKey: 'shakethat' });
+  setupTrackToggle({ cardId: 'track-handsup', videoId: 'video-handsup', toggleKey: 'handsup' });
+  setupTrackToggle({ cardId: 'track-jamaicangirl', videoId: 'video-jamaicangirl', toggleKey: 'jamaicangirl' });
+  setupTrackToggle({ cardId: 'track-smackthat', videoId: 'video-smackthat', toggleKey: 'smackthat' });
+  setupTrackToggle({ cardId: 'track-lacmotion', videoId: 'video-lacmotion', toggleKey: 'lacmotion' });
+  setupTrackToggle({ cardId: 'track-ydk', videoId: 'video-ydk', toggleKey: 'ydk' });
+  setupTrackToggle({ cardId: 'track-jcc', videoId: 'video-jcc', toggleKey: 'jcc' });
+  setupTrackToggle({ cardId: 'track-cab', videoId: 'video-cab', toggleKey: 'cab' });
+  setupTrackToggle({ cardId: 'track-wmy', videoId: 'video-wmy', toggleKey: 'wmy' });
+  setupTrackToggle({ cardId: 'track-beautiful', videoId: 'video-beautiful', toggleKey: 'beautiful' });
+  setupTrackToggle({ cardId: 'track-notafraid', videoId: 'video-notafraid', toggleKey: 'notafraid' });
+  setupTrackToggle({ cardId: 'track-survival', videoId: 'video-survival', toggleKey: 'survival' });
+  setupTrackToggle({ cardId: 'track-berzerk', videoId: 'video-berzerk', toggleKey: 'berzerk' });
+  setupTrackToggle({ cardId: 'track-rapgod', videoId: 'video-rapgod', toggleKey: 'rapgod' });
+  setupTrackToggle({ cardId: 'track-monster', videoId: 'video-monster', toggleKey: 'monster' });
+  setupTrackToggle({ cardId: 'track-headlights', videoId: 'video-headlights', toggleKey: 'headlights' });
+  setupTrackToggle({ cardId: 'track-godzilla', videoId: 'video-godzilla', toggleKey: 'godzilla' });
+  setupTrackToggle({ cardId: 'track-welcome2detroit', videoId: 'video-welcome2detroit', toggleKey: 'welcome2detroit' });
+  setupTrackToggle({ cardId: 'track-calmdown', videoId: 'video-calmdown', toggleKey: 'calmdown' });
+})();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

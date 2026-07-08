@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Songs A-Z | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --letter-nav-height: 145px;
+}
+
+.az-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0.5rem 0;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.song-row {
+  padding: 10px 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  transition: border-color 120ms ease;
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--letter-nav-height, 68px) + 28px);
+}
+
+.song-row a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.song-row a:hover,
+.song-row a:focus {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.song-row:focus-within {
+  border-color: #E21C21;
+}
+
+.song-row.selected-letter {
+  border-color: rgba(226, 28, 33, 0.35);
+}
+.song-row .bracketed {
+  color: #999;
+  font-size: 0.92em;
+}
+
+.song-row .bracketed em {
+  font-style: italic;
+}
+
+
+
+.year-nav {
+  position: sticky;
+  top: calc(var(--header-offset, 84px) + 8px);
+  z-index: 5;
+  display: block;
+  padding: 8px 10px;
+  border: 1px solid #222;
+  background: rgba(11, 11, 11, 0.92);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.year-nav summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  color: #eaeaea;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 2px;
+}
+
+.year-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.year-nav__chevron {
+  font-size: 11px;
+  color: #aaa;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.year-nav[open] .year-nav__chevron {
+  transform: rotate(180deg);
+  color: #ffffff;
+}
+
+.year-nav__panel {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #222;
+}
+
+.year-nav__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.year-nav__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  min-width: 44px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.year-nav__chip:hover,
+.year-nav__chip:focus-visible {
+  color: #ffffff;
+  border-color: #E21C21;
+  outline: none;
+}
+
+.year-nav__chip.is-active {
+  color: #ffffff;
+  border-color: #E21C21;
+  background: #181818;
+}
+
+.year-nav__chip:focus-visible {
+  box-shadow: 0 0 0 2px #E21C21;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --letter-nav-height: 100px;
+  }
+
+  .song-row {
+    padding: 10px;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="az-page">
+  <header>
+    <h1 class="page-title">Songs A-Z</h1>
+    <p class="page-subtitle">Every song page on EMDb, sorted alphabetically.</p>
+  </header>
+
+  <ul class="song-list" aria-label="Songs A-Z list">
+    <li class="song-row" data-letter="0-9"><a href="/songs/non-album/2009-bet-freestyle.html">2009 BET Hip Hop Awards Freestyle</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/recovery/25-to-life.html">25 To Life</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/produced-only/2nd-round-freestyle.html">2nd Round Freestyle</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/relapse/3-am.html">3 a.m.</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/non-album/3-am-travis-barker-remix.html">3 a.m. (Travis Barker Remix)</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/infinite/313.html">313</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/feat/3hree6ix5ive.html">3hree6ix5ive</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/d12-world/40-oz.html">40 Oz.</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/non-album/40-oz-lil-jon-remix.html">40 Oz. (Remix by Lil Jon)</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/feat/5-star-generals.html">5 Star Generals</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/d12-world/6-in-the-morning.html">6 In The Morning</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/8-mile-soundtrack/8-mile.html">8 Mile</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/8-mile-soundtrack/8-miles-and-runnin.html">8 Miles And Runnin’</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/feat/911.html">911</a></li>
+    
+<li class="song-row" data-letter="0-9"><a href="/songs/slim-shady-lp/97-bonnie-and-clyde.html">’97 Bonnie &amp; Clyde</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/hell-the-sequel/above-the-law.html">Above The Law</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/adventures-of-moon-man-and-slim-shady.html">The Adventures Of Moon Man &amp; Slim Shady</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/devils-night/aint-nuttin-but-music.html">Ain’t Nuttin’ But Music</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/feat/airplanes-part-ii.html">Airplanes, Part II</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/non-album/alchemist-freestyle.html">Alchemist Freestyle</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/music-to-be-murdered-by/alfred-interlude.html">Alfred (Interlude)</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/music-to-be-murdered-by/alfred-intro.html">Alfred (Intro)</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/music-to-be-murdered-by/alfred-outro.html">Alfred (Outro)</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/music-to-be-murdered-by/alfreds-theme.html">Alfred’s Theme</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/southpaw-soundtrack/all-i-think-about.html">All I Think About</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/produced-only/all-of-my-life.html">All Of My Life</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/death-of-slim-shady/all-you-got-skit.html">All You Got (Skit)</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/recovery/almost-famous.html">Almost Famous</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/devils-night/american-psycho.html">American Psycho</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/d12-world/american-psycho-2.html">American Psycho II</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/produced-only/american-you.html">American You</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/marshall-mathers-lp/amityville.html">Amityville</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/non-album/anger-management.html">Anger Management</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/feat/animals-pt-i.html">Animals (Pt. I)</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/devils-night/another-public-service-announcement.html">Another Public Service Announcement</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/anthem.html">The Anthem</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/death-of-slim-shady/antichrist.html">Antichrist</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/non-album/any-man.html">Any Man</a></li>
+
+<li class="song-row" data-letter="A"><a href="/songs/snippet-tape-sslp/ariel.html">Ariel <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/revival/arose.html">Arose</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/slim-shady-lp/as-the-world-turns.html">As The World Turns</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/produced-only/ask-about-me.html">Ask About Me</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/encore/ass-like-that.html">Ass Like That</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/marshall-mathers-lp-2/asshole.html">Asshole</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/feat/asylum.html">Asylum</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/produced-only/average-man.html">Average Man</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp-2/baby.html">Baby</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/infinite/backstabber.html">Backstabber</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp-2/bad-guy.html">Bad Guy</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/slim-shady-lp/bad-guys-always-die.html">Bad Guys Always Die</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/revival/bad-husband.html">Bad Husband</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/non-album/bad-influence.html">Bad Influence</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/slim-shady-lp/bad-meets-evil.html">Bad Meets Evil</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/death-of-slim-shady/bad-one.html">Bad One</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/relapse/bagpipes-from-baghdad.html">Bagpipes From Baghdad</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/produced-only/ballad-of-obie-trice.html">Ballad Of Obie Trice</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/bang.html">Bang</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/bang-remix.html">Bang (Remix)</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/bang-bang.html">Bang Bang</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/d12-world/barbershop.html">Barbershop</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/bartender-intro.html">Bartender Intro</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/relapse/beautiful.html">Beautiful</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp-2/beautiful-pain.html">Beautiful Pain</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/revival/believe.html">Believe</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/benzino-diss.html">Benzino Diss</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp-2/berzerk.html">Berzerk</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/curtain-call-2/best-friend.html">Best Friend</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/encore/big-weenie.html">Big Weenie</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/d12-world/bitch.html">Bitch</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/slim-shady-lp/bitch-skit.html">Bitch (Skit)</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp/bitch-please-ii.html">Bitch Please II</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/non-album/biterphobia.html">Biterphobia</a></li>
+
+<li class="song-row" data-letter="B"><a href="/songs/devils-night/bizarre-skit.html">Bizarre (Skit) <span class="bracketed">/ <em>Devil’s Night</em></span></a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/d12-world/bizarre-skit-2.html">Bizarre (Skit) <span class="bracketed">/ <em>D12 World</em></span></a></li>
+        
+<li class="song-row" data-letter="B"><a href="/songs/feat/black-cotton.html">Black Cotton</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/music-to-be-murdered-by/black-magic.html">Black Magic</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/devils-night/blow-my-buzz.html">Blow My Buzz</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/music-to-be-murdered-by/book-of-rhymes.html">Book Of Rhymes</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/slim-shady-lp/brain-damage.html">Brain Damage</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/eminem-show/brain-damage-live-tramps-1999.html">Brain Damage (Live From Tramps, New York / 1999)</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/marshall-mathers-lp-2/brainless.html">Brainless</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/death-of-slim-shady/brand-new-dance.html">Brand New Dance</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/death-of-slim-shady/breaking-news-skit.html">Breaking News (Skit)</a></li>
+
+<li class="song-row" data-letter="B"><a href="/songs/snippet-tape-sslp/brenda.html">Brenda <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/songs-underground-ep/bring-your-boys.html">Bring Your Boys</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/relapse/buffalo-bill.html">Buffalo Bill</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/d12-world/bugz-97-skit.html">Bugz ’97 (Skit)</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/non-album/bully.html">Bully</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/eminem-show/bump-heads.html">Bump Heads</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/feat/busa-rhyme.html">Busa Rhyme</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/eminem-show/business.html">Business</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/non-album/business-mega-mix.html">Business (Green Lantern Mega Mix)</a></li>
+    
+<li class="song-row" data-letter="B"><a href="/songs/non-album/business-live-detroit.html">Business (Live At The Palace Of Auburn Hills, Detroit / 2002)</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/calm-down.html">Calm Down</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/non-album/campaign-speech.html">Campaign Speech</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/relapse/careful-what-you-wish-for.html">Careful What You Wish For</a></li>
+
+<li class="song-row" data-letter="C"><a href="/songs/snippet-tape-mmlp/carry-out.html">Carry Out <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/revival/castle.html">Castle</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/caterpillar.html">Caterpillar</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/songs-underground-ep/chance-to-advance.html">Chance To Advance</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/cheers.html">Cheers</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/chemical-warfare.html">Chemical Warfare</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/revival/chloraseptic.html">Chloraseptic</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/non-album/chloraseptic-remix.html">Chloraseptic (Remix)</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/cigarello.html">Cigarello</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/recovery/cinderella-man.html">Cinderella Man</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/eminem-show/cleanin-out-my-closet.html">Cleanin’ Out My Closet</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/coffin.html">Coffin <span class="bracketed">/ <em>Slaughterhouse</em></span></a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/coffin-jessie-reyez.html">COFFIN <span class="bracketed">/ <em>Jessie Reyez</em></span></a></li>
+
+<li class="song-row" data-letter="C"><a href="/songs/snippet-tape-sslp/cock-massage.html">Cock Massage <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/recovery/cold-wind-blows.html">Cold Wind Blows</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/come-up-for-air.html">Come Up For Air</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/d12-world/commercial-break.html">Commercial Break</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/eminem-show/conspiracy-freestyle.html">The Conspiracy Freestyle</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/count-down.html">Count Down</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/relapse/crack-a-bottle.html">Crack A Bottle</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/crazy.html">Crazy</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/encore/crazy-in-love.html">Crazy In Love</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/marshall-mathers-lp/criminal.html">Criminal</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/produced-only/crooked-nigga-too.html">Crooked Nigga Too</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/cross.html">The Cross</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/slim-shady-lp/cum-on-everybody.html">Cum On Everybody</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/eminem-show/curtains-close-skit.html">Curtains Close (Skit)</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/encore/curtains-up.html">Curtains Up</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/eminem-show/curtains-up-skit.html">Curtains Up (Skit)</a></li>
+
+<li class="song-row" data-letter="C"><a href="/songs/snippet-tape-mmlp/curtis.html">Curtis</a></li>
+    
+<li class="song-row" data-letter="C"><a href="/songs/feat/cmon-let-me-ride.html">C’mon Let Me Ride</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/d12-world/d12-world.html">D12 World</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/music-to-be-murdered-by/darkness.html">Darkness</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/curtain-call/dead-wrong.html">Dead Wrong</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/relapse/deja-vu.html">Deja Vu</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/desperados.html">Desperados</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/marshall-mathers-lp-2/desperation.html">Desperation</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/non-album/despicable-freestyle.html">Despicable (Freestyle)</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/shadyxv/detroit-vs-everybody.html">Detroit Vs. Everybody</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/devils-night/devils-night-song.html">Devil’s Night</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/devils-night-intro.html">Devil’s Night Intro</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/shadyxv/die-alone.html">Die Alone</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/non-album/dirty-steve-skit.html">Dirty Steve (Skit)</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/music-to-be-murdered-by/discombobulated.html">Discombobulated</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/non-album/doe-rae-me.html">Doe Rae Me</a></li>
+
+<li class="song-row" data-letter="D"><a href="/songs/feat/dont-approach-me.html">Don’t Approach Me</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/produced-only/dont-come-down.html">Don’t Come Down</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/marshall-mathers-lp-2/dont-front.html">Don’t Front</a></li>
+
+<li class="song-row" data-letter="D"><a href="/songs/feat/dont-push-me.html">Don’t Push Me</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/produced-only/dont-you-trust-me.html">Don’t You Trust Me</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/doomsday-pt-2.html">Doomsday Pt. 2</a></li>
+
+<li class="song-row" data-letter="D"><a href="/songs/relapse/dr-west-skit.html">Dr. West (Skit)</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/drama-setter.html">Drama Setter</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/eminem-show/drips.html">Drips</a></li>
+
+<li class="song-row" data-letter="D"><a href="/songs/relapse/drop-the-bomb-on-em.html">Drop The Bomb On ’Em</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/drop-the-world.html">Drop The World</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/marshall-mathers-lp/drug-ballad.html">Drug Ballad</a></li>
+
+<li class="song-row" data-letter="D"><a href="/songs/d12-world/dude-skit.html">Dude (Skit)</a></li>
+    
+<li class="song-row" data-letter="D"><a href="/songs/feat/dumpin-dirty-dozen.html">Dumpin (Dirty Dozen)</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/hell-the-sequel/echo.html">Echo</a></li>
+
+<li class="song-row" data-letter="E"><a href="/songs/relapse/elevator.html">Elevator</a></li>
+
+<li class="song-row" data-letter="E"><a href="/songs/encore/em-calls-paul-skit.html">Em Calls Paul (Skit) <span class="bracketed">/ <em>Encore</em></span></a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/kamikaze/em-calls-paul-skit-2.html">Em Calls Paul (Skit) <span class="bracketed">/ <em>Kamikaze</em></span></a></li>
+
+<li class="song-row" data-letter="E"><a href="/songs/feat/eminem-intro.html">Eminem Intro</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/non-album/eminem-skit-1.html">Eminem Skit <span class="bracketed">/ <em>1</em></span></a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/non-album/eminem-skit-2.html">Eminem Skit <span class="bracketed">/ <em>2</em></span></a></li>
+
+<li class="song-row" data-letter="E"><a href="/songs/non-album/eminem-skit-3.html">Eminem Skit <span class="bracketed">/ <em>3</em></span></a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/feat/eminem-speaks.html">Eminem Speaks</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/non-album/eminem-paul-rosenberg-intro.html">Eminem, Paul Rosenberg Intro</a></li>
+
+<li class="song-row" data-letter="E"><a href="/songs/feat/emulate.html">Emulate</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/encore/encore-curtains.html">Encore</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/feat/epmd2.html">EPMD 2</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/stans-soundtrack/everybodys-looking-at-me.html">Everybody’s Looking At Me</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/produced-only/everything-i-love-the-most.html">Everything I Love The Most</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/produced-only/everywhere-i-go.html">Everywhere I Go</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/death-of-slim-shady/evil.html">Evil</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/encore/evil-deeds.html">Evil Deeds</a></li>
+    
+<li class="song-row" data-letter="E"><a href="/songs/marshall-mathers-lp-2/evil-twin.html">Evil Twin</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/curtain-call/fack.html">FACK</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/kamikaze/fall.html">Fall</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/fame.html">Fame</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/music-to-be-murdered-by/farewell.html">Farewell</a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/snippet-tape-mmlp/fat-beats.html">Fat Beats <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/hell-the-sequel/fastlane.html">Fast Lane</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/music-to-be-murdered-by/favorite-bitch.html">Favorite Bitch</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/devils-night/fight-music.html">Fight Music</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/songs-underground-ep/filthy.html">Filthy</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/encore/final-thought-skit.html">Final Thought (Skit)</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/shadyxv/fine-line.html">Fine Line</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/flawless-victory.html">Flawless Victory</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/produced-only/flip-a-bird.html">Flip A Bird</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/produced-only/follow-my-life.html">Follow My Life</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/relapse/forever.html">Forever</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/forgot-about-dre.html">Forgot About Dre</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/revival/framed.html">Framed</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/produced-only/frat-house.html">Frat House</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/eminem-show/freestyle-1-live-tramps-1999.html">Freestyle #1 (Live At Tramps, New York, 1999)</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/eminem-show/freestyle-2-live-tramps-1999.html">Freestyle #2 (Live At Tramps, New York, 1999)</a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/snippet-tape-mmlp/freestyle-light-speed.html">Freestyle <span class="bracketed">/ <em>Light Speed</em></span></a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/snippet-tape-mmlp/freestyle-watcher.html">Freestyle <span class="bracketed">/ <em>The Watcher</em></span></a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/non-album/freestyle-d12-promo-version.html">Freestyle <span class="bracketed">/ <em>D12</em></span></a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/devils-night/freestyle-b-side.html">Freestyle <span class="bracketed">/ <em>D12 B-side Version</em></span></a></li>
+
+<li class="song-row" data-letter="F"><a href="/songs/feat/freestyle-streetsweeper.html">Freestyle <span class="bracketed">/ <em>DJ Kay Slay</em></span></a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/non-album/freestyle-armageddon.html">Freestyle <span class="bracketed">/ <em>Armageddon</em></span></a></li>
+                
+<li class="song-row" data-letter="F"><a href="/songs/feat/friday-night-cypher.html">Friday Night Cypher</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/from-da-d-remix.html">From Tha D (Remix)</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/curtain-call-2/from-the-d-2-the-lbc.html">From The D 2 The LBC</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/non-album/fubba-u-cubba-cubba.html">Fubba U Cubba Cubba</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/fuck-obie-skit.html">Fuck Obie Skit</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/fuck-off.html">Fuck Off</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/fuck-whoo-kid.html">Fuck Whoo Kid</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/non-album/fuckin-backstabber.html">Fuckin’ Backstabber</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/death-of-slim-shady/fuel.html">Fuel</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/death-of-slim-shady/fuel-shady-edition.html">Fuel (Shady Edition)</a></li>
+    
+<li class="song-row" data-letter="F"><a href="/songs/feat/funk-flex-interlude.html">Funk Flex Interlude</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/gatman-and-robbin.html">Gatman And Robbin’</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/get-back.html">Get Back</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/d12-world/get-my-gun.html">Get My Gun</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/get-off-my-nuts.html">Get Off My Nuts</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/get-up.html">Get Up</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/slim-shady-lp/get-you-mad.html">Get You Mad</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/ghetto-gospel.html">Ghetto Gospel</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/ghost.html">Ghost</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/devils-night/girls.html">Girls</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/d12-world/git-up.html">Git Up</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/music-to-be-murdered-by/gnat.html">Gnat</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/non-album/go-to-sleep.html">Go To Sleep</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/music-to-be-murdered-by/godzilla.html">Godzilla</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/going-no-where.html">Going No Where</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/recovery/going-through-changes.html">Going Through Changes</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/d12-world/good-die-young.html">Good Die Young</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/kamikaze/good-guy.html">Good Guy</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/goodbye.html">Gooodbye</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/goodbye-remix.html">Gooodbye (Remix)</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/gospel.html">Gospel</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/got-some-teeth.html">Got Some Teeth</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/kamikaze/greatest.html">Greatest</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/green-and-gold.html">Green And Gold</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/slim-shady-lp/greg-acapella.html">Greg (Acapella)</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/marshall-mathers-lp-2/groundhog-day.html">Groundhog Day</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/death-of-slim-shady/guess-whos-back-skit.html">Guess Who’s Back (Skit)</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/slim-shady-lp/guilty-conscience.html">Guilty Conscience</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/death-of-slim-shady/guilty-conscience-2.html">Guilty Conscience 2</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/produced-only/gun-rule.html">Gun Rule</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/music-to-be-murdered-by/guns-blazing.html">Guns Blazing</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/feat/gunz-n-smoke.html">Gunz N Smoke</a></li>
+    
+<li class="song-row" data-letter="G"><a href="/songs/shadyxv/guts-over-fear.html">Guts Over Fear</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/death-of-slim-shady/habits.html">Habits</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/non-album/hail-mary.html">Hail Mary</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/eminem-show/hailies-song.html">Hailie’s Song</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hammer-dance.html">Hammer Dance</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/hands-on-you.html">Hands On You</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hands-up.html">Hands Up</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/slim-shady-lp/hazardous-youth-acapella.html">Hazardous Youth (Acapella)</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/death-of-slim-shady/head-honcho.html">Head Honcho</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/marshall-mathers-lp-2/headlights.html">Headlights</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/heartbreak .html">Heartbreak</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/revival/heat.html">Heat</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/relapse/hell-breaks-loose.html">Hell Breaks Loose</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/non-album/hellbound.html">Hellbound (H&amp;H Remix)</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/relapse/hello.html">Hello</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/hello-operator-till-i-collapse-live.html">Hello Operator / ’Till I Collapse (Live)</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hennessey.html">Hennessey</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/here-comes-the-weekend.html">Here Comes The Weekend</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/high-all-the-time.html">High All The Time</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/music-to-be-murdered-by/higher.html">Higher</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/hills-remix.html">The Hills (Remix)</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/hip-hop.html">Hip Hop</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/non-album/hit-em-up.html">Hit ’Em Up</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/homicide.html">Homicide</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hoodrats.html">Hoodrats</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hot-sauce.html">Hot Sauce</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/death-of-slim-shady/houdini.html">Houdini</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/d12-world/how-come.html">How Come</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/produced-only/hush-is-coming.html">Hush Is Coming</a></li>
+    
+<li class="song-row" data-letter="H"><a href="/songs/feat/hustlers-and-hardcore.html">Hustlers &amp; Hardcore</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/i-c-dead-people.html">I C Dead People</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/i-do-this.html">I Do This</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/i-dont-care.html">I dont care</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/i-need-a-doctor.html">I Need A Doctor</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/non-album/i-remember.html">I Remember (Dedication To Whitey Ford)</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/music-to-be-murdered-by/i-will.html">I Will</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/if-i-get-locked-up.html">If I Get Locked Up</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/slim-shady-lp/if-i-had.html">If I Had</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/slim-shady-ep/if-i-had-original.html">If I Had...</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/in-da-club-live-state-theatre-detroit.html">In Da Club (Live From The State Theatre In Detroit)</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/in-my-hood.html">In My Hood</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/in-this-world.html">In This World</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/music-to-be-murdered-by/in-too-deep.html">In Too Deep</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/revival/in-your-head.html">In Your Head</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/infinite/infinite-song.html">Infinite</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/non-album/infinite-fbt-remix.html">Infinite (F.B.T. Remix)</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/relapse/insane.html">Insane</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/devils-night/instigator.html">Instigator</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/interlude-zone-3.html">Interlude</a></li>
+
+<li class="song-row" data-letter="I"><a href="/songs/curtain-call/intro-curtain-call.html">Intro <span class="bracketed">/ <em>Curtain Call: The Hits</em></span></a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/non-album/intro-shade-45.html">Intro <span class="bracketed">/ <em>Shade 45: Sirius Bizness </em></span></a></li>
+
+<li class="song-row" data-letter="I"><a href="/songs/snippet-tape-mmlp/intro-mmlp-snippet.html">Intro <span class="bracketed">/ <em>Snippet Tape MMLP</em></span></a></li>
+
+<li class="song-row" data-letter="I"><a href="/songs/snippet-tape-sslp/intro-sslp-snippet.html">Intro <span class="bracketed">/ <em>Snippet Tape SSLP</em></span></a></li>
+        
+<li class="song-row" data-letter="I"><a href="/songs/slim-shady-ep/intro-slim-shady.html">Intro (Slim Shady)</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/introduction.html">Introduction</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/non-album/invasion.html">Invasion</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/curtain-call-2/is-this-love-09.html">Is This Love (’09)</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/it-has-been-said.html">It Has Been Said</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/it-is-what-it-is.html">It Is What It Is</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/infinite/its-ok.html">It’s O.K.</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/d12-world/ill-be-damned.html">I’ll Be Damned</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/marshall-mathers-lp/im-back.html">I’m Back</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/feat/im-gone.html">I’m Gone</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/non-album/im-having-a-relapse.html">I’m Having A Relapse</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/hell-the-sequel/im-on-everything.html">I’m On Everything</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/slim-shady-lp/im-shady.html">I’m Shady</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/im-so-hood.html">I’m So Hood</a></li>
+    
+<li class="song-row" data-letter="I"><a href="/songs/produced-only/im-supposed-to-die-tonight.html">I’m Supposed To Die Tonight</a></li>
+        
+<li class="song-row" data-letter="J"><a href="/songs/feat/ja-rule-freestyle.html">Ja Rule Freestyle</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/produced-only/jamaican-girl.html">Jamaican Girl</a></li>
+
+<li class="song-row" data-letter="J"><a href="/songs/snippet-tape-sslp/jesse.html">Jesse <span class="bracketed">/ <em>Skit</em></span></a></li>
+
+<li class="song-row" data-letter="J"><a href="/songs/snippet-tape-sslp/junko.html">Junko <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/infinite/jealousy-woes-ii.html">Jealousy Woes II</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/re-up/jimmy-crack-corn.html">Jimmy Crack Corn</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/non-album/jimmy-crack-corn-remix.html">Jimmy Crack Corn (Vocal Remix)</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/eminem-show/jimmy-brian-and-mike.html">Jimmy, Brian And Mike</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/eminem-show/just-dont-give-a-fuck-live-tramps-1999.html">Just Don’t Give A Fuck (Live From Tramps, New York / 1999)</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/slim-shady-ep/just-dont-give-a-fuck-original.html">Just Don’t Give A Fuck <span class="bracketed">/ <em>Slim Shady EP</em></span></a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/slim-shady-lp/just-dont-give-a-fuck.html">Just Don’t Give A Fuck <span class="bracketed">/ <em>The Slim Shady LP</em></span></a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/d12-world/just-like-u.html">Just Like U</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/encore/just-lose-it.html">Just Lose It</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/non-album/just-lose-it-remix.html">Just Lose It (DJ Green Lantern Remix)</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/non-album/just-rhymin-with-proof.html">Just Rhymin’ With Proof</a></li>
+    
+<li class="song-row" data-letter="J"><a href="/songs/slim-shady-ep/just-the-two-of-us.html">Just The Two Of Us</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/kamikaze/kamikaze-song.html">Kamikaze</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/d12-world/keep-talkin.html">Keep Talkin’</a></li>
+        
+<li class="song-row" data-letter="K"><a href="/songs/slim-shady-lp/ken-kaniff-skit.html">Ken Kaniff (Skit) <span class="bracketed">/ <em>The Slim Shady LP</em></span></a></li>
+
+<li class="song-row" data-letter="K"><a href="/songs/marshall-mathers-lp/ken-kaniff-skit-2.html">Ken Kaniff (Skit) <span class="bracketed">/ <em>The Marshall Mathers LP</em></span></a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/music-to-be-murdered-by/key-skit.html">Key (Skit)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/kids.html">The Kids</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/feat/kill-for-you.html">Kill For You</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/produced-only/kill-me-a-mutha.html">Kill Me A Mutha</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/marshall-mathers-lp/kill-you.html">Kill You</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/music-to-be-murdered-by/killer.html">Killer</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/non-album/killer-remix.html">Killer (Remix)</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/non-album/killshot.html">Killshot</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/marshall-mathers-lp/kim.html">Kim</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/curtain-call-2/king-and-i.html">The King And I</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/southpaw-soundtrack/kings-never-die.html">Kings Never Die</a></li>
+    
+<li class="song-row" data-letter="A"><a href="/songs/hell-the-sequel/a-kiss.html">A Kiss</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/eminem-show/kiss-skit.html">The Kiss (Skit)</a></li>
+    
+<li class="song-row" data-letter="K"><a href="/songs/death-of-slim-shady/kyrie-and-luka.html">Kyrie &amp; Luka</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/lac-motion.html">‘Lac Motion</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/lace-it.html">Lace It</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/lady.html">Lady</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/last-hit.html">The Last Hit</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/last-hit-original.html">The Last Hit (Original)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/last-one-standing.html">Last One Standing</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/lay-down.html">Lay Down</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/layin-in-the-cut.html">Layin In The Cut</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/lean-back-remix.html">Lean Back (Remix)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/d12-world/leave-dat-boy-alone.html">Leave Dat Boy Alone</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/non-album/leave-dat-boy-alone-green-mix.html">Leave Dat Boy Alone (Green Mix)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/music-to-be-murdered-by/leaving-heaven.html">Leaving Heaven</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/marshall-mathers-lp-2/legacy.html">Legacy</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/legendary.html">Legendary</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/lets-get-high.html">Let’s Get High</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/lets-roll.html">Let’s Roll</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/hell-the-sequel/lighters.html">Lighters</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/revival/like-home.html">Like Home</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/death-of-slim-shady/like-my-shit.html">Like My Shit</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/encore/like-toy-soldiers.html">Like Toy Soldiers</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/liquor-store-church.html">Liquor Store Church</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/liquor-store-church-freeestyle.html">Liquor Store Church Freestyle</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/music-to-be-murdered-by/little-engine.html">Little Engine</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/hell-the-sequel/living-proof.html">Living Proof</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/music-to-be-murdered-by/lock-it-up.html">Lock It Up</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/lord-above.html">Lord Above</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/lord-have-mercy.html">Lord Have Mercy</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/lose-my-mind.html">Lose My Mind</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/8-mile-soundtrack/lose-yourself.html">Lose Yourself</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/non-album/lose-youself-remix.html">Lose Yourself (Green Lantern Rmx)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/shadyxv/lose-youself-original-demo-version.html">Lose Yourself (Original Demo Version)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/hell-the-sequel/loud-noises.html">Loud Noises</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/slim-shady-lp/lounge-skit.html">Lounge (Skit)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/marshall-mathers-lp-2/love-game.html">Love Game</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/8-mile-soundtrack/love-me.html">Love Me</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/recovery/love-the-way-you-lie.html">Love The Way You Lie</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/feat/love-the-way-you-lie-part-ii.html">Love The Way You Lie (Part II)</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/encore/love-you-more.html">Love You More</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/slim-shady-ep/low-down-dirty.html">Low Down, Dirty</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/produced-only/loyal-to-the-game.html">Loyal To The Game</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/d12-world/loyalty.html">Loyalty</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/death-of-slim-shady/lucifer.html">Lucifer</a></li>
+    
+<li class="song-row" data-letter="L"><a href="/songs/kamikaze/lucky-you.html">Lucky You</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/macosa.html">Macosa</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/majesty.html">Majesty</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/many-men-wish-death.html">Many Men (Wish Death)</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/music-to-be-murdered-by/marsh.html">Marsh</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/marshall-mathers-lp/marshall-mathers.html">Marshall Mathers</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/infinite/maxine.html">Maxine</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/medicine-ball.html">Medicine Ball</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/medicine-man.html">Medicine Man</a></li>
+
+<li class="song-row" data-letter="M"><a href="/songs/snippet-tape-mmlp/men-with-van.html">Men With Van <span class="bracketed">/ <em>Skit</em></span></a></li>
+
+<li class="song-row" data-letter="M"><a href="/songs/snippet-tape-mmlp/mimi.html">Mimi <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/encore/mockingbird.html">Mockingbird</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/moment-of-clarity.html">Moment Of Clarity</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/slim-shady-ep/mommy.html">Mommy</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp-2/monster.html">The Monster</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/encore/mosh.html">Mosh</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/mr-mathers-skit.html">Mr. Mathers (Skit)</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/ms-jenkins.html">Ms. Jenkins</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/re-up/murder.html">Murder</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/slim-shady-ep/murder-murder.html">Murder, Murder <span class="bracketed">/ <em>Slim Shady EP</em></span></a></li>
+<li class="song-row" data-letter="M"><a href="/songs/non-album/murder-murder-remix.html">Murder, Murder <span class="bracketed">/ <em>Next Friday (Soundtrack)</em></span></a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/murdergram-deux.html">Murdergram Deux</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/music-box.html">Music Box</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/must-be-the-ganja.html">Must Be The Ganja</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/encore/my-1st-single.html">My 1st Single</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/non-album/my-ballz.html">My Ballz</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/d12-world/my-band.html">My Band</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/my-buddy.html">My Buddy</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/eminem-show/my-dads-gone-crazy.html">My Dad’s Gone Crazy</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/my-darling.html">My Darling</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/slim-shady-lp/my-fault.html">My Fault</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/non-album/my-fault-pizza-mix.html">My Fault (Pizza Mix)</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/my-life.html">My Life <span class="bracketed">/ <em>50 Cent</em></span></a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/my-life-slaughterhouse.html">My Life <span class="bracketed">/ <em>Slaughterhouse</em></span></a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/relapse/my-mom.html">My Mom</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/feat/my-name.html">My Name</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/slim-shady-lp/my-name-is.html">My Name Is</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/non-album/my-name-is-rock-star-remix.html">My Name Is (Rock Star Remix)</a></li>
+    
+<li class="song-row" data-letter="M"><a href="/songs/produced-only/my-toy-soldier.html">My Toy Soldier</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/produced-only/nigga.html">N.I.G.G.A.</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/non-album/nail-in-the-coffin.html">Nail In The Coffin</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/devils-night/nasty-mind.html">Nasty Mind</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/revival/need-me.html">Need Me</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/infinite/never-2-far.html">Never 2 Far</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/encore/never-enough.html">Never Enough</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/produced-only/never-forget-ya.html">Never Forget Ya</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/music-to-be-murdered-by/never-love-again.html">Never Love Again</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/kamikaze/nice-guy.html">Nice Guy</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/produced-only/nice-me.html">Nice Me</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/produced-only/nightmares.html">Nightmares</a></li>
+
+<li class="song-row" data-letter="N"><a href="/songs/snippet-tape-sslp/nicole.html">Nicole <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/re-up/no-apologies.html">No Apologies</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/feat/no-favors.html">No Favors</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/recovery/no-love.html">No Love</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/feat/no-more-to-say.html">No More To Say</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/slim-shady-ep/no-ones-iller.html">No One’s Iller <span class="bracketed">/ <em>Slim Shady EP</em></span></a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/feat/no-ones-iller-bizarre.html">No One’s Iller <span class="bracketed">/ <em>Bizarre Demo</em></span></a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/music-to-be-murdered-by/no-regrets.html">No Regrets</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/kamikaze/normal.html">Normal</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/recovery/not-afraid.html">Not Afraid</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/non-album/not-afraid-live-at-t-in-the-park.html">Not Afraid (Live At T In The Park)</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/kamikaze/not-alike.html">Not Alike</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/revival/nowhere-fast.html">Nowhere Fast</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/feat/numb.html">Numb</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/non-album/nuttin-to-do.html">Nuttin’ To Do</a></li>
+    
+<li class="song-row" data-letter="N"><a href="/songs/produced-only/ny-ny.html">NY NY</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/devils-night/obie-trice-skit.html">Obie Trice (Skit)</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/off-the-wall.html">Off The Wall</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/off-to-tijuana.html">Off To Tijuana</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/revival/offended.html">Offended</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/oil-can-harry.html">Oil Can Harry</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/relapse/old-times-sake.html">Old Time’s Sake</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/produced-only/on-fire-lloyd-banks.html">On Fire  <span class="bracketed">/ <em>Lloyd Banks</em></span></a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/recovery/on-fire.html">On Fire  <span class="bracketed">/ <em>Eminem</em></span></a></li>
+    
+  <li class="song-row" data-letter="O"><a href="/songs/feat/one-day-at-a-time.html">One Day At A Time [Em’s Version]</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/encore/one-shot-2-shot.html">One Shot 2 Shot</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/infinite/open-mic.html">Open Mic</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/produced-only/ou-ouuuuuuuuuu.html">Ou, Ouuuuuuuuuu</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/our-house.html">Our House</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/produced-only/our-way-outro.html">Our Way (Outro)</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/produced-only/out-of-state.html">Out Of State</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/produced-only/out-on-bail.html">Out On Bail</a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/outro-cheers.html">Outro <span class="bracketed">/ <em>Cheers</em></span></a></li>
+
+<li class="song-row" data-letter="O"><a href="/songs/non-album/outro-shade-45.html">Outro <span class="bracketed">/ <em>Shade 45: Sirius Bizness</em></span></a></li>
+
+<li class="song-row" data-letter="O"><a href="/songs/snippet-tape-mmlp/outro-mmlp-snippet.html">Outro <span class="bracketed">/ <em>Snippet Tape MMLP</em></span></a></li>
+    
+<li class="song-row" data-letter="O"><a href="/songs/feat/outro-g-unit-radio-11.html">Outro <span class="bracketed">/ <em>G-Unit Radio 11</em></span></a></li>
+        
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/the-pain.html">The Pain</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/pale-moonlight.html">Pale Moonlight</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/parables-remix.html">Parables (Remix)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/produced-only/park-it-sideways.html">Park It Sideways</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/marshall-mathers-lp-2/parking-lot-skit.html">Parking Lot (Skit)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/produced-only/pass-me-a-lighter.html">Pass Me A Lighter</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/patiently-waiting.html">Patiently Waiting</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/patiently-waiting-live-state-theatre-detroit.html">Patiently Waiting (Live From The State Theatre In Detroit)</a></li>
+
+<li class="song-row" data-letter="P"><a href="/songs/slim-shady-lp/paul-skit.html">Paul (Skit) <span class="bracketed">/ <em>The Slim Shady LP</em></span></a></li>
+
+<li class="song-row" data-letter="P"><a href="/songs/marshall-mathers-lp/paul-skit-2.html">Paul (Skit) <span class="bracketed">/ <em>The Marshall Mathers LP</em></span></a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/encore/paul-skit-4.html">Paul (Skit) <span class="bracketed">/ <em>Encore</em></span></a></li>
+
+<li class="song-row" data-letter="P"><a href="/songs/relapse/paul-skit-5.html">Paul (Skit) <span class="bracketed">/ <em>Relapse</em></span></a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/kamikaze/paul-skit-6.html">Paul (Skit) <span class="bracketed">/ <em>Kamikaze</em></span></a></li>
+                
+<li class="song-row" data-letter="P"><a href="/songs/eminem-show/paul-skit-3.html">Paul Rosenberg (Skit) <span class="bracketed">/ <em>The Eminem Show</em></span></a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/peep-show.html">Peep Show</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/perspective-skit.html">Perspective (Skit)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/southpaw-soundtrack/phenomenal.html">Phenomenal</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/non-album/pick-it-up-live.html">Pick It Up (Live)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/devils-night/pimp-like-me.html">Pimp Like Me</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/pimplikeness.html">Pimplikeness</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/devils-night/pistol-pistol.html">Pistol Pistol</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/re-up/pistol-pistol-remix.html">Pistol Pistol (Obie Trice Remix)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/pistol-poppin.html">Pistol Poppin’</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/produced-only/place-to-be.html">Place To Be</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/8-mile-soundtrack/places-to-go.html">Places To Go</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/produced-only/poor-lil-rich.html">Poor Lil Rich</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/produced-only/pray-for-me.html">Pray For Me</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/music-to-be-murdered-by/premonition-intro.html">Premonition (Intro)</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/feat/psycho.html">Psycho</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/shadyxv/psychopath-killer.html">Psychopath Killer</a></li>
+        
+<li class="song-row" data-letter="P"><a href="/songs/re-up/public-enemy-number-1.html">Public Enemy #1</a></li>
+
+<li class="song-row" data-letter="P"><a href="/songs/slim-shady-lp/public-service-announcement.html">Public Service Announcement <span class="bracketed">/ <em>The Slim Shady LP</em></span></a></li>
+
+<li class="song-row" data-letter="P"><a href="/songs/feat/public-service-announcement-obie-trice.html">Public Service Announcement <span class="bracketed">/ <em>Bar Shots</em></span></a></li>
+            
+<li class="song-row" data-letter="P"><a href="/songs/marshall-mathers-lp/public-service-announcement-2000.html">Public Service Announcement 2000</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/encore/puke.html">Puke</a></li>
+    
+<li class="song-row" data-letter="P"><a href="/songs/devils-night/purple-pills.html">Purple Pills</a></li>
+    
+<li class="song-row" data-letter="Q"><a href="/songs/non-album/quitter.html">Quitter</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/8-mile-soundtrack/rabbit-run.html">Rabbit Run</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/encore/rain-man.html">Rain Man</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/rainy-days.html">Rainy Days</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/8-mile-soundtrack/rap-game.html">Rap Game</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/marshall-mathers-lp-2/rap-god.html">Rap God</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/curtain-call-2/rap-god-mr-cii-remix.html">Rap God (Mr. Cii Remix)</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/produced-only/rap-name.html">Rap Name</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/rap-superstar.html">(Rap) Superstar</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/rap-superstar-alchemist-remix.html">(Rap) Superstar (Alchemist Remix)</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/southpaw-soundtrack/raw.html">Raw</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/re-up/re-up-song.html">The Re-Up</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/real-slim-shady.html">The Real Slim Shady</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/eminem-show/real-slim-shady-live-fuji-2001.html">The Real Slim Shady (Live From Fuji Rock Festival, Japan / 2001)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/real-slim-shady-live-mtv.html">The Real Slim Shady (Live From MTV VMAs / 2000)</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/realest.html">Realest</a></li>
+
+<li class="song-row" data-letter="R"><a href="/songs/snippet-tape-sslp/record-store-1.html">Record Store 1 <span class="bracketed">/ <em>Skit</em></span></a></li>
+
+<li class="song-row" data-letter="R"><a href="/songs/snippet-tape-sslp/record-store-2.html">Record Store 2 <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/marshall-mathers-lp/remember-me.html">Remember Me?</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/remember-the-name.html">Remember The Name</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/revival/remind-me.html">Remind Me</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/revival/remind-me-intro.html">Remind Me (Intro)</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/death-of-slim-shady/renaissance.html">Renaissance</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/curtain-call/renegade.html">Renegade</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/renegades.html">Renegades</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/hell-the-sequel/reunion.html">The Reunion</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/devils-night/revelation.html">Revelation</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/revenge.html">Revenge</a></li>
+
+<li class="song-row" data-letter="R"><a href="/songs/snippet-tape-mmlp/rex.html">Rex <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/revival/revival-interlude.html">Revival (Interlude)</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/marshall-mathers-lp-2/rhyme-or-reason.html">Rhyme Or Reason</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/richard.html">Richard</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/encore/ricky-ticky-toc.html">Ricky Ticky Toc</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/recovery/ridaz.html">Ridaz</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/shadyxv/right-for-me.html">Right For Me</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/kamikaze/ringer.html">The Ringer</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/revival/river.html">River</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/death-of-slim-shady/road-rage.html">Road Rage</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/slim-shady-lp/rock-bottom.html">Rock Bottom</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/rock-city.html">Rock City</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/produced-only/rockstar.html">Rockstar</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/slim-shady-lp/role-model.html">Role Model</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/romans-revenge.html">Roman’s Revenge</a></li>
+    
+  <li class="song-row" data-letter="R"><a href="/songs/produced-only/runnin-dying-to-live.html">Runnin’ [Dying To Live]</a></li>
+    
+<li class="song-row" data-letter="R"><a href="/songs/feat/rush-ya-clique.html">Rush Ya Clique</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/sadapop.html">Sadapop</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/sadapop-outro.html">Sadapop Outro</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/relapse/same-song-and-dance.html">Same Song &amp; Dance</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/non-album/sauce.html">The Sauce</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/say-goodbye-hollywood.html">Say Goodbye Hollywood</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/say-what-you-say.html">Say What You Say</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/non-album/scary-movies.html">Scary Movies</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/infinite/searchin.html">Searchin</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/recovery/seduction.html">Seduction</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/serious.html">Serious</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/recovery/session-one.html">Session One</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/non-album/shade-45-invasion.html">Shade 45 Invasion</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/non-album/shady-cxvpher.html">Shady CXVPHER</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/re-up/shady-narcotics-intro.html">Shady Narcotics (Intro)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/shadyxv/shadyxv-song.html">ShadyXV</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/non-album/shadyxv-outro.html">ShadyXV Outro</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/non-album/shadyxv-shoutout.html">ShadyXV Shoutout</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/curtain-call/shake-that.html">Shake That</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/re-up/shake-that-remix.html">Shake That (Remix)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/music-to-be-murdered-by/she-loves-me.html">She Loves Me</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/shes-the-one.html">She’s The One</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/devils-night/shit-can-happen.html">Shit Can Happen</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/shit-hits-the-fan.html">Shit Hits The Fan</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/devils-night/shit-on-you.html">Shit On You</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/shittin-on-em.html">Shittin’ On ’Em</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/sing-for-the-moment.html">Sing For The Moment</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/produced-only/ski-mask-way.html">Ski Mask Way</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/re-up/ski-mask-way-remix.html">Ski Mask Way (Eminem Remix)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/produced-only/skip-this-ad.html">Skip This Ad</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/skit-g-unit-radio-19.html">Skit</a></li>
+
+<li class="song-row" data-letter="S"><a href="/songs/non-album/skit-eminem.html">Skit - Eminem</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/d12-world/slow-your-roll.html">Slow Your Roll</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/smack-that.html">Smack That</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/snitch.html">Snitch</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/recovery/so-bad.html">So Bad</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp-2/so-far.html">So Far…</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp-2/so-much-better.html">So Much Better</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/slim-shady-lp/soap-skit.html">Soap (Skit)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/soldier.html">Soldier</a></li>
+    
+  <li class="song-row" data-letter="S"><a href="/songs/feat/soldier-like-me.html">Soldier Like Me [Return Of The Soulja]</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/death-of-slim-shady/somebody-save-me.html">Somebody Save Me</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/recovery/space-bound.html">Space Bound</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/speedom-wwc2.html">Speedom (Wwc2)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/encore/spend-some-time.html">Spend Some Time</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/square-dance.html">Square Dance</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp/stan.html">Stan</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/curtain-call/stan-live-grammys.html">Stan (Live At 43rd Grammy Awards)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/stans-soundtrack/stan-live-wembley-2014.html">Stan (Live At Wembley 2014)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/relapse/stay-wide-awake.html">Stay Wide Awake</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/music-to-be-murdered-by/stepdad.html">Stepdad</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/music-to-be-murdered-by/stepdad-intro.html">Stepdad (Intro)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/kamikaze/stepping-stone.html">Stepping Stone</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp/steve-berman.html">Steve Berman <span class="bracketed">/ <em>The Marshall Mathers LP</em></span></a></li>
+
+<li class="song-row" data-letter="S"><a href="/songs/devils-night/steve-berman-skit-2.html">Steve Berman (Skit) <span class="bracketed">/ <em>Devil's Night</em></span></a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/steve-berman-skit-3.html">Steve Berman (Skit) <span class="bracketed">/ <em>The Eminem Show</em></span></a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/relapse/steve-berman-skit-4.html">Steve Berman (Skit) <span class="bracketed">/ <em>Relapse</em></span></a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/death-of-slim-shady/steve-berman-skit-5.html">Steve Berman (Skit) <span class="bracketed">/ <em>The Death Of Slim Shady</em></span></a></li>
+        
+<li class="song-row" data-letter="S"><a href="/songs/d12-world/steves-coffee-house-skit.html">Steve's Coffee House (Skit)</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/slim-shady-lp/still-dont-give-a-fuck.html">Still Don’t Give A Fuck</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/stimulate.html">Stimulate</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/stir-crazy.html">Stir Crazy</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp-2/stronger-than-i-was.html">Stronger Than I Was</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/eminem-show/superman.html">Superman</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/marshall-mathers-lp-2/survival.html">Survival</a></li>
+    
+<li class="song-row" data-letter="S"><a href="/songs/feat/symphony-in-h.html">Symphony In H</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/hell-the-sequel/take-from-me.html">Take From Me</a></li>
+
+<li class="song-row" data-letter="T"><a href="/songs/snippet-tape-sslp/taj-mahal.html">Taj Mahal <span class="bracketed">/ <em>Skit</em></span></a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/take-the-world-with-me.html">Take The World With Me</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/relapse/taking-my-ball.html">Taking My Ball</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/recovery/talkin-2-myself.html">Talkin’ 2 Myself</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/death-of-slim-shady/temporary.html">Temporary</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/that-nigga-a-gangsta.html">That Nigga A Gangsta</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/thats-all-she-wrote.html">That’s All She Wrote</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/devils-night/thats-how-skit.html">That’s How (Skit)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/devils-night/thats-how.html">That’s How...</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/there-they-go.html">There They Go</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/music-to-be-murdered-by/these-demons.html">These Demons</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/devils-night/these-drugs.html">These Drugs</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/they-wanna-kill-me.html">They Wanna Kill Me</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/things-get-worse.html">Things Get Worse</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/southpaw-soundtrack/this-corner.html">This Corner</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/music-to-be-murdered-by/those-kinda-nights.html">Those Kinda Nights</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/thoughts-of-suicide.html">Thoughts Of Suicide</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/non-album/three-verses.html">Three Verses</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/throw-it-away.html">Throw It Away</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/throw-it-up.html">Throw It Up</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/throw-that.html">Throw That</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/thru-the-glass.html">Thru The Glass</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/thug-4-life.html">Thug 4 Life</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/thug-boy.html">Thug Boy</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/thugs-get-lonely-too.html">Thugs Get Lonely Too</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/music-to-be-murdered-by/thus-far-interlude.html">Thus Far (Interlude)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/til-the-end.html">Til The End</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/eminem-show/till-i-collapse.html">’Till I Collapse</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/death-of-slim-shady/tobey.html">Tobey</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/music-to-be-murdered-by/tone-deaf.html">Tone Deaf</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/infinite/tonite.html">Tonite</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/relapse/tonya-skit.html">Tonya (Skit)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/touchdown.html">Touchdown</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/revival/tragic-endings.html">Tragic Endings</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/re-up/trapped.html">Trapped</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/trife-thieves.html">Trife Thieves</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/death-of-slim-shady/trouble.html">Trouble</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/twerk-dat-pop-dat.html">Twerk Dat Pop That</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/shadyxv/twisted.html">Twisted</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/d12-world/u-r-the-one.html">U R The One</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/produced-only/u-think-im-crazy.html">U Think I’m Crazy</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/music-to-be-murdered-by/unaccommodating.html">Unaccommodating</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/marshall-mathers-lp/under-the-influence.html">Under The Influence</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/relapse/underground.html">Underground</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/recovery/untitled.html">Untitled</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/revival/untouchable.html">Untouchable</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/produced-only/uppercut.html">The Uppercut</a></li>
+    
+<li class="song-row" data-letter="U"><a href="/songs/feat/use-this-gospel-remix.html">Use This Gospel (Remix)</a></li>
+    
+<li class="song-row" data-letter="V"><a href="/songs/shadyxv/vegas.html">Vegas</a></li>
+    
+<li class="song-row" data-letter="V"><a href="/songs/kamikaze/venom.html">Venom</a></li>
+    
+<li class="song-row" data-letter="V"><a href="/songs/non-album/venom-remix.html">Venom (Remix)</a></li>
+
+<li class="song-row" data-letter="V"><a href="/songs/snippet-tape-sslp/verse-1.html">Verse 1</a></li>
+
+<li class="song-row" data-letter="V"><a href="/songs/snippet-tape-sslp/verse-2.html">Verse 2</a></li>
+
+<li class="song-row" data-letter="V"><a href="/songs/snippet-tape-sslp/verse-3.html">Verse 3</a></li>
+    
+<li class="song-row" data-letter="V"><a href="/songs/produced-only/violent.html">Violent</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/infinite/wego.html">W.E.G.O.</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/recovery/wtp.html">W.T.P.</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/produced-only/wake-up.html">Wake Up</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/produced-only/walk-of-shame.html">Walk Of Shame</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/revival/walk-on-water.html">Walk On Water</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/stans-soundtrack/walk-on-water-original-version.html">Walk On Water (Original Version)</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/walkthrough.html">Walkthrough</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/non-album/wanksta-eminems-version.html">Wanksta (Eminem’s Version)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/non-album/warning.html">The Warning</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/warrior-pt-2.html">Warrior, Pt. 2</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/watch-deez.html">Watch Deez</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/feat/watcher.html">The Watcher</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/way-i-am.html">The Way I Am</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/way-i-am-remix.html">The Way I Am (Danny Lohner Remix)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/eminem-show/way-i-am-live-fuji-2001.html">The Way I Am  (Live From Fuji Rock Festival, Japan / 2001)</a></li>
+    
+<li class="song-row" data-letter="T"><a href="/songs/marshall-mathers-lp/way-i-am-live-mtv.html">The Way I Am (Live From MTV VMAs / 2000)</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/we-aint.html">We Ain’t</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/we-all-die-one-day.html">We All Die One Day</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/encore/we-as-americans.html">We As Americans</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/relapse/we-made-you.html">We Made You</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/we-shine.html">We Shine</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/we-shine-radio-remix.html">We Shine (Radio Remix)</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/we-shine-remix.html">We Shine (Remix)</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/welcome-2-detroit.html">Welcome 2 Detroit</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/hell-the-sequel/welcome-2-hell.html">Welcome 2 Hell</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/welcome-to-d-block.html">Welcome To D-Block</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/welcome-to-planet-x.html">Welcome To Planet X (We’re Coming For You)</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/re-up/were-back.html">We’re Back</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/what-color-is-soul.html">What Color Is Soul</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/what-if-i-was-white.html">What If I Was White</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/what-the-beat.html">What The Beat</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/re-up/whatever-you-want.html">Whaterver You Want</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/whats-the-difference.html">What’s The Difference</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/produced-only/when-darkness-falls.html">When Darkness Falls</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/curtain-call/when-im-gone.html">When I’m Gone</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/eminem-show/when-the-music-stops.html">When The Music Stops</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/where-im-at.html">Where I’m At</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/eminem-show/white-america.html">White America</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/produced-only/who-do-you-love.html">Who Do You Love</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/marshall-mathers-lp/who-knew.html">Who Knew</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/who-want-it.html">Who Want It</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/whoo-kid-skit.html">Whoo Kid Skit</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/marshall-mathers-lp-2/wicked-ways.html">Wicked Ways</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/without-me copy.html">Without Me</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/eminem-show/without-me.html">Without Me</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/recovery/wont-back-down.html">Won’t Back Down</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/devils-night/words-are-weapons.html">Words Are Weapons</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/words-from-eminem.html">Words From Eminem</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/produced-only/wots-up.html">Wots Up</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/writers-block.html">Writer’s Block</a></li>
+    
+<li class="song-row" data-letter="W"><a href="/songs/feat/writers-block-remix.html">Writer’s Block (DJ Premier Remix)</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/music-to-be-murdered-by/yah-yah.html">Yah Yah</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/encore/yellow-brick-road.html">Yellow Brick Road</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/re-up/you-dont-know.html">You Don’t Know</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/music-to-be-murdered-by/you-gon-learn.html">You Gon’ Learn</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/feat/you-hear-me.html">You Hear Me</a></li>
+    
+<li class="song-row" data-letter="Y"><a href="/songs/recovery/youre-never-over.html">You’re Never Over</a></li>
+    
+<li class="song-row" data-letter="Z"><a href="/songs/music-to-be-murdered-by/zeus.html">Zeus</a></li>
+  
+  </ul>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+  (() => {
+    const songRows = Array.from(document.querySelectorAll('.song-row'));
+    const list = document.querySelector('.song-list');
+    const letterGroups = new Map();
+    const letterChips = [];
+    const chipByLetter = new Map();
+    let activeLetter = null;
+    let setActiveLetter;
+    let navEl = null;
+
+    const getSortLetter = (text) => {
+      if (!text) return '#';
+      let normalized = text.replace(/^The\s+/i, '').trim();
+      normalized = normalized.replace(/^[^a-z0-9]+/i, '');
+      if (!normalized) return '#';
+      const firstChar = normalized[0].toUpperCase();
+      if (/[0-9]/.test(firstChar)) return '0-9';
+      return firstChar;
+    };
+
+    songRows.forEach((row) => {
+      const link = row.querySelector('a');
+      const label = link ? link.textContent.trim() : '';
+      const letter = getSortLetter(label) || row.dataset.letter || '#';
+      row.dataset.letter = letter;
+      if (!letterGroups.has(letter)) letterGroups.set(letter, []);
+      letterGroups.get(letter).push(row);
+    });
+
+    const letters = Array.from(letterGroups.keys());
+    letters.sort((a, b) => {
+      if (a === '0-9') return -1;
+      if (b === '0-9') return 1;
+      return a.localeCompare(b);
+    });
+
+    const makeAnchorId = (letter) => {
+      const cleaned = letter.replace(/[^a-z0-9]/gi, '').toLowerCase();
+      return cleaned ? `letter-${cleaned}` : 'letter-misc';
+    };
+
+    letters.forEach((letter) => {
+      const group = letterGroups.get(letter) || [];
+      if (!group.length) return;
+      const first = group[0];
+      first.id = makeAnchorId(letter);
+      first.classList.add('letter-start');
+      first.setAttribute('aria-label', `Letter ${letter}`);
+    });
+
+    if (list && letters.length) {
+      const nav = document.createElement('details');
+      nav.className = 'year-nav';
+      nav.setAttribute('aria-label', 'Jump to song letter');
+      navEl = nav;
+
+      const summary = document.createElement('summary');
+      summary.className = 'year-nav__summary';
+      summary.textContent = 'Jump to letter';
+
+      const chevron = document.createElement('span');
+      chevron.className = 'year-nav__chevron';
+      chevron.setAttribute('aria-hidden', 'true');
+      chevron.textContent = '▾';
+      summary.appendChild(chevron);
+
+      const panel = document.createElement('div');
+      panel.className = 'year-nav__panel';
+
+      const chipWrap = document.createElement('div');
+      chipWrap.className = 'year-nav__chips';
+
+      letters.forEach((letter) => {
+        const link = document.createElement('a');
+        link.className = 'year-nav__chip';
+        link.textContent = letter;
+        link.dataset.letter = letter;
+        link.href = `#${makeAnchorId(letter)}`;
+        letterChips.push(link);
+        chipByLetter.set(letter, link);
+        chipWrap.appendChild(link);
+      });
+
+      panel.appendChild(chipWrap);
+      nav.appendChild(summary);
+      nav.appendChild(panel);
+
+      const headerEl = document.querySelector('main.az-page header');
+      if (headerEl) {
+        headerEl.after(nav);
+      } else {
+        list.before(nav);
+      }
+
+      setActiveLetter = (letter, { scroll = true } = {}) => {
+        activeLetter = letter;
+
+        letterChips.forEach((chip) => {
+          chip.classList.toggle('is-active', chip.dataset.letter === letter);
+        });
+
+        songRows.forEach((row) => row.classList.remove('selected-letter'));
+
+        const group = letterGroups.get(letter) || [];
+        if (!group.length) return;
+
+        group.forEach((row) => row.classList.add('selected-letter'));
+
+        if (scroll) {
+          const scrollTarget = () => {
+            group[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          };
+
+          const isMobile = window.matchMedia('(max-width: 600px)').matches;
+          if (isMobile && navEl && navEl.hasAttribute('open')) {
+            navEl.open = false;
+            requestAnimationFrame(scrollTarget);
+          } else {
+            scrollTarget();
+          }
+        }
+      };
+
+      letterChips.forEach((chip) => {
+        chip.addEventListener('click', (event) => {
+          event.preventDefault();
+          const letter = chip.dataset.letter;
+          if (activeLetter === letter) {
+            activeLetter = null;
+            letterChips.forEach((c) => c.classList.remove('is-active'));
+            songRows.forEach((row) => row.classList.remove('selected-letter'));
+            return;
+          }
+          setActiveLetter(letter, { scroll: true });
+        });
+      });
+    }
+  })();
+</script>
+</body>
+</html>

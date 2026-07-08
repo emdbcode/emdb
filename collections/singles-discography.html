@@ -1,0 +1,3902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Singles Discography | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+/* Keep focus handling internal; avoid colored border on hash jumps */
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-card a:hover,
+.track-card a:focus {
+  color: #E21C21;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+.year-nav {
+  position: sticky;
+  top: calc(var(--header-offset, 84px) + 8px);
+  z-index: 5;
+  display: block;
+  padding: 8px 10px;
+  border: 1px solid #222;
+  background: rgba(11, 11, 11, 0.92);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.year-nav summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  color: #eaeaea;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 2px;
+}
+
+.year-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.year-nav__chevron {
+  font-size: 11px;
+  color: #aaa;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.year-nav[open] .year-nav__chevron {
+  transform: rotate(180deg);
+  color: #ffffff;
+}
+
+.year-nav__panel {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #222;
+}
+
+.year-nav__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.year-nav__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  min-width: 44px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.year-nav__chip:hover,
+.year-nav__chip:focus-visible {
+  color: #ffffff;
+  border-color: #E21C21;
+  outline: none;
+}
+
+.year-nav__chip:focus-visible {
+  box-shadow: 0 0 0 2px #E21C21;
+}
+
+.year-nav__chip.is-active {
+  color: #ffffff;
+  border-color: #E21C21;
+  background: #181818;
+}
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-chart-performance,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + -9px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + -9px);
+}
+
+.track-card.selected-year {
+  border-color: rgba(226, 28, 33, 0.35);
+}
+
+
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+
+.track-card .track-producer,
+.track-card .track-producer + .track-producer {
+  display: none;
+}
+
+.track-card.show-credits .track-producer,
+.track-card.show-credits .track-producer + .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+  .filter-btn[data-filter="collab"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-chart-performance,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-chart-performance,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-chart-performance {
+  display: none;
+  margin: 2px 0 0;
+}
+
+.track-card.show-details .track-chart-performance {
+  display: block;
+}
+
+.track-chart-link,
+.track-chart-link:visited {
+  display: inline-flex;
+  color: #ddd;
+  text-decoration: none;
+}
+
+.track-chart-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  background: #101010;
+}
+
+.track-chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 30px;
+  line-height: 1.05;
+}
+
+.track-chart-country {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9ea0a8;
+}
+
+.track-chart-value {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #eaeaea;
+}
+
+.track-chart-sep {
+  color: #5a5d67;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.track-chart-link:hover .track-chart-pill,
+.track-chart-link:focus-visible .track-chart-pill {
+  border-color: #E21C21;
+}
+
+.track-chart-link:hover .track-chart-value,
+.track-chart-link:focus-visible .track-chart-value {
+  color: #E21C21;
+}
+
+.track-album a,
+.track-album a:visited {
+  display: inline;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Singles Discography</h1>
+    <div class="filter-bar" role="group" aria-label="Filter by production role">
+      <button class="filter-btn active" data-filter="singles" type="button"><span class="filter-label">Singles</span></button>
+      <button class="filter-btn" data-filter="promo" type="button"><span class="filter-label">Promo / Other (†)</span></button>
+      <button class="filter-btn" data-filter="with-d12" type="button"><span class="filter-label">with D12</span></button>
+      <button class="filter-btn" data-filter="with-d12-promo" type="button"><span class="filter-label">with D12 Promo (†)</span></button>
+      <button class="filter-btn" data-filter="bme" type="button"><span class="filter-label">Bad Meets Evil</span></button>
+      <button class="filter-btn" data-filter="all" type="button"><span class="filter-label">All</span></button>
+    </div>
+  </header>
+
+    <section class="track-list" aria-label="Eminem production discography">
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/slim-shady-ep/just-dont-give-a-fuck-original.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-ep/just-don't-give-a-fuck-ep-single-cover.jpg" alt="Just Don’t Give A Fuck cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-ep/just-dont-give-a-fuck-original.html">Just Don’t Give A Fuck</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+       <p class="track-album">Slim Shady EP</p>
+        <p class="track-release">December 10, 1997</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab">
+      <a class="track-thumb-link" href="/songs/non-album/nuttin-to-do.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/bad-meets-evil-nuttin-to-do-scary-movies-cover.jpg" alt="Nuttin’ To Do / Scary Movies cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/nuttin-to-do.html">Nuttin’ To Do / Scary Movies</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Reef</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">October 1, 1998</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-nuttin-to-do.html" aria-label="View Nuttin’ To Do / Scary Movies chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/slim-shady-lp/just-dont-give-a-fuck.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/just-dont-give-a-fuck-cover.jpg" alt="Just Don’t Give A Fuck cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-lp/just-dont-give-a-fuck.html">Just Don’t Give A Fuck</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">Slim Shady LP</p>
+        <p class="track-release">October 13, 1998</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-just-dont-give-a-fuck.html" aria-label="View Just Don’t Give A Fuck chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/slim-shady-lp/my-name-is.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/my-name-is-cover.jpg" alt="My Name Is cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-lp/my-name-is.html">My Name Is</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album">Slim Shady LP</p>
+        <p class="track-release">January 25, 1999</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-my-name-is.html" aria-label="View My Name Is chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">36</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">2</span>
+              </span>
+            </span>
+          </a>
+        </p>
+</div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/non-album/my-name-is-rock-star-remix.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/my-name-is-rock-remix-cover.jpg" alt="My Name Is (Rock Star Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/my-name-is-rock-star-remix.html">My Name Is (Rock Star Remix) <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Stretch Armstrong</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">May 17, 1999</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Released for free exclusively on eminem.com.</p>
+          </details>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/slim-shady-lp/role-model.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/role-model-cover.jpg" alt="Role Model cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-lp/role-model.html">Role Model <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre & Mel-Man</p>
+        <p class="track-album">Slim Shady LP</p>
+        <p class="track-release">May 26, 1999</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-role-model.html" aria-label="View Role Model † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/slim-shady-lp/guilty-conscience.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/guilty-conscience-cover.jpg" alt="Guilty Conscience cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-lp/guilty-conscience.html">Guilty Conscience</a></h2>
+        <p class="track-artist">Eminem feat. Dr. Dre</p>
+        <p class="track-producer">Produced by Dr. Dre & Eninem</p>
+        <p class="track-album">Slim Shady LP</p>
+        <p class="track-release">June 8, 1999</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-guilty-conscience.html" aria-label="View Guilty Conscience chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">5</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/slim-shady-lp/im-shady.html">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/im-shady-cover.jpg" alt="I’m Shady cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-lp/im-shady.html">I’m Shady <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">Slim Shady LP</p>
+        <p class="track-release">June 8, 1999</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/non-album/bad-influence.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/bad-influence_2-cover.jpg" alt="Bad Influence cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/bad-influence.html">Bad Influence <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+        <p class="track-album">End Of Days (Soundtrack)</p>
+        <p class="track-release">November 2, 1999</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Issued as a split promotional single with Limp Bizkit’s “Crushed”.</p>
+          </details>
+      </div>
+    </article>
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/non-album/any-man.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/any-man-cover.jpg" alt="Any Man cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/any-man.html">Any Man</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Da Beatminerz</p>
+          <p class="track-album">Rawkus Presents: Soundbombing II</p>
+          <p class="track-release">May 18, 1999</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-any-man.html" aria-label="View Any Man chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">150</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/non-album/three-verses.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/three-verses-cover.jpg" alt="Three Verses cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/three-verses.html">Three Verses <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Non-album</p>
+          <p class="track-release">1999</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+           <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Released for free exclusively on eminem.com.</p>
+          </details>
+        </div>
+      </article>
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/non-album/pick-it-up-live.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/pick-it-up-live-cover.jpg" alt="Pick It Up (Live) cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/pick-it-up-live.html">Pick It Up (Live) <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Non-album</p>
+          <p class="track-release">1999</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+           <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Released for free exclusively on eminem.com.</p>
+          </details>
+        </div>
+      </article>
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/non-album/just-rhymin-with-proof.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/just-rhymin-with-proof-cover.jpg" alt="Just Rhymin’ With Proof cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/just-rhymin-with-proof.html">Just Rhymin’ With Proof <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem feat. Proof</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Non-album</p>
+          <p class="track-release">1999</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+           <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Released for free exclusively on eminem.com.</p>
+          </details>
+        </div>
+      </article>
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/real-slim-shady.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/real-slim-shady-cover.jpg" alt="The Real Slim Shady cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/real-slim-shady.html">The Real Slim Shady</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">April 18, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-the-real-slim-shady.html" aria-label="View The Real Slim Shady chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">4</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">1</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/kill-you.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/kill-you-cover.jpg" alt="Kill You cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/kill-you.html">Kill You <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">May 23, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-kill-you.html" aria-label="View Kill You † chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/bitch-please-ii.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/bitch-please-ii-cover.jpg" alt="Bitch Please II cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/bitch-please-ii.html">Bitch Please II <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem feat. Dr. Dre, Snoop Dogg, Xzibit & Nate Dogg</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">July 11, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-bitch-please-ii.html" aria-label="View Bitch Please II † chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+     
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/way-i-am.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/way-i-am-cover.jpg" alt="The Way I Am cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/way-i-am.html">The Way I Am</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">October 3, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-the-way-i-am.html" aria-label="View The Way I Am chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">58</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">8</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/stan.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/stan-cover.jpg" alt="Stan cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/stan.html">Stan</a></h2>
+          <p class="track-artist">Eminem feat. Dido</p>
+          <p class="track-producer">Produced by The 45 King</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">November 20, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-stan.html" aria-label="View Stan chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">51</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">1</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+
+      </article>
+      <article class="track-card collab">
+        <a class="track-thumb-link" href="/songs/devils-night/shit-on-you.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/shit-on-you-cover.jpg" alt="Shit On You cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/shit-on-you.html">Shit On You</a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by DJ Head</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Devil’s Night (Special Edition)</p>
+          <p class="track-release">December 5, 2000</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-shit-on-you.html" aria-label="View Shit On You chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">10</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+       <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/way-i-am-remix.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/way-i-am-remix-cover.jpg" alt="The Way I Am cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/way-i-am-remix.html">The Way I Am (Danny Lohner Remix) <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem feat.  Marilyn Manson</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP (Tour Edition)</p>
+          <p class="track-release">2001</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+       <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/curtain-call/stan-live-grammys.html">
+          <img class="track-thumb" src="../images/album-covers/curtain-call/stan-live-cover.jpg" alt="Stan (Live At 43rd Grammy Awards) cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/curtain-call/stan-live-grammys.html">Stan (Live At 43rd Grammy Awards) <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem feat.  Elton John</p>
+          <p class="track-producer">Produced by The Recording Academy</p>
+          <p class="track-album">Curtain Call: The Hits</p>
+          <p class="track-release">February 22, 2001</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/marshall-mathers-lp/im-back.html">
+          <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/im-back-cover.jpg" alt="I’m Back cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/marshall-mathers-lp/im-back.html">I’m Back</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mel-Man</p>
+          <p class="track-album">The Marshall Mathers LP</p>
+          <p class="track-release">April 9, 2001 (France)</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-im-back.html" aria-label="View I’m Back chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card collab-promo">
+        <a class="track-thumb-link" href="/songs/non-album/freestyle-d12-promo-version.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/d12-freestyle-cover.jpg" alt="Pistol Pistol cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/freestyle-d12-promo-version.html">Freestyle <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Non-Album</p>
+          <p class="track-release">June 2001</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+      
+      <article class="track-card collab">
+        <a class="track-thumb-link" href="/songs/devils-night/purple-pills.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/purple-pills-cover.jpg" alt="Purple Pills cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/purple-pills.html">Purple Pills</a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Jeff Bass</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">June 5, 2001</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-purple-pills.html" aria-label="View Purple Pills chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">19</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">2</span>
+                </span>
+              </span>
+            </a>
+          </p>
+          <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">“Purple Hills,” the clean version of “Purple Pills,” was released simultaneously with the original explicit version.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card collab-promo">
+        <a class="track-thumb-link" href="/songs/devils-night/pistol-pistol.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/pistol-pistol-cover.jpg" alt="Pistol Pistol cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/pistol-pistol.html">Pistol Pistol <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Denaun Porter</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">June 2001</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <a class="track-thumb-link" href="/songs/devils-night/aint-nuttin-but-music.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/aint-nuttin-but-music-cover.jpg" alt="Ain’t Nuttin’ But Music cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/aint-nuttin-but-music.html">Ain’t Nuttin’ But Music</a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">October 2, 2001 (Parts of Europe)</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-aint-nuttin-but-music.html" aria-label="View Ain’t Nuttin’ But Music chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card collab-promo">
+        <a class="track-thumb-link" href="/songs/devils-night/blow-my-buzz.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/blow-my-buzz-cover.jpeg" alt="Blow My Buzz cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/blow-my-buzz.html">Blow My Buzz <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">CO-Produced by Jeff Bass</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">November 6, 2001</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+      
+      <article class="track-card collab">
+        <a class="track-thumb-link" href="/songs/devils-night/fight-music.html">
+          <img class="track-thumb" src="../images/album-covers/devils-night/fight-music-cover.jpg" alt="Fight Music cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/devils-night/fight-music.html">Fight Music</a></h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">November 27, 2001</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-fight-music.html" aria-label="View Fight Music chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">11</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/eminem-show/without-me.html">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/without-me-cover.jpg" alt="Without Me cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/eminem-show/without-me.html">Without Me</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Jeff Bass</p>
+          <p class="track-producer">Additional Production by DJ Head</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 13, 2002</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-without-me.html" aria-label="View Without Me chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">2</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">1</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/eminem-show/cleanin-out-my-closet.html">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/cleanin-out-my-closet-cover.jpg" alt="Cleanin’ Out My Closet cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/eminem-show/cleanin-out-my-closet.html">Cleanin’ Out My Closet</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem &amp; Jeff Bass</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">July 29, 2002</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-cleanin-out-my-closet.html" aria-label="View Cleanin’ Out My Closet chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">4</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">4</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/eminem-show/till-i-collapse.html">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/til-i-collapse-cover.jpg" alt="’Til I Collapse cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/eminem-show/till-i-collapse.html">’Til I Collapse <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">2002</p>
+          <p class="track-chart-performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+      <article class="track-card singles">
+        <a class="track-thumb-link" href="/songs/8-mile-soundtrack/lose-yourself.html">
+          <img class="track-thumb" src="../images/album-covers/8-mile/lose-yourself-cover.jpg" alt="Lose Yourself cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/8-mile-soundtrack/lose-yourself.html">Lose Yourself</a></h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Jeff Bass</p>
+          <p class="track-album"><a href="/releases/8-mile-soundtrack.html">8 Mile (Soundtrack)</a></p>
+          <p class="track-release">October 28, 2002</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-lose-yourself.html" aria-label="View Lose Yourself chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">1</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">1</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/8-mile-soundtrack/8-mile.html">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-single-cover.jpg" alt="8 Mile cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/8-mile-soundtrack/8-mile.html">8 Mile <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/8-mile-soundtrack.html">8 Mile (Soundtrack)</a></p>
+        <p class="track-release">November 2002</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-8-mile.html" aria-label="View 8 Mile † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/eminem-show/superman.html">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/superman-cover.jpg" alt="Superman cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/eminem-show/superman.html">Superman</a></h2>
+        <p class="track-artist">Eminem feat. Dina Rae</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album">The Eminem Show</p>
+        <p class="track-release">January 21, 2003</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-superman.html" aria-label="View Superman chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">15</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+       <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Radio single; no retail single was released.</p>
+          </details>
+        </div>
+      </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/eminem-show/sing-for-the-moment.html">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/sing-for-the-moment-cover.jpg" alt="Sing For The Moment cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/eminem-show/sing-for-the-moment.html">Sing For The Moment</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Jeff Bass</p>
+        <p class="track-album">The Eminem Show</p>
+        <p class="track-release">February 25, 2003</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-sing-for-the-moment.html" aria-label="View Sing For The Moment chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">14</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">6</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+        <a class="track-thumb-link" href="/songs/non-album/hail-mary.html">
+          <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="’Til I Collapse cover">
+        </a>
+        <div class="track-meta">
+          <h2 class="track-title"><a href="/songs/non-album/hail-mary.html">Hail Mary <span class="fn-mark">†</span></a></h2>
+          <p class="track-artist">Eminem, 50 Cent & Busta Rhymes</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory</p>
+          <p class="track-release">May 10, 2003</p>
+          <p class="track-chart-performance">
+            <a class="track-chart-link" href="/charts/charts-hail-mary.html" aria-label="View Hail Mary † chart performance">
+              <span class="track-chart-pill">
+                <span class="track-chart-col">
+                  <span class="track-chart-country">US</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+                <span class="track-chart-sep">|</span>
+                <span class="track-chart-col">
+                  <span class="track-chart-country">UK</span>
+                  <span class="track-chart-value">-</span>
+                </span>
+              </span>
+            </a>
+          </p>
+        </div>
+      </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/eminem-show/business.html">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/business-cover.jpg" alt="Business cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/eminem-show/business.html">Business</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album">The Eminem Show</p>
+        <p class="track-release">July 14, 2003</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-business.html" aria-label="View Business chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">6</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab-promo">
+      <a class="track-thumb-link" href="/songs/d12-world/6-in-the-morning.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/6-in-the-morning-cover.jpg" alt="6 In The Morning cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/6-in-the-morning.html">6 In The Morning <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">January 2004</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab">
+      <a class="track-thumb-link" href="/songs/d12-world/my-band.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/my-band-cover.jpg" alt="My Band cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/my-band.html">My Band</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">March 2, 2004</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-my-band.html" aria-label="View My Band chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">6</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">2</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab-promo">
+      <a class="track-thumb-link" href="/songs/d12-world/40-oz.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/40-oz-cover.jpg" alt="40 Oz. cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/40-oz.html">40 Oz. <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Track Boyz</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">March 2004</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab-promo">
+      <a class="track-thumb-link" href="/songs/non-album/40-oz-lil-jon-remix.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/40-oz-remix-lil-john-cover.jpg" alt="40 Oz (Remix by Lil John) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/40-oz-lil-jon-remix.html">40 Oz. (Remix by Lil Jon) <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Lil Jon</p>
+        <p class="track-album">non-album</p>
+        <p class="track-release">March 2004</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab-promo">
+      <a class="track-thumb-link" href="/songs/d12-world/american-psycho-2.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/american-psycho-2-cover.jpg" alt="Americal Psycho II cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/american-psycho-2.html">American Psycho II <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">D12 feat. B-Real</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">April 2004</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab">
+      <a class="track-thumb-link" href="/songs/d12-world/how-come.html">
+        <img class="track-thumb" src="../images/album-covers/d12-world/how-come-cover.jpg" alt="How Come cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/how-come.html">How Come</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Witt & Pep</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">June 8, 2004</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-how-come.html" aria-label="View How Come chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">27</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/just-lose-it.html">
+        <img class="track-thumb" src="../images/album-covers/encore/just-lose-it-cover.jpg" alt="Just Lose It cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/just-lose-it.html">Just Lose It</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">September 27, 2004</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-just-lose-it.html" aria-label="View Just Lose It chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">6</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/mosh.html">
+        <img class="track-thumb" src="../images/album-covers/encore/mosh-cover.jpg" alt="Mosh cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/mosh.html">Mosh</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">October 26, 2004</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-mosh.html" aria-label="View Mosh chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/encore-curtains.html">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-single-cover.jpg" alt="Encore cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/encore-curtains.html">Encore</a></h2>
+        <p class="track-artist">Eminem feat. Dr. Dre & 50 Cent</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">November 9, 2004</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-encore-curtains.html" aria-label="View Encore chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">25</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">116</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">“Encore” was released as a vinyl-exclusive retail single. Because the records were labeled as promotional copies, the release is often mistakenly categorized as a promotional single, despite selling enough copies to reach No. 13 on Billboard’s Hot R&B/Hip-Hop Singles Sales chart and No. 33 on the UK Hip-Hop & R&B Singles Chart, which at the time functioned as a physical-sales-only chart.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/like-toy-soldiers.html">
+        <img class="track-thumb" src="../images/album-covers/encore/like-toy-soldiers-cover.jpg" alt="Like Toy Soldiers cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/like-toy-soldiers.html">Like Toy Soldiers</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">March 15, 2005</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-like-toy-soldiers.html" aria-label="View Like Toy Soldiers chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">34</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/mockingbird.html">
+        <img class="track-thumb" src="../images/album-covers/encore/mockingbird-cover.jpeg" alt="Mockingbird cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/mockingbird.html">Mockingbird</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">April 25, 2005</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-mockingbird.html" aria-label="View Mockingbird chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">11</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/encore/ass-like-that.html">
+        <img class="track-thumb" src="../images/album-covers/encore/ass-like-that-cover.jpg" alt="Ass Like That cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/ass-like-that.html">Ass Like That</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr Dre & Mike Elizondo</p>
+        <p class="track-album">Encore</p>
+        <p class="track-release">June 7, 2005</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-ass-like-that.html" aria-label="View Ass Like That chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">60</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/curtain-call/when-im-gone.html">
+        <img class="track-thumb" src="../images/album-covers/curtain-call/when-i'm-gone-cover.jpg" alt="When I’m Gone cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/curtain-call/when-im-gone.html">When I’m Gone</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Curtain Call: The Hits</p>
+        <p class="track-release">December 6, 2005</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-when-im-gone.html" aria-label="View When I’m Gone chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">8</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/curtain-call/shake-that.html">
+        <img class="track-thumb" src="../images/album-covers/curtain-call/shake-that-cover.jpg" alt="Shake That cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/curtain-call/shake-that.html">Shake That</a></h2>
+        <p class="track-artist">Eminem feat. Nate Dogg</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Curtain Call: The Hits</p>
+        <p class="track-release">January 17, 2006</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-shake-that.html" aria-label="View Shake That chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">6</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/re-up/you-dont-know.html">
+        <img class="track-thumb" src="../images/album-covers/re-up/you-don't-know-cover.jpeg" alt="You Don’t Know cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/re-up/you-dont-know.html">You Don’t Know</a></h2>
+        <p class="track-artist">Eminem, 50 Cent, Ca$his & Lloyd Banks</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Eminem Presents: The Re-Up</p>
+        <p class="track-release">November 7, 2006</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-you-dont-know.html" aria-label="View You Don’t Know chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">12</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">32</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/re-up/jimmy-crack-corn.html">
+        <img class="track-thumb" src="../images/album-covers/re-up/jimmy-crack-corn-cover.jpg" alt="Jimmy Crack Corn cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/re-up/jimmy-crack-corn.html">Jimmy Crack Corn <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem &amp; 50 Cent</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Eminem Presents: The Re-Up</p>
+        <p class="track-release">December 19, 2006</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-jimmy-crack-corn.html" aria-label="View Jimmy Crack Corn † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/re-up/jimmy-crack-corn-remix.html">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Jimmy Crack Corn (Vocal Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/jimmy-crack-corn-remix.html">Jimmy Crack Corn (Vocal Remix)</a></h2>
+        <p class="track-artist">Eminem feat. Ca$his</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">March 6, 2007</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/crack-a-bottle.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/crack-a-bottle-cover.jpg" alt="Crack A Bottle cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/crack-a-bottle.html">Crack A Bottle</a></h2>
+        <p class="track-artist">Eminem, Dr. Dre & 50 Cent</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album">Relapse</p>
+        <p class="track-release">February 2, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-crack-a-bottle.html" aria-label="View Crack A Bottle chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">1</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/we-made-you.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/we-made-you-cover.jpg" alt="We Made You cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/we-made-you.html">We Made You</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Eminem</p>
+        <p class="track-producer">Additional Production by Doc Ish</p>
+        <p class="track-album">Relapse</p>
+        <p class="track-release">April 7, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-we-made-you.html" aria-label="View We Made You chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">9</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">4</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/3-am.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/3-am-cover.jpg" alt="3 a.m. cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/3-am.html">3 a.m.</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album">Relapse</p>
+        <p class="track-release">April 23, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-3-am.html" aria-label="View 3 a.m. chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">32</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">56</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/3-am-travis-barker-remix.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/3am-travis-barker-remix-cover.jpg" alt="3 a.m. (Travis Barker Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/3-am-travis-barker-remix.html">3 a.m. (Travis Barker Remix)</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Travis Barker</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">May 29, 2009</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/old-times-sake.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/old-times-sake-cover.jpg" alt="Old Time’s Sake cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/old-times-sake.html">Old Time’s Sake</a></h2>
+        <p class="track-artist">Eminem feat. Dr. Dre</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+        <p class="track-album">Relapse</p>
+        <p class="track-release">June 2, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-old-times-sake.html" aria-label="View Old Time’s Sake chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">25</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">61</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/non-album/warning.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/the-warning-despicable-cover.jpg" alt="The Warning cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/warning.html">The Warning <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem feat. Mariah Carey</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">July 30, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-the-warning.html" aria-label="View The Warning † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        </div>
+      </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/beautiful.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/beautiful-cover.jpg" alt="Beautiful cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/beautiful.html">Beautiful</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Jeff Bass</p>
+        <p class="track-album">Relapse</p>
+        <p class="track-release">August 11, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-beautiful.html" aria-label="View Beautiful chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">17</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">12</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/hell-breaks-loose.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/hell-breaks-loose-cover.jpg" alt="Hell Breaks Loose cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/hell-breaks-loose.html">Hell Breaks Loose</a></h2>
+        <p class="track-artist">Eminem feat. Dr. Dre</p>
+        <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+        <p class="track-album">Relapse: Refill</p>
+        <p class="track-release">December 15, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-hell-breaks-loose.html" aria-label="View Hell Breaks Loose chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">29</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/relapse/elevator.html">
+        <img class="track-thumb" src="../images/album-covers/relapse/elevator-cover.jpg" alt="Elevator cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/relapse/elevator.html">Elevator</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional production by Luis Resto</p>
+        <p class="track-album">Relapse: Refill</p>
+        <p class="track-release">December 15, 2009</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-elevator.html" aria-label="View Elevator chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">67</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+    
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/recovery/not-afraid.html">
+        <img class="track-thumb" src="../images/album-covers/recovery/not-afraid-cover.jpg" alt="Not Afraid cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/recovery/not-afraid.html">Not Afraid</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Boi-1da</p>
+        <p class="track-producer">Additional Production by Eminem, Jordan Evans & Matthew Burnett</p>
+        <p class="track-album">Recovery</p>
+        <p class="track-release">April 27, 2010</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-not-afraid.html" aria-label="View Not Afraid chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">1</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">5</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/non-album/despicable-freestyle.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/the-warning-despicable-cover.jpg" alt="Despicable (Freestyle) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/despicable-freestyle.html">Despicable (Freestyle) <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">April 27, 2010</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/recovery/love-the-way-you-lie.html">
+        <img class="track-thumb" src="../images/album-covers/recovery/love-the-way-you-lie-cover.jpg" alt="Love The Way You Lie cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/recovery/love-the-way-you-lie.html">Love The Way You Lie</a></h2>
+        <p class="track-artist">Eminem feat. Rihanna</p>
+        <p class="track-producer">Produced by Alex da Kid</p>
+        <p class="track-album">Recovery</p>
+        <p class="track-release">June 18, 2010</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-love-the-way-you-lie.html" aria-label="View Love The Way You Lie chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">1</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">2</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/recovery/no-love.html">
+        <img class="track-thumb" src="../images/album-covers/recovery/no-love-cover.jpg" alt="No Love cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/recovery/no-love.html">No Love</a></h2>
+        <p class="track-artist">Eminem feat. Lil Wayne</p>
+        <p class="track-producer">Produced by Just Blaze</p>
+        <p class="track-album">Recovery</p>
+        <p class="track-release">October 5, 2010</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-no-love.html" aria-label="View No Love chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">23</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">33</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card collab">
+      <a class="track-thumb-link" href="/songs/hell-the-sequel/fastlane.html">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/fast-lane-cover.jpg" alt="Fast Lane cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/fastlane.html">Fast Lane</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Supa Dups</p>
+        <p class="track-producer">Additional production by Eminem &amp; Jason Gilbert</p>
+        <p class="track-album">Hell: The Sequel</p>
+        <p class="track-release">May 3, 2011</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-fastlane.html" aria-label="View Fast Lane chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">32</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/recovery/space-bound.html">
+        <img class="track-thumb" src="../images/album-covers/recovery/space-bound-cover.jpg" alt="Space Bound cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/recovery/space-bound.html">Space Bound</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Jim Jonsin</p>
+        <p class="track-album">Recovery</p>
+        <p class="track-release">June 18, 2011</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-space-bound.html" aria-label="View Space Bound chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">34</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Radio single; no retail single was released.</p>
+          </details>
+        </div>
+      </article>
+
+    <article class="track-card collab">
+      <a class="track-thumb-link" href="/songs/hell-the-sequel/lighters.html">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/lighters-cover.jpg" alt="Lighters cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/lighters.html">Lighters</a></h2>
+        <p class="track-artist">Bad Meets Evil feat. Bruno Mars</p>
+        <p class="track-producer">Produced by Eminem, The Smeezingtons &amp; Battle Roy</p>
+        <p class="track-album">Hell: The Sequel</p>
+        <p class="track-release">July 5, 2011</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-lighters.html" aria-label="View Lighters chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">4</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">10</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/marshall-mathers-lp-2/berzerk.html">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/bezerk-cover.jpg" alt="Berzerk cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp-2/berzerk.html">Berzerk</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Rick Rubin</p>
+        <p class="track-album">The Marshall Mathers LP 2</p>
+        <p class="track-release">August 27, 2013</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-berzerk.html" aria-label="View Berzerk chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">3</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">2</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/marshall-mathers-lp-2/survival.html">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/survival-cover.jpg" alt="Survival cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp-2/survival.html">Survival</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by DJ Khalil</p>
+        <p class="track-album">The Marshall Mathers LP 2</p>
+        <p class="track-release">October 8, 2013</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-survival.html" aria-label="View Survival chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">16</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">22</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/marshall-mathers-lp-2/rap-god.html">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/rap-god-cover.jpg" alt="Rap God cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp-2/rap-god.html">Rap God</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by DVLP</p>
+        <p class="track-album">The Marshall Mathers LP 2</p>
+        <p class="track-release">October 15, 2013</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-rap-god.html" aria-label="View Rap God chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">7</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">5</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/marshall-mathers-lp-2/monster.html">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/monster-cover.jpg" alt="The Monster cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp-2/monster.html">The Monster</a></h2>
+        <p class="track-artist">Eminem feat. Rihanna</p>
+        <p class="track-producer">Produced by Frequency</p>
+        <p class="track-producer">Co-Produced by Aalias</p>
+        <p class="track-album">The Marshall Mathers LP 2</p>
+        <p class="track-release">October 28, 2013</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-the-monster.html" aria-label="View The Monster chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">1</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/marshall-mathers-lp-2/headlights.html">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/headlights-cover.jpg" alt="Headlights cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp-2/headlights.html">Headlights</a></h2>
+        <p class="track-artist">Eminem feat. Nate Ruess</p>
+        <p class="track-producer">Produced by Emile Haynie &amp; Jeff Bhasker</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">The Marshall Mathers LP 2</p>
+        <p class="track-release">February 5, 2014</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-headlights.html" aria-label="View Headlights chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">45</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">63</span>
+              </span>
+            </span>
+          </a>
+        </p>
+     <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Radio single; no retail single was released.</p>
+          </details>
+        </div>
+      </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/shadyxv/guts-over-fear.html">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/guts-over-fear-cover.jpg" alt="Guts Over Fear cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/shadyxv/guts-over-fear.html">Guts Over Fear</a></h2>
+        <p class="track-artist">Eminem feat. Sia</p>
+        <p class="track-producer">Produced by Emile Haynie &amp; John Hill</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Shady XV</p>
+        <p class="track-release">August 25, 2014</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-guts-over-fear.html" aria-label="View Guts Over Fear chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">22</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">10</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/shadyxv/detroit-vs-everybody.html">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/detroit-vs-everybody-cover.jpg" alt="Detroit vs. Everybody cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/shadyxv/detroit-vs-everybody.html">Detroit vs. Everybody</a></h2>
+        <p class="track-artist">Eminem, Royce Da 5’9“ , Big Sean, Danny Brown, Dej Loaf &amp; Trick Trick</p>
+        <p class="track-producer">Produced by Eminem &amp; Statik Selektah</p>
+        <p class="track-album">Shady XV</p>
+        <p class="track-release">November 11, 2014</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-detroit-vs-everybody.html" aria-label="View Detroit vs. Everybody chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/southpaw-soundtrack/phenomenal.html">
+        <img class="track-thumb" src="../images/album-covers/southpaw/phenomenal-cover.jpg" alt="Phenomenal cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/southpaw-soundtrack/phenomenal.html">Phenomenal</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/southpaw-soundtrack.html">Southpaw (Soundtrack)</a></p>
+        <p class="track-release">June 2, 2015</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-phenomenal.html" aria-label="View Phenomenal chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">47</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">57</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/southpaw-soundtrack/kings-never-die.html">
+        <img class="track-thumb" src="../images/album-covers/southpaw/kings-never-die-cover.jpg" alt="Kings Never Die cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/southpaw-soundtrack/kings-never-die.html">Kings Never Die</a></h2>
+        <p class="track-artist">Eminem feat. Gwen Stefani</p>
+        <p class="track-producer">Produced by DJ Khalil</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album"><a href="/releases/southpaw-soundtrack.html">Southpaw (Soundtrack)</a></p>
+        <p class="track-release">July 10, 2015</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-kings-never-die.html" aria-label="View Kings Never Die chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">80</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">82</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/campaign-speech.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/campaign-speech-cover.jpg" alt="Campaign Speech cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/campaign-speech.html">Campaign Speech</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">October 19, 2016</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/infinite-fbt-remix.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/infinite-fbt-remix-cover.jpg" alt="Infinite (F.B.T. Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/infinite-fbt-remix.html">Infinite (F.B.T. Remix)</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by F.B.T.</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">November 18, 2016</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-infinite-fbt-remix.html" aria-label="View Infinite (F.B.T. Remix) chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">97</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/revival/walk-on-water.html">
+        <img class="track-thumb" src="../images/album-covers/revival/walk-on-water-cover.jpg" alt="Walk On Water cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/walk-on-water.html">Walk On Water</a></h2>
+        <p class="track-artist">Eminem feat. Beyoncé</p>
+        <p class="track-producer">Produced by Rick Rubin</p>
+        <p class="track-producer">Co-Produced by Skylar Grey</p>
+        <p class="track-album">Revival</p>
+        <p class="track-release">November 10, 2017</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-walk-on-water.html" aria-label="View Walk On Water chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">14</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">7</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/revival/untouchable.html">
+        <img class="track-thumb" src="../images/album-covers/revival/untouchable-link-cover-placeholder.jpg" alt="Untouchable cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/untouchable.html">Untouchable <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem, Mark Batson, Emile Haynie &amp; Mr. Porter</p>
+        <p class="track-album">Revival</p>
+        <p class="track-release">December 8, 2017</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-untouchable.html" aria-label="View Untouchable † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">86</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">73</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/revival/river.html">
+        <img class="track-thumb" src="../images/album-covers/revival/river-cover.jpg" alt="River cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/river.html">River</a></h2>
+        <p class="track-artist">Eminem feat. Ed Sheeran</p>
+        <p class="track-producer">Produced by Emile Haynie</p>
+        <p class="track-album">Revival</p>
+        <p class="track-release">December 15, 2017</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-river.html" aria-label="View River chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">11</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/revival/nowhere-fast.html">
+        <img class="track-thumb" src="../images/album-covers/revival/nowhere-fast-cover.jpg" alt="Nowhere Fast cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/nowhere-fast.html">Nowhere Fast</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Rock Mafia &amp; Hit-Boy</p>
+        <p class="track-album">Revival</p>
+        <p class="track-release">March 17, 2018</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-nowhere-fast.html" aria-label="View Nowhere Fast chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">The single includes an extra verse not included on the album.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/revival/remind-me.html">
+        <img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Remind Me cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/remind-me.html">Remind Me <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Rick Rubin</p>
+        <p class="track-album">Revival</p>
+        <p class="track-release">July 6, 2018 (Italy only)</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-remind-me.html" aria-label="View Remind Me † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">21</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">31</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/chloraseptic-remix.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/chloraseptic-remix-cover.jpg" alt="Chloraseptic (Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/chloraseptic-remix.html">Chloraseptic (Remix)</a></h2>
+        <p class="track-artist">Eminem feat. 2 Chainz & Phresher</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">January 8, 2018</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/kamikaze/fall.html">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/fall-lucky-you-cover.jpg" alt="Fall cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/kamikaze/fall.html">Fall</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mike WiLL Made-It</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Kamikaze</p>
+        <p class="track-release">September 4, 2018</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-fall.html" aria-label="View Fall chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">12</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">8</span>
+              </span>
+            </span>
+          </a>
+        </p>
+       <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Radio single; no retail single was released.</p>
+          </details>
+        </div>
+      </article>
+      
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/killshot.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/killshot-cover.jpg" alt="Killshot cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/killshot.html">Killshot</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Illadaproducer</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">September 14, 2018</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-killshot.html" aria-label="View Killshot chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">3</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">13</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/kamikaze/venom.html">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/venom-cover.jpg" alt="Venom cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/kamikaze/venom.html">Venom</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">Kamikaze</p>
+        <p class="track-release">September 21, 2018</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-venom.html" aria-label="View Venom chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">43</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">16</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/kamikaze/lucky-you.html">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Lucky You cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/kamikaze/lucky-you.html">Lucky You <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem feat. Joyner Lucas</p>
+        <p class="track-producer">Produced by Boi-1da &amp; Jahaan Sweet</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Kamikaze</p>
+        <p class="track-release">November 30, 2018 (UK only)</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-lucky-you.html" aria-label="View Lucky You † chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">6</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">6</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/music-to-be-murdered-by/darkness.html">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/darkness-cover.jpg" alt="Darkness cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/music-to-be-murdered-by/darkness.html">Darkness</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Royce Da 5’9” &amp; Eminem</p>
+        <p class="track-album">Music To Be Murdered By</p>
+        <p class="track-release">January 17, 2020</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-darkness.html" aria-label="View Darkness chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">28</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">17</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Promoted as a lead single through video and limited radio play; no retail single was released.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/music-to-be-murdered-by/godzilla.html">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/godzilla-cover.jpg" alt="Godzilla cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/music-to-be-murdered-by/godzilla.html">Godzilla</a></h2>
+        <p class="track-artist">Eminem feat. Juice WRLD</p>
+        <p class="track-producer">Produced by d.a. got that dope</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Music To Be Murdered By</p>
+        <p class="track-release">January 31, 2020</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-godzilla.html" aria-label="View Godzilla chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">3</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+          <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+          <p class="promo-note">Radio single; no retail single was released at time of launch. Later released as a 7-inch single in 2025; exclusive to eminem.com.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/non-album/killer-remix.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/killer-remix-cover.jpg" alt="Killer (Remix) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/killer-remix.html">Killer (Remix)</a></h2>
+        <p class="track-artist">Eminem feat. Jack Harlow & Cordae</p>
+        <p class="track-producer">Produced by d.a. got that dope</p>
+        <p class="track-album">Non-album</p>
+        <p class="track-release">May 28, 2021</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-killer-remix.html" aria-label="View Killer (Remix) chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">62</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">77</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/curtain-call-2/king-and-i.html">
+        <img class="track-thumb" src="../images/album-covers/non-album/king-&-i-cover.jpg" alt="The King And I cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/curtain-call-2/king-and-i.html">The King And I</a></h2>
+        <p class="track-artist">Eminem feat. CeeLo Green</p>
+        <p class="track-producer">Produced by Dr. Dre &amp;Eminem</p>
+        <p class="track-album">Elvis (Soundtrack)</p>
+        <p class="track-release">June 16, 2022</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-the-king-and-i.html" aria-label="View The King And I chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">86</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/curtain-call-2/from-the-d-2-the-lbc.html">
+        <img class="track-thumb" src="../images/album-covers/curtain-call-2/from-the-d-2-the-lbc-cover.jpg" alt="From The D 2 The LBC cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/curtain-call-2/from-the-d-2-the-lbc.html">From The D 2 The LBC</a></h2>
+        <p class="track-artist">Eminem feat. Snoop Dogg</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album">Curtain Call 2</p>
+        <p class="track-release">June 24, 2022</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-from-the-d-2-the-lbc.html" aria-label="View From The D 2 The LBC chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">72</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">51</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/death-of-slim-shady/houdini.html">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/houdini-cover.jpg" alt="Houdini cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/houdini.html">Houdini</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+        <p class="track-release">May 31, 2024</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-houdini.html" aria-label="View Houdini chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">2</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">1</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/death-of-slim-shady/tobey.html">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/tobey-cover.jpg" alt="Tobey cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/tobey.html">Tobey</a></h2>
+        <p class="track-artist">Eminem feat. BabyTron & Big Sean</p>
+        <p class="track-producer">Produced by Daniyel, Cole Bennett, John Nocito, Car!ton &amp; Marvy Ayy</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+        <p class="track-release">July 2, 2024</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-tobey.html" aria-label="View Tobey chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">24</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">29</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/death-of-slim-shady/somebody-save-me.html">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="Somebody Save Me cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/somebody-save-me.html">Somebody Save Me</a></h2>
+        <p class="track-artist">Eminem feat. Jelly Roll</p>
+        <p class="track-producer">Produced by Benny Blanco &amp; Emile Haynie</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+        <p class="track-release">July 19, 2024</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-somebody-save-me.html" aria-label="View Somebody Save Me chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">27</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">32</span>
+              </span>
+            </span>
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <article class="track-card promo">
+      <a class="track-thumb-link" href="/songs/death-of-slim-shady/fuel-shady-edition.html">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady_4-cover.jpg" alt="Fuel (Shady Edition) cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/fuel-shady-edition.html">Fuel (Shady Edition) <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Eminem feat. Westside Boogie & Grip</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album">The Death Of Slim Shady (Coup De Grâce) [Expanded Mourner’s Edition]</p>
+        <p class="track-release">September 11, 2024</p>
+        <p class="track-chart-performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">-</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">-</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Streaming single; exclusive to Spotify.</p>
+          </details>
+      </div>
+    </article>
+
+    <article class="track-card singles">
+      <a class="track-thumb-link" href="/songs/death-of-slim-shady/fuel.html">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/fuel-cover.jpg" alt="Fuel cover">
+      </a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/fuel.html">Fuel</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+        <p class="track-release">May 22, 2025</p>
+        <p class="track-chart-performance">
+          <a class="track-chart-link" href="/charts/charts-fuel.html" aria-label="View Fuel chart performance">
+            <span class="track-chart-pill">
+              <span class="track-chart-col">
+                <span class="track-chart-country">US</span>
+                <span class="track-chart-value">21</span>
+              </span>
+              <span class="track-chart-sep">|</span>
+              <span class="track-chart-col">
+                <span class="track-chart-country">UK</span>
+                <span class="track-chart-value">78</span>
+              </span>
+            </span>
+          </a>
+        </p>
+        <details class="promo-info">
+        <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">7-inch single; exclusive to Interscope.com.</p>
+          </details>
+      </div>
+    </article>
+     
+    <p class="footnote"><a href="singles-featuring-eminem.html">Click here for singles featuring Eminem.</a></p>
+
+    </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const nonAlbumHref = '/collections/non-album-tracks.html';
+    const isSingleAlbum = (text) => /\[(Promo )?Single\]/i.test(text || '');
+    const releaseAlbumLinks = [
+      { pattern: /\bSlim\s+Shady\s+EP\b/i, href: '/releases/slim-shady-ep.html' },
+      { pattern: /\bSlim\s+Shady\s+LP\b/i, href: '/releases/slim-shady-lp.html' },
+      { pattern: /\bThe\s+Marshall\s+Mathers\s+LP\b/i, href: '/releases/marshall-mathers-lp.html' },
+      { pattern: /\bThe\s+Marshall\s+Mathers\s+LP\s*2\b/i, href: '/releases/marshall-mathers-lp-2.html' },
+      { pattern: /\bThe\s+Eminem\s+Show\b/i, href: '/releases/eminem-show.html' },
+      { pattern: /\bEncore\b/i, href: '/releases/encore.html' },
+      { pattern: /\bCurtain\s+Call\s*:?\s*The\s+Hits\b/i, href: '/releases/curtain-call.html' },
+      { pattern: /\bCurtain\s+Call\s*2\b/i, href: '/releases/curtain-call-2.html' },
+      { pattern: /\bEminem\s+Presents:?\s+The\s+Re\-Up\b/i, href: '/releases/re-up.html' },
+      { pattern: /\bRelapse\s*:?\s*Refill\b/i, href: '/releases/relapse.html' },
+      { pattern: /\bRelapse\b/i, href: '/releases/relapse.html' },
+      { pattern: /\bRecovery\b/i, href: '/releases/recovery.html' },
+      { pattern: /\bRevival\b/i, href: '/releases/revival.html' },
+      { pattern: /\bKamikaze\b/i, href: '/releases/kamikaze.html' },
+      { pattern: /\bMusic\s+To\s+Be\s+Murdered\s+By\b/i, href: '/releases/music-to-be-murdered-by.html' },
+      { pattern: /\bShady\s+XV\b/i, href: '/releases/shadyxv.html' },
+      { pattern: /\bSouthpaw\s*\(Soundtrack\)\b/i, href: '/releases/southpaw-soundtrack.html' },
+      { pattern: /\b8\s*Mile\s*\(Soundtrack\)\b/i, href: '/releases/8-mile-soundtrack.html' },
+      { pattern: /\bHell\s*:?\s*The\s+Sequel\b/i, href: '/releases/hell-the-sequel.html' },
+      { pattern: /\bD12\s+World\b/i, href: '/releases/d12-world.html' },
+      { pattern: /\bDevil\'s\s+Night\b/i, href: '/releases/devils-night.html' },
+      { pattern: /\bInfinite\b/i, href: '/releases/infinite.html' },
+      { pattern: /\bThe\s+Death\s+Of\s+Slim\s+Shady\b/i, href: '/releases/death-of-slim-shady.html' }
+    ];
+    const yearGroups = new Map();
+    const yearChips = [];
+    const chipByYear = new Map();
+    let activeYear = null;
+    let setActiveYear;
+    let navEl = null;
+
+    const linkSingleAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = albumEl.textContent || '';
+        if (!isSingleAlbum(albumText)) return;
+        if (/\bPromatic\s*\[Single\]/i.test(albumText)) return;
+        if (/\bHighlife\s*\[Single\]/i.test(albumText)) return;
+
+        const titleLink = card.querySelector('.track-title a');
+        const trackHref = /\bWe\s+Shine\s*\[Single\]/i.test(albumText)
+          ? '/songs/songs-feat/we-shine.html'
+          : titleLink
+            ? titleLink.getAttribute('href')
+            : null;
+        if (!trackHref) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = trackHref;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const linkNonAlbumAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = albumEl.textContent || '';
+        if (!/\bnon\-?album\b/i.test(albumText)) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = nonAlbumHref;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const linkReleaseAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = albumEl.textContent || '';
+        const match = releaseAlbumLinks.find((entry) => entry.pattern.test(albumText));
+        if (!match) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = match.href;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      // Initially mark the first card of each year as the anchor; this will be
+      // updated after filters run to always target the first visible card.
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+
+      const nav = document.createElement('details');
+      nav.className = 'year-nav';
+      nav.setAttribute('aria-label', 'Jump to release year');
+      navEl = nav;
+
+      const summary = document.createElement('summary');
+      summary.className = 'year-nav__summary';
+      summary.textContent = 'Jump to year';
+
+      const chevron = document.createElement('span');
+      chevron.className = 'year-nav__chevron';
+      chevron.setAttribute('aria-hidden', 'true');
+      chevron.textContent = '▾';
+      summary.appendChild(chevron);
+
+      const panel = document.createElement('div');
+      panel.className = 'year-nav__panel';
+
+      const chipWrap = document.createElement('div');
+      chipWrap.className = 'year-nav__chips';
+
+      years.forEach((year) => {
+        const link = document.createElement('a');
+        link.className = 'year-nav__chip';
+        link.href = `#year-${year}`;
+        link.textContent = year;
+        link.dataset.year = year;
+        yearChips.push(link);
+        chipByYear.set(year, link);
+        chipWrap.appendChild(link);
+      });
+
+      panel.appendChild(chipWrap);
+      nav.appendChild(summary);
+      nav.appendChild(panel);
+
+      const headerEl = document.querySelector('main.non-album-page header');
+      if (headerEl) {
+        headerEl.after(nav);
+      } else {
+        trackList.before(nav);
+      }
+
+      setActiveYear = (year, { scroll = true } = {}) => {
+        activeYear = year;
+
+        yearChips.forEach((chip) => {
+          chip.classList.toggle('is-active', chip.dataset.year === year);
+        });
+
+        cards.forEach((card) => card.classList.remove('selected-year'));
+
+        const group = yearGroups.get(year);
+        if (!group) return;
+
+        const visibleCards = group.cards.filter((card) => card.style.display !== 'none');
+        if (!visibleCards.length) return;
+
+        visibleCards.forEach((card) => card.classList.add('selected-year'));
+
+        if (scroll) {
+          const scrollTarget = () => {
+            visibleCards[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          };
+
+          const isMobile = window.matchMedia('(max-width: 600px)').matches;
+          if (isMobile && navEl && navEl.hasAttribute('open')) {
+            navEl.open = false;
+            requestAnimationFrame(scrollTarget);
+          } else {
+            scrollTarget();
+          }
+        }
+      };
+
+      yearChips.forEach((chip) => {
+        chip.addEventListener('click', (event) => {
+          event.preventDefault();
+          const year = chip.dataset.year;
+          if (activeYear === year) {
+            activeYear = null;
+            yearChips.forEach((c) => c.classList.remove('is-active'));
+            cards.forEach((card) => card.classList.remove('selected-year'));
+            return;
+          }
+          setActiveYear(year, { scroll: true });
+        });
+      });
+    };
+
+    const normalizeText = (text) => (text || '').toLowerCase();
+
+    const applyFilter = (filter, { selectYear = true } = {}) => {
+      cards.forEach((card) => {
+        const isSingles = card.classList.contains('singles');
+        const isPromo = card.classList.contains('promo');
+        const isCollab = card.classList.contains('collab');
+        const isCollabPromo = card.classList.contains('collab-promo');
+        const trackArtist = card.querySelector('.track-artist');
+        const artistText = normalizeText(trackArtist ? trackArtist.textContent : '');
+        const isD12 = artistText.includes('d12');
+        const isBme = artistText.includes('bad meets evil');
+        const show =
+          filter === 'all' ||
+          (filter === 'singles' && isSingles) ||
+          (filter === 'promo' && isPromo) ||
+          (filter === 'collab' && isCollab && !isD12 && !isBme) ||
+          (filter === 'collab-promo' && isCollabPromo && !isD12 && !isBme) ||
+          (filter === 'with-d12' && isCollab && isD12) ||
+          (filter === 'with-d12-promo' && isCollabPromo && isD12) ||
+          (filter === 'bme' && isCollab && isBme);
+        card.style.display = show ? 'flex' : 'none';
+
+        if (trackArtist) {
+          trackArtist.style.display = '';
+        }
+      });
+
+      // Update year anchors so the first visible card per year is the jump target.
+      let firstVisibleYear = null;
+
+      yearGroups.forEach((group, year) => {
+        group.cards.forEach((card) => {
+          if (card.id === `year-${year}`) {
+            card.removeAttribute('id');
+            card.classList.remove('year-start');
+          }
+        });
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+        const chip = chipByYear.get(year);
+
+        if (firstVisible) {
+          firstVisible.id = `year-${year}`;
+          firstVisible.classList.add('year-start');
+          firstVisible.setAttribute('aria-label', `Year ${year}`);
+          if (chip) {
+            chip.style.display = 'inline-flex';
+            if (!firstVisibleYear) firstVisibleYear = year;
+          }
+        } else if (chip) {
+          chip.style.display = 'none';
+        }
+      });
+
+      if (activeYear && chipByYear.get(activeYear)?.style.display === 'none') {
+        activeYear = null;
+      }
+
+      if (activeYear && setActiveYear) {
+        const currentYear = activeYear;
+        activeYear = null;
+        setActiveYear(currentYear, { scroll: false });
+      }
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter, { selectYear: false });
+      });
+    });
+
+    const toggleCredits = (card) => {
+      const showing = card.classList.toggle('show-credits');
+      card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+    };
+
+    const initCreditToggles = () => {
+      cards.forEach((card) => {
+        card.setAttribute('role', 'button');
+        card.tabIndex = 0;
+        card.setAttribute('aria-pressed', 'false');
+
+        card.addEventListener('click', (event) => {
+          const target = event.target;
+          if (target.closest('.track-thumb') || target.closest('details') || target.closest('a')) return;
+          toggleCredits(card);
+        });
+
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            card.click();
+          }
+        });
+      });
+    };
+
+    linkSingleAlbums();
+    linkNonAlbumAlbums();
+    linkReleaseAlbums();
+    initYearAnchors();
+    applyFilter('singles', { selectYear: false });
+    initCreditToggles();
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('track-chart-performance')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes
+      .filter((node) => !node.classList.contains('track-chart-performance'))
+      .forEach((node) => details.appendChild(node));
+    detailNodes
+      .filter((node) => node.classList.contains('track-chart-performance'))
+      .forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

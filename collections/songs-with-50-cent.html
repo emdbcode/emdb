@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Songs with 50 Cent | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.track-card:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 3px;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-title a,
+.track-title a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-title a:hover,
+.track-title a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-thumb-link {
+  display: inline-flex;
+  border-radius: 8px;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-album a,
+.track-album a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+
+.track-card .track-producer {
+  display: none;
+}
+
+.track-card.show-credits .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+
+  .filter-btn[data-filter="addl"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Songs with 50 Cent</h1>
+    <div class="filter-bar" role="group" aria-label="Filter by role or collaborator">
+      <button class="filter-btn active" data-filter="all" type="button"><span class="filter-label">Performed with 50 Cent</span></button>
+      <button class="filter-btn" data-filter="more" type="button"><span class="filter-label">Other Credits</span></button>
+    </div>
+  </header>
+
+  <section class="track-list" aria-label="Songs with 50 Cent">
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Love Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Love Me</h2>
+          <p class="track-artist">Eminem, Obie Trice &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Rap Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rap Game</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem &amp; Denaun Porter</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+          <details class="promo-info">
+            <summary class="promo-summary" aria-label="More info">ⓘ</summary>
+            <p class="promo-note">Although uncredited, 50 Cent performs the chorus.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Patiently Waiting cover">
+        <div class="track-meta">
+          <h2 class="track-title">Patiently Waiting</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Don’t Push Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Don’t Push Me</h2>
+          <p class="track-artist">50 Cent feat. Lloyd Banks &amp; Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Hail Mary cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hail Mary</h2>
+          <p class="track-artist">Eminem, 50 Cent &amp; Busta Rhymes</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+          <p class="track-release">April 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Bump Heads cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bump Heads</h2>
+          <p class="track-artist">Eminem, 50 Cent, Tony Yayo &amp; Lloyd Banks</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+          <p class="track-release">April 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card producer">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Invasion Part II: Conspiracy Theory cover">
+        <div class="track-meta">
+          <h2 class="track-title">We All Die One Day</h2>
+          <p class="track-artist">DJ Muggs feat. Eminem, 50 Cent, Lloyd Banks, Tony Yayo &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory</p>
+          <p class="track-release">April 15, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card collab suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-hunger-for-more-cover.jpg" alt="Warrior, Pt. 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Warrior, Pt. 2</h2>
+          <p class="track-artist">Lloyd Banks feat. Eminem, 50 Cent &amp; Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Hunger for More</p>
+          <p class="track-release">June 29, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-single-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Encore</h2>
+          <p class="track-artist">Eminem feat. Dr. Dre &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 9, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Never Enough cover">
+        <div class="track-meta">
+          <h2 class="track-title">Never Enough</h2>
+          <p class="track-artist">Eminem feat. 50 Cent &amp; Nate Dogg</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Spend Some Time cover">
+        <div class="track-meta">
+          <h2 class="track-title">Spend Some Time</h2>
+          <p class="track-artist">Eminem feat. Obie Trice, Stat Quo &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="Gatman And Robbin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gatman And Robbin’</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Mark & Jeff Bass</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/re-up/you-don't-know-cover.jpeg" alt="You Don’t Know cover">
+        <div class="track-meta">
+          <h2 class="track-title">You Don’t Know</h2>
+          <p class="track-artist">Eminem, 50 Cent, Cashis &amp; Lloyd Banks</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">October 26, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Re-Up</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card collab">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Jimmy Crack Corn cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy Crack Corn</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-curtis-cover.jpg" alt="Peep Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Peep Show</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Curtis</p>
+          <p class="track-release">September 10, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/relapse/crack-a-bottle-cover.jpg" alt="Crack A Bottle cover">
+        <div class="track-meta">
+          <h2 class="track-title">Crack A Bottle</h2>
+          <p class="track-artist">Eminem feat. Dr. Dre &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Relapse</p>
+          <p class="track-release">April 23, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-before-i-self-destruct-cover.jpg" alt="Psycho cover">
+        <div class="track-meta">
+          <h2 class="track-title">Psycho</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">Before I Self Destruct</p>
+          <p class="track-release">November 9, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-eminem">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-my-life-cover.jpg" alt="My Life cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Life</h2>
+          <p class="track-artist">50 Cent feat. Eminem &amp; Adam Levine</p>
+          <p class="track-producer">Produced by S1</p>
+          <p class="track-album">My Life [Single]</p>
+          <p class="track-release">November 26, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card collab suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/ed-sheeran-remember-the-name-cover.jpg" alt="Remember The Name cover">
+        <div class="track-meta">
+          <h2 class="track-title">Remember The Name</h2>
+          <p class="track-artist">Ed Sheeran feat. Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Ed Sheeran, Fred again.., Max Martin &amp; Shellback</p>
+          <p class="track-album">No.6 Collaborations Project</p>
+          <p class="track-release">July 12, 2019</p>
+        </div>
+      </article>
+
+      <article class="track-card feat-50">
+        <img class="track-thumb" src="../images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Is This Love (’09) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Is This Love (’09)</h2>
+          <p class="track-artist">Eminem feat. 50 Cent</p>
+          <p class="track-producer">Produced by Dr. Dre, Mark Batson &amp; Trevor Lawrence Jr.</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Curtain Call 2</p>
+          <p class="track-release">August 5, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card collab suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/snoop-dogg-gunz-n-smoke-cover.jpg" alt="Gunz N Smoke cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gunz N Smoke</h2>
+          <p class="track-artist">Snoop Dogg feat. 50 Cent &amp; Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; C.S. Armstrong</p>
+          <p class="track-album">Missionary</p>
+          <p class="track-release">December 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/g-unit-words-from-eminem-cover.jpg" alt="Words From Eminem cover">
+        <div class="track-meta">
+          <h2 class="track-title">Words From Eminem</h2>
+          <p class="track-artist">G-Unit</p>
+          <p class="track-producer">Produced by N/A</p>
+          <p class="track-album">God’s Plan [Mixtape]</p>
+          <p class="track-release">November 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Places To Go cover">
+        <div class="track-meta">
+          <h2 class="track-title">Places To Go</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Many Men cover">
+        <div class="track-meta">
+          <h2 class="track-title">Many Men (Wish Death)</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Darrell “Digga” Branch</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Get Rich or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="High All The Time cover">
+        <div class="track-meta">
+          <h2 class="track-title">High All The Time</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by DJ Rad</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Sha Money XL</p>
+          <p class="track-album">Get Rich or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Poor Lil Rich cover">
+        <div class="track-meta">
+          <h2 class="track-title">Poor Lil Rich</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Sha Money XL</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Get Rich or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Keep Talkin cover">
+        <div class="track-meta">
+          <h2 class="track-title">Keep Talkin’</h2>
+          <p class="track-artist">Eminem &amp; D12</p>
+          <p class="track-producer">Produced by Night &amp; Day</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+          <p class="track-release">April 15, 2003</p>
+       <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">50 Cent performs a spoken intro and laughter overdubs on the mixtape version only.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/g-unit-beg-for-mercy-cover.jpg" alt="My Buddy cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Buddy</h2>
+          <p class="track-artist">G-Unit</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Beg For Mercy</p>
+          <p class="track-release">November 14, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/g-unit-beg-for-mercy-cover.jpg" alt="I’m So Hood cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m So Hood</h2>
+          <p class="track-artist">G-Unit</p>
+          <p class="track-producer">Produced by DJ Twinz</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Beg For Mercy</p>
+          <p class="track-release">November 14, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+      <a class="track-link" href="/songs/produced-only/on-fire-lloyd-banks.html"><img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-on-fire-cover.jpg" alt="The Hunger for More cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/produced-only/on-fire-lloyd-banks.html">On Fire <span class="fn-mark">†</span></a></h2>
+        <p class="track-artist">Lloyd Banks</p>
+        <p class="track-producer">Produced by K1 Mil</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album">The Hunger For More</p>
+        <p class="track-release">April 12, 2004</p>
+      </div>
+    </article>
+
+      <article class="track-card more suppress-feat">
+      <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+      <div class="track-meta">
+        <h2 class="track-title">Leave Dat Boy Alone</h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Red Spyda</p>
+        <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+        <p class="track-album">D12 World</p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="I’m Supposed To Die Tonight cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m Supposed To Die Tonight</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="Ski Mask Way cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ski Mask Way</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Disco D</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="My Toy Soldier cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Toy Soldier</h2>
+          <p class="track-artist">50 Cent feat. Tony Yayo</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-hands-up-cover.jpg" alt="Hands Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hands Up</h2>
+          <p class="track-artist">Lloyd Banks feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem, Chris Styles &amp; Bang Out</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Rotten Apple</p>
+          <p class="track-release">July 25, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card more suppress-feat">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Everywhere I Go cover">
+        <div class="track-meta">
+          <h2 class="track-title">Everywhere I Go</h2>
+          <p class="track-artist">Obie Trice feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+    <p class="footnote"><a href="songs-with-royce-da-59.html">Click here for songs with Royce Da 5’9“.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const yearGroups = new Map();
+    const normalizeTitle = (text) =>
+      (text || '')
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+    const trackSongHrefMap = new Map([
+      ['love me', '/songs/8-mile-soundtrack/love-me.html'],
+      ['rap game', '/songs/8-mile-soundtrack/rap-game.html'],
+      ['patiently waiting', '/songs/feat/patiently-waiting.html'],
+      ["don't push me", '/songs/feat/dont-push-me.html'],
+      ['hail mary', '/songs/non-album/hail-mary.html'],
+      ['bump heads', '/songs/eminem-show/bump-heads.html'],
+      ['we all die one day', '/songs/feat/we-all-die-one-day.html'],
+      ['warrior, pt. 2', '/songs/feat/warrior-pt-2.html'],
+      ['encore', '/songs/encore/encore-curtains.html'],
+      ['never enough', '/songs/encore/never-enough.html'],
+      ['spend some time', '/songs/encore/spend-some-time.html'],
+      ["gatman and robbin'", '/songs/feat/gatman-and-robbin.html'],
+      ["you don't know", '/songs/re-up/you-dont-know.html'],
+      ['the re-up', '/songs/re-up/re-up-song.html'],
+      ['jimmy crack corn', '/songs/re-up/jimmy-crack-corn.html'],
+      ['peep show', '/songs/feat/peep-show.html'],
+      ['crack a bottle', '/songs/relapse/crack-a-bottle.html'],
+      ['psycho', '/songs/feat/psycho.html'],
+      ['my life', '/songs/feat/my-life.html'],
+      ['remember the name', '/songs/feat/remember-the-name.html'],
+      ["is this love ('09)", '/songs/curtain-call-2/is-this-love-09.html'],
+      ['gunz n smoke', '/songs/feat/gunz-n-smoke.html'],
+      ['words from eminem', '/songs/feat/words-from-eminem.html'],
+      ['places to go', '/songs/8-mile-soundtrack/places-to-go.html'],
+      ['many men (wish death)', '/songs/produced-only/many-men-wish-death.html'],
+      ['high all the time', '/songs/produced-only/high-all-the-time.html'],
+      ['poor lil rich', '/songs/produced-only/poor-lil-rich.html'],
+      ["keep talkin'", '/songs/d12-world/keep-talkin.html'],
+      ['my buddy', '/songs/produced-only/my-buddy.html'],
+      ["i'm so hood", '/songs/produced-only/im-so-hood.html'],
+      ['leave dat boy alone', '/songs/d12-world/leave-dat-boy-alone.html'],
+      ["i'm supposed to die tonight", '/songs/produced-only/im-supposed-to-die-tonight.html'],
+      ['ski mask way', '/songs/produced-only/ski-mask-way.html'],
+      ['my toy soldier', '/songs/produced-only/my-toy-soldier.html'],
+      ['hands up', '/songs/produced-only/hands-up.html'],
+      ['everywhere i go', '/songs/produced-only/everywhere-i-go.html']
+    ]);
+    const releaseLinkMap = new Map([
+      ['8 mile (soundtrack)', '/releases/8-mile-soundtrack.html'],
+      ['encore', '/releases/encore.html'],
+      ['eminem presents: the re-up', '/releases/re-up.html'],
+      ['the re-up', '/releases/re-up.html'],
+      ['relapse', '/releases/relapse.html'],
+      ['curtain call 2', '/releases/curtain-call-2.html'],
+      ['d12 world', '/releases/d12-world.html']
+    ]);
+
+    const linkTrackSongs = () => {
+      cards.forEach((card) => {
+        const titleEl = card.querySelector('.track-title');
+        const thumbEl = card.querySelector('.track-thumb');
+        if (!titleEl || !thumbEl) return;
+
+        const titleText = normalizeTitle(titleEl.textContent || '');
+        const songHref = trackSongHrefMap.get(titleText);
+        if (!songHref) return;
+
+        if (!titleEl.querySelector('a')) {
+          const titleLink = document.createElement('a');
+          titleLink.href = songHref;
+          const nodes = Array.from(titleEl.childNodes);
+          nodes.forEach((node) => titleLink.appendChild(node));
+          titleEl.appendChild(titleLink);
+        }
+
+        if (!thumbEl.closest('a')) {
+          const thumbLink = document.createElement('a');
+          thumbLink.href = songHref;
+          thumbLink.className = 'track-thumb-link';
+          thumbEl.parentNode.insertBefore(thumbLink, thumbEl);
+          thumbLink.appendChild(thumbEl);
+        }
+      });
+    };
+
+    const linkReleaseAlbums = () => {
+      cards.forEach((card) => {
+        const albumEl = card.querySelector('.track-album');
+        if (!albumEl || albumEl.querySelector('a')) return;
+        const albumText = normalizeTitle(albumEl.textContent || '');
+        const releaseHref = releaseLinkMap.get(albumText);
+        if (!releaseHref) return;
+
+        const albumLink = document.createElement('a');
+        albumLink.href = releaseHref;
+        const nodes = Array.from(albumEl.childNodes);
+        nodes.forEach((node) => albumLink.appendChild(node));
+        albumEl.appendChild(albumLink);
+      });
+    };
+
+    const initCreditToggles = () => {
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.track-thumb');
+
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-pressed', card.classList.contains('show-credits') ? 'true' : 'false');
+
+        const toggleCredits = () => {
+          const isShown = card.classList.toggle('show-credits');
+          card.setAttribute('aria-pressed', isShown ? 'true' : 'false');
+        };
+
+        card.addEventListener('click', (evt) => {
+          if (evt.target.closest('a')) return;
+          if (thumb && (evt.target === thumb || evt.target.closest('.track-thumb'))) return;
+          if (evt.target.closest('details')) return;
+          toggleCredits();
+        });
+
+        card.addEventListener('keydown', (evt) => {
+          if (evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            toggleCredits();
+          }
+        });
+      });
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        // Attach the year id and a marker class to the first track card
+        // in the group instead of inserting an empty anchor element which
+        // becomes a flex item and creates extra spacing.
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+      // Jump-to-year navigation removed — year anchors are attached
+      // directly to the first card of each year group.
+    };
+
+    const applyFilter = (filter) => {
+      cards.forEach((card) => {
+        const artistText = card.querySelector('.track-artist')?.textContent || '';
+        const producerText = (card.querySelector('.track-producer')?.textContent || '') +
+          (card.querySelector('.track-producer + .track-producer')?.textContent || '');
+        const isProducedOnly = card.classList.contains('produced-only');
+
+        let isFeat50 = /\b(?:feat\.?|featuring)\s+50\s*Cent\b/i.test(artistText) || card.classList.contains('feat-50') || ( /\b50\s*Cent\b/i.test(artistText) && !/^\s*50\s*Cent\b/i.test(artistText) && /\bfeat\b|featuring/i.test(artistText) );
+        let isFeatEminem = /\b(?:feat\.?|featuring)\s+Eminem\b/i.test(artistText) || card.classList.contains('feat-eminem');
+        if (card.classList.contains('suppress-feat')) {
+          isFeat50 = false;
+          isFeatEminem = false;
+        }
+        // Collab: either explicitly marked with `collab` class, or both artists
+        // appear as co-primary (e.g. "Eminem & Dr. Dre"). Exclude pure
+        // 'feat.' cases unless the card is manually marked as collab.
+        const isCollab = card.classList.contains('collab') || (
+          /\bEminem\b/i.test(artistText) && /\b50\s*Cent\b/i.test(artistText) && !/\bfeat\b|featuring/i.test(artistText)
+        );
+        const isOther = card.classList.contains('other');
+        const isMore = card.classList.contains('more');
+        // Produced-by filter is intentional/manual: only match tracks with the
+        // `produced-dre` class so the list stays empty until items are added.
+        const isProducedByDre = card.classList.contains('produced-dre');
+
+        let show = false;
+        if (isMore) {
+          show = filter === 'more';
+        } else {
+          show =
+            (filter === 'produced-eminem' && isProducedByEminem) ||
+            (!isProducedOnly && (
+              filter === 'all' ||
+              (filter === 'feat-50' && isFeat50) ||
+              (filter === 'feat-eminem' && isFeatEminem) ||
+              (filter === 'collab' && isCollab) ||
+              (filter === 'other' && isOther)
+            ));
+        }
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        if (!group.anchor) return;
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+
+        if (firstVisible) {
+          group.anchor.style.display = 'block';
+          trackList.insertBefore(group.anchor, firstVisible);
+        } else {
+          group.anchor.style.display = 'none';
+        }
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    linkTrackSongs();
+    linkReleaseAlbums();
+    initCreditToggles();
+    initYearAnchors();
+    applyFilter('all');
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

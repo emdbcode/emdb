@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Songs with Denaun Porter | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.track-card:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 3px;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.track-link {
+  display: inline-flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-title a:hover,
+.track-title a:focus {
+  color: #E21C21;
+}
+
+.track-album a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus {
+  color: #E21C21;
+}
+
+.track-link:focus-visible,
+.track-title a:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+
+.track-card .track-producer {
+  display: none;
+}
+
+.track-card.show-credits .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+
+  .filter-btn[data-filter="addl"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Songs with Denaun Porter</h1>
+    <div class="filter-bar" role="group" aria-label="Filter songs with Denaun Porter">
+      <button class="filter-btn active" data-filter="produced-porter" type="button"><span class="filter-label">Produced by Denaun Porter</span></button>
+      <button class="filter-btn" data-filter="performed-porter" type="button"><span class="filter-label">Performed with Denaun Porter</span></button>
+      <button class="filter-btn" data-filter="other-credits" type="button"><span class="filter-label">Other Credits</span></button>
+    </div>
+  </header>
+
+  <section class="track-list" aria-label="Songs with Denaun Porter">
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/infinite/maxine.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Maxine cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/maxine.html">Maxine</a></h2>
+        <p class="track-artist">Eminem feat. Denaun Porter &amp; Three</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/infinite/open-mic.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Open Mic cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/open-mic.html">Open Mic</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+        </div>
+      </article>
+
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/infinite/never-2-far.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Never 2 Far cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/never-2-far.html">Never 2 Far</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+        </div>
+      </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/infinite/jealousy-woes-ii.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Jealousy Woes II cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/jealousy-woes-ii.html">Jealousy Woes II</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+        </div>
+      </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/underground-ep/filthy.html"><img class="track-thumb" src="../images/album-covers-tn/non-album/d12-filthy-cover.jpg" alt="Filthy cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/underground-ep/filthy.html">Filthy</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by DJ Head</p>
+        <p class="track-album"><a href="/releases/underground-ep.html">Yester Years (Test Pressing) [EP]</a></p>
+        <p class="track-release">1997</p>
+       <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Later included on The Underground EP.</p>
+          </details>
+        </div>
+      </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/marshall-mathers-lp/under-the-influence.html"><img class="track-thumb" src="../images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="Under The Influence cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/marshall-mathers-lp/under-the-influence.html">Under The Influence</a></h2>
+        <p class="track-artist">Eminem feat. D12</p>
+        <p class="track-producer">Produced by F.B.T. &amp; Eminem</p>
+        <p class="track-album"><a href="/releases/marshall-mathers-lp.html">The Marshall Mathers LP</a></p>
+        <p class="track-release">May 23, 2000</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/shit-on-you.html"><img class="track-thumb" src="../images/album-covers/devils-night/shit-on-you-cover.jpg" alt="Shit On You cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/shit-on-you.html">Shit On You</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by DJ Head</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night (Special Edition)</a></p>
+        <p class="track-release">December 5, 2000</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/non-album/freestyle-d12-promo-version.html"><img class="track-thumb" src="../images/album-covers/non-album/d12-freestyle-cover.jpg" alt="Freestyle cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/freestyle-d12-promo-version.html">Freestyle</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album"><a href="/songs/non-album/freestyle-d12-promo-version.html">Freestyle [Promo Single]</a></p>
+        <p class="track-release">June 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/purple-pills.html"><img class="track-thumb" src="../images/album-covers/devils-night/purple-pills-cover.jpg" alt="Purple Pills cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/purple-pills.html">Purple Pills</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 5, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/shit-can-happen.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Shit Can Happen cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/shit-can-happen.html">Shit Can Happen</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/pistol-pistol.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Pistol Pistol cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/pistol-pistol.html">Pistol Pistol</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/aint-nuttin-but-music.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Ain’t Nuttin’ But Music cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/aint-nuttin-but-music.html">Ain’t Nuttin’ But Music</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced and Mixed by Dr. Dre</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/american-psycho.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="American Psycho cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/american-psycho.html">American Psycho</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/thats-how.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="That’s How... cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/thats-how.html">That’s How...</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/fight-music.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Fight Music cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/fight-music.html">Fight Music</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced and Mixed by Dr. Dre</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/pimp-like-me.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Pimp Like Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/pimp-like-me.html">Pimp Like Me</a></h2>
+        <p class="track-artist">D12 feat. Dina Rae</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Jeff Bass</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/blow-my-buzz.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Blow My Buzz cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/blow-my-buzz.html">Blow My Buzz</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Jeff Bass</p>
+        <p class="track-producer">Mixed by Richard “Segal” Huredia</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/devils-night-song.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil’s Night cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/devils-night-song.html">Devil’s Night</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Jeff Bass</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/revelation.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Revelation cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/revelation.html">Revelation</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Dr. Dre</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/devils-night/freestyle-b-side.html"><img class="track-thumb" src="../images/album-covers/devils-night/fight-music-cover.jpg" alt="Freestyle [B-side Version] cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/freestyle-b-side.html">Freestyle [B-side Version]</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night (Expanded Edition)</a></p>
+        <p class="track-release">November 27, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/eminem-show/when-the-music-stops.html"><img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="When The Music Stops cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/eminem-show/when-the-music-stops.html">When The Music Stops</a></h2>
+        <p class="track-artist">Eminem feat. D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/eminem-show.html">The Eminem Show</a></p>
+        <p class="track-release">May 26, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/8-mile-soundtrack/rap-game.html"><img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Rap Game cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/8-mile-soundtrack/rap-game.html">Rap Game</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem &amp; Denaun Porter</p>
+        <p class="track-album"><a href="/releases/8-mile-soundtrack.html">8 Mile (Soundtrack)</a></p>
+        <p class="track-release">October 29, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/6-in-the-morning.html"><img class="track-thumb" src="../images/album-covers/d12-world/6-in-the-morning-cover.jpg" alt="6 In The Morning cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/6-in-the-morning.html">6 In The Morning</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">January 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/non-album/doe-rae-me.html"><img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Doe Rae Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/doe-rae-me.html">Doe Rae Me</a></h2>
+        <p class="track-artist">D12, Eminem &amp; Obie Trice</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 15, 2003</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/my-band.html"><img class="track-thumb" src="../images/album-covers/d12-world/my-band-cover.jpg" alt="My Band cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/my-band.html">My Band</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">March 2, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/how-come.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="How Come cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/how-come.html">How Come</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Witt &amp; Pep</p>
+        <p class="track-producer">Mixed by Eminem &amp; Steve King</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/leave-dat-boy-alone.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Leave Dat Boy Alone cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/leave-dat-boy-alone.html">Leave Dat Boy Alone</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Red Spyda</p>
+        <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/get-my-gun.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Get My Gun cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/get-my-gun.html">Get My Gun</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/bitch.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Bitch cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/bitch.html">Bitch</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/d12-world/slow-your-roll.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Slow Your Roll cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/slow-your-roll.html">Slow Your Roll</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World (Special Edition)</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/non-album/my-ballz.html"><img class="track-thumb" src="../images/album-covers/feat/d12-my-ballz-cover.jpg" alt="My Ballz cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/my-ballz.html">My Ballz</a></h2>
+        <p class="track-artist">D12 feat. Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/songs/non-album/my-ballz.html">The Longest Yard (Soundtrack)</a></p>
+        <p class="track-release">May 24, 2005</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/encore/one-shot-2-shot.html"><img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="One Shot 2 Shot cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/encore/one-shot-2-shot.html">One Shot 2 Shot</a></h2>
+        <p class="track-artist">Eminem feat. D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/encore.html">Encore</a></p>
+        <p class="track-release">November 12, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/non-album/not-afraid-live-at-t-in-the-park.html"><img class="track-thumb" src="../images/album-covers/recovery/love-the-way-you-lie-cover.jpg" alt="Not Afraid (Live At T In The Park) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/not-afraid-live-at-t-in-the-park.html">Not Afraid (Live At T In The Park)</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by N/A</p>
+        <p class="track-album"><a href="/songs/non-album/not-afraid-live-at-t-in-the-park.html">Love The Way You Lie [Single]</a></p>
+        <p class="track-release">August 26, 2010</p>
+        </div>
+      </article>
+
+
+    <article class="track-card performed-porter">
+      <a class="track-link" href="/songs/music-to-be-murdered-by/yah-yah.html"><img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Yah Yah cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/music-to-be-murdered-by/yah-yah.html">Yah Yah</a></h2>
+        <p class="track-artist">Eminem feat. Royce Da 5’9“, Black Thought, Q-Tip &amp; Denaun</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/music-to-be-murdered-by.html">Music To Be Murdered By</a></p>
+        <p class="track-release">January 17, 2020</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/infinite-song.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Infinite cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/infinite-song.html">Infinite</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/wego.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="W.E.G.O. cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/wego.html">W.E.G.O.</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/its-ok.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="It’s O.K. cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/its-ok.html">It’s O.K.</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/tonite.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Tonite cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/tonite.html">Tonite</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/313.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="313 cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/313.html">313</a></h2>
+        <p class="track-artist">Eminem feat. Eye-Kyu</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/maxine.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Maxine cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/maxine.html">Maxine</a></h2>
+        <p class="track-artist">Eminem feat. Denaun Porter &amp; Three</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/open-mic.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Open Mic cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/open-mic.html">Open Mic</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/never-2-far.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Never 2 Far cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/never-2-far.html">Never 2 Far</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/searchin.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Searchin’ cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/searchin.html">Searchin’</a></h2>
+        <p class="track-artist">Eminem feat. Eye-Kyu</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/backstabber.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Backstabber cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/backstabber.html">Backstabber</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/infinite/jealousy-woes-ii.html"><img class="track-thumb" src="../images/album-covers/infinite/infinite-cover.jpg" alt="Jealousy Woes II cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/infinite/jealousy-woes-ii.html">Jealousy Woes II</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Slim</p>
+        <p class="track-album"><a href="/releases/infinite.html">Infinite</a></p>
+        <p class="track-release">November 12, 1996</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/slim-shady-ep/low-down-dirty.html"><img class="track-thumb" src="../images/album-covers/slim-shady-ep/slim-shady-ep-cover.jpg" alt="Low Down, Dirty cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-ep/low-down-dirty.html">Low Down, Dirty</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Da Brigade</p>
+        <p class="track-album"><a href="/releases/slim-shady-ep.html">Slim Shady EP</a></p>
+        <p class="track-release">December 10, 1997</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/slim-shady-ep/just-dont-give-a-fuck.html"><img class="track-thumb" src="../images/album-covers/slim-shady-ep/slim-shady-ep-cover.jpg" alt="Just Don’t Give A Fuck cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/slim-shady-ep/just-dont-give-a-fuck.html">Just Don’t Give A Fuck</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/slim-shady-ep.html">Slim Shady EP</a></p>
+        <p class="track-release">December 10, 1997</p>
+      </div>
+    </article>
+
+     <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/feat/take-the-world-with-me.html"><img class="track-thumb" src="../images/album-covers/feat/bizarre-one-sided-demo-cover.jpg" alt="Take The World With Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/feat/take-the-world-with-me.html">Take The World With Me</a></h2>
+        <p class="track-artist">Bizarre Kid feat. Eminem & Pacewon</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album">One Sided Demo</p>
+        <p class="track-release">1998</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/underground-ep/chance-to-advance.html"><img class="track-thumb" src="../images/album-covers/non-album/d12-underground-ep-cover.jpg" alt="Chance To Advance cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/underground-ep/chance-to-advance.html">Chance To Advance</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/underground-ep.html">The Underground EP</a></p>
+        <p class="track-release">2000</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/underground-ep/bring-your-boys.html"><img class="track-thumb" src="../images/album-covers/non-album/d12-underground-ep-cover.jpg" alt="Bring Your Boys cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/underground-ep/bring-your-boys.html">Bring Your Boys</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/underground-ep.html">The Underground EP</a></p>
+        <p class="track-release">2000</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/devils-night/shit-can-happen.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Shit Can Happen cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/shit-can-happen.html">Shit Can Happen</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/devils-night/pistol-pistol.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Pistol Pistol cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/pistol-pistol.html">Pistol Pistol</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/devils-night/thats-how.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="That’s How... cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/thats-how.html">That’s How...</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/devils-night/freestyle-b-side.html"><img class="track-thumb" src="../images/album-covers/devils-night/fight-music-cover.jpg" alt="Freestyle [B-side Version] cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/freestyle-b-side.html">Freestyle [B-side Version]</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night (Expanded Edition)</a></p>
+        <p class="track-release">November 27, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/eminem-show/when-the-music-stops.html"><img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="When The Music Stops cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/eminem-show/when-the-music-stops.html">When The Music Stops</a></h2>
+        <p class="track-artist">Eminem feat. D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/eminem-show.html">The Eminem Show</a></p>
+        <p class="track-release">May 26, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/8-mile-soundtrack/rap-game.html"><img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="Rap Game cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/8-mile-soundtrack/rap-game.html">Rap Game</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem &amp; Denaun Porter</p>
+        <p class="track-album"><a href="/releases/8-mile-soundtrack.html">8 Mile (Soundtrack)</a></p>
+        <p class="track-release">October 29, 2002</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/non-album/doe-rae-me.html"><img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Doe Rae Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/doe-rae-me.html">Doe Rae Me</a></h2>
+        <p class="track-artist">D12, Eminem &amp; Obie Trice</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album">Invasion Part II: Conspiracy Theory [Mixtape]</p>
+        <p class="track-release">April 2003</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/feat/dumpin-dirty-dozen.html"><img class="track-thumb" src="../images/album-covers/feat/parts-unknown-dumpin-cover.jpg" alt="Dumpin’ (Dirty Dozen) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/feat/dumpin-dirty-dozen.html">Dumpin’ (Dirty Dozen)</a></h2>
+        <p class="track-artist">Parts Unknown</p>
+        <p class="track-producer">Produced by Denaun Porter</p>
+        <p class="track-album">Payin’ Dues</p>
+        <p class="track-release">July 20, 2006</p>
+      <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Recorded in 1997. Features verses by Eminem, Proof, and early members Eye-Kyu and B-Flat.</p>
+          </details>
+        </div>
+      </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/recovery/on-fire.html"><img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="On Fire cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/recovery/on-fire.html">On Fire</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/recovery.html">Recovery</a></p>
+        <p class="track-release">June 18, 2010</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/hell-the-sequel/above-the-law.html"><img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Above The Law cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/above-the-law.html">Above The Law</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></p>
+        <p class="track-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/hell-the-sequel/im-on-everything.html"><img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="I’m On Everything cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/im-on-everything.html">I’m On Everything</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></p>
+        <p class="track-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/hell-the-sequel/take-from-me.html"><img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Take From Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/take-from-me.html">Take From Me</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Co-Produced by Tony “56” Jackson</p>
+        <p class="track-album"><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></p>
+        <p class="track-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/hell-the-sequel/loud-noises.html"><img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Loud Noises cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/loud-noises.html">Loud Noises</a></h2>
+        <p class="track-artist">Bad Meets Evil feat. Slaughterhouse</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album"><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></p>
+        <p class="track-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/hell-the-sequel/living-proof.html"><img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Living Proof cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/hell-the-sequel/living-proof.html">Living Proof</a></h2>
+        <p class="track-artist">Bad Meets Evil</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></p>
+        <p class="track-release">June 14, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/feat/fame.html"><img class="track-thumb" src="../images/album-covers/non-album/d12-return-of-dozen-vol-2-cover.jpg" alt="Fame cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/feat/fame.html">Fame</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album">Return Of The Dozen, Vol. 2</p>
+        <p class="track-release">April 12, 2011</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/revival/believe.html"><img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Believe cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/believe.html">Believe</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto &amp; Mr. Porter</p>
+        <p class="track-producer">Mixed by Mike Strange</p>
+        <p class="track-album"><a href="/releases/revival.html">Revival</a></p>
+        <p class="track-release">December 15, 2017</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/revival/chloraseptic.html"><img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Chloraseptic cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/chloraseptic.html">Chloraseptic</a></h2>
+        <p class="track-artist">Eminem feat. Phresher</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Mixed by Mike Strange</p>
+        <p class="track-album"><a href="/releases/revival.html">Revival</a></p>
+        <p class="track-release">December 15, 2017</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/revival/untouchable.html"><img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Untouchable cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/untouchable.html">Untouchable</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Eminem, Mark Batson, Emile Haynie &amp; Mr. Porter</p>
+        <p class="track-producer">Mixed by Mike Strange</p>
+        <p class="track-album"><a href="/releases/revival.html">Revival</a></p>
+        <p class="track-release">December 15, 2017</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/non-album/chloraseptic-remix.html"><img class="track-thumb" src="../images/album-covers/non-album/chloraseptic-remix-cover.jpg" alt="Chloraseptic (Remix) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/non-album/chloraseptic-remix.html">Chloraseptic (Remix)</a></h2>
+        <p class="track-artist">Eminem feat. 2 Chainz &amp; Phresher</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/songs/non-album/chloraseptic-remix.html">Chloraseptic (Remix) [Single]</a></p>
+        <p class="track-release">January 8, 2018</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/music-to-be-murdered-by/yah-yah.html"><img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Yah Yah cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/music-to-be-murdered-by/yah-yah.html">Yah Yah</a></h2>
+        <p class="track-artist">Eminem feat. Royce Da 5’9“, Black Thought, Q-Tip &amp; Denaun</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/releases/music-to-be-murdered-by.html">Music To Be Murdered By</a></p>
+        <p class="track-release">January 17, 2020</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/death-of-slim-shady/fuel.html"><img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="Fuel cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/fuel.html">Fuel</a></h2>
+        <p class="track-artist">Eminem feat. JID</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album"><a href="/releases/death-of-slim-shady.html">The Death Of Slim Shady (Coup De Grace)</a></p>
+        <p class="track-release">July 12, 2024</p>
+      </div>
+    </article>
+
+    <article class="track-card produced-porter">
+      <a class="track-link" href="/songs/death-of-slim-shady/fuel-shady-edition.html"><img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="Fuel (Shady Edition) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/death-of-slim-shady/fuel-shady-edition.html">Fuel (Shady Edition)</a></h2>
+        <p class="track-artist">Eminem feat. Westside Boogie &amp; Grip</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album"><a href="/releases/death-of-slim-shady.html">The Death Of Slim Shady: Expanded Mourner’s Edition</a></p>
+        <p class="track-release">July 12, 2024</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+        <img class="track-thumb" src="../images/album-covers/slim-shady-lp/just-dont-give-a-fuck-cover.jpg" alt="Just Don’t Give A Fuck cover">
+        <div class="track-meta">
+          <h2 class="track-title">Just Don’t Give A Fuck</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Mark &amp; Jeff Bass</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Slim Shady LP</p>
+          <p class="track-release">October 13, 1999</p>
+        </div>
+      </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/devils-night/instigator.html"><img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Instigator cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/devils-night/instigator.html">Instigator</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Co-Produced by Jeff Bass</p>
+        <p class="track-album"><a href="/releases/devils-night.html">Devil’s Night</a></p>
+        <p class="track-release">June 19, 2001</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="Love Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Drips</h2>
+          <p class="track-artist">Eminem feat. Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/d12-world/barbershop.html"><img class="track-thumb" src="../images/album-covers/d12-world/barbershop-2-cover.jpg" alt="Barbershop cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/barbershop.html">Barbershop</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Co-Produced by Ess-Man</p>
+        <p class="track-album"><a href="/songs/d12-world/barbershop.html">Barbershop 2: Back in Business (Soundtrack)</a></p>
+        <p class="track-release">February 3, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/d12-world/u-r-the-one.html"><img class="track-thumb" src="../images/album-covers/d12-world/u-r-the-one-cover.jpg" alt="U R The One (Eminem New Mix) cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/u-r-the-one.html">U R The One (Eminem New Mix)</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-album"><a href="/songs/d12-world/u-r-the-one.html">U R The One [Promo Single]</a></p>
+        <p class="track-release">April 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/d12-world/loyalty.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Loyalty cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/loyalty.html">Loyalty</a></h2>
+        <p class="track-artist">D12 feat. Obie Trice</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/d12-world/ill-be-damned.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="I’ll Be Damed cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/ill-be-damned.html">I’ll Be Damed</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/d12-world/good-die-young.html"><img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="Good Die Young cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/d12-world/good-die-young.html">Good Die Young</a></h2>
+        <p class="track-artist">D12</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Co-Produced by Ess-Man</p>
+        <p class="track-album"><a href="/releases/d12-world.html">D12 World</a></p>
+        <p class="track-release">April 27, 2004</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/re-up/whatever-you-want.html"><img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Whatever You Want cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/re-up/whatever-you-want.html">Whatever You Want</a></h2>
+        <p class="track-artist">Swift &amp; Kon Artis</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-album"><a href="/releases/re-up.html">Eminem Presents: The Re-Up</a></p>
+        <p class="track-release">December 5, 2006</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/produced-only/throw-it-away.html"><img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-throw-it-away-cover.jpg" alt="Throw It Away cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/produced-only/throw-it-away.html">Throw It Away <span class="fn-mark">‡</span></a></h2>
+        <p class="track-artist">Slaughterhouse feat. Swizz Beatz</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">July 2, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/southpaw-soundtrack/this-corner.html"><img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="This Corner cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/southpaw-soundtrack/this-corner.html">This Corner</a></h2>
+        <p class="track-artist">Denaun</p>
+        <p class="track-producer">Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Luis Resto &amp; Mr. Porter</p>
+        <p class="track-album"><a href="/releases/southpaw-soundtrack.html">Southpaw (Soundtrack)</a></p>
+        <p class="track-release">July 24, 2015</p>
+      </div>
+    </article>
+
+    <article class="track-card other-credits">
+      <a class="track-link" href="/songs/revival/remind-me.html"><img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Remind Me cover"></a>
+      <div class="track-meta">
+        <h2 class="track-title"><a href="/songs/revival/remind-me.html">Remind Me</a></h2>
+        <p class="track-artist">Eminem</p>
+        <p class="track-producer">Produced by Rick Rubin</p>
+        <p class="track-album"><a href="/releases/revival.html">Revival</a></p>
+        <p class="track-release">December 15, 2017</p>
+      </div>
+    </article>
+
+    <p class="footnote"><a href="songs-with-fbt.html">Click here for songs with Jeff Bass &amp; F.B.T.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const yearGroups = new Map();
+
+    const initCreditToggles = () => {
+      cards.forEach((card) => {
+        const thumb = card.querySelector('.track-thumb');
+
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-pressed', card.classList.contains('show-credits') ? 'true' : 'false');
+
+        const toggleCredits = () => {
+          const isShown = card.classList.toggle('show-credits');
+          card.setAttribute('aria-pressed', isShown ? 'true' : 'false');
+        };
+
+        card.addEventListener('click', (evt) => {
+          if (evt.target.closest('a')) return;
+          if (thumb && (evt.target === thumb || evt.target.closest('.track-thumb'))) return;
+          if (evt.target.closest('details')) return;
+          toggleCredits();
+        });
+
+        card.addEventListener('keydown', (evt) => {
+          if (evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            toggleCredits();
+          }
+        });
+      });
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        // Attach the year id and a marker class to the first track card
+        // in the group instead of inserting an empty anchor element which
+        // becomes a flex item and creates extra spacing.
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+      // Jump-to-year navigation removed — year anchors are attached
+      // directly to the first card of each year group.
+    };
+
+    const applyFilter = (filter) => {
+      cards.forEach((card) => {
+        const isPerformed = card.classList.contains('performed-porter');
+        const isProduced = card.classList.contains('produced-porter');
+        const isOther = card.classList.contains('other-credits');
+
+        const show =
+          (filter === 'performed-porter' && isPerformed) ||
+          (filter === 'produced-porter' && isProduced) ||
+          (filter === 'other-credits' && isOther);
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        if (!group.anchor) return;
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+
+        if (firstVisible) {
+          group.anchor.style.display = 'block';
+          trackList.insertBefore(group.anchor, firstVisible);
+        } else {
+          group.anchor.style.display = 'none';
+        }
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    initCreditToggles();
+    initYearAnchors();
+    applyFilter('produced-porter');
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

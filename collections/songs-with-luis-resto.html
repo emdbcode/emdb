@@ -1,0 +1,3985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eminem Songs with Luis Resto | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+:root {
+  --header-offset: 84px;
+  --year-nav-height: 145px;
+}
+
+.non-album-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 1rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.track-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+.fn-mark {
+  color: #6a6a6a;
+  font-weight: 400;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #222;
+  background: #101010;
+  color: #c8c8c8;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.filter-btn.active {
+  background: #181818;
+  border-color: #E21C21;
+  color: #ffffff;
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid #E21C21;
+  outline-offset: 2px;
+}
+
+
+
+
+.track-artist,
+.track-producer,
+.track-album,
+.track-release,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-card {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.track-card.year-start {
+  scroll-margin-top: calc(var(--header-offset, 84px) + var(--year-nav-height, 68px) + 12px);
+}
+
+.filter-label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide production credits site-wide in this page */
+.track-producer {
+  display: none;
+}
+
+.track-card.show-producers .track-producer {
+  display: block;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #c8c8c8;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  text-align: center;
+}
+
+.track-note {
+  color: #ffffff;
+}
+
+.promo-info {
+  margin: 0;
+}
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --year-nav-height: 100px;
+  }
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .filter-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    max-width: 48%;
+  }
+
+  .filter-btn[data-filter="addl"] {
+    max-width: 52%;
+  }
+
+  .year-nav {
+    top: calc(var(--mobile-header-height, 72px) + 10px);
+    gap: 8px;
+  }
+  .year-nav__chips {
+    max-height: none;
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="non-album-page">
+  <header>
+    <h1 class="page-title">Songs with Luis Resto</h1>
+    <div class="filter-bar" role="group" aria-label="Filter by production role">
+      <button class="filter-btn active" data-filter="all" type="button"><span class="filter-label">All</span></button>
+      <button class="filter-btn" data-filter="produced" type="button"><span class="filter-label">Produced with Luis Resto</span></button>
+      <button class="filter-btn" data-filter="other" type="button"><span class="filter-label">Other Credits (†)</span></button>
+    </div>
+  </header>
+
+  <section class="track-list" aria-label="Songs with Luis Resto">
+
+      <article class="track-card produced">
+        <img class="track-thumb" src="../images/album-covers/feat/xzibit-my-name-cover.jpg" alt="Man vs Machine cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Name</h2>
+          <p class="track-artist">Xzibit feat. Eminem &amp; Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Man Vs. Machine</p>
+          <p class="track-release">October 1, 2001</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">Love Me</h2>
+          <p class="track-artist">Eminem, Obie Trice &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">8 Mile</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rabbit Run</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Get Rich Or Die Tryin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">Many Men (Wish Death)</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Darrell “Digga” Branch</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/king-gordy-the-entity-cover.jpg" alt="The Entity cover">
+        <div class="track-meta">
+          <h2 class="track-title">Nightmares</h2>
+          <p class="track-artist">King Gordy</p>
+          <p class="track-producer">Produced by F.B.T.</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Entity</p>
+          <p class="track-release">June 24, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/king-gordy-the-entity-cover.jpg" alt="The Entity cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Pain</h2>
+          <p class="track-artist">King Gordy</p>
+          <p class="track-producer">Produced by F.B.T.</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Entity</p>
+          <p class="track-release">June 24, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/king-gordy-the-entity-cover.jpg" alt="The Entity cover">
+        <div class="track-meta">
+          <h2 class="track-title">Pass Me A Lighter</h2>
+          <p class="track-artist">King Gordy</p>
+          <p class="track-producer">Produced by F.B.T.</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Entity</p>
+          <p class="track-release">June 24, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-got-some-teeth-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Got Some Teeth</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">August 12, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lady</h2>
+          <p class="track-artist">Obie Trice feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/g-unit-beg-for-mercy-cover.jpg" alt="Beg For Mercy cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Buddy</h2>
+          <p class="track-artist">G-Unit</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Beg For Mercy</p>
+          <p class="track-release">November 14, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/g-unit-beg-for-mercy-cover.jpg" alt="Beg For Mercy cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m So Hood</h2>
+          <p class="track-artist">G-Unit</p>
+          <p class="track-producer">Produced by DJ Twinz</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Beg For Mercy</p>
+          <p class="track-release">November 14, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/jay-z-moment-of-clarity-cover.jpg" alt="The Black Album cover">
+        <div class="track-meta">
+          <h2 class="track-title">Moment Of Clarity</h2>
+          <p class="track-artist">JAY-Z</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Black Album</p>
+          <p class="track-release">November 14, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/6-in-the-morning-cover.jpg" alt="6 In The Morning cover">
+        <div class="track-meta">
+          <h2 class="track-title">6 In The Morning</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">January 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/my-band-cover.jpg" alt="My Band cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Band</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">March 2, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/dj-kay-slay-streetsweeper,-vol.-2-cover.jpg" alt="The Streetsweeper, Vol. 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m Gone</h2>
+          <p class="track-artist">DJ Kay Slay feat. Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Streetsweeper, Vol. 2: The Pain From The Game</p>
+          <p class="track-release">March 30, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-on-fire-cover.jpg" alt="The Hunger for More cover">
+        <div class="track-meta">
+          <h2 class="track-title">On Fire</h2>
+          <p class="track-artist">Lloyd Banks</p>
+          <p class="track-producer">Produced by K1 Mil</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Hunger for More</p>
+          <p class="track-release">April 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Git Up</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Loyalty</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Just Like U</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Hi-Tek</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+           </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’ll Be Damned</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Leave Dat Boy Alone</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Red Spyda</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Get My Gun</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bitch</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Keep Talkin’</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Night &amp; Day</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/jadakiss-welcome-to-d-block-cover.jpg" alt="Kiss Of Death cover">
+        <div class="track-meta">
+          <h2 class="track-title">Welcome To D-Block</h2>
+          <p class="track-artist">Jadakiss feat. Sheek Louch, Styles P &amp; Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Kiss Of Death</p>
+          <p class="track-release">June 22, 2004</p>
+        </div>
+      </article>
+
+       <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-thugs-get-lonely-too-cover.jpg" alt="Thugs Get Lonely Too cover">
+        <div class="track-meta">
+          <h2 class="track-title">Thugs Get Lonely Too</h2>
+          <p class="track-artist">2Pac feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">September 23, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Yellow Brick Road</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Like Toy Soldiers</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Puke</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">My 1st Single</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Spend Some Time</h2>
+          <p class="track-artist">Eminem feat. Obie Trice, Stat Quo &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Mockingbird</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Crazy In Love</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">One Shot 2 Shot</h2>
+          <p class="track-artist">Eminem feat. D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore_2-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">We As Americans</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore (Deluxe Edition)</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore_2-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Love You More</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore (Deluxe Edition)</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/encore/encore_2-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ricky Ticky Toc</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Encore (Deluxe Edition)</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Soldier Like Me </h2>
+          <p class="track-artist">2Pac feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Uppercut</h2>
+          <p class="track-artist">2Pac feat. E.D.I. Mean &amp; Young Noble</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Out On Bail</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ghetto Gospel</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Black Cotton</h2>
+          <p class="track-artist">2Pac feat. Eminem, Kastro &amp; Young Noble</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">N.I.G.G.A.</h2>
+          <p class="track-artist">2Pac feat. Jadakiss</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Who Do You Love?</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Crooked Nigga Too</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Don’t You Trust Me</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hennessey</h2>
+          <p class="track-artist">2Pac feat. Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-loyal-to-the-game.jpg" alt="Loyal To The Game cover">
+        <div class="track-meta">
+          <h2 class="track-title">Thug 4 Life</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Loyal To The Game</p>
+          <p class="track-release">December 14, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/game-we-ain't-cover.jpg" alt="We Ain’t cover">
+        <div class="track-meta">
+          <h2 class="track-title">We Ain’t</h2>
+          <p class="track-artist">The Game feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto</p>
+          <p class="track-album">The Documentary</p>
+          <p class="track-release">January 18, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="The Massacre cover">
+        <div class="track-meta">
+          <h2 class="track-title">In My Hood</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Bang Out &amp; C. Styles</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="The Massacre cover">
+        <div class="track-meta">
+          <h2 class="track-title">I’m Supposed To Die Tonight</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="The Massacre cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ski Mask Way</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Disco D</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="The Massacre cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Toy Soldier</h2>
+          <p class="track-artist">50 Cent feat. Tony Yayo</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/d12-my-ballz-cover.jpg" alt="My Ballz cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Ballz</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Longest Yard (Soundtrack)</p>
+          <p class="track-release">May 24, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/bizarre-rock-star-cover.jpg" alt="Rockstar cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rockstar</h2>
+          <p class="track-artist">Bizarre</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Hannicap Circus</p>
+          <p class="track-release">May 24, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/trick-trick-the-people-Vs.-cover.jpg" alt="The People Vs. cover">
+        <div class="track-meta">
+          <h2 class="track-title">Welcome 2 Detroit</h2>
+          <p class="track-artist">Trick Trick feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The People Vs.</p>
+          <p class="track-release">July 12, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/hush-bulletproof-cover.jpg" alt="Bulletproof cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hush Is Coming</h2>
+          <p class="track-artist">Hush feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Bulletproof</p>
+          <p class="track-release">August 23, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/hush-bulletproof-cover.jpg" alt="Bulletproof cover">
+        <div class="track-meta">
+          <h2 class="track-title">Off To Tijuana</h2>
+          <p class="track-artist">Hush feat. Eminem, Kuniva &amp; Swift</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Bulletproof</p>
+          <p class="track-release">August 23, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/tony-yayo-thoughts-of-a-predicate-felon-cover.jpg" alt="Thoughts Of A Predicate Felon cover">
+        <div class="track-meta">
+          <h2 class="track-title">Drama Setter</h2>
+          <p class="track-artist">Tony Yayo feat. Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto &amp; Jeff Bass</p>
+          <p class="track-album">Thoughts Of A Predicate Felon</p>
+          <p class="track-release">August 30, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
+        <div class="track-meta">
+          <h2 class="track-title">FACK</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Curtain Call: The Hits</p>
+          <p class="track-release">December 6, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shake That</h2>
+          <p class="track-artist">Eminem feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Curtain Call: The Hits</p>
+          <p class="track-release">December 6, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
+        <div class="track-meta">
+          <h2 class="track-title">When I’m Gone</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Curtain Call: The Hits</p>
+          <p class="track-release">December 6, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/notorious-big-it-has-been-said-cover.jpg" alt="Duets: The Final Chapter cover">
+        <div class="track-meta">
+          <h2 class="track-title">It Has Been Said</h2>
+          <p class="track-artist">The Notorious B.I.G. feat. Diddy, Eminem &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Duets: The Final Chapter</p>
+          <p class="track-release">December 20, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-hands-up-cover.jpg" alt="Hands Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hands Up</h2>
+          <p class="track-artist">Lloyd Banks feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem, Chris Styles &amp; Bang Out</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Rotten Apple</p>
+          <p class="track-release">July 25, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Wake Up</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Violent</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lay Down</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kill Me A Mutha</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">There They Go</h2>
+          <p class="track-artist">Obie Trice feat. Big Herk, Eminem &amp; Trick Trick</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Everywhere I Go</h2>
+          <p class="track-artist">Obie Trice feat. 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-rotten-apple-cover.jpg" alt="Rotten Apple cover">
+        <div class="track-meta">
+          <h2 class="track-title">NY NY</h2>
+          <p class="track-artist">Lloyd Banks feat. Tony Yayo</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Rotten Apple</p>
+          <p class="track-release">October 10, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/you-don't-know-cover.jpeg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">You Don’t Know</h2>
+          <p class="track-artist">Eminem, 50 Cent, Cashis &amp; Lloyd Banks</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">October 26, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">We’re Back</h2>
+          <p class="track-artist">Eminem, Obie Trice, Stat Quo, Bobby Creekwater &amp; Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Murder</h2>
+          <p class="track-artist">Bizarre &amp; Kuniva</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy Crack Corn</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ski Mask Way (Eminem Remix)</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Disco D</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shake That (Remix)</h2>
+          <p class="track-artist">Eminem, Nate Dogg, Obie Trice &amp; Bobby Creekwater</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">No Apologies</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Eminem Presents The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/non-album/jimmy-crack-corn-(vocal-remix)-cover.jpg" alt="Jimmy Crack Corn single cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy Crack Corn (Vocal Remix)</h2>
+          <p class="track-artist">Eminem feat. Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Jimmy Crack Corn [Single]</p>
+          <p class="track-release">March 6, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/ca$his-the-county-hound-ep-cover.jpg" alt="The County Hound EP cover">
+        <div class="track-meta">
+          <h2 class="track-title">Pistol Poppin’</h2>
+          <p class="track-artist">Ca$his feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem &amp; Luis Resto</p>
+          <p class="track-album">The County Hound EP</p>
+          <p class="track-release">May 1, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+        <div class="track-meta">
+          <h2 class="track-title">Careful What You Wish For</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Relapse (Deluxe)</p>
+          <p class="track-release">May 15, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/relapse/relapse_2-cover.jpg" alt="Elevator cover">
+        <div class="track-meta">
+          <h2 class="track-title">Elevator</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Relapse: Refill</p>
+          <p class="track-release">December 21, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/b.o.b-airplanes,-part-ii-cover.jpg" alt="The Adventures of Bobby Ray cover">
+        <div class="track-meta">
+          <h2 class="track-title">Airplanes, Part II</h2>
+          <p class="track-artist">B.o.B. feat. Eminem &amp; Hayley Williams</p>
+          <p class="track-producer">Produced by Alex da Kid</p>
+          <p class="track-producer">Additional Production by Eminem &amp; Luis Resto</p>
+          <p class="track-album">The Adventures of Bobby Ray</p>
+          <p class="track-release">April 17, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bottoms-up-cover.jpg" alt="Bottoms Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Going No Where</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Bottoms Up</p>
+          <p class="track-release">April 3, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Asylum</h2>
+          <p class="track-artist">Slaughterhouse feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">So Much Better</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Brainless</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Stronger Than I Was</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Baby</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Marshall Mathers LP 2 (Deluxe Edition)</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Die Alone</h2>
+          <p class="track-artist">Eminem feat. Kobe</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Vegas</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fine Line</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Twisted</h2>
+          <p class="track-artist">Skylar Grey, Eminem &amp; Yelawolf</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Right For Me</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-love-story.jpg" alt="Love Story cover">
+        <div class="track-meta">
+          <h2 class="track-title">American You</h2>
+          <p class="track-artist">Yelawolf</p>
+          <p class="track-producer">Produced by Maylay</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Love Story</p>
+          <p class="track-release">April 21, 2015</p>
+        </div>
+      </article>
+
+       <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/southpaw/phenomenal-cover.jpg" alt="Phenomenal cover">
+        <div class="track-meta">
+          <h2 class="track-title">Phenomenal</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">June 2, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">This Corner</h2>
+          <p class="track-artist">Denaun</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto &amp; Mr. Porter</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 24, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/southpaw/southpaw-cover.jpeg" alt="Southpaw Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">All I Think About</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 24, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/skylar-grey-natural-causes-cover.jpg" alt="Natural Causes cover">
+        <div class="track-meta">
+          <h2 class="track-title">Come Up For Air</h2>
+          <p class="track-artist">Skylar Grey</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Natural Causes</p>
+          <p class="track-release">September 23, 2016</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+        <div class="track-meta">
+          <h2 class="track-title">Believe</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto &amp; Mr. Porter</p>
+          <p class="track-album">Revival</p>
+          <p class="track-release">December 15, 2017</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Stepping Stone</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Venom</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/conway-the-machine-bang-cover.jpg" alt="Bang single cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bang</h2>
+          <p class="track-artist">Conway the Machine feat. Eminem</p>
+          <p class="track-producer">Produced by Beat Butcha &amp; Daringer</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Luis Resto</p>
+          <p class="track-album">Bang [Single]</p>
+          <p class="track-release">July 19, 2019</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/griselda-bang-cover.jpg" alt="WWCD cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bang (Remix)</h2>
+          <p class="track-artist">Griselda feat. Eminem</p>
+          <p class="track-producer">Produced by Beat Butcha &amp; Daringer</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Luis Resto</p>
+          <p class="track-album">WWCD</p>
+          <p class="track-release">November 29, 2019</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Premonition (Intro)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson (Part 1) • Eminem (Part 2)</p>
+          <p class="track-producer">Additional Production by Dawaun Parker (Part 1) • Luis Resto (Part 2)</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">You Gon’ Learn</h2>
+          <p class="track-artist">Eminem feat. Royce Da 5’9“ &amp; White Gold</p>
+          <p class="track-producer">Produced by Royce Da 5’9“</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Darkness</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Royce Da 5’9“ &amp; Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Stepdad</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by The Alchemist &amp; Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Marsh</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">I Will</h2>
+          <p class="track-artist">Eminem feat. KXNG Crooked, Royce Da 5’9“ &amp; Joell Ortiz</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Tone Deaf</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Book Of Rhymes</h2>
+          <p class="track-artist">Eminem feat. DJ Premier</p>
+          <p class="track-producer">Produced by Eminem &amp; Illadaproducer</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/houdini-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Houdini</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">May 31, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Renaissance</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Brand New Dance</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Antichrist</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Luis Resto</p>
+          <p class="track-producer">Additional Production by Foulmouth</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Head Honcho</h2>
+          <p class="track-artist">Eminem feat. Ez Mil</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Ez Mil, Jameil Aossey &amp; Luis Resto</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bad One</h2>
+          <p class="track-artist">Eminem feat. White Gold</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grâce)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/jid-animals-(pt.-i).jpg" alt="God Does Like Ugly (The Preluxe) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Animals (Pt. I)</h2>
+          <p class="track-artist">JID feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem, Christo, Anca trio plus one &amp; Eest</p>
+          <p class="track-producer">Additional Production by Luis Resto</p>
+          <p class="track-album">God Does Like Ugly (The Preluxe) [EP]</p>
+          <p class="track-release">July 4, 2025</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil’s Night cover">
+        <div class="track-meta">
+          <h2 class="track-title">Girls</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Devil’s Night</p>
+          <p class="track-release">June 19, 2001</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/jay-z-renegade-cover.jpg" alt="The Blueprint cover">
+        <div class="track-meta">
+          <h2 class="track-title">Renegade</h2>
+          <p class="track-artist">JAY-Z feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Blueprint</p>
+          <p class="track-release">September 11, 2001</p>
+          </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">White America</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Jeff Bass</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Square Dance</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Soldier</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Say Goodbye Hollywood</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Sing For The Moment</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Jeff Bass</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hailie’s Song</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        <div class="track-meta">
+          <h2 class="track-title">’Til I Collapse</h2>
+          <p class="track-artist">Eminem feat. Nate Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Jeff Bass</p>
+          <p class="track-album">The Eminem Show</p>
+          <p class="track-release">May 26, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/8-mile/lose-yourself-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lose Yourself</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Jeff Bass</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 28, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rap Game</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Eminem &amp; Denaun Porter</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover">
+        <div class="track-meta">
+          <h2 class="track-title">8 Miles And Runnin’</h2>
+          <p class="track-artist">JAY-Z feat. Freeway</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">8 Mile (Soundtrack)</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-rap-name-cover.jpg" alt="Rap Name single cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rap Name</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Rap Name [Single]</p>
+          <p class="track-release">October 29, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/nas-the-cross-cover.jpg" alt="The Cross cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Cross</h2>
+          <p class="track-artist">Nas</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">God’s Son</p>
+          <p class="track-release">December 13, 2002</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Get Rich Or Die Tryin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">Patiently Waiting</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Get Rich Or Die Tryin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">High All The Time</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by DJ Rad</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Sha Money XL</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Get Rich Or Die Tryin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">Poor Lil Rich</h2>
+          <p class="track-artist">50 Cent</p>
+          <p class="track-producer">Produced by Sha Money XL</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-get-rich-or-die-tryin-cover.jpg" alt="Get Rich Or Die Tryin’ cover">
+        <div class="track-meta">
+          <h2 class="track-title">Don’t Push Me</h2>
+          <p class="track-artist">50 Cent feat. Lloyd Banks &amp; Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Get Rich Or Die Tryin’</p>
+          <p class="track-release">February 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/non-album/go-to-sleep-cover.jpg" alt="Cradle 2 The Grave / Resurrection cover">
+        <div class="track-meta">
+          <h2 class="track-title">Go To Sleep</h2>
+          <p class="track-artist">Eminem, DMX &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cradle 2 The Grave (Soundtrack)</p>
+          <p class="track-release">February 18, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Invasion Part II: Conspiracy Theory cover">
+        <div class="track-meta">
+          <h2 class="track-title">We All Die One Day</h2>
+          <p class="track-artist">DJ Muggs feat. Eminem, 50 Cent, Lloyd Banks, Tony Yayo &amp; Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Invasion Part II: Conspiracy Theory</p>
+          <p class="track-release">April 15, 2003</p>
+         <details class="promo-info">
+            <summary class="promo-summary" aria-label="Info">ⓘ</summary>
+            <p class="promo-note">Originally recorded for DJ Muggs’ album, the track later appeared on Obie Trice’s album Cheers, following the project’s delay.</p>
+          </details>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-runnin'-cover.jpg" alt="Tupac: Resurrection cover">
+        <div class="track-meta">
+          <h2 class="track-title">Runnin’ [Dying To Live]</h2>
+          <p class="track-artist">2Pac feat. The Notorious B.I.G.</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Tupac: Resurrection (Soundtrack)</p>
+          <p class="track-release">September 6, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Cheers</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Don’t Come Down</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Follow My Life</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Fredwreck</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hands On You</h2>
+          <p class="track-artist">Obie Trice feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Hoodrats</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Emile</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-cheers-cover.jpg" alt="Cheers cover">
+        <div class="track-meta">
+          <h2 class="track-title">Never Forget Ya</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Cheers</p>
+          <p class="track-release">September 23, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-resurrection-cover.jpg" alt="Tupac: Resurrection cover">
+        <div class="track-meta">
+          <h2 class="track-title">Ghost</h2>
+          <p class="track-artist">2Pac</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Tupac: Resurrection (Soundtrack)</p>
+          <p class="track-release">November 11, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/2pac-resurrection-cover.jpg" alt="Tupac: Resurrection cover">
+        <div class="track-meta">
+          <h2 class="track-title">One Day At A Time [Em’s Version]</h2>
+          <p class="track-artist">2Pac with Eminem feat. Outlawz</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Tupac: Resurrection (Soundtrack)</p>
+          <p class="track-release">November 11, 2003</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">How Come</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Witt &amp; Pep</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">April 27, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/d12-world/how-come-cover.jpg" alt="D12 World cover">
+        <div class="track-meta">
+          <h2 class="track-title">How Come (Extended Version)</h2>
+          <p class="track-artist">D12</p>
+          <p class="track-producer">Produced by Witt &amp; Pep</p>
+          <p class="track-album">D12 World</p>
+          <p class="track-release">June 8, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-single-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Encore</h2>
+          <p class="track-artist">Eminem feat. Dr. Dre &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mark Batson</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 9, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        <div class="track-meta">
+          <h2 class="track-title">Curtains Up</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Encore</p>
+          <p class="track-release">November 12, 2004</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/50-cent-the-massacre-cover.jpg" alt="The Massacre cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gatman And Robbin’</h2>
+          <p class="track-artist">50 Cent feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Mark &amp; Jeff Bass</p>
+          <p class="track-album">The Massacre</p>
+          <p class="track-release">March 3, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/tony-yayo-thoughts-of-a-predicate-felon-cover.jpg" alt="Thoughts Of A Predicate Felon cover">
+        <div class="track-meta">
+          <h2 class="track-title">It Is What It Is</h2>
+          <p class="track-artist">Tony Yayo feat. Spider Loc</p>
+          <p class="track-producer">Produced by Sebb</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Thoughts Of A Predicate Felon</p>
+          <p class="track-release">August 30, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/trick-trick-the-people-Vs.-cover.jpg" alt="The People Vs. cover">
+        <div class="track-meta">
+          <h2 class="track-title">No More To Say</h2>
+          <p class="track-artist">Trick Trick feat. Eminem &amp; Proof</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Trick-Trick</p>
+          <p class="track-album">The People Vs.</p>
+          <p class="track-release">December 27, 2005</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jamaican Girl</h2>
+          <p class="track-artist">Obie Trice feat. Brick &amp; Lace</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/obie-trice-second-rounds-on-me-cover.jpg" alt="Second Round’s On Me cover">
+        <div class="track-meta">
+          <h2 class="track-title">Out Of State</h2>
+          <p class="track-artist">Obie Trice</p>
+          <p class="track-producer">Produced by Swinga</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Second Round’s On Me</p>
+          <p class="track-release">July 28, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/akon-smack-that-cover.jpg" alt="Konvicted cover">
+        <div class="track-meta">
+          <h2 class="track-title">Smack That</h2>
+          <p class="track-artist">Akon feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Konvicted</p>
+          <p class="track-release">September 26, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Shady Narcotics (Intro)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Re-Up</h2>
+          <p class="track-artist">Eminem &amp; 50 Cent</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Trapped</h2>
+          <p class="track-artist">Proof</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/re-up/re-up-cover.jpg" alt="Eminem Presents: The Re-Up cover">
+        <div class="track-meta">
+          <h2 class="track-title">Public Enemy #1</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Eminem Presents: The Re-Up</p>
+          <p class="track-release">December 5, 2006</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/young-buck-lose-my-mind-cover.jpg" alt="Buck The World cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lose My Mind</h2>
+          <p class="track-artist">Young Buck</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Buck The World</p>
+          <p class="track-release">March 27, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/ca$his-the-county-hound-ep-cover.jpg" alt="The County Hound EP cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gun Rule</h2>
+          <p class="track-artist">Ca$his</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The County Hound EP</p>
+          <p class="track-release">May 1, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/t.i.-touchdown-cover.jpg" alt="T.I. Vs T.I.P. cover">
+        <div class="track-meta">
+          <h2 class="track-title">Touchdown</h2>
+          <p class="track-artist">T.I. feat. Eminem</p>
+          <p class="track-producer">Produced by Eminem &amp; Jeff Bass</p>
+          <p class="track-album">T.I. Vs T.I.P.</p>
+          <p class="track-release">June 12, 2007</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/trick-trick-the-villain-cover.jpg" alt="The Villain cover">
+        <div class="track-meta">
+          <h2 class="track-title">Who Want It</h2>
+          <p class="track-artist">Trick Trick feat. Eminem</p>
+          <p class="track-producer">Produced by Trick Trick &amp; Eminem</p>
+          <p class="track-album">The Villain</p>
+          <p class="track-release">November 11, 2008</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+        <div class="track-meta">
+          <h2 class="track-title">Beautiful</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Co-Produced by Jeff Bass</p>
+          <p class="track-album">Relapse</p>
+          <p class="track-release">May 15, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+        <div class="track-meta">
+          <h2 class="track-title">My Darling</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Relapse (Deluxe)</p>
+          <p class="track-release">May 15, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/lil-wayne-drop-the-world-cover.jpg" alt="Rebirth cover">
+        <div class="track-meta">
+          <h2 class="track-title">Drop The World</h2>
+          <p class="track-artist">Lil Wayne feat. Eminem</p>
+          <p class="track-producer">Produced by Chase N. Cashe &amp; B.CaRR</p>
+          <p class="track-album">Rebirth</p>
+          <p class="track-release">December 28, 2009</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/recovery/not-afraid-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Not Afraid</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Boi-1da</p>
+          <p class="track-producer">Additional Production by Eminem, Jordan Evans &amp; Matthew Burnett</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">May 3, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Talkin’ 2 Myself</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">On Fire</h2>
+          <p class="track-artist">Eminem feat. Kobe</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">W.T.P.</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Supa Dups</p>
+          <p class="track-producer">Co-Produced by Jason Gilbert</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Going Through Changes</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Emile</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Seduction</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Boi-1da</p>
+          <p class="track-producer">Additional Production by Matthew Burnett</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Almost Famous</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        <div class="track-meta">
+          <h2 class="track-title">Untitled</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Havoc</p>
+          <p class="track-producer">Co-Produced by Magnedo7</p>
+          <p class="track-album">Recovery</p>
+          <p class="track-release">June 18, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/lloyd-banks-hunger-for-more-2-cover.jpg" alt="H.F.M. 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Where I’m At</h2>
+          <p class="track-artist">Lloyd Banks feat. Eminem</p>
+          <p class="track-producer">Produced by Boi-1da</p>
+          <p class="track-producer">Additional Production by Matthew Burnett</p>
+          <p class="track-album">H.F.M. 2 (The Hunger For More 2)</p>
+          <p class="track-release">November 22, 2010</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/fast-lane-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fast Lane</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Supa Dups</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; Jason Gilbert</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">May 3, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Reunion</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Sid Roams</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">A Kiss</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Bangladesh</p>
+          <p class="track-producer">Additional Production by branNu</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">Above The Law</h2>
+          <p class="track-artist">Bad Meets Evil</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lighters</h2>
+          <p class="track-artist">Bad Meets Evil feat. Bruno Mars</p>
+          <p class="track-producer">Produced by Eminem, The Smeezingtons &amp; Battle Roy</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        <div class="track-meta">
+          <h2 class="track-title">Loud Noises</h2>
+          <p class="track-artist">Bad Meets Evil feat. Slaughterhouse</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Hell: The Sequel</p>
+          <p class="track-release">June 14, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-lets-roll-cover.jpeg" alt="Let’s Roll cover">
+        <div class="track-meta">
+          <h2 class="track-title">Let’s Roll</h2>
+          <p class="track-artist">Yelawolf feat. Kid Rock</p>
+          <p class="track-producer">Produced by Mr. Pyro &amp; The Audibles</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Radioactive</p>
+          <p class="track-release">October 28, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-radioactive-cover.jpg" alt="Radioactive cover">
+        <div class="track-meta">
+          <h2 class="track-title">Throw It Up</h2>
+          <p class="track-artist">Yelawolf feat. Eminem & Gangsta Boo</p>
+          <p class="track-producer">Produced by WLPWR</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Radioactive</p>
+          <p class="track-release">November 21, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-radioactive-cover.jpg" alt="Radioactive cover">
+        <div class="track-meta">
+          <h2 class="track-title">Everything I Love The Most</h2>
+          <p class="track-artist">Yelawolf</p>
+          <p class="track-producer">Produced by WLPWR</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Radioactive</p>
+          <p class="track-release">November 21, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-radioactive_2-cover.jpg" alt="Radioactive cover">
+        <div class="track-meta">
+          <h2 class="track-title">In This World</h2>
+          <p class="track-artist">Yelawolf</p>
+          <p class="track-producer">Produced by WLPWR</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Radioactive (Deluxe Edition)</p>
+          <p class="track-release">November 21, 2011</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+       <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-hammer-dance-cover.jpeg" alt="Hammer Dance cover">
+      <div class="track-meta">
+        <h2 class="track-title">Hammer Dance</h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by AraabMuzik</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">March 13, 2012</p>
+      </div>
+    </article>
+
+     <article class="track-card other produced co-produced">
+       <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-my-life-cover.jpg" alt="My Life cover">
+      <div class="track-meta">
+        <h2 class="track-title">My Life <span class="fn-mark">†</span></h2>
+        <p class="track-artist">Slaughterhouse feat. CeeLo Green</p>
+        <p class="track-producer">Produced by StreetRunner &amp; Sarom</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">May 15, 2012</p>
+      </div>
+    </article>
+
+     <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-throw-it-away-cover.jpg" alt="Throw It Away cover">
+      <div class="track-meta">
+        <h2 class="track-title">Throw It Away <span class="fn-mark">†</span></h2>
+        <p class="track-artist">Slaughterhouse feat. Swizz Beatz</p>
+        <p class="track-producer">Produced by Mr. Porter</p>
+        <p class="track-producer">Additional Production by Eminem</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">July 2, 2012</p>
+      </div>
+    </article>
+
+    <article class="track-card other produced co-produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-goodbye-cover.jpg" alt="Goodbye cover">
+      <div class="track-meta">
+        <h2 class="track-title">Goodbye <span class="fn-mark">†</span></h2>
+        <p class="track-artist">Slaughterhouse</p>
+        <p class="track-producer">Produced by Boi-1da</p>
+        <p class="track-producer">Co-Produced by Eminem</p>
+        <p class="track-producer">Additional Production by Matthew Burnett</p>
+        <p class="track-album">Welcome To: Our House</p>
+        <p class="track-release">August 9, 2012</p>
+      </div>
+    </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-throw-that-cover.jpg" alt="Throw That cover">
+        <div class="track-meta">
+          <h2 class="track-title">Throw That</h2>
+          <p class="track-artist">Slaughterhouse feat. Eminem</p>
+          <p class="track-producer">Produced by T-Minus</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 21, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Our House</h2>
+          <p class="track-artist">Slaughterhouse feat. Eminem &amp; Skylar Grey</p>
+          <p class="track-producer">Produced by Alex da Kid</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Coffin</h2>
+          <p class="track-artist">Slaughterhouse feat. Busta Rhymes</p>
+          <p class="track-producer">Produced by Hit-Boy</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Get Up</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by No I.D.</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Welcome To: Our House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Flip A Bird</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by Black Key Beats &amp; Zukhan</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Frat House cover">
+        <div class="track-meta">
+          <h2 class="track-title">Frat House</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by T-Minus</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Park It Sideways cover">
+        <div class="track-meta">
+          <h2 class="track-title">Park It Sideways</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by Kane Beatz</p>
+          <p class="track-producer">Co-Produced by Ashanti Floyd &amp; JMIKE</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house-cover.jpg" alt="Our Way (Outro) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Our Way (Outro)</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by Boi-1da</p>
+          <p class="track-producer">Co-Produced by Eminem &amp; The Maven Boys</p>
+          <p class="track-album">Welcome To: Our House</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house_2-cover.jpg" alt="Walk Of Shame cover">
+        <div class="track-meta">
+          <h2 class="track-title">Walk Of Shame</h2>
+          <p class="track-artist">Slaughterhouse</p>
+          <p class="track-producer">Produced by StreetRunner &amp; Sarom</p>
+          <p class="track-producer">Co-Produced by I.L.O. &amp; Eminem</p>
+          <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/slaughterhouse-welcome-to-our-house_2-cover.jpg" alt=" cover">
+        <div class="track-meta">
+          <h2 class="track-title">Place To Be</h2>
+          <p class="track-artist">Slaughterhouse feat. B.o.B</p>
+          <p class="track-producer">Produced by Kane Beatz &amp; JMIKE</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Welcome To: Our House (Deluxe Edition)</p>
+          <p class="track-release">August 28, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/skylar-gre-c’mon-let-me-ride-cover.jpg" alt="Don’t Look Down cover">
+        <div class="track-meta">
+          <h2 class="track-title">C’mon Let Me Ride</h2>
+          <p class="track-artist">Skylar Grey feat. Eminem</p>
+          <p class="track-producer">Produced by Alex da Kid</p>
+          <p class="track-album">Don’t Look Down</p>
+          <p class="track-release">December 11, 2012</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/bezerk-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Berzerk</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Rick Rubin</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">August 27, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Rhyme Or Reason</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem &amp; Rick Rubin</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Legacy</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Emile Haynie</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Asshole</h2>
+          <p class="track-artist">Eminem feat. Skylar Grey</p>
+          <p class="track-producer">Produced by Alex da Kid</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Monster</h2>
+          <p class="track-artist">Eminem feat. Rihanna</p>
+          <p class="track-producer">Produced by Frequency</p>
+          <p class="track-producer">Co-Produced by Aalias</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">So Far…</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Rick Rubin</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Love Game</h2>
+          <p class="track-artist">Eminem feat. Kendrick Lamar</p>
+          <p class="track-producer">Produced by Rick Rubin</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Headlights</h2>
+          <p class="track-artist">Eminem feat. Nate Ruess</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; Jeff Bhasker</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Evil Twin</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Sid Roams</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP 2</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Desperation</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Alex da Kid</p>
+          <p class="track-album">The Marshall Mathers LP 2 (Deluxe Edition)</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2_2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Beautiful Pain</h2>
+          <p class="track-artist">Eminem feat. Sia</p>
+          <p class="track-producer">Produced by Emile Haynie</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Marshall Mathers LP 2 (Deluxe Edition)</p>
+          <p class="track-release">November 5, 2013</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/guts-over-fear-cover.jpg" alt="Guts Over Fear cover">
+        <div class="track-meta">
+          <h2 class="track-title">Guts Over Fear</h2>
+          <p class="track-artist">Eminem feat. Sia</p>
+          <p class="track-producer">Produced by Emile Haynie &amp; John Hill</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">August 25, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/detroit-vs-everybody-cover.jpg" alt="Detroit Vs. Everybody cover">
+        <div class="track-meta">
+          <h2 class="track-title">Detroit Vs. Everybody</h2>
+          <p class="track-artist">Eminem, Royce Da 5’9”, Big Sean, Danny Brown, Dej Loaf &amp; Trick Trick</p>
+          <p class="track-producer">Produced by Eminem &amp; Statik Selektah</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 11, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">ShadyXV</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lose Yourself (Original Demo Version)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Jeff Bass</p>
+          <p class="track-album">SHADYXV</p>
+          <p class="track-release">November 24, 2014</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/yelawolf-love-story.jpg" alt="Love Story cover">
+        <div class="track-meta">
+          <h2 class="track-title">Best Friend</h2>
+          <p class="track-artist">Yelawolf feat. Eminem</p>
+          <p class="track-producer">Produced by WLPWR</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Love Story</p>
+          <p class="track-release">April 14, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/tech-n9ne-speedom-(wwc2)-cover.jpg" alt="Special Effects cover">
+        <div class="track-meta">
+          <h2 class="track-title">Speedom (Wwc2)</h2>
+          <p class="track-artist">Tech N9ne feat. Eminem &amp; Krizz Kaliko</p>
+          <p class="track-producer">Produced by Michael “Seven” Summers</p>
+          <p class="track-album">Special Effects</p>
+          <p class="track-release">May 4, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/southpaw/kings-never-die-cover.jpg" alt="Southpaw cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kings Never Die</h2>
+          <p class="track-artist">Eminem feat. Gwen Stefani</p>
+          <p class="track-producer">Produced by DJ Khalil</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Southpaw (Soundtrack)</p>
+          <p class="track-release">July 10, 2015</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+        <div class="track-meta">
+          <h2 class="track-title">Like Home</h2>
+          <p class="track-artist">Eminem feat. Alicia Keys</p>
+          <p class="track-producer">Produced by Just Blaze</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Revival</p>
+          <p class="track-release">December 15, 2017</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+        <div class="track-meta">
+          <h2 class="track-title">Bad Husband</h2>
+          <p class="track-artist">Eminem feat. X Ambassadors</p>
+          <p class="track-producer">Produced by Alex Da Kid</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Revival</p>
+          <p class="track-release">December 15, 2017</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/nicki-minaj-majesty-cover.jpg" alt="Queen cover">
+        <div class="track-meta">
+          <h2 class="track-title">Majesty</h2>
+          <p class="track-artist">Nicki Minaj feat. Eminem &amp; Labrinth</p>
+          <p class="track-producer">Produced by Labrinth</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Queen</p>
+          <p class="track-release">August 10, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Ringer</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Illadaproducer (Part 1) • Ronny J (Part 2)</p>
+          <p class="track-producer">Co-Produced by Eminem (Part 1)</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lucky You</h2>
+          <p class="track-artist">Eminem feat. Joyner Lucas</p>
+          <p class="track-producer">Produced by Boi-1da &amp; Jahaan Sweet (Part 1) • Illadaproducer (Part 2)</p>
+          <p class="track-producer">Additional Production by Eminem (Part 2)</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Not Alike</h2>
+          <p class="track-artist">Eminem feat. Royce Da 5’9“</p>
+          <p class="track-producer">Produced by Tay Keith (Part 1) • Ronny J (Part 2)</p>
+          <p class="track-producer">Additional Production by Eminem (Part 1)</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kamikaze</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Tim Suby</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fall</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Mike WiLL Made-It</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Nice Guy</h2>
+          <p class="track-artist">Eminem feat. Jessie Reyez</p>
+          <p class="track-producer">Produced by Fred Ball &amp; S1</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        <div class="track-meta">
+          <h2 class="track-title">Good Guy</h2>
+          <p class="track-artist">Eminem feat. Jessie Reyez</p>
+          <p class="track-producer">Produced by Illadaproducer</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Kamikaze</p>
+          <p class="track-release">August 31, 2018</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/logic-homicide-cover.jpg" alt="Confessions Of A Dangerous Mind cover">
+        <div class="track-meta">
+          <h2 class="track-title">Homicide</h2>
+          <p class="track-artist">Logic feat. Eminem</p>
+          <p class="track-producer">Produced by Bregma</p>
+          <p class="track-producer">Co-Produced by Shroom</p>
+          <p class="track-album">Confessions Of A Dangerous Mind</p>
+          <p class="track-release">May 3, 2019</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Unaccommodating</h2>
+          <p class="track-artist">Eminem feat. Young M.A</p>
+          <p class="track-producer">Produced by Tim Suby</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Alfred (Interlude)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre, Dawaun Parker &amp; Andre Brissett</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Those Kinda Nights</h2>
+          <p class="track-artist">Eminem feat. Ed Sheeran</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Fred again..</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">In Too Deep</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Tim Suby</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Godzilla</h2>
+          <p class="track-artist">Eminem feat. Juice WRLD</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Yah Yah</h2>
+          <p class="track-artist">Eminem feat. Royce Da 5’9”, Black Thought, Q-Tip &amp; Denaun</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Leaving Heaven</h2>
+          <p class="track-artist">Eminem feat. Skylar Grey</p>
+          <p class="track-producer">Produced by Skylar Grey</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Never Love Again</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre, Dem Jointz, Dawaun Parker &amp; Trevor Lawrence Jr.</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Little Engine</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre, Blu2th, Dawaun Parker &amp; Trevor Lawrence Jr.</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lock It Up</h2>
+          <p class="track-artist">Eminem feat. Anderson .Paak</p>
+          <p class="track-producer">Produced by Dr. Dre, Dawaun Parker, Blu2th, Dem Jointz &amp; Trevor Lawrence Jr.</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">Farewell</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Ricky Racks</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music To Be Murdered By cover">
+        <div class="track-meta">
+          <h2 class="track-title">No Regrets</h2>
+          <p class="track-artist">Eminem feat. Don Toliver</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By</p>
+          <p class="track-release">January 17, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/jessie-reyez-coffin-cover.jpg" alt="Before Love Came to Kill Us cover">
+        <div class="track-meta">
+          <h2 class="track-title">Coffin</h2>
+          <p class="track-artist">Jessie Reyez feat. Eminem</p>
+          <p class="track-producer">Produced by Bizness Boi &amp; Tobias “Priest” Frelin</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Before Love Came to Kill Us</p>
+          <p class="track-release">March 27, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/kid-kudi-the-adventures-of-moon-man-&-slim-shady.jpg" alt="The Adventures Of Moon Man &amp; Slim Shady cover">
+        <div class="track-meta">
+          <h2 class="track-title">The Adventures Of Moon Man &amp; Slim Shady</h2>
+          <p class="track-artist">Kid Cudi feat. Eminem</p>
+          <p class="track-producer">Produced by J Gramm &amp; Dot Da Genius</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Adventures Of Moon Man &amp; Slim Shady (Single)</p>
+          <p class="track-release">July 10, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Alfred (Intro)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Black Magic</h2>
+          <p class="track-artist">Eminem feat. Skylar Grey</p>
+          <p class="track-producer">Produced by Skylar Grey &amp; Jayson DeZuzio</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Alfred’s Theme</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Favorite Bitch</h2>
+          <p class="track-artist">Eminem feat. Ty Dolla $ign</p>
+          <p class="track-producer">Produced by BlackNailz &amp; MJ Nichols</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Guns Blazing</h2>
+          <p class="track-artist">Eminem feat. Dr. Dre &amp; Sly Pyper</p>
+          <p class="track-producer">Produced by J.LBS</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gnat</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Higher</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">These Demons</h2>
+          <p class="track-artist">Eminem feat. MAJ</p>
+          <p class="track-producer">Produced by Mike Zombie, TheLoudPack, d.a. got that dope &amp; Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Key (Skit)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">She Loves Me</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre, Focus…, Blu2th &amp; Trevor Lawrence Jr.</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Killer</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by_4-cover.jpg" alt="Music To Be Murdered By - Side B cover">
+        <div class="track-meta">
+          <h2 class="track-title">Thus Far (Interlude)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Music To Be Murdered By - Side B (Deluxe Edition)</p>
+          <p class="track-release">December 18, 2020</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/non-album/killer-remix-cover.jpg" alt="Killer (Remix) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Killer (Remix)</h2>
+          <p class="track-artist">Eminem feat. Jack Harlow &amp; Cordae</p>
+          <p class="track-producer">Produced by d.a. got that dope</p>
+          <p class="track-album">Killer (Remix) [Single]</p>
+          <p class="track-release">May 28, 2021</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/nas-epmd-2-cover.jpg" alt="King’s Disease II cover">
+        <div class="track-meta">
+          <h2 class="track-title">EPMD 2</h2>
+          <p class="track-artist">Nas feat. Eminem &amp; EPMD</p>
+          <p class="track-producer">Produced by Hit-Boy</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">King’s Disease II</p>
+          <p class="track-release">August 5, 2021</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/feat/dr.-dre-gospel-cover.jpg" alt="Gospel cover">
+        <div class="track-meta">
+          <h2 class="track-title">Gospel</h2>
+          <p class="track-artist">Dr. Dre feat. Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Listen2KOACH</p>
+          <p class="track-album">Gospel (Single)</p>
+          <p class="track-release">February 4, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/eminem-show/eminem-show_2-cover.jpg" alt="The Eminem Show (Expanded Edition) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Jimmy, Brian And Mike</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Mike Elizondo</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Eminem Show (Expanded Edition)</p>
+          <p class="track-release">May 26, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/non-album/king-&-i-cover.jpg" alt="Elvis (Soundtrack) cover">
+        <div class="track-meta">
+          <h2 class="track-title">The King And I</h2>
+          <p class="track-artist">Eminem feat. CeeLo Green</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Eminem</p>
+          <p class="track-album">Elvis (Soundtrack)</p>
+          <p class="track-release">June 16, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/curtain-call-2/from-the-d-2-the-lbc-cover.jpg" alt="Curtain Call 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">From The D 2 The LBC</h2>
+          <p class="track-artist">Eminem feat. Snoop Dogg</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">Curtain Call 2</p>
+          <p class="track-release">June 24, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Curtain Call 2 cover">
+        <div class="track-meta">
+          <h2 class="track-title">Is This Love (’09)</h2>
+          <p class="track-artist">Eminem feat. 50 Cent</p>
+          <p class="track-producer">Produced by Dr. Dre, Mark Batson &amp; Trevor Lawrence Jr.</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">Curtain Call 2</p>
+          <p class="track-release">August 5, 2022</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/ez-mil-realest-cover.jpg" alt="DU4LI7Y: REDUX cover">
+        <div class="track-meta">
+          <h2 class="track-title">Realest</h2>
+          <p class="track-artist">Ez Mil feat. Eminem</p>
+          <p class="track-producer">Produced by Ez Mil</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">DU4LI7Y: REDUX</p>
+          <p class="track-release">August 4, 2023</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/feat/juice-wrld-lace-it-cover.jpg" alt="The Party Never Ends cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lace It</h2>
+          <p class="track-artist">Juice WRLD feat. Eminem &amp; Benny Blanco</p>
+          <p class="track-producer">Produced by Benny Blanco, Cashmere Cat &amp; Happy Perez</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Party Never Ends</p>
+          <p class="track-release">December 16, 2023</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/lyrical-lemonade-doomsday-pt.-2-cover.jpg" alt="All Is Yellow cover">
+        <div class="track-meta">
+          <h2 class="track-title">Doomsday Pt. 2</h2>
+          <p class="track-artist">Lyrical Lemonade feat. Eminem</p>
+          <p class="track-producer">Produced by Cole Bennett, Daniyel, John Nocito &amp; Kosher World</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">All Is Yellow</p>
+          <p class="track-release">January 26, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/tobey-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Tobey</h2>
+          <p class="track-artist">Eminem feat. BabyTron &amp; Big Sean</p>
+          <p class="track-producer">Produced by Daniyel, Cole Bennett, John Nocito, Car!ton &amp; Marvy Ayy</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 2, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Habits</h2>
+          <p class="track-artist">Eminem feat. White Gold</p>
+          <p class="track-producer">Produced by White Gold</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-producer">Additional Production by Narza</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Evil</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Don Cannon &amp; Cubeatz</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">All You Got (Skit)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Lucifer</h2>
+          <p class="track-artist">Eminem feat. Sly Pyper</p>
+          <p class="track-producer">Produced by Callus &amp; Dr. Dre</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fuel</h2>
+          <p class="track-artist">Eminem feat. JID</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Road Rage</h2>
+          <p class="track-artist">Eminem feat. Dem Jointz &amp; Sly Pyper</p>
+          <p class="track-producer">Produced by Dr. Dre &amp; Dem Jointz</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Breaking News (Skit)</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Guilty Conscience 2</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Fredwreck, Dem Jointz &amp; Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Temporary</h2>
+          <p class="track-artist">Eminem feat. Skylar Grey</p>
+          <p class="track-producer">Produced by Skylar Grey</p>
+          <p class="track-producer">Co-Produced by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Somebody Save Me</h2>
+          <p class="track-artist">Eminem feat. Jelly Roll</p>
+          <p class="track-producer">Produced by Benny Blanco &amp; Emile Haynie</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace)</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced co-produced">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Kyrie &amp; Luka</h2>
+          <p class="track-artist">Eminem feat. 2 Chainz</p>
+          <p class="track-producer">Produced by Eminem &amp; 2 Chainz</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace) [Limited Edition]</p>
+          <p class="track-release">July 12, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/feat/ll-cool-j-murdergram-deux-cover.jpg" alt="The FORCE cover">
+        <div class="track-meta">
+          <h2 class="track-title">Murdergram Deux</h2>
+          <p class="track-artist">LL Cool J feat. Eminem</p>
+          <p class="track-producer">Produced by Q-Tip</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The FORCE</p>
+          <p class="track-release">August 30, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced addl">
+        <img class="track-thumb" src="../images/album-covers/death-of-slim-shady/death-of-slim-shady_4-cover.jpg" alt="The Death Of Slim Shady (Coup De Grace): Expanded Mourner’s Edition cover">
+        <div class="track-meta">
+          <h2 class="track-title">Fuel (Shady Edition)</h2>
+          <p class="track-artist">Eminem feat. Westside Boogie &amp; Grip</p>
+          <p class="track-producer">Produced by Mr. Porter</p>
+          <p class="track-producer">Additional Production by Eminem</p>
+          <p class="track-album">The Death Of Slim Shady (Coup De Grace): Expanded Mourner’s Edition</p>
+          <p class="track-release">September 13, 2024</p>
+        </div>
+      </article>
+
+      <article class="track-card other produced">
+        <img class="track-thumb" src="../images/album-covers/non-album/stans-cover.jpg" alt="STANS (Soundtrack) cover">
+        <div class="track-meta">
+          <h2 class="track-title">Everybody’s Looking At Me</h2>
+          <p class="track-artist">Eminem</p>
+          <p class="track-producer">Produced by Dr. Dre</p>
+          <p class="track-album">STANS (Soundtrack)</p>
+          <p class="track-release">August 26, 2025</p>
+        </div>
+      </article>
+
+    <p class="footnote"><a href="songs-with-dr-dre.html">Click here for songs with Dr. Dre.</a></p>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+
+
+  (() => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = Array.from(document.querySelectorAll('.track-card'));
+    const trackList = document.querySelector('.track-list');
+    const footnote = document.querySelector('.footnote');
+    const originalOrder = [...cards];
+    const originalIndex = new Map(cards.map((card, idx) => [card, idx]));
+    const yearGroups = new Map();
+
+    const markOtherTitles = () => {
+      cards.forEach((card) => {
+        if (!card.classList.contains('other')) return;
+        const titleNode = card.querySelector('.track-title');
+        if (!titleNode || titleNode.querySelector('.fn-mark')) return;
+
+        titleNode.appendChild(document.createTextNode(' '));
+        const dagger = document.createElement('span');
+        dagger.className = 'fn-mark';
+        dagger.textContent = '†';
+        titleNode.appendChild(dagger);
+      });
+    };
+
+    const parseReleaseDate = (card) => {
+      const text = card.querySelector('.track-release')?.textContent || '';
+      const parsed = Date.parse(text);
+      if (!Number.isNaN(parsed)) return parsed;
+      const yearMatch = text.match(/(19|20)\d{2}/);
+      if (yearMatch) return Date.parse(`${yearMatch[0]}-01-01`);
+      return Number.MAX_SAFE_INTEGER;
+    };
+
+    const sortedAll = [...cards].sort((a, b) => {
+      const timeA = parseReleaseDate(a);
+      const timeB = parseReleaseDate(b);
+      if (timeA !== timeB) return timeA - timeB;
+      return originalIndex.get(a) - originalIndex.get(b);
+    });
+
+    const restoreOriginalOrder = () => {
+      originalOrder.forEach((card) => trackList.appendChild(card));
+    };
+
+    const initYearAnchors = () => {
+      if (!trackList || !cards.length) return;
+
+      const years = [];
+
+      cards.forEach((card) => {
+        const releaseText = card.querySelector('.track-release')?.textContent || '';
+        const match = releaseText.match(/(19|20)\d{2}/);
+        if (!match) return;
+        const year = match[0];
+        card.dataset.year = year;
+
+        if (!yearGroups.has(year)) {
+          yearGroups.set(year, { cards: [], anchor: null });
+          years.push(year);
+        }
+        yearGroups.get(year).cards.push(card);
+      });
+
+      if (!years.length) return;
+
+      years.sort((a, b) => b.localeCompare(a));
+
+      years.forEach((year) => {
+        const group = yearGroups.get(year);
+        if (!group || !group.cards.length) return;
+
+        // Attach the year id and a marker class to the first track card
+        // in the group instead of inserting an empty anchor element which
+        // becomes a flex item and creates extra spacing.
+        const firstCard = group.cards[0];
+        firstCard.id = `year-${year}`;
+        firstCard.classList.add('year-start');
+        firstCard.setAttribute('aria-label', `Year ${year}`);
+      });
+      // Jump-to-year navigation removed — year anchors are attached
+      // directly to the first card of each year group.
+    };
+
+    const applyFilter = (filter) => {
+      if (filter === 'all') {
+        sortedAll.forEach((card) => trackList.appendChild(card));
+      } else {
+        restoreOriginalOrder();
+      }
+
+      if (footnote) trackList.appendChild(footnote);
+
+      const includesFBT = (line) => {
+        return /f\.?\s*b\.?\s*t/.test(line) ||
+          line.includes('mark & jeff bass') ||
+          line.includes('mark and jeff bass') ||
+          line.includes('jeff bass') ||
+          line.includes('bass brothers');
+      };
+
+      cards.forEach((card) => {
+        const producerLines = Array.from(card.querySelectorAll('.track-producer')).map((node) => (node.textContent || '').toLowerCase());
+        if (card.classList.contains('other')) {
+          card.style.display = filter === 'all' || filter === 'other' ? 'flex' : 'none';
+          return;
+        }
+        const isProduced = card.classList.contains('produced') || producerLines.some((line) => line.startsWith('produced by') && includesFBT(line));
+        const isCoProduced = card.classList.contains('co-produced') || producerLines.some((line) => line.startsWith('co-produced by') && includesFBT(line));
+        const isAdditional = card.classList.contains('addl') || producerLines.some((line) => line.includes('additional production') && includesFBT(line));
+
+        let show = filter === 'all';
+        if (filter === 'produced') show = isProduced;
+        if (filter === 'co-produced') show = isCoProduced;
+        if (filter === 'addl') show = isAdditional;
+        if (filter === 'other') show = false; // handled above
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        if (!group.anchor) return;
+
+        const firstVisible = group.cards.find((card) => card.style.display !== 'none');
+
+        if (firstVisible) {
+          group.anchor.style.display = 'block';
+          trackList.insertBefore(group.anchor, firstVisible);
+        } else {
+          group.anchor.style.display = 'none';
+        }
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    markOtherTitles();
+    initYearAnchors();
+    applyFilter('all');
+
+    cards.forEach((card) => {
+      card.addEventListener('click', (event) => {
+        const isInteractive = event.target.closest('a, button, summary');
+        if (isInteractive) return;
+        card.classList.toggle('show-producers');
+      });
+    });
+  })();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

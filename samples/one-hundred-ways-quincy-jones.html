@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>One Hundred Ways — Quincy Jones | EMDb</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* make links match surrounding text, and red on hover */
+    .sample-page a { color: inherit; text-decoration: none; }
+    .sample-page a:hover, .sample-page a:focus { color: #E21C21; outline: none; }
+    /* inline sample players: desktop side-by-side, mobile stacked */
+    .sample-videos { display:flex; justify-content:center; align-items:flex-start; gap:56px; flex-wrap:nowrap; margin-top:24px; }
+    .sample-inline-video { flex:0 0 360px; width:360px; max-width:360px; margin-top:16px; }
+    .sample-title {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+    .sample-title span { display: inline-block; padding-right: 24px; transition: transform 0.3s ease; }
+    @media (max-width: 640px) {
+      .sample-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .sample-details { width: 100%; }
+      .sample-videos { display:flex; flex-direction:column; align-items:stretch; gap:30px; margin-top:16px; flex-wrap:nowrap; }
+      .sample-inline-video { width:100%; max-width:100%; flex:0 0 auto; transform:none; margin-top:0; }
+      .sample-title { white-space: normal; }
+      .sample-inline-video + .sample-inline-video {
+        border-top: 1px solid rgba(255,255,255,0.12);
+        padding-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <div class="sample-page" style="max-width:900px;margin:2rem auto;color:#ddd;background:#151515;padding:1.5rem;border-radius:6px;border:1px solid #222;">
+          <h3 style="color:#fff;margin:0 0 0.75rem 0;">Sample</h3>
+          <div class="sample-videos">
+            <div class="sample-inline-video">
+              <div class="sample-title" data-reveal="true"><span>One Hundred Ways - Quincy Jones</span></div>
+              <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
+                <iframe id="sampleVideo" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/OJmbfD34pLk?rel=0&modestbranding=1&enablejsapi=1" title="One Hundred Ways - Quincy Jones" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;margin-top:6px;">
+                <span style="font-size:0.95rem;">@ 0:17</span>
+                <button id="seekSampleBtn" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
+              </div>
+            </div>
+            <div class="sample-inline-video">
+              <div class="sample-title"><a href="/songs/infinite/searchin.html">Searchin - Eminem</a></div>
+              <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
+                <iframe id="sampleVideo2" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/VA9Nqwh0aks?rel=0&modestbranding=1&enablejsapi=1" title="Searchin - Eminem" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;margin-top:6px;">
+                <span style="font-size:0.95rem;">@ 0:01</span>
+                <button id="seekSampleBtn2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    
+    <!-- inline player moved into the sample-meta section for compact layout -->
+  </main>
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+  <script>
+    var samplePlayer1, samplePlayer2;
+    function onYouTubeIframeAPIReady(){
+      function onPlayerStateChange(e){
+        if (!window.YT || typeof YT.PlayerState === 'undefined') return;
+        if (e.data !== YT.PlayerState.PLAYING) return;
+        if (e.target === samplePlayer1 && samplePlayer2 && typeof samplePlayer2.pauseVideo === 'function') {
+          samplePlayer2.pauseVideo();
+        }
+        if (e.target === samplePlayer2 && samplePlayer1 && typeof samplePlayer1.pauseVideo === 'function') {
+          samplePlayer1.pauseVideo();
+        }
+      }
+      try{
+        samplePlayer1 = new YT.Player('sampleVideo', { events: { onStateChange: onPlayerStateChange } });
+      }catch(e){}
+      try{
+        samplePlayer2 = new YT.Player('sampleVideo2', { events: { onStateChange: onPlayerStateChange } });
+      }catch(e){}
+    }
+    (function loadYT(){
+      if(window.YT && window.YT.Player){ return onYouTubeIframeAPIReady(); }
+      var tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tag, s);
+    })();
+    document.addEventListener('DOMContentLoaded', function(){
+      var btn1 = document.getElementById('seekSampleBtn');
+      var btn2 = document.getElementById('seekSampleBtn2');
+      var revealTitles = document.querySelectorAll('.sample-title[data-reveal="true"]');
+      revealTitles.forEach(function(title){
+        var t = null;
+        title.addEventListener('click', function(){
+          var span = title.querySelector('span');
+          if (!span) return;
+          if (t) { clearTimeout(t); }
+          span.style.transform = 'translateX(0)';
+          var overflow = span.scrollWidth - title.clientWidth;
+          if (overflow > 0) {
+            span.style.transform = 'translateX(-' + overflow + 'px)';
+            t = setTimeout(function(){
+              span.style.transform = 'translateX(0)';
+              t = null;
+            }, 1600);
+          }
+        });
+      });
+      if(btn1){
+        btn1.addEventListener('click', function(){
+          if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
+            samplePlayer1.seekTo(17, true);
+            if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
+          } else {
+            var iframe = document.getElementById('sampleVideo');
+            if(iframe && iframe.contentWindow){
+              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [16, true] }), '*'); }catch(e){}
+            }
+          }
+          btn1.blur();
+        }, false);
+      }
+      if(btn2){
+        btn2.addEventListener('click', function(){
+          if(window.YT && samplePlayer2 && typeof samplePlayer2.seekTo === 'function'){
+            samplePlayer2.seekTo(1, true);
+            if(typeof samplePlayer2.playVideo === 'function') samplePlayer2.playVideo();
+          } else {
+            var iframe = document.getElementById('sampleVideo2');
+            if(iframe && iframe.contentWindow){
+              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [1, true] }), '*'); }catch(e){}
+            }
+          }
+          btn2.blur();
+        }, false);
+      }
+    });
+  </script>
+</body>
+</html>

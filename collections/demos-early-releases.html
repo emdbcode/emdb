@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demos & Early Releases | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+.tape-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e21c21;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(24px, 5vw, 34px);
+}
+
+.page-blurb {
+  margin: 0;
+  color: #c8c8c8;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tape-collection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tape-card {
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tape-header {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* compact album thumbnail to the left of header text; about three lines high */
+.album-thumb {
+  width: 74px;
+  height: 48px; /* ~3 lines worth of text at default sizes */
+  background: linear-gradient(180deg, #1a1a1a, #0f0f11);
+  border: 1px solid #222;
+  border-radius: 6px;
+  flex: 0 0 auto;
+}
+
+.tape-header .page-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tape-year {
+  margin: 0;
+  font-size: 13px;
+  color: #aaa;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.tape-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tape-credits {
+  margin: 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+}
+
+.tape-sides {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px 16px;
+}
+
+.tape-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tape-side h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #eaeaea;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.tracklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.track-item {
+  line-height: 1.5;
+  font-size: 14px;
+  color: #eaeaea;
+}
+
+.track-label {
+  color: #e21c21;
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.track-note {
+  color: #aaa;
+  font-weight: 400;
+  font-size: 12px;
+}
+.track-artist {
+  display: inline;
+}
+.footnote {
+  margin: 0;
+  font-size: 12.5px;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+.info-btn { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; background: transparent; border: none; padding: 0; margin: 0 0 6px 0; cursor: pointer; font-style: normal; line-height: 1; display: inline-block; }
+.info-btn:hover { color: #aaa; }
+.info-btn:active,
+.info-btn[aria-expanded="true"] { color: #E21C21; }
+.info-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+.promo-info { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.32s ease, opacity 0.22s ease; font-style: italic; color: #aaa; margin-top: 4px; font-size: clamp(12px, 3.5vw, 13px); }
+.promo-info.open { max-height: 240px; opacity: 1; }
+
+.info-btn[aria-expanded="true"] {
+  color: #e21c21;
+}
+
+.promo-info {
+  margin-top: 0px;
+  background: transparent;
+  border: none;
+  padding: 8px 0 0 0;
+  border-radius: 0;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.promo-info[hidden] { display: none; }
+
+@media (max-width: 560px) {
+  .tape-card {
+    padding: 14px;
+  }
+  .tape-title {
+    font-size: 17px;
+  }
+  .tape-sides {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="tape-page">
+  <header class="page-header">
+    <h1 class="page-title">Demos & Early Releases</h1>
+  </header>
+
+  <section class="tape-collection" aria-label="Demos and early releases">
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/cold-room-on-this-defin-tape-cover.jpg" alt="Bassmint Productions – Under New Management / Cold Room On This Defin’ Tape cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1990</p>
+          <h2 class="tape-title">Bassmint Productions – Cold Room On This Defin’ Tape (Under New Management)</h2>
+          <p class="tape-credits">Produced by Manix • Cuts and Scratches by DJ Butterfingers</p>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Bassmint Intro - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> Beats 1–5 - <span class="track-note">Instrumental</span></li>
+            <li class="track-item"><span class="track-label">A3.</span> My Posse - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">A4.</span> Chaos Kid (Skit)
+            <li class="track-item"><span class="track-label">A5.</span> Symbolic Reflections - <span class="track-note">Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">A6.</span> Beats 6–8 - <span class="track-note">Instrumental</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> Beats 9–14 - <span class="track-note">Instrumental</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Smoke Crack On The Mic - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">B3.</span> Danny K (Skit)
+            <li class="track-item"><span class="track-label">B4.</span> Positive Identity - <span class="track-note">Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">B5.</span> Fab Five Freddy (Skit)
+            <li class="track-item"><span class="track-label">B6.</span> Positive Identity #2 - <span class="track-note">Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">B7.</span> Don’t Chew With Your Mouth Full - <span class="track-note">M&amp;M</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/steppin-on-the-scene-cover.jpg" alt="Bassmint Productions – Steppin’ On To The Scene cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1990</p>
+          <h2 class="tape-title">Bassmint Productions – Steppin’ On To The Scene</h2>
+          <p class="tape-credits">Produced by Manix • Cuts and Scratches by DJ Butterfingers</p>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Steppin’ On To The Scene - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> Fattest Skinny Kid Alive - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">A3.</span> Under New Management - <span class="track-note">M&amp;M</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> Style-O-Maniac - <span class="track-note">Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Enuff Is Enuff - <span class="track-note">Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">B3.</span> Lord Have Mercy - <span class="track-note">Chaos Kid</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/still-in-the-bassmint-cover.jpg" alt="Soul Intent – Still In The Bassmint cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1992</p>
+          <h2 class="tape-title">Soul Intent – Still In The Bassmint</h2>
+          <p class="tape-credits">Produced by Manix • Cuts and Scratches by DJ Butterfingers</p>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Unreallistically Graphic - <span class="track-note">M&amp;M, Chaos Kid</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> The Day It Dawned - <span class="track-note">Chaos Kid</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> One-Handed Juggler - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Conceptual Corrections - <span class="track-note">Chaos Kid, M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">B3.</span> Soul Intent - <span class="track-note">M&amp;M</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/soul-intent-cover.jpg" alt="M with DJ Butter Fingers &amp; Manix – Soul Intent cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1992</p>
+          <h2 class="tape-title">M with DJ Butter Fingers &amp; Manix – Soul Intent</h2>
+          <p class="tape-credits">Produced by Manix • Cuts and Scratches by DJ Butterfingers</p>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Unreallistically Graphic - <span class="track-note">M&amp;M, Chaos Kid †</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> One-Handed Juggler - <span class="track-note">M&amp;M †</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> Soul Intent - <span class="track-note">M&amp;M</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Still In The Bassmint - <span class="track-note">M&amp;M</span></li>
+          </ol>
+        </div>
+      </div>
+        <p class="footnote"><em>† Taken from Soul Intent’s previous release.</em> <button class="info-btn" aria-expanded="false" aria-controls="demosPromoInfo">ⓘ</button></p>
+        <div id="demosPromoInfo" class="promo-info" hidden>This tape is a solo Eminem release, credited as M. It was issued alongside a Chaos Kid solo tape.</div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/fuckin-backstabber-cover.jpg" alt="Soul Intent – Fuckin’ Backstabber cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1995</p>
+          <h2 class="tape-title">Soul Intent – Fuckin’ Backstabber</h2>
+          <p class="tape-credits">Produced by Manix • Cuts and Scratches by DJ Butterfingers</p>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Fuckin’ Backstabber - <span class="track-note">M&amp;M, Proof</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> Biterphobia - <span class="track-note">M&amp;M</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/infinite-demo-tape-cover.jpg" alt="Eminem – Infinite cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1996</p>
+          <h2 class="tape-title">Eminem – Infinite [Demo Version]</h2>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Infinite</li>
+            <li class="track-item"><span class="track-label">A2.</span> Wego Interlude</li>
+            <li class="track-item"><span class="track-label">A3.</span> It’s Okay <span class="track-note">feat. Eye-Kyu</span></li>
+            <li class="track-item"><span class="track-label">A4.</span> Tonite</li>
+            <li class="track-item"><span class="track-label">A5.</span> 313 <span class="track-note">feat. Eye-Kyu</span></li>
+            <li class="track-item"><span class="track-label">A5.</span> Maxine <span class="track-note">feat. Denine, Three & Maissha Scrugga</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> Open Mic <span class="track-note">feat. Thyme</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Never 2 Far</li>
+            <li class="track-item"><span class="track-label">B3.</span> Searchin <span class="track-note">feat. Denine & Angela Workman</span></li>
+            <li class="track-item"><span class="track-label">B4.</span> Backstabber</li>
+            <li class="track-item"><span class="track-label">B5.</span> Jealousy Woes II</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/rough-demo-97-cover.jpg" alt="Eminem Rough Demo ’97 cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1997</p>
+          <h2 class="tape-title">Eminem Rough Demo ’97</h2>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> No One Iz Iller Than Me - <span class="track-note">No One’s Iller Demo</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> Low Down, Dirty - <span class="track-note">Demo</span></li>
+            <li class="track-item"><span class="track-label">A3.</span> Dumpin’</li>
+            <li class="track-item"><span class="track-label">A4.</span> Slim Shady</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="tape-card">
+      <header class="tape-header">
+        <div class="album-thumb">
+          <img src="../images/album-covers/demos/slim-shady-demo-cover.jpg" alt="Slim Shady Demo ’97 cover" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div class="page-meta">
+          <p class="tape-year">1997</p>
+          <h2 class="tape-title">Slim Shady Demo ’97</h2>
+        </div>
+      </header>
+      <div class="tape-sides">
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">A1.</span> Fucking Crazy - <span class="track-note">Any Man Demo</span></li>
+            <li class="track-item"><span class="track-label">A2.</span> Get Down Tonight - <span class="track-note">Cum On Everybody Demo</span></li>
+          </ol>
+        </div>
+        <div class="tape-side">
+          <ol class="tracklist">
+            <li class="track-item"><span class="track-label">B1.</span> I’m Shady - <span class="track-note">Demo</span></li>
+            <li class="track-item"><span class="track-label">B2.</span> Rock Bottom - <span class="track-note">Demo</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <aside class="note-block">
+    <p class="footnote">Various unofficial Bassmint Productions demo tapes circulate, drawing from two CD-Rs sold by DJ Butterfingers on eBay, along with other leaked material. <em>The Slim Shady LP</em> demo CD, titled <em>Untitled Sequence</em>, is a fan-made compilation created after a <em>Slim Shady LP</em> session tape (Ruff Mixes #2) leaked and is considered unofficial.</p>
+  </aside>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+document.addEventListener('click', function(e){
+  var btn = e.target.closest && e.target.closest('.info-btn');
+  if (!btn) return;
+  var id = btn.getAttribute('aria-controls');
+  var panel = document.getElementById(id);
+  if (!panel) return;
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  if (expanded) {
+    panel.setAttribute('hidden', '');
+    panel.classList.remove('open');
+  } else {
+    panel.removeAttribute('hidden');
+    // allow transition CSS (.promo-info.open) to animate
+    panel.classList.add('open');
+  }
+});
+</script>
+</body>
+</html>

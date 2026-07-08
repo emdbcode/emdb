@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drama Setter | Charts | EMDb</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+  overflow-x: hidden;
+}
+
+
+.charts-page {
+  max-width: 920px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .charts-box {
+    padding: clamp(12px, 4vw, 16px) clamp(12px, 4vw, 18px);
+  }
+  .grid-2,
+  .grid-3 {
+    gap: clamp(10px, 4vw, 14px);
+  }
+  .chart-name {
+    font-size: clamp(12px, 3.8vw, 14px);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0rem 0;
+  color: #eaeaea;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+}
+
+.page-title a { color: inherit; text-decoration: none; transition: color .12s ease; }
+.page-title a:hover, .page-title a:focus, .page-title a:active { color: #E21C21 !important; }
+
+.charts-box {
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid #222;
+  background: #151515;
+  padding: clamp(16px, 4vw, 22px) clamp(16px, 4vw, 24px);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.charts-box + .charts-box {
+  margin-top: clamp(18px, 5vw, 28px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(56px, 18vw, 80px);
+  gap: clamp(12px, 4vw, 20px);
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    clamp(80px, 22vw, 120px)
+    clamp(80px, 22vw, 120px);
+  gap: clamp(12px, 4vw, 20px);
+}
+
+.grid-2 > :not(:last-child),
+.grid-3 > :not(:last-child) {
+  padding-right: clamp(10px, 3vw, 16px);
+  border-right: 1px solid #333;
+}
+
+.chart-header,
+.cert-header {
+  font-size: clamp(14px, 4vw, 16px);
+  color: #aaa;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #333;
+}
+
+.chart-row,
+.cert-row {
+  padding: clamp(5px, 2vw, 6px) 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+
+.chart-row:last-of-type,
+.cert-row:last-of-type {
+  border-bottom: none;
+}
+
+/* nested sub-charts (threaded) */
+.chart-sublist {
+  margin-left: 18px;
+  padding-left: 14px;
+  border-left: 2px dotted #2f2f2f;
+  display: none;
+}
+.chart-sublist.open { display: block; }
+.chart-subrow {
+  position: relative;
+}
+/* clickable parent rows for subcharts */
+.chart-parent { cursor: pointer; }
+.chart-parent:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+.chart-parent .chart-name { display: flex; align-items: center; gap: 8px; }
+.chart-parent .chart-name::after { content: "▼"; margin-left: auto; color: #777; font-size: 12px; }
+.chart-parent[aria-expanded="true"] .chart-name::after { content: "▲"; }
+.chart-subrow::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 12px;
+  height: 0;
+  border-top: 2px dotted #2f2f2f;
+  transform: translateY(-50%);
+}
+
+.chart-name {
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.4;
+  color: #eaeaea;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-source {
+  display: inline;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.cert-source {
+  display: inline;
+  color: #aaa;
+  font-weight: normal;
+}
+
+@media (max-width: 520px) {
+  .chart-name {
+    font-size: clamp(12px, 3.8vw, 14px) !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+  }
+}
+
+.cert-name {
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.4;
+  color: #eaeaea;
+}
+
+.chart-peak,
+.cert-level,
+.cert-units {
+  font-size: clamp(14px, 4vw, 16px);
+  color: #fff;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.chart-peak {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(56px, 18vw, 72px);
+  height: clamp(28px, 6vw, 34px);
+  padding: 0;
+  border-radius: 6px;
+  background: #1a1a1a;
+  border: 0px solid #2c2c2c;
+  color: #000 !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  justify-self: center;
+}
+
+.peak-gold { color: #0f1e0f; background: linear-gradient(165deg, rgba(124,224,140,0.82) 0%, rgba(75,191,100,0.65) 55%, rgba(47,154,69,0.55) 100%), #1a1a1a; border-color: #5ccf73; }
+.peak-green { color: #242204; background: linear-gradient(165deg, rgba(226,241,153,0.9) 0%, rgba(160, 218, 112, 0.72) 55%, rgba(170,185,65,0.62) 100%), #1a1a1a; border-color: #d2de7a; }
+.peak-yellow { color: #f8f1cf; background: linear-gradient(165deg, rgba(236,216,120,0.9) 0%, rgba(208, 201, 97, 0.78) 55%, rgba(180, 165, 48, 0.7) 100%), #1a1a1a; border-color: #d8bd55; }
+.peak-orange { color: #fde6d1; background: linear-gradient(165deg, rgba(255,193,133,0.82) 0%, rgba(239,156,83,0.65) 55%, rgba(215,119,50,0.55) 100%), #1a1a1a; border-color: #f0a360; }
+.peak-red { color: #fde1e1; background: linear-gradient(165deg, rgba(255,159,159,0.82) 0%, rgba(228,103,103,0.65) 55%, rgba(201,72,72,0.55) 100%), #1a1a1a; border-color: #e77979; }
+
+.special-edition {
+  font-size: clamp(12px, 3.5vw, 13px);
+  font-style: italic;
+  color: #aaa;
+  margin-left: 6px;
+}
+
+.section-divider {
+  height: 1px;
+  background: #333;
+  margin: clamp(26px, 6vw, 38px) 0;
+}
+
+.info-note {
+  font-size: clamp(12px, 3.5vw, 13px);
+  color: #aaa;
+  font-style: italic;
+  margin-top: 6px;
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+  /* slightly smaller inset so notes align under the card content without pushing too far right */
+  padding-left: clamp(12px, 3vw, 18px);
+  padding-right: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+  margin: 8px auto 0 auto;
+  transform: translateX(-6px);
+}
+
+.info-note + .info-note {
+  margin-top: 6px;
+}
+
+@media (max-width: 520px) {
+  .info-note { transform: translateX(-6px); padding-left: clamp(10px, 3vw, 14px); }
+
+  .chart-name {
+    font-size: clamp(12px, 3.8vw, 14px) !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+  }
+
+  .chart-source {
+    display: block;
+    margin-top: 1px;
+  }
+
+  .cert-name {
+    font-size: clamp(12px, 3.8vw, 14px) !important;
+    white-space: normal !important;
+  }
+
+  .cert-source {
+    display: block;
+    margin-top: 1px;
+  }
+
+  .cert-source.promusicae {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
+
+/* reduce space between the last chart box and the notes */
+.charts-box:last-of-type {
+  margin-bottom: 6px;
+}
+</style>
+</head>
+
+<body>
+<div id="site-header"></div>
+
+<main class="charts-page">
+<h1 class="page-title"><a href="../songs/feat/drama-setter.html">Drama Setter</a> | <a href="../charts/index-charts.html">Charts</a></h1>
+
+<div class="charts-box">
+
+  <div class="chart-header grid-2">
+    <span>Weekly Charts</span>
+    <span>Peak</span>
+  </div>
+
+  <div class="chart-row grid-2"><span class="chart-name">US Hot R&amp;B/Hip-Hop Singles Sales <span class="chart-source">(Billboard)</span></span><span class="chart-peak peak-orange">34</span></div>
+
+</div>
+
+
+</main>
+
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+
+<script>
+  (function setupSubchartToggles(){
+    var parents = Array.from(document.querySelectorAll('.chart-parent[data-sublist]'));
+    function toggle(parent){
+      var targetId = parent.getAttribute('data-sublist');
+      if (!targetId) return;
+      var sublist = document.getElementById(targetId);
+      if (!sublist) return;
+      var isOpen = sublist.classList.toggle('open');
+      sublist.setAttribute('aria-hidden', String(!isOpen));
+      parent.setAttribute('aria-expanded', String(isOpen));
+    }
+    parents.forEach(function(parent){
+      parent.addEventListener('click', function(){ toggle(parent); });
+      parent.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle(parent);
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

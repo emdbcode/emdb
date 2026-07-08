@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Marshall Mathers LP | Critic Scores | EMDb</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+  overflow-x: hidden;
+}
+
+
+.charts-page {
+  max-width: 920px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .charts-box {
+    padding: clamp(12px, 4vw, 16px) clamp(12px, 4vw, 18px);
+  }
+  .grid-2,
+  .grid-3 {
+    gap: clamp(10px, 4vw, 14px);
+  }
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0;
+  color: #eaeaea;
+  line-height: 1.2;
+  text-align: left;
+  font-weight: 700;
+}
+
+.page-title a { color: inherit; text-decoration: none; transition: color .12s ease; }
+.page-title a:hover,
+.page-title a:focus,
+.page-title a:active { color: #E21C21 !important; }
+
+.title-row {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(12px, 3vw, 18px);
+  padding-left: clamp(16px, 4vw, 24px);
+  padding-right: clamp(16px, 4vw, 24px);
+  box-sizing: border-box;
+}
+
+.title-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 2.5vw, 14px);
+  flex-wrap: wrap;
+}
+
+.cover-thumb {
+  width: auto;
+  height: calc(3 * clamp(22px, 5vw, 32px) * 1.2);
+  max-height: 180px;
+  min-height: 64px;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  border: 1px solid #222;
+}
+
+.overall-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.overall-label {
+  font-size: clamp(12px, 3.5vw, 14px);
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.charts-box {
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid #222;
+  background: #151515;
+  padding: clamp(16px, 4vw, 22px) clamp(16px, 4vw, 24px);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.grid-critic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(80px, 22vw, 120px);
+  gap: clamp(12px, 4vw, 18px);
+  align-items: center;
+}
+
+.critic-header {
+  font-size: clamp(14px, 4vw, 16px);
+  color: #aaa;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.critic-row {
+  padding: clamp(6px, 2vw, 8px) 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+
+.critic-row:last-of-type { border-bottom: none; }
+
+.overall-row {
+  margin-top: clamp(12px, 4vw, 18px);
+  padding-top: clamp(12px, 4vw, 18px);
+  border-top: none;
+}
+
+.critic-name {
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.4;
+  color: #eaeaea;
+}
+
+.critic-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.critic-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: default;
+}
+.critic-score:link,
+.critic-score:visited,
+.critic-score:hover,
+.critic-score:active {
+  color: #000;
+}
+.critic-red    { background: #E21C21; }
+.critic-orange { background: #FF8C00; }
+.critic-yellow { background: #eadb03; }
+.critic-green  { background: #4CAF50; }
+.critic-gold {
+  background: linear-gradient(180deg, #ffe680 0%, #f0c95a 45%, #d4af37 80%);
+  border: 0px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.25);
+  color: #111;
+}
+
+.critic-link {
+  color: #aaa;
+  font-size: clamp(13px, 3.6vw, 15px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.critic-link:hover,
+.critic-link:focus { color: #E21C21; }
+
+.critic-link.muted { color: #777; cursor: default; }
+.critic-link.muted:hover { color: #777; }
+
+.info-note {
+  font-size: clamp(12px, 3.5vw, 13px);
+  color: #aaa;
+  font-style: italic;
+  margin-top: 10px;
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+  padding-left: clamp(12px, 3vw, 18px);
+  padding-right: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.info-btn {
+  font-family: Arial, sans-serif;
+  font-size: clamp(12px, 3.5vw, 13px);
+  color: #aaa;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-style: normal;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transform: translateY(0);
+}
+.info-btn:hover { color: #aaa; }
+.info-btn:active,
+.info-btn[aria-expanded="true"] { color: #E21C21; }
+.info-btn:focus-visible { outline: 2px solid rgba(226,28,33,0.18); outline-offset: 2px; }
+
+.promo-info {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.32s ease, opacity 0.22s ease;
+  font-style: italic;
+  color: #aaa;
+  margin-top: 8px;
+  font-size: clamp(12px, 3.5vw, 13px);
+  width: 100%;
+  max-width: 700px;
+  padding-left: clamp(12px, 3vw, 18px);
+  padding-right: clamp(12px, 3vw, 18px);
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+.promo-info.open { max-height: 240px; opacity: 1; }
+
+@media (max-width: 520px) {
+  .title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .overall-score { align-items: flex-start; }
+  .overall-score .critic-score { margin-left: 0; }
+
+  .grid-critic {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(10px, 3vw, 14px);
+    align-items: center;
+  }
+  .critic-row { border-bottom: 1px solid #2f2f2f; }
+  .critic-row > *:not(:last-child) { margin-bottom: 0; }
+  .critic-link { justify-content: flex-start; }
+  .critic-score { justify-self: end; }
+}
+</style>
+</head>
+
+<body>
+<div id="site-header"></div>
+
+<main class="charts-page">
+<div class="title-row">
+  <div class="title-main">
+    <img class="cover-thumb" src="../images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover">
+    <h1 class="page-title">Eminem<br><a href="../releases/marshall-mathers-lp.html">The Marshall Mathers LP</a><br><a href="../charts/index-critic-scores.html">Critic Scores</a></h1>
+  </div>
+</div>
+
+<div class="charts-box">
+  <div class="critic-header grid-critic">
+    <span>Outlet</span>
+    <span>Score</span>
+  </div>
+
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">AllMusic</span><a class="critic-link" href="https://www.allmusic.com/album/the-marshall-mathers-lp-mw0000062949" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.allmusic.com/album/the-marshall-mathers-lp-mw0000062949" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Consumer Guide</span><a class="critic-link" href="https://www.robertchristgau.com/get_artist.php?name=eminem" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.robertchristgau.com/get_artist.php?name=eminem" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Laut</span><a class="critic-link" href="https://laut.de/Eminem/Alben/The-Marshall-Mathers-LP-340" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://laut.de/Eminem/Alben/The-Marshall-Mathers-LP-340" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Sputnikmusic</span><a class="critic-link" href="https://www.sputnikmusic.com/review/1440/Eminem-The-Marshall-Mathers-LP/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.sputnikmusic.com/review/1440/Eminem-The-Marshall-Mathers-LP/" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Vibe</span><a class="critic-link" href="https://www.vibe.com/features/editorial/vibe-review-marshall-mathers-lp-349543/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.vibe.com/features/editorial/vibe-review-marshall-mathers-lp-349543/" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">XXL</span><a class="critic-link" href="https://www.xxlmag.com/eminem-marshall-mathers-lp-classic-review/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.xxlmag.com/eminem-marshall-mathers-lp-classic-review/" target="_blank" rel="noopener">10</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Pitchfork</span><a class="critic-link" href="https://pitchfork.com/reviews/albums/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://pitchfork.com/reviews/albums/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">9.4</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Entertainment Weekly</span><a class="critic-link" href="https://ew.com/article/2000/06/02/marshall-mathers-lp-2/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://ew.com/article/2000/06/02/marshall-mathers-lp-2/" target="_blank" rel="noopener">9.1</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">NME</span><a class="critic-link" href="https://www.nme.com/reviews/reviews-nme-2338-336218" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.nme.com/reviews/reviews-nme-2338-336218" target="_blank" rel="noopener">9</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Village Voice</span><span class="critic-link muted">Review unavailable</span></div><span class="critic-score critic-gold" aria-label="Score 9">9</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">RapReviews</span><a class="critic-link" href="https://www.rapreviews.com/2000/05/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-gold" href="https://www.rapreviews.com/2000/05/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">8.5</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">CDNow</span><span class="critic-link muted">Review unavailable</span></div><span class="critic-score critic-green" aria-label="Score 8">8</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Drowned In Sound</span><a class="critic-link" href="https://drownedinsound.com/releases/2467/reviews/286" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://drownedinsound.com/releases/2467/reviews/286" target="_blank" rel="noopener">8</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">MTV</span><span class="critic-link muted">Review unavailable</span></div><span class="critic-score critic-green" aria-label="Score 8">8</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Rolling Stone</span><a class="critic-link" href="https://www.rollingstone.com/music/music-album-reviews/the-marshall-mathers-lp-203914/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.rollingstone.com/music/music-album-reviews/the-marshall-mathers-lp-203914/" target="_blank" rel="noopener">8</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Source</span><span class="critic-link muted">Review unavailable</span></div><span class="critic-score critic-green" aria-label="Score 8">8</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Uncut</span><span class="critic-link muted">Print only</span></div><span class="critic-score critic-green" aria-label="Score 8">8</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Wall Of Sound</span><span class="critic-link muted">Review unavailable</span></div><span class="critic-score critic-green" aria-label="Score 8">8</span></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The A.V. Club</span><a class="critic-link" href="https://www.avclub.com/eminem-the-marshall-mathers-lp-1798192401" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-green" href="https://www.avclub.com/eminem-the-marshall-mathers-lp-1798192401" target="_blank" rel="noopener">7</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Independent</span><a class="critic-link" href="https://archive.org/details/the-independent-2000-album-reviews/The_Independent_Sat__Jun_3__2000_.jpg" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://archive.org/details/the-independent-2000-album-reviews/The_Independent_Sat__Jun_3__2000_.jpg" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Q</span><a class="critic-link" href="https://web.archive.org/web/20001205064000/http://www.qonline.co.uk/reviews/server.asp?id=18934" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-yellow" href="https://web.archive.org/web/20001205064000/http://www.qonline.co.uk/reviews/server.asp?id=18934" target="_blank" rel="noopener">6</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">The Guardian</span><a class="critic-link" href="https://theguardian.newspapers.com/article/the-guardian-eminem-the-marshall-mathe/128753894/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-orange" href="https://theguardian.newspapers.com/article/the-guardian-eminem-the-marshall-mathe/128753894/" target="_blank" rel="noopener">4</a></div>
+  <div class="critic-row grid-critic"><div class="critic-name-block"><span class="critic-name">Slant</span><a class="critic-link" href="https://www.slantmagazine.com/music/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">Read this review</a></div><a class="critic-score critic-orange" href="https://www.slantmagazine.com/music/eminem-the-marshall-mathers-lp/" target="_blank" rel="noopener">3</a></div>
+  <div class="critic-row grid-critic overall-row"><div class="critic-name-block"><span class="critic-name">Overall</span></div><span class="critic-score critic-gold" aria-label="Overall score 8.1">8.1</span></div>
+
+</div>
+
+<div id="infoNotePanel" class="info-note">
+  <em>Some scores are adjusted to a 10-point scale for consistency. Color scale: 0–2 red; 2.1–4 orange; 4.1–6 yellow; 6.1–8 green; 8.1–10 gold.</em>
+</div>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+
+</body>
+</html>

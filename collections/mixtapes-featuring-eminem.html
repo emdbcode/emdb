@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixtapes Featuring Eminem | EMDb</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eaeaea;
+}
+
+.albums-discography-page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-title {
+  font-size: clamp(22px, 5vw, 32px);
+  margin: 0 0 0.5rem 0;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.track-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  align-items: flex-start;
+}
+
+.track-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0f0f0f;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.album-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.album-title {
+  cursor: pointer;
+}
+
+.album-tracks {
+  margin-top: 12px;
+  color: #eaeaea;
+  font-size: 14px;
+  /* move track list left so its left edge aligns with the thumbnail */
+  position: relative;
+  z-index: 1;
+  margin-left: calc(-1 * (72px + 12px));
+}
+
+.album-tracks ul {
+  margin: 6px 0 0 0;
+  padding: 0;
+}
+
+.album-tracks li {
+  display: block;
+  padding: 6px 6px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.album-tracks li:last-child {
+  border-bottom: none;
+}
+
+.footnote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #222;
+  background: #0f0f0f;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #c8c8c8;
+  margin: 0;
+}
+
+.footnote a {
+  color: #c8c8c8;
+  text-decoration: none;
+}
+.footnote a:hover,
+.footnote a:focus {
+  text-decoration: underline;
+  color: #E21C21;
+}
+
+.album-artist,
+.album-type,
+.album-release,
+.album-label,
+.track-note {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.track-note {
+  color: #aaa;
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* dagger marker color: darker than #aaa but lighter than the background */
+.dagger {
+  color: #aaa;
+}
+
+.promo-info {
+  display: inline;
+}
+
+
+.promo-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.promo-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* active/open/hover state */
+details[open] > summary.promo-summary,
+.promo-summary:hover {
+  color: #E21C21;
+}
+
+/* when the details is closed but the summary is focused, keep it white */
+details:not([open]) > summary.promo-summary:focus {
+  color: #aaa;
+}
+
+.promo-note {
+  margin: 8px 0 0 0;
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+
+
+.track-feat {
+  font-weight: 400;
+  color: #c8c8c8;
+  font-size: 13px;
+}
+
+.fn-mark {
+  color: #aaa;
+  font-weight: 400;
+}
+
+/* album title links: no underline by default, underline on hover; preserve color */
+.album-title a {
+  text-decoration: none;
+  color: inherit;
+}
+.album-title a:hover,
+.album-title a:focus {
+  text-decoration: none;
+  color: #E21C21;
+}
+
+@media (max-width: 520px) {
+  .track-card {
+    gap: 10px;
+    padding: 10px;
+  }
+  .track-thumb {
+    width: 64px;
+    height: 64px;
+  }
+  .album-tracks li {
+    padding: 8px 8px;
+    margin-bottom: 8px;
+  }
+  /* responsive left-shift for smaller thumbnails/gap */
+  .album-tracks {
+    margin-left: calc(-1 * (64px + 10px));
+  }
+}
+
+/* collection-dropdown-enhancements-style:start */
+.track-card {
+  align-items: flex-start;
+}
+
+.track-thumb,
+.track-thumb-link {
+  align-self: flex-start;
+}
+
+.track-meta {
+  flex: 1;
+  min-width: 0;
+  min-height: 72px;
+  justify-content: center;
+  border-left: 1px solid #2a2a2a;
+  padding-left: 12px;
+
+  position: relative;
+  padding-right: 36px;
+}
+
+.track-title-row {
+  display: block;
+  width: 100%;
+}
+
+.track-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.18s ease, color 120ms ease;
+}
+
+.track-toggle.open {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.track-toggle:hover,
+.track-toggle:focus-visible,
+.track-card.show-details .track-toggle {
+  color: #E21C21;
+}
+
+.track-details {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-card.show-details .track-details {
+  display: flex;
+}
+
+.track-title,
+.track-artist,
+.track-album,
+.track-release,
+.track-producer,
+.promo-note {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-card.show-details .track-title,
+.track-card.show-details .track-artist,
+.track-card.show-details .track-album,
+.track-card.show-details .track-release,
+.track-card.show-details .track-producer,
+.track-card.show-details .promo-note {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.track-details .promo-note {
+  margin: 0;
+}
+/* collection-dropdown-enhancements-style:end */
+
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="albums-discography-page">
+  <header>
+    <h1 class="page-title">Mixtapes Featuring Eminem</h1>
+  </header>
+
+  <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/dj-butter-desperados-cover.jpg" alt="God’s Plan cover">
+      <div class="track-meta">
+        <h2 class="album-title">Kill The DJ</h2>
+        <p class="album-artist">DJ Butter</p>
+        <p class="album-release">2000</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Desperados</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+      
+      <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/g-unit-words-from-eminem-cover.jpg" alt="God’s Plan cover">
+      <div class="track-meta">
+        <h2 class="album-title">God’s Plan</h2>
+        <p class="album-artist">G-Unit</p>
+        <p class="album-release">November 12, 2002</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Words From Eminem</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-cover.jpg" alt="Invasion: The Shady Records Mixtape cover">
+      <div class="track-meta">
+        <h2 class="album-title">Invasion: The Shady Records Mixtape</h2>
+        <p class="album-artist">DJ Green Lantern</p>
+        <p class="album-release">November 21, 2002</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Invasion</li>
+            <li>The Sauce</li>
+            <li>Nail In The Coffin</li>
+            <li>Lose Yourself (Green Lantern Rmx)</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-2-cover.jpg" alt="Invasion Part II: Conspiracy Theory cover">
+      <div class="track-meta">
+        <h2 class="album-title">Invasion Part II: Conspiracy Theory</h2>
+        <p class="album-artist">DJ Green Lantern</p>
+        <p class="album-release">April 15, 2003</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>The Conspiracy Freestyle</li>
+            <li>Ja Rule Freestyle</li>
+            <li>Hail Mary</li>
+            <li>Bump Heads</li>
+            <li>Doe Ray Me</li>
+            <li>We All Die One Day</li>
+            <li>Keep Talkin’</li>
+            <li>Patiently Waiting (Live From The State Theatre In Detroit)</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shady-records-mixtape-cd-cover.jpg" alt="Shady Records Mixtape-CD cover">
+      <div class="track-meta">
+        <h2 class="album-title">Shady Records Mixtape-CD</h2>
+        <p class="album-artist">DJ Green Lantern</p>
+        <p class="album-release">April, 2003</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Bump Heads <span class="dagger">*</span></li>
+            <li>Doe Ray Me <span class="dagger">*</span></li>
+            <li>Keep Talkin’ <span class="dagger">*</span></li>
+            <li>Patiently Waiting (Live From The State Theatre In Detroit) <span class="dagger">*</span></li>
+            <li>In Da Club (Live From The State Theatre In Detroit)</li>
+          </ul>
+          <p class="track-note">* Previously released. <details class="promo-info"><summary class="promo-summary">ⓘ</summary><p class="promo-note">The mix of “Bump Heads” features additional vocals from DJ Green Lantern that are not included on the previously released version.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/royce-da-5'9-renegades-she's-the-one-cover.jpg" alt="Build And Destroy cover">
+      <div class="track-meta">
+        <h2 class="album-title">Build And Destroy</h2>
+        <p class="album-artist">Royce Da 5’9”</p>
+        <p class="album-release">June 3, 2003</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Nuttin’ To Do <span class="dagger">*</span></li>
+            <li>What The Beat <span class="dagger">*</span></li>
+            <li>She’s The One</li>
+            <li>Renegades</li>
+          </ul>
+          <p class="track-note">* Previously released. <details class="promo-info"><summary class="promo-summary">ⓘ</summary><p class="promo-note">“She’s The One” and “Renegades” were initially released but were later omitted when the mixtape was reissued as a compilation album by Trouble Records on July 29, 2003. “Renegades” is the original version of “Renegade” by JAY-Z.</p></details>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-is-open-cover.jpg" alt="The Bar Is Open cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Bar Is Open</h2>
+        <p class="album-artist">Obie Trice</p>
+        <p class="album-release">September 23, 2003</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Bartender Intro</li>
+            <li>Shit Hits The Fan <span class="dagger">*</span></li>
+            <li>Lady <span class="dagger">*</span></li>
+            <li>Drips <span class="dagger">*</span></li>
+            <li>Go To Sleep <span class="dagger">*</span></li>
+            <li>We All Die One Day <span class="dagger">*</span></li>
+            <li>Love Me <span class="dagger">*</span></li>
+            <li>Funk Flex Interlude</li>
+          </ul>
+           <p class="track-note">* Previously released.</p>
+        </div>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/bully-cover.jpg" alt="SWAT: Global Mixtape Strike Team cover">
+      <div class="track-meta">
+        <h2 class="album-title">SWAT: Global Mixtape Strike Team</h2>
+        <p class="album-artist">DJ Whoo Kid & Lloyd Banks</p>
+        <p class="album-release">December 2003</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Bully</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/invasion-3-cover.jpg" alt="Invasion Part 3: Countdown to Armageddon cover">
+      <div class="track-meta">
+        <h2 class="album-title">Invasion Part 3: Countdown to Armageddon</h2>
+        <p class="album-artist">DJ Green Lantern</p>
+        <p class="album-release">January 2004</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Freestyle</li>
+            <li>6 In The Morning</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shade-45-cover.jpg" alt="Shade 45: Sirius Bizness cover">
+      <div class="track-meta">
+        <h2 class="album-title">Shade 45: Sirius Bizness</h2>
+        <p class="album-artist">DJ Green Lantern</p>
+        <p class="album-release">October 2004</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Intro</li>
+            <li>Shade 45 Invasion</li>
+            <li>Mosh <span class="dagger">*</span></li>
+            <li>Just Lose It (Remix)</li>
+            <li>Leave Dat Boy Alone (Green Mix)</li>
+            <li>Outro</li>
+         </ul>
+            <p class="track-note">* Previously released.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/proof-grown-man-shit-cover.jpg" alt="Grown Man Shit (The Mixtape) cover">
+      <div class="track-meta">
+        <h2 class="album-title">Grown Man Shit (The Mixtape)</h2>
+        <p class="album-artist">Proof</p>
+        <p class="album-release">April 25, 2005</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Oil Can Harry</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/anger-management-3-cover.jpg" alt="Anger Management 3 mixtape cover">
+      <div class="track-meta">
+        <h2 class="album-title">Anger Management 3</h2>
+        <p class="album-artist">Clinton Sparks</p>
+        <p class="album-release">July 12, 2005</p>
+          <div class="album-tracks" hidden aria-hidden="true">
+            <ul>
+              <li>Introduction</li>
+              <li>Anger Management</li>
+              <li>Fubba U Cubba Cubba</li>
+              <li>Dirty Steve (Skit)</li>
+              <li>Emulate</li>
+              <li>Welcome 2 Detroit</li>
+              <li>Hip-Hop <span class="dagger">*</span></li>
+            </ul>
+            <p class="track-note">* Previously released.</p>
+          </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/strike-pale-moonlight-cover.jpeg" alt="Strike 1 The Mixtape cover">
+      <div class="track-meta">
+        <h2 class="album-title">Unsportsmanlike Conduct</h2>
+        <p class="album-artist">Strike</p>
+        <p class="album-release">2005</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Pale Moonlight</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/obie-trice-bar-shots-cover.jpg" alt="DJ Whoo Kid Presents: Bar Shots cover">
+      <div class="track-meta">
+        <h2 class="album-title">DJ Whoo Kid Presents: Bar Shots</h2>
+        <p class="album-artist">Obie Trice</p>
+        <p class="album-release">August 12, 2006</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Fuck Obie Skit</li>
+            <li>There They Go <span class="dagger">*</span></li>
+            <li>Public Service Announcement</li>
+            <li>Whoo Kid Skit</li>
+            <li>Sadapop Outro</li>
+          </ul>
+          <p class="track-note">* Previously released.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/d12-return-of-dozen-vol-2-cover.jpg" alt="Return Of The Dozen Vol. 2 cover">
+      <div class="track-meta">
+        <h2 class="album-title">Return Of The Dozen Vol. 2</h2>
+        <p class="album-artist">D12</p>
+        <p class="album-release">April 12, 2011</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Eminem Intro</li>
+            <li>Fame</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/feat/d12-devils-night-mixtape-cover.jpg" alt="The Devil’s Night Mixtape cover">
+      <div class="track-meta">
+        <h2 class="album-title">The Devil’s Night Mixtape</h2>
+        <p class="album-artist">D12</p>
+        <p class="album-release">October 31, 2015</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>Devil’s Night Intro</li>
+          </ul>
+          <details class="promo-info"><summary class="promo-summary">ⓘ</summary><p class="promo-note">The mixtape was initially released without the Eminem introduction. The following day, the song was added and the mixtape was subtitled Reloaded. The subtitle has since been removed, with the standard version now featuring the Eminem introduction.</p></details>
+        </div>
+      </div>
+    </article>
+
+     <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/shady-classics-cover.jpg" alt="Shady Classics Mixtape cover">
+      <div class="track-meta">
+        <h2 class="album-title">Shady Classics Mixtape</h2>
+        <p class="album-artist">DJ Whoo Kid & Eminem</p>
+        <p class="album-release">November 22, 2014</p>
+        <div class="album-tracks" hidden aria-hidden="true">
+          <ul>
+            <li>I’m Having A Relapse</li>
+            <li>Eminem, Paul Rosenberg Intro</li>
+            <li>Quitter</li>
+            <li>Hit ’Em Up</li>
+            <li>Eminem Skit [1]</li>
+            <li>2009 BET Hip Hop Awards Freestyle</li>
+            <li>Eminem Skit [2]</li>
+            <li>ShadyXV Shoutout</li>
+            <li>Alchemist Freestyle</li>
+            <li>Eminem Skit [3]</li>
+            <li>ShadyXV Outro</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <p class="promo-note">This list includes only mixtapes featuring previously unreleased songs and excludes those containing only remixes or recycled material.</p>
+
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/header.js"></script>
+<script>
+(() => {
+  const titles = Array.from(document.querySelectorAll('.track-card .album-title'));
+  titles.forEach((title) => {
+    title.setAttribute('role', 'button');
+    title.setAttribute('tabindex', '0');
+    title.setAttribute('aria-expanded', 'false');
+
+    const toggle = () => {
+      const card = title.closest('.track-card');
+      if (!card) return;
+      const tracks = card.querySelector('.album-tracks');
+      if (!tracks) return;
+      const nowHidden = !tracks.hidden;
+      tracks.hidden = nowHidden;
+      tracks.setAttribute('aria-hidden', String(nowHidden));
+      title.setAttribute('aria-expanded', String(!nowHidden));
+    };
+
+    title.addEventListener('click', toggle);
+    title.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+</script>
+
+<script id="collection-dropdown-enhancements-script">
+(() => {
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!cards.length) return;
+
+  const toggleDetails = (card) => {
+    const showing = card.classList.toggle('show-details');
+    const toggle = card.querySelector('.track-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+    }
+    card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+  };
+
+  cards.forEach((card) => {
+    const meta = card.querySelector('.track-meta');
+    const title = meta ? meta.querySelector('.track-title') : null;
+    if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
+    promoBlocks.forEach((block) => {
+      const note = block.querySelector('.promo-note');
+      if (!note) {
+        block.remove();
+        return;
+      }
+      const inlineNote = document.createElement('p');
+      inlineNote.className = 'promo-note';
+      inlineNote.innerHTML = note.innerHTML;
+      block.replaceWith(inlineNote);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'track-toggle';
+    toggle.setAttribute('aria-label', 'Toggle track details');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▾';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'track-title-row';
+    title.parentNode.insertBefore(titleRow, title);
+    titleRow.appendChild(title);
+    titleRow.appendChild(toggle);
+
+    const details = document.createElement('div');
+    details.className = 'track-details';
+    const detailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && (el.classList.contains('track-producer')
+        || el.classList.contains('track-release')
+        || el.classList.contains('promo-note'))
+    ));
+    detailNodes.forEach((node) => details.appendChild(node));
+    meta.appendChild(details);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-pressed', 'false');
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleDetails(card);
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.stopPropagation();
+      }
+    });
+
+    card.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a,button,details,summary,iframe,video')) return;
+      toggleDetails(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        card.click();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
