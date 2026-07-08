@@ -73,8 +73,11 @@ const deriveUsername = (email) => {
 };
 
 const normalizeAvatar = (path) => {
-  if (!path) return '/images/avatars/avatar-1.jpg';
-  if (path.startsWith('/images/avatars/')) return path;
+  const raw = String(path || '').trim().replace(/\\/g, '/');
+  if (!raw) return '/images/avatars/avatar-1.jpg';
+  const avatarMatch = raw.match(/avatar[_-]?(\d+)\.(?:jpe?g|png|webp|gif)$/i);
+  if (avatarMatch) return `/images/avatars/avatar-${Number(avatarMatch[1])}.jpg`;
+  if (/^\/images\/avatars\/avatar-\d+\.jpg$/i.test(raw)) return raw.toLowerCase();
   return '/images/avatars/avatar-1.jpg';
 };
 

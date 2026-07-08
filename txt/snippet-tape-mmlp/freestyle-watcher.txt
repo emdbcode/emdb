@@ -1,22 +1,0 @@
-Freestyle [The Watcher]
-Eminem Snippet Tape (The Marshall Mathers LP) • 2000
-/Users/hwdn/Desktop/EMDb/images/album-covers/non-album/snippet-mmlp-cover.jpg
-https://www.youtube.com/watch?v=SyGY6my_Hg8
-
-Performers
-Eminem Vocals
-
-Written by
-Eminem, Dr. Dre, Mel-Man
-
-Released 2000
-
-Samples and Interpolations
-
-/Users/hwdn/Desktop/EMDb/images/sample-covers/bglm-1.jpg
-Dr. Dre - The Watcher (Instrumental)
-Beat Sample
-
-Lyrics
-
-<div id='rg_embed_link_50132' class='rg_embed_link' data-song-id='50132'>Read <a href='https://genius.com/Eminem-freestyle-the-watcher-lyrics'>“Freestyle (The Watcher)” by Eminem</a> on Genius</div> <script crossorigin src='//genius.com/songs/50132/embed.js'></script>

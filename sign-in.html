@@ -188,7 +188,7 @@
           const { error: insertError } = await supabaseClient.from('profiles').insert({
             id: user.id,
             username,
-            avatar_url: '/images/avatars/avatar_1.jpg',
+            avatar_url: '/images/avatars/avatar-1.jpg',
             joined_at: user.created_at,
             updated_at: new Date().toISOString(),
           });

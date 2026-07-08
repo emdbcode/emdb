@@ -1941,7 +1941,15 @@ function initHeaderInteractions() {
 
     const isLoggedIn = () => localStorage.getItem(STORAGE_KEY) === 'true';
     const userEmail = () => localStorage.getItem(STORAGE_USER_EMAIL);
-    const userAvatar = () => localStorage.getItem(STORAGE_USER_AVATAR) || '/images/avatars/avatar_1.jpg';
+    const normalizeAvatarPath = (value) => {
+      const raw = String(value || '').trim().replace(/\\/g, '/');
+      if (!raw) return '/images/avatars/avatar-1.jpg';
+      const avatarMatch = raw.match(/avatar[_-]?(\d+)\.(?:jpe?g|png|webp|gif)$/i);
+      if (avatarMatch) return `/images/avatars/avatar-${Number(avatarMatch[1])}.jpg`;
+      if (/^\/images\/avatars\/avatar-\d+\.jpg$/i.test(raw)) return raw.toLowerCase();
+      return '/images/avatars/avatar-1.jpg';
+    };
+    const userAvatar = () => normalizeAvatarPath(localStorage.getItem(STORAGE_USER_AVATAR));
 
     const renderLoggedOut = () => {
       userArea.classList.remove('logged-in');

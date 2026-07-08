@@ -8,7 +8,7 @@
 
   const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
-  const DEFAULT_AVATAR = '/images/avatars/avatar_1.jpg';
+  const DEFAULT_AVATAR = '/images/avatars/avatar-1.jpg';
   const DEFAULT_COVER = '/images/logos/songs-with-cover.jpg';
   const DEFAULT_MIN_REVIEW_LENGTH = 300;
   const DEFAULT_MAX_REVIEW_LENGTH = 10000;
@@ -33,6 +33,15 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  function normalizeAvatarPath(value) {
+    const raw = String(value || '').trim().replace(/\\/g, '/');
+    if (!raw) return DEFAULT_AVATAR;
+    const avatarMatch = raw.match(/avatar[_-]?(\d+)\.(?:jpe?g|png|webp|gif)$/i);
+    if (avatarMatch) return `/images/avatars/avatar-${Number(avatarMatch[1])}.jpg`;
+    if (/^\/images\/avatars\/avatar-\d+\.jpg$/i.test(raw)) return raw.toLowerCase();
+    return DEFAULT_AVATAR;
   }
 
   function getFileRootPrefix() {
@@ -1289,9 +1298,10 @@
     const vm = _voteMap[review.id] || { likes: 0, dislikes: 0 };
     const uv = _userVotes[review.id];
     const profileHref = getProfileHref(review.user_id);
+    const avatarSrc = normalizeAvatarPath(profile.avatar_url || DEFAULT_AVATAR);
     const avatarHtml = profileHref
-      ? `<a class="ar-user-link" href="${esc(profileHref)}" aria-label="View ${esc(profile.username || 'user')} profile"><img class="ar-avatar" src="${esc(profile.avatar_url || DEFAULT_AVATAR)}" alt="${esc(profile.username || 'User')}'s avatar"></a>`
-      : `<img class="ar-avatar" src="${esc(profile.avatar_url || DEFAULT_AVATAR)}" alt="${esc(profile.username || 'User')}'s avatar">`;
+      ? `<a class="ar-user-link" href="${esc(profileHref)}" aria-label="View ${esc(profile.username || 'user')} profile"><img class="ar-avatar" src="${esc(avatarSrc)}" alt="${esc(profile.username || 'User')}'s avatar"></a>`
+      : `<img class="ar-avatar" src="${esc(avatarSrc)}" alt="${esc(profile.username || 'User')}'s avatar">`;
     const usernameHtml = profileHref
       ? `<a class="ar-user-link" href="${esc(profileHref)}">${esc(profile.username || 'Anonymous')}</a>`
       : esc(profile.username || 'Anonymous');
