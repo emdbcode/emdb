@@ -24,6 +24,22 @@
       overflow: hidden;
       min-height: 600px;
     }
+
+    .emx-fallback {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .emx-fallback a {
+      color: #ddd;
+      text-decoration: underline;
+    }
+
+    .emx-fallback a:hover,
+    .emx-fallback a:focus {
+      color: #E21C21;
+    }
   </style>
 </head>
 <body>
@@ -33,13 +49,52 @@
     <div class="emx-page">
       <h1>Eminem on X</h1>
       <div class="emx-timeline-wrap">
-        <a class="twitter-timeline" href="https://twitter.com/Eminem">Posts by Eminem</a>
-        <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+        <a
+          class="twitter-timeline"
+          data-theme="dark"
+          data-dnt="true"
+          href="https://x.com/Eminem?ref_src=twsrc%5Etfw"
+        >Posts by Eminem</a>
       </div>
+      <p class="emx-fallback">If the embed does not load, open <a href="https://x.com/Eminem" target="_blank" rel="noopener noreferrer">@Eminem on X</a>.</p>
     </div>
   </main>
 
   <div id="site-footer"></div>
   <script src="/header.js"></script>
+  <script>
+    (() => {
+      const mount = document.querySelector('.emx-timeline-wrap');
+      if (!mount) return;
+
+      const loadWidgets = () => {
+        if (window.twttr && window.twttr.widgets && typeof window.twttr.widgets.load === 'function') {
+          window.twttr.widgets.load(mount);
+          return;
+        }
+
+        const existing = document.querySelector('script[data-x-widgets]');
+        if (existing) return;
+
+        const script = document.createElement('script');
+        script.async = true;
+        script.charset = 'utf-8';
+        script.src = 'https://platform.x.com/widgets.js';
+        script.setAttribute('data-x-widgets', 'true');
+        script.onload = () => {
+          if (window.twttr && window.twttr.widgets && typeof window.twttr.widgets.load === 'function') {
+            window.twttr.widgets.load(mount);
+          }
+        };
+        document.body.appendChild(script);
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadWidgets, { once: true });
+      } else {
+        loadWidgets();
+      }
+    })();
+  </script>
 </body>
 </html>

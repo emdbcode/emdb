@@ -125,6 +125,39 @@ a:focus {
   text-decoration: underline !important;
 }
 
+/* Inline eminem.com links inside note copy should match the note color, not the global link color. */
+.track-note a[href*="eminem.com"],
+.track-note a[href*="www.eminem.com"],
+.promo-note a[href*="eminem.com"],
+.promo-note a[href*="www.eminem.com"],
+.footnote a[href*="eminem.com"],
+.footnote a[href*="www.eminem.com"] {
+  color: inherit !important;
+  text-decoration: underline !important;
+}
+
+.track-note a[href*="eminem.com"]:hover,
+.track-note a[href*="eminem.com"]:focus,
+.track-note a[href*="eminem.com"]:focus-visible,
+.track-note a[href*="www.eminem.com"]:hover,
+.track-note a[href*="www.eminem.com"]:focus,
+.track-note a[href*="www.eminem.com"]:focus-visible,
+.promo-note a[href*="eminem.com"]:hover,
+.promo-note a[href*="eminem.com"]:focus,
+.promo-note a[href*="eminem.com"]:focus-visible,
+.promo-note a[href*="www.eminem.com"]:hover,
+.promo-note a[href*="www.eminem.com"]:focus,
+.promo-note a[href*="www.eminem.com"]:focus-visible,
+.footnote a[href*="eminem.com"]:hover,
+.footnote a[href*="eminem.com"]:focus,
+.footnote a[href*="eminem.com"]:focus-visible,
+.footnote a[href*="www.eminem.com"]:hover,
+.footnote a[href*="www.eminem.com"]:focus,
+.footnote a[href*="www.eminem.com"]:focus-visible {
+  color: #E21C21 !important;
+  text-decoration: underline !important;
+}
+
 .credit-name-search-global {
   all: unset;
   display: inline;
