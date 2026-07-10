@@ -31,6 +31,13 @@
       color: #aaa;
     }
 
+    .emx-file-warning {
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: #ffb3b3;
+      display: none;
+    }
+
     .emx-fallback a {
       color: #ddd;
       text-decoration: underline;
@@ -55,7 +62,9 @@
           data-dnt="true"
           href="https://x.com/Eminem?ref_src=twsrc%5Etfw"
         >Posts by Eminem</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
+      <p class="emx-file-warning" id="emxFileWarning">X embeds do not load from file:// previews. Open this page through your site or localhost.</p>
       <p class="emx-fallback">If the embed does not load, open <a href="https://x.com/Eminem" target="_blank" rel="noopener noreferrer">@Eminem on X</a>.</p>
     </div>
   </main>
@@ -64,35 +73,9 @@
   <script src="/header.js"></script>
   <script>
     (() => {
-      const mount = document.querySelector('.emx-timeline-wrap');
-      if (!mount) return;
-
-      const loadWidgets = () => {
-        if (window.twttr && window.twttr.widgets && typeof window.twttr.widgets.load === 'function') {
-          window.twttr.widgets.load(mount);
-          return;
-        }
-
-        const existing = document.querySelector('script[data-x-widgets]');
-        if (existing) return;
-
-        const script = document.createElement('script');
-        script.async = true;
-        script.charset = 'utf-8';
-        script.src = 'https://platform.x.com/widgets.js';
-        script.setAttribute('data-x-widgets', 'true');
-        script.onload = () => {
-          if (window.twttr && window.twttr.widgets && typeof window.twttr.widgets.load === 'function') {
-            window.twttr.widgets.load(mount);
-          }
-        };
-        document.body.appendChild(script);
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadWidgets, { once: true });
-      } else {
-        loadWidgets();
+      const fileWarning = document.getElementById('emxFileWarning');
+      if (fileWarning && location.protocol === 'file:') {
+        fileWarning.style.display = 'block';
       }
     })();
   </script>
