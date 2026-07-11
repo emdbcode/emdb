@@ -1307,8 +1307,23 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     }
 
     async function loadVideoIds(){
+      const videoOverrides = new Map([
+        ['walk on water', 'FnLgDgWboh8']
+      ]);
+
+      const normalizeTrackTitle = (text) => (text || '')
+        .toLowerCase()
+        .replace(/[’']/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+
       const fetches = tracks.map(async track => {
         if (!track.link || !track.link.getAttribute('href')) return;
+        const overrideVideoId = videoOverrides.get(normalizeTrackTitle(track.title));
+        if (overrideVideoId) {
+          track.videoId = overrideVideoId;
+          return;
+        }
         try {
           const response = await fetch(track.link.getAttribute('href'), { credentials: 'same-origin' });
           if (!response.ok) return;

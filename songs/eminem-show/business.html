@@ -351,10 +351,11 @@ body {
 /* Add margin below performers-list on desktop to match my-name-is.html spacing */
 .performers-list { margin-bottom: 6px; }
 .song-extra .fancy-quote { position: relative; padding: 2.6rem 1rem 2.4rem 1rem; margin: 0 auto 1rem auto; max-width: 700px; background: transparent; border-left: none; text-align: left; }
-.song-extra .fancy-quote .quote-mark { position: absolute; left: -40px; top: 18px; font-size: 56px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
+.song-extra .fancy-quote .quote-mark { position: absolute; left: -20px; top: 32px; font-size: 68px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
 .song-extra .fancy-quote .quote-text { margin: 0; color: #ddd; font-size: 15px; line-height: 1.5; }
 .song-extra .fancy-quote .quote-attrib { position: absolute; right: 12px; bottom: 8px; color: #aaa; font-size: 13px; }
-@media (max-width: 480px) { .song-extra .fancy-quote .quote-mark { font-size: 44px; left: -4px; top: 6px; } .song-extra .fancy-quote { padding: 1rem 1rem 1.6rem 1rem; max-width: 100%; } .song-extra .fancy-quote .quote-text { font-size: 15px; line-height: 1.5; } }
+.song-extra .quote-divider { width: min(700px, calc(100% - 1rem)); height: 1px; margin: 0.25rem auto 0.9rem auto; background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%); }
+@media (max-width: 480px) { .song-extra .fancy-quote .quote-mark { font-size: 40px; left: -8px; top: 12px; } .song-extra .fancy-quote { padding: 1rem 1rem 2rem 1rem; max-width: 100%; } .song-extra .fancy-quote .quote-text { font-size: 15px; line-height: 1.5; margin-bottom: 0.6rem; } }
 
 /* color for ellipsis bracketed text */
 .ellipsis { color: #565656; display: none !important; }
@@ -908,6 +909,15 @@ body {
       <li style="margin-bottom:8px;">“Business” received radio airplay in the US, leading it to chart on Billboard’s Hot Rap Songs chart on July 13, 2002. The track received a physical single release in Europe and Australia on July 14, 2003. It peaked at No. 6 on the UK Singles Chart and No. 4 on Australia’s ARIA Singles Chart.</li>
       <li>Despite being released as a single, no official music video was produced for the track. To support its promotion in Europe and Australia, televised live performances from London and Barcelona were broadcast in place of a traditional video.</li>
     </ul>
+  </div>
+
+  <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from Eminem</h3>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <p class="quote-text">When I was a kid, I used to watch <em>Batman</em> on my mom’s black-and-white TV. I wanted “Business” to be like a rap version, Dre and me saving hip-hop. He’s definitely Batman, and I’m Robin. There's a line in the final version of the song about how we're going to “disappear into the mountains.” That was our plan from the jump, to grow beards and get weird. Well, actually, I’m already weird, so by the time Dre does that, it’ll be time to move to the mountains.</p>
+      <footer class="quote-attrib">— Eminem, The Way I Am, 2008</footer>
+    </blockquote>
   </div>
 
 <div

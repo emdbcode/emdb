@@ -170,6 +170,23 @@ a:focus {
   color: #E21C21;
 }
 
+/* Song trivia only: dotted underline search-button treatment (matches Stan/Love Me). */
+.song-extra > h3 + ul .credit-name-search-global,
+.song-extra > h3 + ul .credit-name-search-global:visited {
+  color: #eaeaea;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(179, 179, 179, 0.45);
+}
+
+.song-extra > h3 + ul .credit-name-search-global:hover,
+.song-extra > h3 + ul .credit-name-search-global:focus,
+.song-extra > h3 + ul .credit-name-search-global:focus-visible {
+  color: #E21C21;
+  text-decoration-color: rgba(226, 28, 33, 0.5);
+}
+
 /* ========================= */
 /* HEADER */
 /* ========================= */

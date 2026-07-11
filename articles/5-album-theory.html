@@ -95,6 +95,66 @@
 			margin: 0.35rem auto 1.1rem auto;
 			background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%);
 		}
+
+		.article-copy .credit-name-search-global,
+		.article-copy .credit-name-search-global:visited {
+			color: #eaeaea;
+			text-decoration-line: underline;
+			text-decoration-style: dotted;
+			text-underline-offset: 2px;
+			text-decoration-color: rgba(179, 179, 179, 0.45);
+		}
+
+		.article-copy .credit-name-search-global:hover,
+		.article-copy .credit-name-search-global:focus,
+		.article-copy .credit-name-search-global:focus-visible {
+			color: #E21C21;
+			text-decoration-color: rgba(226, 28, 33, 0.5);
+		}
+
+		.theory-compare {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 10px;
+			max-width: 720px;
+			margin: 1rem auto 1.3rem;
+		}
+
+		.theory-compare--3 {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 10px;
+			max-width: 720px;
+		}
+
+		.theory-compare__blank {
+			aspect-ratio: 1;
+			border-radius: 6px;
+			border: 1px solid #2a2a2a;
+			background: #0f0f0f;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: #fff;
+			font-size: clamp(30px, 5vw, 46px);
+			font-weight: 700;
+			line-height: 1;
+		}
+
+		.theory-compare img {
+			width: 100%;
+			height: auto;
+			display: block;
+			border-radius: 6px;
+			border: 1px solid #2a2a2a;
+		}
+
+		@media (max-width: 640px) {
+			.theory-compare {
+				grid-template-columns: 1fr;
+				max-width: 360px;
+				gap: 10px;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -112,11 +172,13 @@
 
 			<p>If that rhythm continues, the next chapter could, on paper, be <em>The Marshall Mathers LP 3</em>. But following his most recent studio album, the nostalgia-driven <em><a href="/releases/death-of-slim-shady.html">The Death of Slim Shady</a></em>, another direct sequel feels unlikely. A more plausible outcome is a Marshall-focused record that captures the spirit of <em><a href="/releases/marshall-mathers-lp.html">The Marshall Mathers LP</a></em> without necessarily carrying its name.</p>
 
+			<p>Beyond the album-to-album parallels, each five-album period also appears to follow a broader creative arc. In many cases, the second release of each period establishes the direction that shapes what follows: <em><a href="/releases/slim-shady-lp.html">The Slim Shady LP</a></em> defined the sound and identity of Eminem’s first major era (Dr. Dre, Jeff Bass, Eminem production, and in-house features only), <em><a href="/releases/recovery.html">Recovery</a></em> marked a new direction (outside producers, pop features, and a tonal shift), and <em>The Death of Slim Shady</em> appears to have reintroduced elements of his classic style while blending them with the modern era. This broader pattern may offer another clue into how Eminem’s current chapter could continue to develop.</p>
+
 			<div class="quote-divider" aria-hidden="true"></div>
 
-			<p>I’ve been following this theory since <em><a href="/releases/recovery.html">Recovery</a></em>, and while it hasn’t always predicted exact albums, it’s consistently pointed me in the right direction. Following <em>Recovery</em>, I expected the next studio album to revisit <em>The Marshall Mathers LP</em> in some form. What arrived was far more literal than I anticipated: <em><a href="/releases/marshall-mathers-lp-2.html">The Marshall Mathers LP 2</a></em>.</p>
+			<p>I’ve been following this theory since <em>Recovery</em>, and while it hasn’t always predicted exact albums, it’s consistently pointed me in the right direction. Following <em>Recovery</em>, I expected the next studio album to revisit <em>The Marshall Mathers LP</em> in some form. What arrived was far more literal than I anticipated: <em><a href="/releases/marshall-mathers-lp-2.html">The Marshall Mathers LP 2</a></em>.</p>
 
-			<p>The following two releases, <em><a href="/releases/revival.html">Revival</a></em> and <em><a href="/releases/kamikaze.html">Kamikaze</a></em>, are less direct, but they do contain elements that can be read as nods to their corresponding albums, <em><a href="/releases/the-eminem-show.html">The Eminem Show</a></em> and <em>Encore</em>. With his 11th studio album, I expected it to feature elements of horror as did <em><a href="/releases/relapse.html">Relapse</a></em>, and his 12th album to somehow echo <em><a href="/releases/slim-shady-lp.html">The Slim Shady LP</a></em>. In hindsight, <em><a href="/releases/music-to-be-murdered-by.html">Music to Be Murdered By</a></em> and <em>The Death of Slim Shady</em> did exactly that.</p>
+			<p>The following two releases, <em><a href="/releases/revival.html">Revival</a></em> and <em><a href="/releases/kamikaze.html">Kamikaze</a></em>, are less direct, but they do contain elements that can be read as nods to their corresponding albums, <em><a href="/releases/the-eminem-show.html">The Eminem Show</a></em> and <em>Encore</em>. With his 11th studio album, I expected it to feature elements of horror as did <em><a href="/releases/relapse.html">Relapse</a></em>, and his 12th album to somehow echo <em>The Slim Shady LP</em>. In hindsight, <em><a href="/releases/music-to-be-murdered-by.html">Music to Be Murdered By</a></em> and <em>The Death of Slim Shady</em> did exactly that.</p>
 
 			<p>That said, the parallels are rarely obvious. More often than not, they appear as subtle creative echoes, which, combined with the <em><button type="button" class="credit-name-search-global" data-search-term="Curtain Call">Curtain Call</button></em> albums encouraging fans to view Eminem’s career through a different lens, may explain why the pattern has gone largely unnoticed for so long.</p>
 
@@ -142,29 +204,6 @@
 			<p>Whether intentional or not, it’s another example of the structured patterns that have repeatedly emerged throughout Eminem’s career.</p>
 
 			<p>Now, back to the albums —</p>
-			<div class="quote-divider" aria-hidden="true"></div>
-
-			<p>The similarities don’t stop at individual records. Each five-album period also appears to follow a broader creative arc, where the second release establishes the direction that shapes much of what follows.</p>
-
-			<h3>Period 1</h3>
-			<ul>
-				<li>Album [EP] 1 (<em>Slim Shady EP</em>) continues Eminem’s underground era.</li>
-				<li>Album 2 (<em>The Slim Shady LP</em>) establishes the sound that defines the rest of the period (<button type="button" class="credit-name-search-global" data-search-term="Dr. Dre">Dr. Dre</button>, <button type="button" class="credit-name-search-global" data-search-term="Jeff Bass">Jeff Bass</button>, Eminem production, in-house features only).</li>
-			</ul>
-
-			<h3>Period 2</h3>
-			<ul>
-				<li>Album 1 (<em>Relapse</em>) continues the creative direction of the previous period.</li>
-				<li>Album 2 (<em>Recovery</em>) establishes a new direction (outside producers, pop features, tonal shift), which defines the rest of the period.</li>
-			</ul>
-
-			<h3>Period 3</h3>
-			<ul>
-				<li>Album 1 (<em>Music to Be Murdered By</em>) largely continues the Recovery-era approach.</li>
-				<li>Album 2 (<em>The Death of Slim Shady</em>) pivots back toward Eminem’s classic style while retaining elements of the previous period, creating a blend of both.</li>
-			</ul>
-
-      <p>If this pattern continues, <em>The Death of Slim Shady</em> may offer the clearest indication yet of where the current period is headed.</p>
 
 			<div class="quote-divider" aria-hidden="true"></div>
 
@@ -181,28 +220,52 @@
 				<li><em>Music to Be Murdered By</em> is the first Eminem album since <em>Relapse: Refill</em> to feature three consecutive Dr. Dre-produced tracks.</li>
 			</ul>
 
+			<div class="theory-compare theory-compare--3" aria-label="Album comparison images">
+				<img src="/images/album-covers-tn/slim-shady-ep/slim-shady-ep-cover.jpg" alt="The Slim Shady EP cover">
+				<img src="/images/album-covers-tn/relapse/relapse-cover.jpg" alt="Relapse cover">
+				<img src="/images/album-covers-tn/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music to Be Murdered By cover">
+			</div>
+
 			<h3>Album 2 - <em>The Slim Shady LP</em> > <em>Recovery</em> > <em>The Death of Slim Shady</em></h3>
 			<ul>
 				<li>Each marks a major turning point for Slim Shady (mainstream introduction, hiatus, and reintroduction/death).</li>
 				<li><em>Recovery</em> acts as the opposite of <em>The Slim Shady LP</em>, Eminem’s major label debut, moving away from the Slim Shady persona and many of the creative tropes established on that album. Following the mixed reception to <em>Relapse</em>, Eminem largely abandoned that style, making <em>Recovery</em> the debut of his new creative era. <em>The Death of Slim Shady</em>, in contrast, heavily revisits <em>The Slim Shady LP</em>, bringing many of those tropes and the original tone back.</li>
-				<li><em>The Slim Shady LP</em> and <em>Recovery</em> feature mirrored cover artwork: Eminem stands in the top-right at night, off-road, facing forward, versus the bottom-left in daylight, on-road, facing away, symbolically reflecting two very different points in his life.</li>
+				<li><em>The Slim Shady LP</em> and <em>Recovery</em> feature mirrored cover artwork: Eminem stands in the top-right background at night, off-road and facing forward, versus the bottom-left foreground in daylight, on the road and facing away, symbolically reflecting two very different points in his life.</li>
 				<li>Beyond the obvious connection between <em>The Slim Shady LP</em> and <em>The Death of Slim Shady</em>, they’re also the only Eminem albums to feature a dead body on their covers.</li>
 			</ul>
+
+			<div class="theory-compare theory-compare--3" aria-label="Album comparison images">
+				<img src="/images/album-covers-tn/slim-shady-lp/slim-shady-lp-cover.jpg" alt="The Slim Shady LP cover">
+				<img src="/images/album-covers-tn/recovery/recovery-cover.jpg" alt="Recovery cover">
+				<img src="/images/album-covers-tn/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death of Slim Shady cover">
+			</div>
 
 			<h3>Album 3 - <em>The Marshall Mathers LP</em> > <em>The Marshall Mathers LP 2</em> > ?</h3>
 			<ul>
 				<li><em>The Marshall Mathers LP 2</em> directly revisits and references its predecessor throughout.</li>
 			</ul>
 
+			<div class="theory-compare" aria-label="Album comparison images">
+				<img src="/images/album-covers-tn/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover">
+				<img src="/images/album-covers-tn/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+				<div class="theory-compare__blank" aria-hidden="true">?</div>
+			</div>
+
 			<h3>Album 4 - <em>The Eminem Show</em> > <em>Revival</em> > ?</h3>
 			<ul>
 				<li>Both place greater emphasis on politics and society.</li>
 				<li>Both feature direct attacks on the President of the United States.</li>
 				<li>Each contains some of Eminem’s most personal songwriting.</li>
-				<li>Both covers depict Eminem seated with his head in his hands, with <em>Revival</em> replacing the curtains with a projection of the American flag. See the comparison featuring wider <em>Revival</em> shot below from the album booklets back cover.</li>
+				<li>Both covers depict Eminem seated with his head in his hands, with <em>Revival</em> replacing the curtains with a projection of the American flag. See the comparison featuring the wider <em>Revival</em> shot below from the CD booklet back cover.</li>
 				<li>“<a href="/songs/eminem-show/my-dads-gone-crazy.html">My Dad’s Gone Crazy</a>,” <em>The Eminem Show</em>, which portrays Eminem as a fun, loving father, is sampled on <em>Revival</em>’s “<a href="/songs/revival/bad-husband.html">Bad Husband</a>,” which in contrast describes him as “a great dad, but a bad husband.”</li>
 				<li>Each album arrived at opposite ends of Eminem’s career: <em>The Eminem Show</em> at his commercial peak, and <em>Revival</em> during his biggest critical slump. Unlike the other similarities, this one is almost certainly just coincidence.</li>
 			</ul>
+
+			<div class="theory-compare" aria-label="The Eminem Show and Revival cover comparison">
+				<img src="/images/album-covers-tn/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+				<img src="/images/gallery/revival-back-booklet.jpg" alt="Revival back booklet image">
+				<div class="theory-compare__blank" aria-hidden="true">?</div>
+			</div>
 
 			<h3>Album 5 - <em>Encore</em> > <em>Kamikaze</em> > ?</h3>
 			<ul>
@@ -213,6 +276,12 @@
 				<li><em>Encore</em> was the last Eminem studio album to feature D12, leaving Eminem’s commitment to the group in question until <em>Kamikaze</em>, where “<a href="/songs/kamikaze/stepping-stone.html">Stepping Stone</a>” confirms his departure.</li>
 			</ul>
 
+			<div class="theory-compare" aria-label="Album comparison images">
+				<img src="/images/gallery/encore-cd-artwork.jpg" alt="Encore CD artwork">
+				<img src="/images/gallery/kamikaze-back-cover.jpg" alt="Kamikaze back cover">
+				<div class="theory-compare__blank" aria-hidden="true">?</div>
+			</div>
+
 			<h2>Side Projects</h2>
 			<p>The similarities become even more interesting once the side projects from each period are included. <span class="note">Note: Unlike the studio albums, these side projects don’t follow a consistent release order within each period.</span></p>
 
@@ -222,7 +291,7 @@
 				<li>The first two periods each include two major Eminem-steered collaboration/group releases. The first period had two D12 albums, while the second had <em><a href="/releases/hell-the-sequel.html">Hell: The Sequel</a></em> and <button type="button" class="credit-name-search-global" data-search-term="Slaughterhouse">Slaughterhouse</button>’s <em>Welcome To: Our House</em>. No, Eminem wasn’t a member of Slaughterhouse, but he was heavily involved in the project, contributing nine production credits, appearing on three tracks, and mixing the entire album.</li>
 			</ul>
 
-			<p>Unlike Griselda’s <em>WWCD</em>, which received virtually no creative input from Eminem, <em>Welcome To: Our House</em> was very much an Eminem-led project. Although <em>WWCD</em> featured “<a href="/songs/feat/bang-remix.html">Bang (Remix)</a>,” Eminem’s contribution had already been recorded for the song’s standalone single release four months earlier.</p>
+			<p>Unlike <button type="button" class="credit-name-search-global" data-search-term="Griselda">Griselda</button>’s <em>WWCD</em>, which received virtually no creative input from Eminem, <em>Welcome To: Our House</em> was very much an Eminem-led project. Although <em>WWCD</em> featured “<a href="/songs/feat/bang-remix.html">Bang (Remix)</a>,” Eminem’s contribution had already been recorded for the song’s standalone single release four months earlier.</p>
 
 			<p>So, if this admittedly crazy theory holds up, there may still be room for two more Eminem-steered collaboration/group releases before this period comes to an end.</p>
 

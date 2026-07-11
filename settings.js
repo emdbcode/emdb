@@ -32,7 +32,27 @@ const AVATAR_FALLBACK_OPTIONS = [
   '/images/avatars/avatar-2.jpg',
   '/images/avatars/avatar-3.jpg',
   '/images/avatars/avatar-4.jpg',
-  '/images/avatars/avatar-5.jpg'
+  '/images/avatars/avatar-5.jpg',
+  '/images/avatars/avatar-6.jpg',
+  '/images/avatars/avatar-7.jpg',
+  '/images/avatars/avatar-8.jpg',
+  '/images/avatars/avatar-9.jpg',
+  '/images/avatars/avatar-10.jpg',
+  '/images/avatars/avatar-11.jpg',
+  '/images/avatars/avatar-12.jpg',
+  '/images/avatars/avatar-13.jpg',
+  '/images/avatars/avatar-14.jpg',
+  '/images/avatars/avatar-16.jpg',
+  '/images/avatars/avatar-17.jpg',
+  '/images/avatars/avatar-18.jpg',
+  '/images/avatars/avatar-19.jpg',
+  '/images/avatars/avatar-20.jpg',
+  '/images/avatars/avatar-21.jpg',
+  '/images/avatars/avatar-22.jpg',
+  '/images/avatars/avatar-23.jpg',
+  '/images/avatars/avatar-24.jpg',
+  '/images/avatars/avatar-25.jpg',
+  '/images/avatars/avatar-26.jpg'
 ];
 let avatarOptions = [...AVATAR_FALLBACK_OPTIONS];
 

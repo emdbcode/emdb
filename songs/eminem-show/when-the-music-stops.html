@@ -351,10 +351,11 @@ body {
 /* Add margin below performers-list on desktop to match my-name-is.html spacing */
 .performers-list { margin-bottom: 6px; }
 .song-extra .fancy-quote { position: relative; padding: 2.6rem 1rem 2.4rem 1rem; margin: 0 auto 1rem auto; max-width: 700px; background: transparent; border-left: none; text-align: left; }
-.song-extra .fancy-quote .quote-mark { position: absolute; left: -40px; top: 18px; font-size: 56px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
+.song-extra .fancy-quote .quote-mark { position: absolute; left: -20px; top: 32px; font-size: 68px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
 .song-extra .fancy-quote .quote-text { margin: 0; color: #ddd; font-size: 15px; line-height: 1.5; }
 .song-extra .fancy-quote .quote-attrib { position: absolute; right: 12px; bottom: 8px; color: #aaa; font-size: 13px; }
-@media (max-width: 480px) { .song-extra .fancy-quote .quote-mark { font-size: 44px; left: -4px; top: 6px; } .song-extra .fancy-quote { padding: 1rem 1rem 1.6rem 1rem; max-width: 100%; } .song-extra .fancy-quote .quote-text { font-size: 15px; line-height: 1.5; } }
+.song-extra .quote-divider { width: min(700px, calc(100% - 1rem)); height: 1px; margin: 0.25rem auto 0.9rem auto; background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%); }
+@media (max-width: 480px) { .song-extra .fancy-quote .quote-mark { font-size: 40px; left: -8px; top: 12px; } .song-extra .fancy-quote { padding: 1rem 1rem 2rem 1rem; max-width: 100%; } .song-extra .fancy-quote .quote-text { font-size: 15px; line-height: 1.5; margin-bottom: 0.6rem; } }
 
 /* color for ellipsis bracketed text */
 .ellipsis { color: #565656; display: none !important; }
@@ -877,10 +878,17 @@ body {
     </div>
   </div>
 
+  </div>
+
   <!-- no standalone samples, quotes, or trivia sections for this track -->
 
-
-
+  <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from Eminem</h3>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <p class="quote-text">“When The Music Stops” was with D12, and it was definitely a good time for us. We knew we’d made it. To me, the guys had gotten to a new level of rhyming, even better than before. It’s one of my favorite rhymes from Proof on a song, and it’s one of the best D12 songs. <br><br>When I was doing my verse, I dropped the beat out for a long time. While I was rhyming, before the beat came in, everybody in the studio had their hands up in the air, going wild. When you get that approval you want to keep going. It was a big-ass party. When Dre came in and listened to it, he was like, “Damn!”</p>
+      <footer class="quote-attrib">— Eminem, The Way I Am, 2008</footer>
+    </blockquote>
   </div>
 
 <div
