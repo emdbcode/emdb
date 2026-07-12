@@ -47,19 +47,10 @@
               <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
                 <iframe id="sampleVideo" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/qmTx_K_m4fU?rel=0&modestbranding=1&enablejsapi=1" title="Indian Sunset - Elton John" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
-              <div style="color:#ccc;font-size:0.95rem;display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:6px;">
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 3:50</span>
-                  <button id="seekSampleBtn" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 6:02</span>
-                  <button id="seekSampleBtnAlt" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 5:59</span>
-                  <button id="seekSampleBtnAlt2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
+              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;">
+                <button id="seekSampleBtn1" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 3:50</button>
+                <button id="seekSampleBtn2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 6:02</button>
+                <button id="seekSampleBtn3" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 5:59</button>
               </div>
             </div>
             <div class="sample-inline-video">
@@ -67,19 +58,10 @@
               <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
                 <iframe id="sampleVideo2" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/PL8-x_-Zwjo?rel=0&modestbranding=1&enablejsapi=1" title="Ghetto Gospel - 2Pac" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
-              <div style="color:#ccc;font-size:0.95rem;display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:6px;">
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 0:06</span>
-                  <button id="seekSampleBtn2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 0:17</span>
-                  <button id="seekSampleBtn2Alt" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <span style="font-size:0.95rem;">@ 0:26</span>
-                  <button id="seekSampleBtn2Alt2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
-                </div>
+              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;">
+                <button id="seekSampleBtn4" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 0:06</button>
+                <button id="seekSampleBtn5" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 0:17</button>
+                <button id="seekSampleBtn6" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 0:26</button>
               </div>
             </div>
           </div>
@@ -119,12 +101,12 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tag, s);
     })();
     document.addEventListener('DOMContentLoaded', function(){
-      var btn1 = document.getElementById('seekSampleBtn');
-      var btn1Alt = document.getElementById('seekSampleBtnAlt');
-      var btn1Alt2 = document.getElementById('seekSampleBtnAlt2');
+      var btn1 = document.getElementById('seekSampleBtn1');
       var btn2 = document.getElementById('seekSampleBtn2');
-      var btn2Alt = document.getElementById('seekSampleBtn2Alt');
-      var btn2Alt2 = document.getElementById('seekSampleBtn2Alt2');
+      var btn3 = document.getElementById('seekSampleBtn3');
+      var btn4 = document.getElementById('seekSampleBtn4');
+      var btn5 = document.getElementById('seekSampleBtn5');
+      var btn6 = document.getElementById('seekSampleBtn6');
       var revealTitles = document.querySelectorAll('.sample-title[data-reveal="true"]');
       revealTitles.forEach(function(title){
         var t = null;
@@ -143,88 +125,48 @@
           }
         });
       });
+
+      function jumpTo(player, iframeId, seconds, btn){
+        if(window.YT && player && typeof player.seekTo === 'function'){
+          player.seekTo(seconds, true);
+          if(typeof player.playVideo === 'function') player.playVideo();
+        } else {
+          var iframe = document.getElementById(iframeId);
+          if(iframe && iframe.contentWindow){
+            try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [seconds, true] }), '*'); }catch(e){}
+          }
+        }
+        if (btn) btn.blur();
+      }
+
       if(btn1){
         btn1.addEventListener('click', function(){
-          if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(230, true);
-            if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
-          } else {
-            var iframe = document.getElementById('sampleVideo');
-            if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [230, true] }), '*'); }catch(e){}
-            }
-          }
-          btn1.blur();
-        }, false);
-      }
-      if(btn1Alt){
-        btn1Alt.addEventListener('click', function(){
-          if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(362, true);
-            if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
-          } else {
-            var iframeAlt = document.getElementById('sampleVideo');
-            if(iframeAlt && iframeAlt.contentWindow){
-              try{ iframeAlt.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [362, true] }), '*'); }catch(e){}
-            }
-          }
-          btn1Alt.blur();
-        }, false);
-      }
-      if(btn1Alt2){
-        btn1Alt2.addEventListener('click', function(){
-          if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(359, true);
-            if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
-          } else {
-            var iframeAlt2 = document.getElementById('sampleVideo');
-            if(iframeAlt2 && iframeAlt2.contentWindow){
-              try{ iframeAlt2.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [359, true] }), '*'); }catch(e){}
-            }
-          }
-          btn1Alt2.blur();
+          jumpTo(samplePlayer1, 'sampleVideo', 230, btn1);
         }, false);
       }
       if(btn2){
         btn2.addEventListener('click', function(){
-          if(window.YT && samplePlayer2 && typeof samplePlayer2.seekTo === 'function'){
-            samplePlayer2.seekTo(6, true);
-            if(typeof samplePlayer2.playVideo === 'function') samplePlayer2.playVideo();
-          } else {
-            var iframe = document.getElementById('sampleVideo2');
-            if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [6, true] }), '*'); }catch(e){}
-            }
-          }
-          btn2.blur();
+          jumpTo(samplePlayer1, 'sampleVideo', 362, btn2);
         }, false);
       }
-      if(btn2Alt){
-        btn2Alt.addEventListener('click', function(){
-          if(window.YT && samplePlayer2 && typeof samplePlayer2.seekTo === 'function'){
-            samplePlayer2.seekTo(17, true);
-            if(typeof samplePlayer2.playVideo === 'function') samplePlayer2.playVideo();
-          } else {
-            var iframeAlt3 = document.getElementById('sampleVideo2');
-            if(iframeAlt3 && iframeAlt3.contentWindow){
-              try{ iframeAlt3.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [17, true] }), '*'); }catch(e){}
-            }
-          }
-          btn2Alt.blur();
+      if(btn3){
+        btn3.addEventListener('click', function(){
+          jumpTo(samplePlayer1, 'sampleVideo', 359, btn3);
         }, false);
       }
-      if(btn2Alt2){
-        btn2Alt2.addEventListener('click', function(){
-          if(window.YT && samplePlayer2 && typeof samplePlayer2.seekTo === 'function'){
-            samplePlayer2.seekTo(26, true);
-            if(typeof samplePlayer2.playVideo === 'function') samplePlayer2.playVideo();
-          } else {
-            var iframeAlt4 = document.getElementById('sampleVideo2');
-            if(iframeAlt4 && iframeAlt4.contentWindow){
-              try{ iframeAlt4.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [26, true] }), '*'); }catch(e){}
-            }
-          }
-          btn2Alt2.blur();
+      if(btn4){
+        btn4.addEventListener('click', function(){
+          jumpTo(samplePlayer2, 'sampleVideo2', 6, btn4);
+        }, false);
+      }
+      if(btn5){
+        btn5.addEventListener('click', function(){
+          jumpTo(samplePlayer2, 'sampleVideo2', 17, btn5);
+        }, false);
+      }
+      if(btn6){
+        btn6.addEventListener('click', function(){
+          jumpTo(samplePlayer2, 'sampleVideo2', 26, btn6);
         }, false);
       }
     });

@@ -277,6 +277,8 @@ function initHeaderInteractions() {
     let lastFilter = 'All';
     let lastQuery = '';
     let suppressBlurClose = false;
+    let searchRequestVersion = 0;
+    let searchInputFrame = 0;
 
     let supabaseClient = null;
     let supabaseClientPromise = null;
@@ -1126,7 +1128,6 @@ function initHeaderInteractions() {
           });
         });
         processed += batch.length;
-        renderResults(lastResults);
       }
 
       searchIndex = dedupeByUrl([...items, ...articleItems]);
@@ -1689,7 +1690,7 @@ function initHeaderInteractions() {
       return indexPromise;
     };
 
-    const handleSearchInput = async () => {
+    const handleSearchInput = async (requestVersion) => {
       const query = searchInput.value.trim();
       const effectiveQuery = normalizeSearchAliasQuery(query);
       const normalizedInputQuery = normalizeText(effectiveQuery);
@@ -1780,6 +1781,7 @@ function initHeaderInteractions() {
       renderResults([], { status: `Searching for "${effectiveQuery}"...`, emptyMessage: 'Searching...' });
       try {
         const index = await ensureIndex();
+        if (requestVersion !== searchRequestVersion) return;
         lastResults = searchIndexForQuery(effectiveQuery, index);
         if (fallbackItem && !lastResults.some((item) => item.url === fallbackItem.url)) {
           lastResults = [fallbackItem, ...lastResults];
@@ -1791,6 +1793,16 @@ function initHeaderInteractions() {
       }
     };
 
+    const scheduleSearch = () => {
+      searchRequestVersion += 1;
+      const requestVersion = searchRequestVersion;
+      if (searchInputFrame) cancelAnimationFrame(searchInputFrame);
+      searchInputFrame = requestAnimationFrame(() => {
+        searchInputFrame = 0;
+        handleSearchInput(requestVersion);
+      });
+    };
+
     searchInput.addEventListener('focus', () => {
       if (!searchInput.value.trim()) {
         lastResults = [];
@@ -1800,9 +1812,9 @@ function initHeaderInteractions() {
       }
       openSuggestions();
     });
-    searchInput.addEventListener('input', handleSearchInput);
-    searchInput.addEventListener('keyup', handleSearchInput);
-    searchInput.addEventListener('search', handleSearchInput);
+    searchInput.addEventListener('input', scheduleSearch);
+    searchInput.addEventListener('keyup', scheduleSearch);
+    searchInput.addEventListener('search', scheduleSearch);
     searchInput.addEventListener('blur', () => {
       setTimeout(() => {
         if (suppressBlurClose) return;
@@ -1839,6 +1851,16 @@ function initHeaderInteractions() {
         closeSuggestions();
       }
     });
+
+    const warmIndex = () => {
+      if (searchIndex || indexPromise) return;
+      void ensureIndex().catch(() => {});
+    };
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(warmIndex, { timeout: 1500 });
+    } else {
+      setTimeout(warmIndex, 0);
+    }
   }
 
   (function setupLogoCaption() {
@@ -1996,6 +2018,7 @@ function initHeaderInteractions() {
 function bootstrapLayoutPartials() {
   enforceTriviaBullets();
   setupSampleBackButton();
+  setupSampleJumpButtonLayout();
   linkifyEminemDotComMentions();
   setupSongCreditsNameSearch();
   loadSiteHeader();
@@ -2081,6 +2104,80 @@ function setupSampleBackButton() {
 
   backWrap.appendChild(backBtn);
   main.insertBefore(backWrap, main.firstChild);
+}
+
+function setupSampleJumpButtonLayout() {
+  const path = String(window.location.pathname || '');
+  if (!path.includes('/samples/')) return;
+
+  if (!document.getElementById('sample-jump-btn-style')) {
+    const style = document.createElement('style');
+    style.id = 'sample-jump-btn-style';
+    style.textContent = [
+      '.sample-page .sample-inline-video .sample-jump-wrap {',
+      '  color: #ccc;',
+      '  font-size: 0.95rem;',
+      '  display: flex;',
+      '  gap: 8px;',
+      '  align-items: center;',
+      '  flex-wrap: wrap;',
+      '  margin-top: 6px;',
+      '}',
+      '.sample-page .sample-inline-video .sample-jump-wrap button {',
+      '  background: #E21C21;',
+      '  color: #fff;',
+      '  border: 0;',
+      '  padding: 4px 6px;',
+      '  border-radius: 4px;',
+      '  cursor: pointer;',
+      '  font-size: 0.85rem;',
+      '}'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  const sampleBlocks = Array.from(document.querySelectorAll('.sample-page .sample-inline-video'));
+  sampleBlocks.forEach((block) => {
+    const buttons = Array.from(block.querySelectorAll('button[id^="seekSampleBtn"]'));
+    if (!buttons.length) return;
+
+    const iframe = block.querySelector('iframe');
+    if (!iframe) return;
+    const iframeWrap = iframe.parentElement;
+    if (!iframeWrap) return;
+
+    let jumpWrap = block.querySelector(':scope > .sample-jump-wrap');
+    if (!jumpWrap) {
+      jumpWrap = document.createElement('div');
+      jumpWrap.className = 'sample-jump-wrap';
+      iframeWrap.insertAdjacentElement('afterend', jumpWrap);
+    }
+
+    buttons.forEach((btn) => {
+      const row = btn.parentElement;
+      const timeSpan = row ? row.querySelector('span') : null;
+      const rawTime = timeSpan
+        ? String(timeSpan.textContent || '').replace('@', '').trim()
+        : '';
+      const btnText = String(btn.textContent || '').trim();
+
+      if (rawTime) {
+        btn.textContent = `Jump ${rawTime}`;
+      } else if (/^jump$/i.test(btnText)) {
+        btn.textContent = 'Jump';
+      }
+
+      if (timeSpan) {
+        timeSpan.remove();
+      }
+
+      jumpWrap.appendChild(btn);
+
+      if (row && row !== jumpWrap && row.childElementCount === 0) {
+        row.remove();
+      }
+    });
+  });
 }
 
 function linkifyEminemDotComMentions() {
