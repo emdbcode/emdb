@@ -1995,10 +1995,92 @@ function initHeaderInteractions() {
 
 function bootstrapLayoutPartials() {
   enforceTriviaBullets();
+  setupSampleBackButton();
   linkifyEminemDotComMentions();
   setupSongCreditsNameSearch();
   loadSiteHeader();
   loadSiteFooter();
+}
+
+function setupSampleBackButton() {
+  const path = String(window.location.pathname || '');
+  if (!path.includes('/samples/')) return;
+
+  const main = document.querySelector('main') || document.body;
+  if (!main) return;
+
+  if (!document.getElementById('sample-back-btn-style')) {
+    const style = document.createElement('style');
+    style.id = 'sample-back-btn-style';
+    style.textContent = [
+      '.gallery-back-wrap {',
+      '  max-width: 900px;',
+      '  margin: 1rem auto 0;',
+      '  padding: 0 1rem;',
+      '}',
+      '.gallery-back-btn {',
+      '  display: inline-block;',
+      '  background: #111;',
+      '  color: #eaeaea;',
+      '  border: 1px solid #333;',
+      '  border-radius: 8px;',
+      '  padding: 0.45rem 0.8rem;',
+      '  font-size: 0.9rem;',
+      '  cursor: pointer;',
+      '}',
+      '.gallery-back-btn:hover,',
+      '.gallery-back-btn:focus-visible {',
+      '  border-color: #E21C21;',
+      '  color: #fff;',
+      '  text-decoration: none;',
+      '}'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  const goBack = function () {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    const ref = document.referrer || '/index.html';
+    window.location.href = ref;
+  };
+
+  const bindBack = (node) => {
+    if (!node || node.dataset.backBound === 'true') return;
+    node.dataset.backBound = 'true';
+    node.addEventListener('click', (event) => {
+      event.preventDefault();
+      goBack();
+    });
+  };
+
+  const existingLink = main.querySelector('.back-link');
+  if (existingLink) {
+    existingLink.classList.add('gallery-back-btn');
+    existingLink.textContent = 'Back';
+    bindBack(existingLink);
+    return;
+  }
+
+  const existingBtn = main.querySelector('.gallery-back-wrap .gallery-back-btn');
+  if (existingBtn) {
+    bindBack(existingBtn);
+    return;
+  }
+
+  const backWrap = document.createElement('div');
+  backWrap.className = 'gallery-back-wrap';
+
+  const backBtn = document.createElement('button');
+  backBtn.type = 'button';
+  backBtn.className = 'gallery-back-btn';
+  backBtn.textContent = 'Back';
+  bindBack(backBtn);
+
+  backWrap.appendChild(backBtn);
+  main.insertBefore(backWrap, main.firstChild);
 }
 
 function linkifyEminemDotComMentions() {
