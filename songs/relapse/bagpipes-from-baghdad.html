@@ -796,6 +796,34 @@ body {
 
 /* written-by width */
 .song-meta p.written-by .meta-value { max-width: var(--written-by-max); }
+
+.ratings-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+@supports (overflow: clip) {
+  .ratings-container {
+    overflow-x: clip;
+  }
+}
+
+@media (max-width: 767px) {
+  .media-col .ratings-container,
+  .ratings-container {
+    overflow-x: hidden !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .media-col .ratings-container::-webkit-scrollbar,
+  .ratings-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+}
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
