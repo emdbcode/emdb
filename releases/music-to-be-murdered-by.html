@@ -415,6 +415,28 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   max-height: 40px;
 }
 
+/* allow explicit 'tap' class to reveal votes on touch devices */
+.rating-block.show-votes-tap #emdbVotes {
+  opacity: 1;
+  max-height: 40px;
+}
+
+@media (max-width: 767px) {
+  /* Mobile browsers can keep :hover/:focus-within sticky after tap; rely on JS classes instead. */
+  .rating-block:hover #emdbVotes,
+  .rating-block:focus-within #emdbVotes {
+    opacity: 0 !important;
+    max-height: 0 !important;
+  }
+  .rating-block.show-votes-tap #emdbVotes,
+  .ratings-container.show-votes #emdbVotes {
+    opacity: 1 !important;
+    max-height: 40px !important;
+  }
+}
+
+
+
 /* critic reviews count (hidden by default). We'll reveal both counts
    when hovering EMDb or Critic via JS toggling `.ratings-container.show-votes`. */
 #criticReviews {
@@ -502,6 +524,9 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
 
 </style>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 <div id="site-header"></div>
@@ -1356,13 +1381,50 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     const blocks = ratingsContainer.querySelectorAll('.rating-block');
     const emdbBlock = blocks[0];
     const criticBlock = blocks[2];
-    function enter(){ ratingsContainer.classList.add('show-votes'); }
-    function leave(){ ratingsContainer.classList.remove('show-votes'); }
+    let hideTimer = null;
+    let visibleByTap = false;
+    const isMobileViewport = () => window.matchMedia('(max-width: 767px)').matches;
+    function scheduleHide(delayMs = 2500){
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      hideTimer = setTimeout(() => {
+        visibleByTap = false;
+        leave();
+        hideTimer = null;
+      }, delayMs);
+    }
+    function enter(){
+      if (!(visibleByTap && isMobileViewport())) {
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      }
+      ratingsContainer.classList.add('show-votes');
+      if (emdbBlock) emdbBlock.classList.add('show-votes-tap');
+    }
+    function leave(){
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      ratingsContainer.classList.remove('show-votes');
+      if (emdbBlock) emdbBlock.classList.remove('show-votes-tap');
+    }
     if (emdbBlock){
       emdbBlock.addEventListener('mouseenter', enter);
       emdbBlock.addEventListener('mouseleave', leave);
       emdbBlock.addEventListener('focusin', enter);
       emdbBlock.addEventListener('focusout', leave);
+      // on mobile: tap opens, re-press closes, auto-hide after a short delay
+      emdbBlock.addEventListener('click', (e) => {
+        if (!isMobileViewport()) return;
+        if (e.target && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON')) return;
+
+        if (visibleByTap) {
+          if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+          visibleByTap = false;
+          leave();
+          return;
+        }
+
+        visibleByTap = true;
+        enter();
+        scheduleHide(2500);
+      });
     }
     if (criticBlock){
       criticBlock.addEventListener('mouseenter', enter);
@@ -1371,6 +1433,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       criticBlock.addEventListener('focusout', leave);
     }
   })();
+
 
   // Promo info toggle button — slide the explanatory note in/out
   (function setupPromoInfo(){

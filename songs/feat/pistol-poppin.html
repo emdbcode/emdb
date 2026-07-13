@@ -170,7 +170,7 @@ body {
     margin-bottom: 6px;
     padding-bottom: 0;
   }
-  .media-col .ratings-container { margin-top: -8px !important; }
+  .media-col .ratings-container { margin-top: 10px !important; }
 }
 @media(min-width:768px){ .media-col { flex: 0 0 auto; } .release-info { flex: 1 1 0; } }
 
@@ -260,7 +260,7 @@ body {
 
 /* mobile divider element (inserted by JS) */
 .mobile-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0; display: none; width: 100%; align-self: stretch; }
-@media (max-width: 767px) { .mobile-divider { display: block; } }
+@media (max-width: 767px) { .mobile-divider { display: block; margin: 0; } }
 
 @media (min-width: 768px) {
   .release-info .song-meta {
@@ -410,7 +410,7 @@ body {
 
   .media-col .ratings-container,
   .ratings-container {
-    margin-top: -8px !important;
+    margin-top: 10px !important;
     padding-top: 0 !important;
   }
 
@@ -418,7 +418,7 @@ body {
   .release-info {
     border-bottom: 1px solid rgba(255,255,255,0.06) !important;
     padding-bottom: 8px !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 0 !important;
   }
 }
 
@@ -499,7 +499,7 @@ body {
   margin-top: 1rem;
   align-items: flex-start;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .rating-block {
@@ -551,6 +551,21 @@ body {
   opacity: 1;
   max-height: 40px;
 }
+
+@media (max-width: 767px) {
+  /* Mobile browsers can keep :hover/:focus-within sticky after tap; rely on JS classes instead. */
+  .rating-block:hover #emdbVotes,
+  .rating-block:focus-within #emdbVotes {
+    opacity: 0 !important;
+    max-height: 0 !important;
+  }
+  .rating-block.show-votes-tap #emdbVotes,
+  .ratings-container.show-votes #emdbVotes {
+    opacity: 1 !important;
+    max-height: 40px !important;
+  }
+}
+
 
 .rating-block.show-votes-tap #emdbVotes {
   opacity: 1;
@@ -737,6 +752,9 @@ body {
 /* written-by width */
 .song-meta p.written-by .meta-value { max-width: var(--written-by-max); }
 </style>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 <div id="site-header"></div>
@@ -1043,8 +1061,20 @@ body {
     const criticBlock = blocks[2];
     let hideTimer = null;
     let visibleByTap = false;
-    function enter(){
+    const isMobileViewport = () => window.matchMedia('(max-width: 767px)').matches;
+    function scheduleHide(delayMs = 2500){
       if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      hideTimer = setTimeout(() => {
+        visibleByTap = false;
+        leave();
+        hideTimer = null;
+      }, delayMs);
+    }
+    function enter(){
+      // On mobile tap flows, keep the auto-hide timer alive even if synthetic hover/focus fires.
+      if (!(visibleByTap && isMobileViewport())) {
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+      }
       ratingsContainer.classList.add('show-votes');
       if (emdbBlock) emdbBlock.classList.add('show-votes-tap');
     }
@@ -1058,10 +1088,13 @@ body {
       emdbBlock.addEventListener('mouseleave', leave);
       emdbBlock.addEventListener('focusin', enter);
       emdbBlock.addEventListener('focusout', leave);
+      // on mobile: toggle votes on tap; second tap closes immediately
       emdbBlock.addEventListener('click', (e) => {
-        if (!window.matchMedia('(max-width: 767px)').matches) return;
+        if (!isMobileViewport()) return; // desktop uses hover/focus
+        // allow normal behaviour for links/buttons inside
         if (e.target && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON')) return;
 
+        // toggle using tap-state so first tap always opens on mobile
         if (visibleByTap) {
           if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
           visibleByTap = false;
@@ -1069,10 +1102,10 @@ body {
           return;
         }
 
+        // first tap opens, then auto-hide after a short delay
         visibleByTap = true;
         enter();
-        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-        hideTimer = setTimeout(() => { visibleByTap = false; leave(); hideTimer = null; }, 1000);
+        scheduleHide(2500);
       });
     }
     if (criticBlock){
@@ -1082,6 +1115,7 @@ body {
       criticBlock.addEventListener('focusout', leave);
     }
   })();
+
 
   document.querySelectorAll('.critic-score').forEach(box => {
     const score = parseInt(box.dataset.score, 10);
