@@ -392,6 +392,9 @@ function initHeaderInteractions() {
     const normalizeSearchAliasQuery = (query) => {
       const raw = String(query || '').trim();
       if (!raw) return '';
+      if (/^swift$/i.test(raw)) {
+        return 'Swifty McVay';
+      }
       if (/^cashis$/i.test(raw)) {
         return 'Ca$his';
       }
@@ -2337,6 +2340,7 @@ function setupSongCreditsNameSearch() {
   ]);
   const searchAliases = new Map([
     ['slim', 'Kevin Wilder'],
+    ['swift', 'Swifty McVay'],
     ['puff daddy', 'Diddy'],
     ['sean diddy combs', 'Diddy'],
     ['sean "diddy" combs', 'Diddy'],

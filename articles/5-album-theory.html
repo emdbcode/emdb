@@ -146,13 +146,43 @@
 			display: block;
 			border-radius: 6px;
 			border: 1px solid #2a2a2a;
+			cursor: default;
+		}
+
+		.cover-zoom-overlay {
+			position: fixed;
+			inset: 0;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.82);
+			padding: 16px;
+			z-index: 2000;
+		}
+
+		.cover-zoom-overlay.open {
+			display: flex;
+		}
+
+		.cover-zoom-overlay img {
+			width: auto;
+			height: auto;
+			max-width: min(94vw, 760px);
+			max-height: 90vh;
+			border-radius: 8px;
+			border: 1px solid #2a2a2a;
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
 		}
 
 		@media (max-width: 640px) {
 			.theory-compare {
-				grid-template-columns: 1fr;
-				max-width: 360px;
-				gap: 10px;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				max-width: 100%;
+				gap: 8px;
+			}
+
+			.theory-compare img {
+				cursor: zoom-in;
 			}
 		}
 	</style>
@@ -332,6 +362,52 @@
 	</main>
 
 	<div id="site-footer"></div>
+	<div class="cover-zoom-overlay" id="coverZoomOverlay" aria-hidden="true">
+		<img id="coverZoomImage" alt="Expanded album cover">
+	</div>
 	<script src="/header.js"></script>
+	<script>
+		(function setupAlbumCoverPressZoom() {
+			const images = document.querySelectorAll('.theory-compare img');
+			const overlay = document.getElementById('coverZoomOverlay');
+			const zoomImage = document.getElementById('coverZoomImage');
+			if (!images.length || !overlay || !zoomImage) return;
+			const isMobileView = () => window.matchMedia('(max-width: 640px)').matches;
+
+			let activePointerId = null;
+
+			const closeOverlay = () => {
+				overlay.classList.remove('open');
+				overlay.setAttribute('aria-hidden', 'true');
+				activePointerId = null;
+			};
+
+			images.forEach((img) => {
+				img.addEventListener('pointerdown', (event) => {
+					if (!isMobileView()) return;
+					if (event.button !== undefined && event.button !== 0) return;
+					activePointerId = event.pointerId;
+					zoomImage.src = img.currentSrc || img.src;
+					zoomImage.alt = img.alt || 'Expanded album cover';
+					overlay.classList.add('open');
+					overlay.setAttribute('aria-hidden', 'false');
+				});
+			});
+
+			document.addEventListener('pointerup', (event) => {
+				if (activePointerId === null || event.pointerId === activePointerId) {
+					closeOverlay();
+				}
+			});
+
+			document.addEventListener('pointercancel', closeOverlay);
+			document.addEventListener('visibilitychange', () => {
+				if (document.hidden) closeOverlay();
+			});
+			window.addEventListener('resize', () => {
+				if (!isMobileView()) closeOverlay();
+			});
+		})();
+	</script>
 </body>
 </html>

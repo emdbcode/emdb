@@ -397,6 +397,11 @@ body {
   outline: 2px solid rgba(226,28,33,0.18);
   outline-offset: 3px;
 }
+@media (min-width: 768px) {
+  .album-name.nav-trigger {
+    white-space: nowrap;
+  }
+}
 .album-artist {
   font-size: clamp(18px, 5vw, 30px);
   color: #E21C21;
@@ -883,7 +888,7 @@ body {
             </div>
           </div>
         </div>
-        <div class="album-artist">Eminem</div>
+        <div class="album-artist">Eminem <span class="feat-artists">feat. <button type="button" class="credit-name-search-global" data-search-term="Marilyn Manson">Marilyn Manson</button></span></div>
         <div class="from-album"><a href="/releases/marshall-mathers-lp.html">The Marshall Mathers LP (Tour Edition)</a> • 2001</div>
       </div>
       <div class="credits-block" id="creditsBlock" style="margin-top: 0;">
