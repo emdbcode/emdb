@@ -165,6 +165,11 @@ a:focus {
   cursor: pointer;
 }
 
+.album-artist .credit-name-search-global,
+.album-artist .credit-name-search-global:visited {
+  color: inherit;
+}
+
 .credit-name-search-global:hover,
 .credit-name-search-global:focus {
   color: #E21C21;

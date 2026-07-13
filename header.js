@@ -261,7 +261,7 @@ function initHeaderInteractions() {
   if (searchInput && searchSuggestions) {
     const openSuggestions = () => searchSuggestions.classList.add('open');
     const closeSuggestions = () => searchSuggestions.classList.remove('open');
-    const STORAGE_KEY = 'emdb_search_index_v25';
+    const STORAGE_KEY = 'emdb_search_index_v26';
     const STORAGE_META = 'emdb_search_index_meta_v25';
     const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
@@ -966,7 +966,7 @@ function initHeaderInteractions() {
 
         // Capture structured credit names so person searches can match exactly.
         const creditValues = [];
-        doc.querySelectorAll('.meta-name, .written-by .meta-value, .credit-pair .meta-value').forEach((node) => {
+        doc.querySelectorAll('.album-artist, .meta-name, .written-by .meta-value, .credit-pair .meta-value').forEach((node) => {
           const value = String(node.textContent || '').trim();
           if (value) creditValues.push(value);
         });
