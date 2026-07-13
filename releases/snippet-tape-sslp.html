@@ -140,7 +140,7 @@ body {
   background: transparent;
   border: none;
   color: #E21C21;
-  font-size: 12px;
+  font-size: 15px;
   opacity: 0;
   cursor: pointer;
   transition: opacity 0.15s ease, color 0.15s ease;
@@ -150,11 +150,34 @@ body {
 .track:focus-within .track-play-btn { opacity: 1; }
 .track:hover .track-number-text,
 .track:focus-within .track-number-text { opacity: 0; }
-.track.open .track-play-btn,
 .track.playing .track-play-btn { opacity: 1; }
-.track.open .track-number-text,
 .track.playing .track-number-text { opacity: 0; }
-.track-play-btn.playing { color: #E21C21; }
+.track.paused .track-play-btn { opacity: 1; }
+.track.paused .track-number-text { opacity: 0; }
+.track-play-btn.playing {
+  color: #E21C21;
+  font-size: 12px;
+}
+.track-play-btn.paused::after {
+  content: '\2022';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 1px;
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: #E21C21;
+  opacity: 0.5;
+  animation: pausedDotsPulse 1s ease-in-out infinite;
+}
+@keyframes pausedDotsPulse {
+  0% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.95; transform: translateX(-50%) translateY(1px); }
+  100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+}
+
 @media (max-width: 720px){
   .track-number-text { opacity: 0; }
   .track-play-btn { opacity: 1; }
@@ -547,24 +570,24 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </div>
 
   <div class="tracklist">
-    <div class="track"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/intro-sslp-snippet.html">Intro</a></div></div><div class="track-length">0:30</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-1.html">Record Store 1</a></div></div><div class="track-length">0:46</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/my-name-is.html">My Name Is (Snippet)</a></div></div><div class="track-length">1:53</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-2.html">Record Store 2</a></div></div><div class="track-length">1:34</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-1.html">Verse 1</a></div></div><div class="track-length">1:25</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/nicole.html">Nicole</a></div></div><div class="track-length">1:15</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/brain-damage.html">Brain Damage (Snippet)</a></div></div><div class="track-length">1:47</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">8</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/ariel.html">Ariel</a></div></div><div class="track-length">2:06</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">9</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-2.html">Verse 2</a></div></div><div class="track-length">0:58</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">10</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/brenda.html">Brenda</a></div></div><div class="track-length">2:00</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">11</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/im-shady.html">I’m Shady (Snippet)</a></div></div><div class="track-length">1:21</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/jesse.html">Jesse</a></div></div><div class="track-length">0:56</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/guilty-conscience.html">Guilty Conscience (Snippet)</a></div></div><div class="track-length">0:45</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/junko.html">Junko</a></div></div><div class="track-length">1:31</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">15</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-3.html">Verse 3</a></div></div><div class="track-length">0:48</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">16</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/cock-massage.html">Cock Massage</a></div></div><div class="track-length">0:39</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">17</div><div class="track-title-container"><div class="track-title"><a href="../songs/non-album/scary-movies.html">Scary Movies (Snippet)</a></div></div><div class="track-length">2:02</div></div></div>
-    <div class="track"><div class="track-header"><div class="track-number">18</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/taj-mahal.html">Taj Mahal</a></div></div><div class="track-length">1:38</div></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/intro-sslp-snippet.html">Intro</a></div></div><div class="track-length">0:30 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-1.html">Record Store 1</a></div></div><div class="track-length">0:46 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/my-name-is.html">My Name Is (Snippet)</a></div></div><div class="track-length">1:53 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Dr. Dre">Dr. Dre</button></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/record-store-2.html">Record Store 2</a></div></div><div class="track-length">1:34 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-1.html">Verse 1</a></div></div><div class="track-length">1:25 <span class="arrow">▼</span></div></div><div class="track-details">Produced by N/A</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/nicole.html">Nicole</a></div></div><div class="track-length">1:15 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/brain-damage.html">Brain Damage (Snippet)</a></div></div><div class="track-length">1:47 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Bass Brothers">Bass Brothers</button><br>Co-Produced by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">8</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/ariel.html">Ariel</a></div></div><div class="track-length">2:06 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">9</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-2.html">Verse 2</a></div></div><div class="track-length">0:58 <span class="arrow">▼</span></div></div><div class="track-details">Produced by N/A</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">10</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/brenda.html">Brenda</a></div></div><div class="track-length">2:00 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">11</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/im-shady.html">I’m Shady (Snippet)</a></div></div><div class="track-length">1:21 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Bass Brothers">Bass Brothers</button><br>Co-Produced by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/jesse.html">Jesse</a></div></div><div class="track-length">0:56 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="../songs/slim-shady-lp/guilty-conscience.html">Guilty Conscience (Snippet)</a></div></div><div class="track-length">0:45 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Dr. Dre">Dr. Dre</button> &amp; Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/junko.html">Junko</a></div></div><div class="track-length">1:31 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">15</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/verse-3.html">Verse 3</a></div></div><div class="track-length">0:48 <span class="arrow">▼</span></div></div><div class="track-details">Produced by N/A</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">16</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/cock-massage.html">Cock Massage</a></div></div><div class="track-length">0:39 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
+    <div class="track"><div class="track-header"><div class="track-number">17</div><div class="track-title-container"><div class="track-title"><a href="../songs/non-album/scary-movies.html">Scary Movies (Snippet)</a></div></div><div class="track-length">2:02 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Reef">Reef</button></div></div>
+    <div class="track"><div class="track-header"><div class="track-number">18</div><div class="track-title-container"><div class="track-title"><a href="../songs/snippet-tape-sslp/taj-mahal.html">Taj Mahal</a></div></div><div class="track-length">1:38 <span class="arrow">▼</span></div></div><div class="track-details">Crank call, performed by Eminem</div></div>
     <div class="total-length"><span>Total length</span><span>23 minutes</span></div>
 
     
@@ -751,11 +774,19 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     let currentIndex = 0;
     let isPlaying = false;
     let playlist = [];
-    let ytPlayer = null;
+    let pausedIndex = -1;
+    let hasPlayedOnce = false;
+let ytPlayer = null;
+    const forcedVideoByPath = {
+      '/songs/slim-shady-lp/guilty-conscience.html': 'V-aBJYpARhA',
+      '/songs/slim-shady-lp/im-shady.html': 'ZO4QY6gtze4',
+      '/songs/slim-shady-lp/brain-damage.html': '8Ki09L2M8I8',
+      '/songs/slim-shady-lp/my-name-is.html': '8rVbIsiWWGk'
+    };
     const fallbackVideoByPath = {
       '/songs/non-album/scary-movies.html': 'HgExVxTWUUY',
       '/songs/slim-shady-lp/guilty-conscience.html': 'V-aBJYpARhA',
-      '/songs/slim-shady-lp/im-shady.html': 'V-aBJYpARhA',
+      '/songs/slim-shady-lp/im-shady.html': 'ZO4QY6gtze4',
       '/songs/slim-shady-lp/brain-damage.html': '8Ki09L2M8I8',
       '/songs/slim-shady-lp/my-name-is.html': '8rVbIsiWWGk'
     };
@@ -788,9 +819,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         const btn = track.row.querySelector('.track-play-btn');
         if (!btn) return;
         const isCurrent = current && track.videoId === current.videoId;
+        const isPausedCurrent = isCurrent && pausedIndex === currentIndex && !isPlaying;
         btn.textContent = isCurrent && isPlaying ? '❚❚' : '▶';
-        btn.classList.toggle('playing', isCurrent);
+        btn.classList.toggle('playing', isCurrent && isPlaying);
+        btn.classList.toggle('paused', isPausedCurrent);
         track.row.classList.toggle('playing', isCurrent && isPlaying);
+        track.row.classList.toggle('paused', isPausedCurrent);
       });
       prevBtn.disabled = currentIndex <= 0;
       nextBtn.disabled = currentIndex >= playlist.length - 1;
@@ -836,6 +870,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     function playAtIndex(index){
       if (index < 0 || index >= playlist.length) return;
       closeOpenVideoPlayers();
+      pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
     }
@@ -844,11 +879,27 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       const current = playlist[currentIndex];
       if (!current) return;
       isPlaying = false;
+      if (hasPlayedOnce) pausedIndex = currentIndex;
       if (ytPlayer) {
         ytPlayer.pauseVideo();
       } else {
         player.src = `https://www.youtube.com/embed/${current.videoId}?enablejsapi=1`;
       }
+      updateUI();
+    }
+
+    function resumeCurrent(){
+      const current = playlist[currentIndex];
+      if (!current) return;
+      closeOpenVideoPlayers();
+      pausedIndex = -1;
+      if (ytPlayer) {
+        ytPlayer.playVideo();
+      } else {
+        player.src = `https://www.youtube.com/embed/${current.videoId}?autoplay=1&enablejsapi=1`;
+      }
+      isPlaying = true;
+      hasPlayedOnce = true;
       updateUI();
     }
 
@@ -860,8 +911,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
           event.stopPropagation();
           const idx = playlist.findIndex(item => item.videoId === track.videoId);
           if (idx === -1) return;
-          if (idx === currentIndex && isPlaying) pauseCurrent();
-          else playAtIndex(idx);
+          if (idx === currentIndex) {
+            if (isPlaying) pauseCurrent();
+            else resumeCurrent();
+            return;
+          }
+          playAtIndex(idx);
         });
       });
 
@@ -883,10 +938,13 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
               if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
             } else if (event.data === YT.PlayerState.PLAYING) {
               closeOpenVideoPlayers();
+              pausedIndex = -1;
               isPlaying = true;
+              hasPlayedOnce = true;
               updateUI();
             } else if (event.data === YT.PlayerState.PAUSED) {
               isPlaying = false;
+              if (hasPlayedOnce) pausedIndex = currentIndex;
               updateUI();
             }
           }
@@ -924,9 +982,9 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
           const doc = new DOMParser().parseFromString(html, 'text/html');
           const videoEl = doc.querySelector('.song-video[data-video]') || doc.querySelector('#songVideo[data-video]');
           const videoId = videoEl ? videoEl.getAttribute('data-video') : '';
-          track.videoId = videoId || fallbackVideoByPath[resolvedPath] || '';
+          track.videoId = forcedVideoByPath[resolvedPath] || videoId || fallbackVideoByPath[resolvedPath] || '';
         } catch (err) {
-          track.videoId = fallbackVideoByPath[resolvedPath] || '';
+          track.videoId = forcedVideoByPath[resolvedPath] || fallbackVideoByPath[resolvedPath] || '';
         }
       });
 

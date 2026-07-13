@@ -137,7 +137,7 @@ body {
   background: transparent;
   border: none;
   color: #E21C21;
-  font-size: 12px;
+  font-size: 15px;
   opacity: 0;
   cursor: pointer;
   transition: opacity 0.15s ease, color 0.15s ease;
@@ -147,11 +147,34 @@ body {
 .track:focus-within .track-play-btn { opacity: 1; }
 .track:hover .track-number-text,
 .track:focus-within .track-number-text { opacity: 0; }
-.track.open .track-play-btn,
 .track.playing .track-play-btn { opacity: 1; }
-.track.open .track-number-text,
 .track.playing .track-number-text { opacity: 0; }
-.track-play-btn.playing { color: #E21C21; }
+.track.paused .track-play-btn { opacity: 1; }
+.track.paused .track-number-text { opacity: 0; }
+.track-play-btn.playing {
+  color: #E21C21;
+  font-size: 12px;
+}
+.track-play-btn.paused::after {
+  content: '\2022';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 1px;
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: #E21C21;
+  opacity: 0.5;
+  animation: pausedDotsPulse 1s ease-in-out infinite;
+}
+@keyframes pausedDotsPulse {
+  0% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.95; transform: translateX(-50%) translateY(1px); }
+  100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+}
+
 @media (max-width: 720px){
   .track-number-text { opacity: 0; }
   .track-play-btn { opacity: 1; }
@@ -528,30 +551,29 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </div>
 
   <div class="tracklist">
-    <div class="track" data-video="JsPj38pRiYQ"><div class="track-header"><div class="track-number"><span class="track-number-text">1</span><button class="track-play-btn" type="button" aria-label="Play Infinite">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/infinite-song.html">Infinite</a></div></div><div class="track-length">4:03</div></div></div>
+    <div class="track" data-video="JsPj38pRiYQ"><div class="track-header"><div class="track-number"><span class="track-number-text">1</span><button class="track-play-btn" type="button" aria-label="Play Infinite">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/infinite-song.html">Infinite</a></div></div><div class="track-length">4:03 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="3PrgRvuEP8g"><div class="track-header"><div class="track-number"><span class="track-number-text">2</span><button class="track-play-btn" type="button" aria-label="Play W.E.G.O.">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/wego.html">W.E.G.O.</a></div><div class="track-feat"></div></div><div class="track-length">0:21</div></div></div>
+    <div class="track" data-video="3PrgRvuEP8g"><div class="track-header"><div class="track-number"><span class="track-number-text">2</span><button class="track-play-btn" type="button" aria-label="Play W.E.G.O.">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/wego.html">W.E.G.O.</a></div></div><div class="track-length">0:21 <span class="arrow">▼</span></div></div><div class="track-details">Performed by <button type="button" class="credit-name-search-global" data-search-term="Proof">Proof</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="DJ Head">DJ Head</button><br>Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="pJ8IzgkMVnk"><div class="track-header"><div class="track-number"><span class="track-number-text">3</span><button class="track-play-btn" type="button" aria-label="Play It's O.K.">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/its-ok.html">It’s O.K.</a></div><div class="track-feat"></div></div><div class="track-length">3:32</div></div></div>
+    <div class="track" data-video="pJ8IzgkMVnk"><div class="track-header"><div class="track-number"><span class="track-number-text">3</span><button class="track-play-btn" type="button" aria-label="Play It's O.K.">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/its-ok.html">It’s O.K.</a></div></div><div class="track-length">3:32 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="2fUbxRERxHo"><div class="track-header"><div class="track-number"><span class="track-number-text">4</span><button class="track-play-btn" type="button" aria-label="Play Tonite">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/tonite.html">Tonite</a></div></div><div class="track-length">3:45</div></div></div>
+    <div class="track" data-video="2fUbxRERxHo"><div class="track-header"><div class="track-number"><span class="track-number-text">4</span><button class="track-play-btn" type="button" aria-label="Play Tonite">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/tonite.html">Tonite</a></div></div><div class="track-length">3:45 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="Gh9rAOzwOHg"><div class="track-header"><div class="track-number"><span class="track-number-text">5</span><button class="track-play-btn" type="button" aria-label="Play 313">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/313.html">313</a></div><div class="track-feat">feat. Eye-Kyu</div></div><div class="track-length">4:13</div></div></div>
+    <div class="track" data-video="Gh9rAOzwOHg"><div class="track-header"><div class="track-number"><span class="track-number-text">5</span><button class="track-play-btn" type="button" aria-label="Play 313">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/313.html">313</a></div><div class="track-feat">feat. Eye-Kyu</div></div><div class="track-length">4:13 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="2r3iU1NM_ys"><div class="track-header"><div class="track-number"><span class="track-number-text">6</span><button class="track-play-btn" type="button" aria-label="Play Maxine">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/maxine.html">Maxine</a></div><div class="track-feat">feat. Denaun Porter & Three</div></div><div class="track-length">3:57</div></div></div>
+    <div class="track" data-video="2r3iU1NM_ys"><div class="track-header"><div class="track-number"><span class="track-number-text">6</span><button class="track-play-btn" type="button" aria-label="Play Maxine">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/maxine.html">Maxine</a></div><div class="track-feat">feat. Denaun Porter & Three</div></div><div class="track-length">3:57 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="Gf6h0g7r1Wo"><div class="track-header"><div class="track-number"><span class="track-number-text">7</span><button class="track-play-btn" type="button" aria-label="Play Open Mic">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/open-mic.html">Open Mic</a></div><div class="track-feat"></div></div><div class="track-length">4:03</div></div></div>
+    <div class="track" data-video="Gf6h0g7r1Wo"><div class="track-header"><div class="track-number"><span class="track-number-text">7</span><button class="track-play-btn" type="button" aria-label="Play Open Mic">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/open-mic.html">Open Mic</a></div></div><div class="track-length">4:03 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="cyQ8r4yQmEQ"><div class="track-header"><div class="track-number"><span class="track-number-text">8</span><button class="track-play-btn" type="button" aria-label="Play Never 2 Far">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/never-2-far.html">Never 2 Far</a></div></div><div class="track-length">3:40</div></div></div>
+    <div class="track" data-video="cyQ8r4yQmEQ"><div class="track-header"><div class="track-number"><span class="track-number-text">8</span><button class="track-play-btn" type="button" aria-label="Play Never 2 Far">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/never-2-far.html">Never 2 Far</a></div></div><div class="track-length">3:40 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="VA9Nqwh0aks"><div class="track-header"><div class="track-number"><span class="track-number-text">9</span><button class="track-play-btn" type="button" aria-label="Play Searchin'">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/searchin.html">Searchin’</a></div><div class="track-feat">feat. Eye-Kyu</div></div><div class="track-length">3:46</div></div></div>
+    <div class="track" data-video="VA9Nqwh0aks"><div class="track-header"><div class="track-number"><span class="track-number-text">9</span><button class="track-play-btn" type="button" aria-label="Play Searchin'">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/searchin.html">Searchin’</a></div><div class="track-feat">feat. Eye-Kyu</div></div><div class="track-length">3:46 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="S4H_AEbP994"><div class="track-header"><div class="track-number"><span class="track-number-text">10</span><button class="track-play-btn" type="button" aria-label="Play Backstabber">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/backstabber.html">Backstabber</a></div></div><div class="track-length">3:26</div></div></div>
+    <div class="track" data-video="S4H_AEbP994"><div class="track-header"><div class="track-number"><span class="track-number-text">10</span><button class="track-play-btn" type="button" aria-label="Play Backstabber">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/backstabber.html">Backstabber</a></div></div><div class="track-length">3:26 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
-    <div class="track" data-video="3TN9m2xdkYE"><div class="track-header"><div class="track-number"><span class="track-number-text">11</span><button class="track-play-btn" type="button" aria-label="Play Jealousy Woes II">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/jealousy-woes-ii.html">Jealousy Woes II</a></div></div><div class="track-length">3:23</div></div></div>
+    <div class="track" data-video="3TN9m2xdkYE"><div class="track-header"><div class="track-number"><span class="track-number-text">11</span><button class="track-play-btn" type="button" aria-label="Play Jealousy Woes II">▶</button></div><div class="track-title-container"><div class="track-title"><a href="../songs/infinite/jealousy-woes-ii.html">Jealousy Woes II</a></div></div><div class="track-length">3:23 <span class="arrow">▼</span></div></div><div class="track-details">Produced by <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button><br>Co-Produced by <button type="button" class="credit-name-search-global" data-search-term="Slim">Slim</button><br>Mixed by <button type="button" class="credit-name-search-global" data-search-term="Kevin Wilder">Kevin Wilder</button> &amp; <button type="button" class="credit-name-search-global" data-search-term="Robert Handy">Robert Handy</button></div></div>
 
     <div class="total-length"><span>Total length</span><span>38 minutes</span></div>
-    <div class="track-note">Produced by Denaun Porter<br>Co-Produced by Slim<br>Mixed by Kevin Wilder & Robert Handy</div>
 
     
   </div>
@@ -758,6 +780,8 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
     let currentIndex = 0;
     let isPlaying = false;
+    let pausedIndex = -1;
+    let hasPlayedOnce = false;
     let ytPlayer = null;
 
     function setVideo(videoId, autoplay){
@@ -791,9 +815,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         const btn = row.querySelector('.track-play-btn');
         if (!btn) return;
         const isCurrent = row.dataset.video === current.id;
+        const isPausedCurrent = isCurrent && pausedIndex === currentIndex && !isPlaying;
         btn.textContent = isCurrent && isPlaying ? '❚❚' : '▶';
-        btn.classList.toggle('playing', isCurrent);
+        btn.classList.toggle('playing', isCurrent && isPlaying);
+        btn.classList.toggle('paused', isPausedCurrent);
         row.classList.toggle('playing', isCurrent && isPlaying);
+        row.classList.toggle('paused', isPausedCurrent);
       });
       prevBtn.disabled = currentIndex == 0;
       nextBtn.disabled = currentIndex == playlist.length - 1;
@@ -816,6 +843,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     function playAtIndex(index){
       if (index < 0 || index >= playlist.length) return;
       closeOpenVideoPlayers();
+      pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
     }
@@ -823,6 +851,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     function pauseCurrent(){
       const current = playlist[currentIndex];
       isPlaying = false;
+      if (hasPlayedOnce) pausedIndex = currentIndex;
       if (ytPlayer) {
         ytPlayer.pauseVideo();
       } else {
@@ -831,13 +860,32 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       updateUI();
     }
 
+    function resumeCurrent(){
+      const current = playlist[currentIndex];
+      if (!current) return;
+      closeOpenVideoPlayers();
+      pausedIndex = -1;
+      if (ytPlayer) {
+        ytPlayer.playVideo();
+      } else {
+        player.src = `https://www.youtube.com/embed/${current.id}?autoplay=1&enablejsapi=1`;
+      }
+      isPlaying = true;
+      hasPlayedOnce = true;
+      updateUI();
+    }
+
     trackRows.forEach((row, index) => {
       const btn = row.querySelector('.track-play-btn');
       if (!btn) return;
       btn.addEventListener('click', (event) => {
         event.stopPropagation();
-        if (index == currentIndex && isPlaying) pauseCurrent();
-        else playAtIndex(index);
+        if (index === currentIndex) {
+          if (isPlaying) pauseCurrent();
+          else resumeCurrent();
+          return;
+        }
+        playAtIndex(index);
       });
     });
 
@@ -858,10 +906,13 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
               if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
             } else if (event.data === YT.PlayerState.PLAYING) {
               closeOpenVideoPlayers();
+              pausedIndex = -1;
               isPlaying = true;
+              hasPlayedOnce = true;
               updateUI();
             } else if (event.data === YT.PlayerState.PAUSED) {
               isPlaying = false;
+              if (hasPlayedOnce) pausedIndex = currentIndex;
               updateUI();
             }
           }

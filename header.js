@@ -1292,6 +1292,9 @@ function initHeaderInteractions() {
       );
       if (isKenKaniffQuery) {
         const kenKaniffSongUrls = new Set([
+          '/songs/snippet-tape-sslp/cock-massage.html',
+          '/songs/snippet-tape-mmlp/men-with-van.html',
+          '/songs/snippet-tape-mmlp/rex.html',
           '/songs/slim-shady-lp/ken-kaniff-skit.html',
           '/songs/marshall-mathers-lp/ken-kaniff-skit-2.html',
           '/songs/eminem-show/curtains-close-skit.html',

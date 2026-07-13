@@ -143,7 +143,7 @@ body {
   background: transparent;
   border: none;
   color: #E21C21;
-  font-size: 12px;
+  font-size: 15px;
   opacity: 0;
   cursor: pointer;
   transition: opacity 0.15s ease, color 0.15s ease;
@@ -153,11 +153,34 @@ body {
 .track:focus-within .track-play-btn { opacity: 1; }
 .track:hover .track-number-text,
 .track:focus-within .track-number-text { opacity: 0; }
-.track.open .track-play-btn,
 .track.playing .track-play-btn { opacity: 1; }
-.track.open .track-number-text,
 .track.playing .track-number-text { opacity: 0; }
-.track-play-btn.playing { color: #E21C21; }
+.track.paused .track-play-btn { opacity: 1; }
+.track.paused .track-number-text { opacity: 0; }
+.track-play-btn.playing {
+  color: #E21C21;
+  font-size: 12px;
+}
+.track-play-btn.paused::after {
+  content: '\2022';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 1px;
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: #E21C21;
+  opacity: 0.5;
+  animation: pausedDotsPulse 1s ease-in-out infinite;
+}
+@keyframes pausedDotsPulse {
+  0% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.95; transform: translateX(-50%) translateY(1px); }
+  100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+}
+
 @media (max-width: 720px){
   .track-number-text { opacity: 0; }
   .track-play-btn { opacity: 1; }
@@ -1011,6 +1034,8 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       title: track.title,
       artist: track.artist
     }));
+    let pausedIndex = -1;
+    let hasPlayedOnce = false;
     let ytPlayer = null;
 
     function ensurePlayButtons(){
@@ -1046,9 +1071,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         const btn = track.row.querySelector('.track-play-btn');
         if (!btn) return;
         const isCurrent = current && track.videoId === current.videoId;
+        const isPausedCurrent = isCurrent && pausedIndex === currentIndex && !isPlaying;
         btn.textContent = isCurrent && isPlaying ? '❚❚' : '▶';
-        btn.classList.toggle('playing', isCurrent);
+        btn.classList.toggle('playing', isCurrent && isPlaying);
+        btn.classList.toggle('paused', isPausedCurrent);
         track.row.classList.toggle('playing', isCurrent && isPlaying);
+        track.row.classList.toggle('paused', isPausedCurrent);
       });
       prevBtn.disabled = currentIndex <= 0;
       nextBtn.disabled = currentIndex >= playlist.length - 1;
@@ -1094,6 +1122,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     function playAtIndex(index){
       if (index < 0 || index >= playlist.length) return;
       closeOpenVideoPlayers();
+      pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
     }
@@ -1102,11 +1131,27 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       const current = playlist[currentIndex];
       if (!current) return;
       isPlaying = false;
+      if (hasPlayedOnce) pausedIndex = currentIndex;
       if (ytPlayer) {
         ytPlayer.pauseVideo();
       } else {
         player.src = `https://www.youtube.com/embed/${current.videoId}?enablejsapi=1`;
       }
+      updateUI();
+    }
+
+    function resumeCurrent(){
+      const current = playlist[currentIndex];
+      if (!current) return;
+      closeOpenVideoPlayers();
+      pausedIndex = -1;
+      if (ytPlayer) {
+        ytPlayer.playVideo();
+      } else {
+        player.src = `https://www.youtube.com/embed/${current.videoId}?autoplay=1&enablejsapi=1`;
+      }
+      isPlaying = true;
+      hasPlayedOnce = true;
       updateUI();
     }
 
@@ -1118,8 +1163,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
           event.stopPropagation();
           const idx = playlist.findIndex(item => item.videoId === track.videoId);
           if (idx === -1) return;
-          if (idx === currentIndex && isPlaying) pauseCurrent();
-          else playAtIndex(idx);
+          if (idx === currentIndex) {
+            if (isPlaying) pauseCurrent();
+            else resumeCurrent();
+            return;
+          }
+          playAtIndex(idx);
         });
       });
 
@@ -1141,10 +1190,13 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
               if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
             } else if (event.data === YT.PlayerState.PLAYING) {
               closeOpenVideoPlayers();
+              pausedIndex = -1;
               isPlaying = true;
+              hasPlayedOnce = true;
               updateUI();
             } else if (event.data === YT.PlayerState.PAUSED) {
               isPlaying = false;
+              if (hasPlayedOnce) pausedIndex = currentIndex;
               updateUI();
             }
           }

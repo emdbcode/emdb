@@ -52,7 +52,9 @@ const AVATAR_FALLBACK_OPTIONS = [
   '/images/avatars/avatar-23.jpg',
   '/images/avatars/avatar-24.jpg',
   '/images/avatars/avatar-25.jpg',
-  '/images/avatars/avatar-26.jpg'
+  '/images/avatars/avatar-26.jpg',
+  '/images/avatars/avatar-27.jpg',
+  '/images/avatars/avatar-28.jpg'
 ];
 let avatarOptions = [...AVATAR_FALLBACK_OPTIONS];
 
