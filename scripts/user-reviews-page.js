@@ -455,6 +455,11 @@ body {
   color: #E21C21;
 }
 
+.vote-btn[data-vote="-1"],
+.vote-btn.voted-down {
+  display: none !important;
+}
+
 .vote-score {
   font-size: 12px;
   color: #cfd2d9;

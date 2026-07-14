@@ -365,6 +365,8 @@
 .ar-vote-btn:disabled { opacity: 0.28; cursor: default; }
 .ar-vote-btn.ar-voted-up { color: #4CAF50; }
 .ar-vote-btn.ar-voted-down { color: #E21C21; }
+.ar-vote-btn[data-ar-vote="-1"],
+.ar-vote-btn.ar-voted-down { display: none !important; }
 .ar-vote-score {
   font-size: 12px;
   color: #cfd2d9;
