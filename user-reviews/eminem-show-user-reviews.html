@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Eminem Show User Reviews | EMDb</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+  <style>
+    body { margin: 0; background: #0b0b0b; color: #eaeaea; font-family: Arial, Helvetica, sans-serif; }
+    .reviews-page { max-width: 900px; margin: 2rem auto; padding: 1rem; box-sizing: border-box; }
+    .hero { background: #151515; border: 1px solid #222; border-radius: 8px; padding: 1rem; display: flex; gap: 12px; align-items: center; margin-bottom: 1rem; }
+    .album-cover { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; background: #000; }
+    .hero-text h1 { margin: 0; font-size: clamp(20px, 4vw, 28px); color: #fff; line-height: 1.2; }
+    .hero-text p { margin: 6px 0 0; color: #aaa; font-size: 13px; }
+    .hero-actions { margin-left: auto; }
+    .hero-actions a { color: #aaa; text-decoration: none; border: 1px solid #333; border-radius: 6px; padding: 8px 12px; display: inline-block; font-size: 13px; }
+    .hero-actions a:hover { color: #E21C21; border-color: #E21C21; }
+    .review-list { display: flex; flex-direction: column; gap: 10px; }
+    .review-card { background: #151515; border: 1px solid #222; border-radius: 8px; padding: 12px; }
+    .review-head { display: flex; align-items: center; gap: 10px; }
+    .avatar { width: 34px; height: 34px; border-radius: 7px; object-fit: cover; background: #111; }
+    .meta { min-width: 0; flex: 1; }
+    .user { font-size: 14px; color: #f2f2f2; font-weight: 600; line-height: 1.2; }
+    .date { font-size: 12px; color: #777; margin-top: 2px; }
+    .rating { font-size: 13px; color: #E21C21; font-weight: 700; white-space: nowrap; }
+    .text { margin: 10px 0 0; color: #d8d8d8; font-size: 14px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+    .score { margin-top: 8px; font-size: 12px; color: #aaa; }
+    .empty { color: #aaa; margin: 0; background: #151515; border: 1px solid #222; border-radius: 8px; padding: 12px; }
+    @media (max-width: 700px) {
+      .hero { align-items: flex-start; }
+      .hero-actions { margin-left: 0; }
+      .hero { flex-wrap: wrap; }
+    }
+  </style>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="reviews-page" id="userReviewsPage" data-album-slug="eminem-show" data-release-path="../releases/eminem-show.html">
+    <section class="hero">
+    <img class="album-cover" src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+      <div class="hero-text">
+        <h1 id="reviewsTitle">The Eminem Show User Reviews</h1>
+        <p id="reviewsSubtitle">Loading reviews...</p>
+      </div>
+          </section>
+
+    <section id="reviewList" class="review-list"></section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="../scripts/user-reviews-page.js"></script>
+  <script src="../header.js"></script>
+</body>
+</html>

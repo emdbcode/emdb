@@ -269,6 +269,9 @@
   display: inline-flex;
   align-items: center;
 }
+.ar-user-link:hover,
+.ar-user-link:focus,
+.ar-user-link:active { text-decoration: none; }
 .ar-user-meta { flex: 1; min-width: 0; }
 .ar-username {
   font-size: 14px;
@@ -1172,12 +1175,34 @@
     const textEl = card.querySelector('.ar-text');
     const btn = card.querySelector('.ar-more-btn');
     if (!textEl || !btn) return;
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isClamped = textEl.classList.contains('ar-text--clamped');
-      textEl.classList.toggle('ar-text--clamped', !isClamped);
-      btn.textContent = isClamped ? 'Less' : 'More';
-    });
+
+    const setup = () => {
+      if (!textEl.classList.contains('ar-text--clamped')) {
+        textEl.classList.add('ar-text--clamped');
+      }
+
+      const needsToggle = textEl.scrollHeight > (textEl.clientHeight + 1);
+      if (!needsToggle) {
+        btn.remove();
+        textEl.classList.remove('ar-text--clamped');
+        return;
+      }
+
+      if (btn.dataset.wired === '1') return;
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isClamped = textEl.classList.contains('ar-text--clamped');
+        textEl.classList.toggle('ar-text--clamped', !isClamped);
+        btn.textContent = isClamped ? 'Less' : 'More';
+      });
+    };
+
+    if (document.body.contains(card)) {
+      window.requestAnimationFrame(setup);
+    } else {
+      window.setTimeout(setup, 0);
+    }
   }
 
   // ── Load reviews (entity page) ──────────────────────────────────────────────
@@ -1209,9 +1234,9 @@
     const reviewerIds = [...new Set(rows.map((r) => r.user_id))];
 
     const [voteRes, userVoteRes, ratingRes, profileRows] = await Promise.all([
-      _client.from(_voteTable).select('review_id, vote').in('review_id', ids),
+      _client.from(_voteTable).select('review_id, user_id, vote').in('review_id', ids),
       _userId
-        ? _client.from(_voteTable).select('review_id, vote').eq('user_id', _userId).in('review_id', ids)
+        ? _client.from(_voteTable).select('review_id, user_id, vote').eq('user_id', _userId).in('review_id', ids)
         : Promise.resolve({ data: [], error: null }),
       _reviewEntityType !== 'song'
         ? _client.from(_ratingTable).select('user_id, rating')
@@ -1242,7 +1267,11 @@
     (Array.isArray(profileRows) ? profileRows : []).forEach((p) => { profileMap[p.id] = p; });
 
     _voteMap = {};
+    const seenVoteKeys = new Set();
     (voteRes.data || []).forEach((v) => {
+      const voteKey = `${v.review_id}:${v.user_id}`;
+      if (seenVoteKeys.has(voteKey)) return;
+      seenVoteKeys.add(voteKey);
       if (!_voteMap[v.review_id]) _voteMap[v.review_id] = { likes: 0, dislikes: 0 };
       if (v.vote === 1) _voteMap[v.review_id].likes += 1;
       else if (v.vote === -1) _voteMap[v.review_id].dislikes += 1;
@@ -1297,6 +1326,7 @@
     const profile = review.profiles || {};
     const vm = _voteMap[review.id] || { likes: 0, dislikes: 0 };
     const uv = _userVotes[review.id];
+    const isOwnReview = !!_userId && review.user_id === _userId;
     const profileHref = getProfileHref(review.user_id);
     const avatarSrc = normalizeAvatarPath(profile.avatar_url || DEFAULT_AVATAR);
     const avatarHtml = profileHref
@@ -1326,9 +1356,9 @@
 ${clamped && _reviewEntityType !== 'song' ? '<button type="button" class="ar-more-btn">More</button>' : ''}
 <div class="ar-card-foot">
   <div class="ar-vote-group">
-    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote">↑</button>
+    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote"${isOwnReview ? ' disabled' : ''}>↑</button>
     <span class="ar-vote-score">${Math.max(0, vm.likes - vm.dislikes)}</span>
-    <button type="button" class="ar-vote-btn${uv === -1 ? ' ar-voted-down' : ''}" data-ar-vote="-1" aria-label="Downvote"${Math.max(0, vm.likes - vm.dislikes) === 0 ? ' disabled' : ''}>↓</button>
+    <button type="button" class="ar-vote-btn${uv === -1 ? ' ar-voted-down' : ''}" data-ar-vote="-1" aria-label="Downvote"${isOwnReview || Math.max(0, vm.likes - vm.dislikes) === 0 ? ' disabled' : ''}>↓</button>
   </div>
   ${canDeleteSongThought ? '<button type="button" class="ar-song-delete-btn" data-ar-delete="1" aria-label="Delete" title="Delete">Delete</button>' : ''}
 </div>`;
@@ -1336,6 +1366,7 @@ ${clamped && _reviewEntityType !== 'song' ? '<button type="button" class="ar-mor
     card.querySelectorAll('.ar-vote-btn').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
+        if (isOwnReview) return;
         console.log('[AR-VOTE] button handler', {
           review_id: review.id,
           vote: Number(btn.dataset.arVote)
@@ -1447,7 +1478,15 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       viewBtn.textContent = _reviews.length > 3
         ? `View All (${_reviews.length})`
         : `All reviews (${_reviews.length})`;
-      viewBtn.addEventListener('click', openAllModal);
+      const albumContainer = document.querySelector('.album-container');
+      const reviewsUrl = albumContainer && albumContainer.dataset
+        ? (albumContainer.dataset.userReviews || albumContainer.dataset.reviews || '')
+        : '';
+      if (reviewsUrl) {
+        viewBtn.addEventListener('click', () => { window.location.href = reviewsUrl; });
+      } else {
+        viewBtn.addEventListener('click', openAllModal);
+      }
       head.appendChild(viewBtn);
     }
 

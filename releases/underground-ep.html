@@ -44,15 +44,13 @@ body {
   background-color: #222;
   padding: 1.5rem;
   border-radius: 6px;
+  box-sizing: border-box;
 }
 @media(min-width: 768px){
   .album-container {
     flex-direction: row;
     align-items: flex-start;
     gap: 2rem;
-  }
-  .release-info {
-    flex: 1 1 0;
   }
 }
 
@@ -199,7 +197,7 @@ body {
 /* SINGLES SECTION */
 .singles-container { background-color: #151515; padding: 1.5rem; margin: 2rem auto 3rem auto; border-radius: 6px; max-width: 900px;  border: 1px solid #222;
 }
-.playlist-container { max-width: 900px; width: 100%; }
+.playlist-container { max-width: 900px; width: 100%; box-sizing: border-box; }
 .single-section-singles { display: flex; align-items: flex-start; gap: clamp(10px, 3vw, 15px); font-family: Arial, sans-serif; color: #fff; margin-bottom: clamp(12px, 3vw, 18px); }
 .single-section-singles img { width: clamp(50px, 12vw, 60px); aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
 .single-info-singles { display: flex; flex-direction: column; }
@@ -324,7 +322,11 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   align-items: center;
 }
 
-.rating-label { font-size: 13px; color: #aaa; margin-bottom: 4px; }
+.rating-label {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
 
 .album-header { display: flex; align-items: center; justify-content: flex-start; gap: 8px; }
 .album-nav { position: relative; display: flex; gap: 12px; align-items: center; margin-left: 8px; }
@@ -479,7 +481,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 <body>
 <div id="site-header"></div>
 <main>
-  <div class="album-container" data-prev="marshall-mathers-lp.html" data-next="devils-night.html">
+  <div class="album-container" data-prev="marshall-mathers-lp.html" data-next="devils-night.html" data-user-reviews="../user-reviews/underground-ep-user-reviews.html">
     <div class="album-single" id="albumSingleRevival">
       <img src="../images/album-covers/non-album/d12-underground-ep-cover.jpg" alt="The Underground EP cover">
     </div>
@@ -502,7 +504,8 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       <strong>Released:</strong> 2000<br>
       <strong>Labels:</strong> Self-released<br>
       <div class="release-details" id="releaseDetails">
-        <strong>Recorded:</strong> 1996 – 1999
+        <strong>Recorded:</strong> 1996 – 1999<br>
+          <strong>Re-released:</strong> October 31, 2022 (Original release was an underground limited release)
       </div>
       <div class="toggle-details" id="toggleDetails">Show More</div>
 
@@ -763,7 +766,6 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     function resumeCurrent(){
       const current = playlist[currentIndex];
       if (!current) return;
-      closeOpenVideoPlayers();
       pausedIndex = -1;
       if (ytPlayer) {
         ytPlayer.playVideo();
