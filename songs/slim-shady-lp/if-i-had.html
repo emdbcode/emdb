@@ -28,6 +28,19 @@ body {
   color: #eaeaea;
 }
 
+/* Reserve header space before async partial injection to prevent initial top snap. */
+#site-header {
+  min-height: 84px;
+  background: linear-gradient(90deg, #0f0f11 0%, #101016 50%, #0f0f11 100%);
+  border-bottom: 1px solid #1f0f24;
+}
+
+@media (max-width: 1024px) {
+  #site-header {
+    min-height: 72px;
+  }
+}
+
 :root {
   --written-by-max: 70ch;
 }
