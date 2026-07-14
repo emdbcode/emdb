@@ -132,6 +132,7 @@
   let _deletedReviews = {}; // Track deletions to prevent XP farming: { "user_id:entity_id": timestamp }
   let _awardedReviewXp = {}; // Persist awarded review XP: { "user_id:entity_type:entity_id": timestamp }
   const SONG_THOUGHT_PREVIEW_COUNT = 4;
+  let _songThoughtSort = 'new';
 
   // Load deletion tracking from localStorage
   function loadDeletedReviewsCache() {
@@ -249,6 +250,39 @@
   flex-shrink: 0;
 }
 .ar-view-all-btn:hover { color: #E21C21; border-color: #E21C21; }
+
+.ar-filter-bar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: -2px 0 10px;
+}
+
+.ar-filter-btn {
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+  font-family: Arial, sans-serif;
+}
+
+.ar-filter-btn:hover,
+.ar-filter-btn:focus-visible {
+  color: #eaeaea;
+  border-color: #444;
+  outline: none;
+}
+
+.ar-filter-btn.is-active {
+  color: #eaeaea;
+  border-color: #E21C21;
+}
 
 /* ─── Review card ──────────────────────────────────────────────────────── */
 .ar-card {
@@ -400,8 +434,41 @@
   z-index: 1100;
   padding: 16px;
   box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .ar-modal.open { display: flex; }
+
+.ar-modal--all {
+  align-items: flex-start !important;
+  justify-content: center;
+  padding: calc(max(8px, env(safe-area-inset-top)) + clamp(30px, 8vh, 72px)) 12px 12px;
+}
+
+.ar-modal--all .ar-modal-panel {
+  width: min(700px, 94vw);
+  margin-top: clamp(14px, 3vh, 30px);
+  max-height: calc(78vh - env(safe-area-inset-top));
+}
+
+@supports (height: 100dvh) {
+  .ar-modal--all .ar-modal-panel {
+    max-height: calc(78dvh - env(safe-area-inset-top));
+  }
+}
+
+.ar-modal--all .ar-modal-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #111;
+}
+
+.ar-modal--all .ar-modal-close {
+  position: sticky;
+  top: 0;
+}
+
 .ar-modal-panel {
   background: #111;
   border: 1px solid #2a2a2a;
@@ -411,8 +478,15 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  margin: 0 auto;
 }
 .ar-modal-panel--wide { width: min(780px, 100%); }
+
+@supports (height: 100dvh) {
+  .ar-modal-panel {
+    max-height: calc(100dvh - 32px);
+  }
+}
 .ar-modal-head {
   display: flex;
   align-items: center;
@@ -473,6 +547,72 @@
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+}
+
+@media (max-width: 700px) {
+  .ar-modal {
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .ar-modal--all {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: calc(max(8px, env(safe-area-inset-top)) + clamp(34px, 10vh, 78px)) 10px 10px !important;
+  }
+
+  .ar-modal--all .ar-modal-panel {
+    width: min(700px, 94vw) !important;
+    height: auto !important;
+    max-height: calc(78vh - env(safe-area-inset-top)) !important;
+    border-radius: 12px !important;
+    border-left: 1px solid #2a2a2a !important;
+    border-right: 1px solid #2a2a2a !important;
+    margin: clamp(14px, 3vh, 28px) auto 0 !important;
+  }
+
+  @supports (height: 100dvh) {
+    .ar-modal--all .ar-modal-panel {
+      max-height: calc(78dvh - env(safe-area-inset-top)) !important;
+    }
+  }
+
+  .ar-modal--all .ar-modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    background: #111;
+  }
+
+  .ar-modal-panel {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - env(safe-area-inset-top));
+    max-height: none;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    margin: env(safe-area-inset-top) 0 0;
+  }
+
+  @supports (height: 100dvh) {
+    .ar-modal-panel {
+      height: calc(100dvh - env(safe-area-inset-top));
+    }
+  }
+
+  .ar-modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #111;
+  }
+
+  .ar-modal-close {
+    position: sticky;
+    top: 0;
+  }
 }
 .ar-no-rating-box {
   background: #1a1a1a;
@@ -799,7 +939,7 @@
     if (document.getElementById('arAllModal')) return;
     const div = document.createElement('div');
     div.id = 'arAllModal';
-    div.className = 'ar-modal';
+    div.className = 'ar-modal ar-modal--all';
     div.setAttribute('aria-hidden', 'true');
     div.innerHTML = `
 <div class="ar-modal-panel ar-modal-panel--wide" role="dialog" aria-modal="true" aria-labelledby="arAllModalTitle">
@@ -877,6 +1017,56 @@
     if (val) val.textContent = '';
   }
 
+  function getSongThoughtGroupsByMode(mode) {
+    const own = _userId
+      ? (_reviews.find((r) => r.user_id === _userId) || null)
+      : null;
+    const others = own
+      ? _reviews.filter((r) => r.id !== own.id)
+      : _reviews.slice();
+
+    others.sort((a, b) => {
+      const scoreA = Number(a.score) || 0;
+      const scoreB = Number(b.score) || 0;
+      const timeA = new Date(a.created_at).getTime() || 0;
+      const timeB = new Date(b.created_at).getTime() || 0;
+
+      if (mode === 'score') {
+        if (scoreB !== scoreA) return scoreB - scoreA;
+        return timeB - timeA;
+      }
+
+      if (mode === 'preview') {
+        if (scoreB !== scoreA) return scoreB - scoreA;
+        return timeA - timeB;
+      }
+
+      return timeB - timeA;
+    });
+
+    return { own, others };
+  }
+
+  function buildThoughtFilterBar() {
+    const bar = document.createElement('div');
+    bar.className = 'ar-filter-bar';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'Sort thoughts');
+    bar.innerHTML = ''
+      + '<button class="ar-filter-btn" type="button" data-sort="new" aria-pressed="false">New</button>'
+      + '<button class="ar-filter-btn" type="button" data-sort="score" aria-pressed="false">Score</button>';
+    return bar;
+  }
+
+  function syncThoughtFilterBar(bar) {
+    if (!bar) return;
+    bar.querySelectorAll('.ar-filter-btn').forEach((btn) => {
+      const isActive = String(btn.dataset.sort) === _songThoughtSort;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  }
+
   // ── Open all-reviews modal ──────────────────────────────────────────────────
   function openAllModal() {
     injectStyles();
@@ -887,6 +1077,33 @@
     body.innerHTML = '';
     if (!_reviews.length) {
       body.innerHTML = '<p class="ar-no-reviews">No reviews yet.</p>';
+    } else if (_reviewEntityType === 'song') {
+      _songThoughtSort = 'new';
+      const filterBar = buildThoughtFilterBar();
+      const listWrap = document.createElement('div');
+      body.appendChild(filterBar);
+      body.appendChild(listWrap);
+
+      const renderThoughtModalList = () => {
+        syncThoughtFilterBar(filterBar);
+        listWrap.innerHTML = '';
+        const groups = getSongThoughtGroupsByMode(_songThoughtSort === 'score' ? 'score' : 'new');
+        if (groups.own) {
+          listWrap.appendChild(buildReviewCard(groups.own, false));
+        }
+        groups.others.forEach((r) => listWrap.appendChild(buildReviewCard(r, false)));
+      };
+
+      filterBar.querySelectorAll('.ar-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const nextSort = String(btn.dataset.sort || 'new');
+          if (nextSort === _songThoughtSort) return;
+          _songThoughtSort = nextSort;
+          renderThoughtModalList();
+        });
+      });
+
+      renderThoughtModalList();
     } else {
       _reviews.forEach((r) => body.appendChild(buildReviewCard(r, true)));
     }
@@ -1477,6 +1694,10 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
     h2.textContent = _sectionTitle;
     head.appendChild(h2);
 
+    const songGroups = _reviewEntityType === 'song'
+      ? getSongThoughtGroupsByMode('preview')
+      : null;
+
     if (_reviewEntityType !== 'song' && _reviews.length > 0) {
       const viewBtn = document.createElement('button');
       viewBtn.type = 'button';
@@ -1494,7 +1715,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         viewBtn.addEventListener('click', openAllModal);
       }
       head.appendChild(viewBtn);
-    } else if (_reviewEntityType === 'song' && _reviews.length > SONG_THOUGHT_PREVIEW_COUNT) {
+    } else if (_reviewEntityType === 'song' && songGroups && songGroups.others.length > SONG_THOUGHT_PREVIEW_COUNT) {
       const viewBtn = document.createElement('button');
       viewBtn.type = 'button';
       viewBtn.className = 'ar-view-all-btn';
@@ -1505,8 +1726,8 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
 
     section.appendChild(head);
 
-    const ownReviewInThread = (_reviewEntityType === 'song' && _userId)
-      ? (_reviews.find((r) => r.user_id === _userId) || null)
+    const ownReviewInThread = (_reviewEntityType === 'song' && songGroups)
+      ? songGroups.own
       : null;
 
     if (_reviewEntityType === 'song' && !ownReviewInThread) {
@@ -1522,9 +1743,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
     } else {
       if (_reviewEntityType === 'song') {
         const ownReview = ownReviewInThread;
-        const otherReviews = ownReview
-          ? _reviews.filter((r) => r.id !== ownReview.id)
-          : _reviews.slice();
+        const otherReviews = songGroups ? songGroups.others : [];
         const previewOthers = otherReviews.slice(0, SONG_THOUGHT_PREVIEW_COUNT);
 
         if (ownReview) {
