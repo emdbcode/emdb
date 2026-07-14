@@ -680,9 +680,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
     const userReviewsBtn = document.getElementById('userReviewsBtn');
     if (userReviewsBtn) {
-      const reviewsUrl = albumContainer.dataset.userReviews || albumContainer.dataset.reviews || '';
-      if (reviewsUrl) userReviewsBtn.addEventListener('click', () => { window.location.href = reviewsUrl; });
-      else userReviewsBtn.addEventListener('click', () => {});
+      userReviewsBtn.addEventListener('click', () => {});
     }
 
     if (toggle && popover) {

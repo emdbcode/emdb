@@ -1555,7 +1555,11 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
     const btn = document.getElementById('userReviewsBtn');
     if (!btn) return;
     btn.addEventListener('click', async (e) => {
+      e.preventDefault();
       e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') {
+        e.stopImmediatePropagation();
+      }
       const popover = document.getElementById('albumNavPopover');
       const songPopover = document.getElementById('songNavPopover');
       if (popover) {
@@ -1571,7 +1575,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         if (songToggle) songToggle.setAttribute('aria-expanded', 'false');
       }
       await openWriteModal();
-    });
+    }, true);
   }
 
   // ── Init on album pages ─────────────────────────────────────────────────────
