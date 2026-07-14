@@ -517,7 +517,7 @@ body {
   }
 
   function getScore(votes) {
-    return Math.max(0, (votes.likes || 0) - (votes.dislikes || 0));
+    return (votes.likes || 0) - (votes.dislikes || 0);
   }
 
   function getProfileHref(userId) {
@@ -829,7 +829,7 @@ body {
           + '<div class="vote-group">'
             + '<button type="button" class="vote-btn' + (uv === 1 ? ' voted-up' : '') + '" data-vote="1" aria-label="Upvote"' + (isOwnReview ? ' disabled' : '') + '>↑</button>'
           + '<span class="vote-score">' + score + '</span>'
-            + '<button type="button" class="vote-btn' + (uv === -1 ? ' voted-down' : '') + '" data-vote="-1" aria-label="Downvote"' + (isOwnReview || score === 0 ? ' disabled' : '') + '>↓</button>'
+            + '<button type="button" class="vote-btn' + (uv === -1 ? ' voted-down' : '') + '" data-vote="-1" aria-label="Downvote"' + (isOwnReview ? ' disabled' : '') + '>↓</button>'
           + '</div>'
           + '</div>'
           + '</article>';
