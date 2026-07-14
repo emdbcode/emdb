@@ -50,10 +50,10 @@
             <div class="sample-inline-video">
               <div class="sample-title" data-reveal="true"><span>We Will Rock You - Queen</span></div>
               <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
-                <iframe id="sampleVideo" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/-nPlo3wM-Zw?rel=0&modestbranding=1&enablejsapi=1" title="We Will Rock You - Queen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe id="sampleVideo" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/-tJYN-eG1zk?rel=0&modestbranding=1&enablejsapi=1" title="We Will Rock You - Queen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;margin-top:6px;">
-                <span style="font-size:0.95rem;">@ 0:00</span>
+                <span style="font-size:0.95rem;">@ 0:06</span>
                 <button id="seekSampleBtn" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
               </div>
             </div>
@@ -127,12 +127,12 @@
       if(btn1){
         btn1.addEventListener('click', function(){
           if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(0, true);
+            samplePlayer1.seekTo(6, true);
             if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
           } else {
             var iframe = document.getElementById('sampleVideo');
             if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [0, true] }), '*'); }catch(e){}
+              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [6, true] }), '*'); }catch(e){}
             }
           }
           btn1.blur();
