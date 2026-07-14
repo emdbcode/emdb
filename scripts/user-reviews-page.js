@@ -516,8 +516,13 @@ body {
     }
   }
 
+  function normalizeVoteValue(value) {
+    const vote = Number(value);
+    return vote === 1 || vote === -1 ? vote : 0;
+  }
+
   function getScore(votes) {
-    return (votes.likes || 0) - (votes.dislikes || 0);
+    return votes.likes || 0;
   }
 
   function getProfileHref(userId) {
@@ -764,8 +769,9 @@ body {
       if (seenVoteKeys.has(voteKey)) return;
       seenVoteKeys.add(voteKey);
       if (!voteMap[v.review_id]) voteMap[v.review_id] = { likes: 0, dislikes: 0 };
-      if (v.vote === 1) voteMap[v.review_id].likes += 1;
-      if (v.vote === -1) voteMap[v.review_id].dislikes += 1;
+      const vote = normalizeVoteValue(v.vote);
+      if (vote === 1) voteMap[v.review_id].likes += 1;
+      if (vote === -1) voteMap[v.review_id].dislikes += 1;
     });
 
     const userVoteMap = {};
@@ -776,7 +782,7 @@ body {
         .eq('user_id', userId)
         .in('review_id', reviewIds);
       (userVotesRes || []).forEach((row) => {
-        userVoteMap[row.review_id] = row.vote;
+        userVoteMap[row.review_id] = normalizeVoteValue(row.vote);
       });
     }
 
@@ -829,7 +835,6 @@ body {
           + '<div class="vote-group">'
             + '<button type="button" class="vote-btn' + (uv === 1 ? ' voted-up' : '') + '" data-vote="1" aria-label="Upvote"' + (isOwnReview ? ' disabled' : '') + '>↑</button>'
           + '<span class="vote-score">' + score + '</span>'
-            + '<button type="button" class="vote-btn' + (uv === -1 ? ' voted-down' : '') + '" data-vote="-1" aria-label="Downvote"' + (isOwnReview ? ' disabled' : '') + '>↓</button>'
           + '</div>'
           + '</div>'
           + '</article>';
@@ -850,7 +855,7 @@ body {
 
             const reviewId = Number(card.getAttribute('data-review-id'));
             const vote = Number(btn.getAttribute('data-vote'));
-            const currentVote = userVoteMap[reviewId] || 0;
+            const currentVote = normalizeVoteValue(userVoteMap[reviewId]);
             let nextVote = currentVote;
             let dbError = null;
 

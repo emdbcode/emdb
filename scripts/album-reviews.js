@@ -100,6 +100,15 @@
     return '';
   }
 
+  function normalizeVoteValue(value) {
+    const vote = Number(value);
+    return vote === 1 || vote === -1 ? vote : 0;
+  }
+
+  function getVoteDisplayScore(voteMap) {
+    return (voteMap && voteMap.likes) || 0;
+  }
+
   // ── Module state ────────────────────────────────────────────────────────────
   let _client = null;
   let _userId = null;
@@ -1050,15 +1059,11 @@
       showVoteSignInPrompt(reviewId);
       return;
     }
-    // Disallow downvote when score is already 0
-    if (vote === -1) {
-      const vm = _voteMap[reviewId] || { likes: 0, dislikes: 0 };
-      const score = Math.max(0, vm.likes - vm.dislikes);
-      if (score === 0 && _userVotes[reviewId] !== -1) return;
-    }
+    vote = normalizeVoteValue(vote);
+    if (vote !== 1 && vote !== -1) return;
     if (!_voteMap[reviewId]) _voteMap[reviewId] = { likes: 0, dislikes: 0 };
     const vm = _voteMap[reviewId];
-    const existing = _userVotes[reviewId];
+    const existing = normalizeVoteValue(_userVotes[reviewId]);
 
     if (existing === vote) {
       // Toggle off – remove vote
@@ -1128,7 +1133,7 @@
       likes: vm.likes,
       dislikes: vm.dislikes,
       real_score: vm.likes - vm.dislikes,
-      ui_score: Math.max(0, vm.likes - vm.dislikes)
+      ui_score: getVoteDisplayScore(vm)
     });
     if (_reviewEntityType === 'song' && !opts.profileMode) {
       await loadReviews();
@@ -1140,18 +1145,13 @@
 
   function refreshVoteUi(reviewId) {
     const vm = _voteMap[reviewId] || { likes: 0, dislikes: 0 };
-    const uv = _userVotes[reviewId];
-    const score = Math.max(0, vm.likes - vm.dislikes);
+    const uv = normalizeVoteValue(_userVotes[reviewId]);
+    const score = getVoteDisplayScore(vm);
     document.querySelectorAll(`[data-review-id="${reviewId}"]`).forEach((card) => {
       const upBtn = card.querySelector('[data-ar-vote="1"]');
-      const downBtn = card.querySelector('[data-ar-vote="-1"]');
       const scoreEl = card.querySelector('.ar-vote-score');
       if (upBtn) {
         upBtn.classList.toggle('ar-voted-up', uv === 1);
-      }
-      if (downBtn) {
-        downBtn.classList.toggle('ar-voted-down', uv === -1);
-        downBtn.disabled = score === 0;
       }
       if (scoreEl) scoreEl.textContent = score;
     });
@@ -1273,12 +1273,13 @@
       if (seenVoteKeys.has(voteKey)) return;
       seenVoteKeys.add(voteKey);
       if (!_voteMap[v.review_id]) _voteMap[v.review_id] = { likes: 0, dislikes: 0 };
-      if (v.vote === 1) _voteMap[v.review_id].likes += 1;
-      else if (v.vote === -1) _voteMap[v.review_id].dislikes += 1;
+      const vote = normalizeVoteValue(v.vote);
+      if (vote === 1) _voteMap[v.review_id].likes += 1;
+      else if (vote === -1) _voteMap[v.review_id].dislikes += 1;
     });
 
     _userVotes = {};
-    (userVoteRes.data || []).forEach((v) => { _userVotes[v.review_id] = v.vote; });
+    (userVoteRes.data || []).forEach((v) => { _userVotes[v.review_id] = normalizeVoteValue(v.vote); });
 
     console.log('[AR-VOTE] vote maps', {
       vote_map: _voteMap,
@@ -1289,7 +1290,7 @@
       ...r,
       profiles: profileMap[r.user_id] || null,
       rating: reviewerRatingMap[r.user_id] || null,
-      score: ((_voteMap[r.id] || {}).likes || 0) - ((_voteMap[r.id] || {}).dislikes || 0)
+      score: ((_voteMap[r.id] || {}).likes || 0)
     })).sort((a, b) => {
       if (_reviewEntityType === 'song') {
         if (b.score !== a.score) return b.score - a.score;
@@ -1325,7 +1326,7 @@
   function buildReviewCard(review, clamped) {
     const profile = review.profiles || {};
     const vm = _voteMap[review.id] || { likes: 0, dislikes: 0 };
-    const uv = _userVotes[review.id];
+    const uv = normalizeVoteValue(_userVotes[review.id]);
     const isOwnReview = !!_userId && review.user_id === _userId;
     const profileHref = getProfileHref(review.user_id);
     const avatarSrc = normalizeAvatarPath(profile.avatar_url || DEFAULT_AVATAR);
@@ -1357,8 +1358,7 @@ ${clamped && _reviewEntityType !== 'song' ? '<button type="button" class="ar-mor
 <div class="ar-card-foot">
   <div class="ar-vote-group">
     <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote"${isOwnReview ? ' disabled' : ''}>↑</button>
-    <span class="ar-vote-score">${Math.max(0, vm.likes - vm.dislikes)}</span>
-    <button type="button" class="ar-vote-btn${uv === -1 ? ' ar-voted-down' : ''}" data-ar-vote="-1" aria-label="Downvote"${isOwnReview || Math.max(0, vm.likes - vm.dislikes) === 0 ? ' disabled' : ''}>↓</button>
+    <span class="ar-vote-score">${getVoteDisplayScore(vm)}</span>
   </div>
   ${canDeleteSongThought ? '<button type="button" class="ar-song-delete-btn" data-ar-delete="1" aria-label="Delete" title="Delete">Delete</button>' : ''}
 </div>`;
@@ -1709,8 +1709,9 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       } else {
         (voteRows || []).forEach((row) => {
           if (!voteMap[row.review_id]) voteMap[row.review_id] = { likes: 0, dislikes: 0 };
-          if (row.vote === 1) voteMap[row.review_id].likes += 1;
-          if (row.vote === -1) voteMap[row.review_id].dislikes += 1;
+          const vote = normalizeVoteValue(row.vote);
+          if (vote === 1) voteMap[row.review_id].likes += 1;
+          if (vote === -1) voteMap[row.review_id].dislikes += 1;
         });
       }
 
@@ -1722,7 +1723,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         if (userVoteError) {
           console.error('User review viewer votes fetch error:', userVoteError);
         } else {
-          (userVoteRows || []).forEach((row) => { _userVotes[row.review_id] = row.vote; });
+          (userVoteRows || []).forEach((row) => { _userVotes[row.review_id] = normalizeVoteValue(row.vote); });
         }
       }
     }
@@ -1767,8 +1768,8 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       const titleHtml = link
         ? `<a href="${esc(link)}" style="color:#f2f2f2;text-decoration:none;">${esc(album.title || 'Album')}</a>`
         : esc(album.title || 'Album');
-      const uv = _userVotes[review.id];
-      const score = Math.max(0, review.score);
+      const uv = normalizeVoteValue(_userVotes[review.id]);
+      const score = Math.max(0, review.likes || 0);
 
       const card = document.createElement('div');
       card.className = 'ar-card';
@@ -1790,7 +1791,6 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
   <div class="ar-vote-group">
     <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote">↑</button>
     <span class="ar-vote-score">${score}</span>
-    <button type="button" class="ar-vote-btn${uv === -1 ? ' ar-voted-down' : ''}" data-ar-vote="-1" aria-label="Downvote"${score === 0 ? ' disabled' : ''}>↓</button>
   </div>
 </div>`;
 
@@ -1876,8 +1876,9 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       } else {
         (voteRows || []).forEach((row) => {
           if (!voteMap[row.review_id]) voteMap[row.review_id] = { likes: 0, dislikes: 0 };
-          if (row.vote === 1) voteMap[row.review_id].likes += 1;
-          if (row.vote === -1) voteMap[row.review_id].dislikes += 1;
+          const vote = normalizeVoteValue(row.vote);
+          if (vote === 1) voteMap[row.review_id].likes += 1;
+          if (vote === -1) voteMap[row.review_id].dislikes += 1;
         });
       }
 
@@ -1889,7 +1890,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         if (userVoteError) {
           console.error('User thought viewer votes fetch error:', userVoteError);
         } else {
-          (userVoteRows || []).forEach((row) => { _userVotes[row.review_id] = row.vote; });
+          (userVoteRows || []).forEach((row) => { _userVotes[row.review_id] = normalizeVoteValue(row.vote); });
         }
       }
     }
@@ -1902,7 +1903,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         rating: ratingMap[thought.song_id] ?? null,
         likes: votes.likes,
         dislikes: votes.dislikes,
-        score: votes.likes - votes.dislikes
+        score: votes.likes
       };
     });
 
@@ -1937,8 +1938,8 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         ? `<a href="${esc(link)}" style="color:#f2f2f2;text-decoration:none;">${esc(song.title || 'Song')}</a>`
         : esc(song.title || 'Song');
       const coverUrl = song.cover_url || (album && album.cover_url) || DEFAULT_COVER;
-      const uv = _userVotes[thought.id];
-      const score = Math.max(0, thought.score);
+      const uv = normalizeVoteValue(_userVotes[thought.id]);
+      const score = Math.max(0, thought.likes || 0);
 
       const card = document.createElement('div');
       card.className = 'ar-card';
@@ -1959,7 +1960,6 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
   <div class="ar-vote-group">
     <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote">↑</button>
     <span class="ar-vote-score">${score}</span>
-    <button type="button" class="ar-vote-btn${uv === -1 ? ' ar-voted-down' : ''}" data-ar-vote="-1" aria-label="Downvote"${score === 0 ? ' disabled' : ''}>↓</button>
   </div>
 </div>`;
 
