@@ -451,6 +451,12 @@ body {
   color: #4CAF50;
 }
 
+.vote-btn.voted-up:hover:not(:disabled),
+.vote-btn.voted-up:focus-visible,
+.vote-btn.voted-up:active {
+  color: #4CAF50;
+}
+
 .vote-btn.voted-down {
   color: #E21C21;
 }

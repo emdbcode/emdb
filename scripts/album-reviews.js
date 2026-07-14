@@ -131,6 +131,7 @@
   let _maxReviewLength = DEFAULT_MAX_REVIEW_LENGTH;
   let _deletedReviews = {}; // Track deletions to prevent XP farming: { "user_id:entity_id": timestamp }
   let _awardedReviewXp = {}; // Persist awarded review XP: { "user_id:entity_type:entity_id": timestamp }
+  const SONG_THOUGHT_PREVIEW_COUNT = 4;
 
   // Load deletion tracking from localStorage
   function loadDeletedReviewsCache() {
@@ -364,6 +365,9 @@
 .ar-vote-btn:hover:not(:disabled) { color: #eee; background: rgba(255,255,255,0.04); }
 .ar-vote-btn:disabled { opacity: 0.28; cursor: default; }
 .ar-vote-btn.ar-voted-up { color: #4CAF50; }
+.ar-vote-btn.ar-voted-up:hover:not(:disabled),
+.ar-vote-btn.ar-voted-up:focus-visible,
+.ar-vote-btn.ar-voted-up:active { color: #4CAF50; }
 .ar-vote-btn.ar-voted-down { color: #E21C21; }
 .ar-vote-btn[data-ar-vote="-1"],
 .ar-vote-btn.ar-voted-down { display: none !important; }
@@ -1490,6 +1494,13 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         viewBtn.addEventListener('click', openAllModal);
       }
       head.appendChild(viewBtn);
+    } else if (_reviewEntityType === 'song' && _reviews.length > SONG_THOUGHT_PREVIEW_COUNT) {
+      const viewBtn = document.createElement('button');
+      viewBtn.type = 'button';
+      viewBtn.className = 'ar-view-all-btn';
+      viewBtn.textContent = `All thoughts (${_reviews.length})`;
+      viewBtn.addEventListener('click', openAllModal);
+      head.appendChild(viewBtn);
     }
 
     section.appendChild(head);
@@ -1514,11 +1525,12 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         const otherReviews = ownReview
           ? _reviews.filter((r) => r.id !== ownReview.id)
           : _reviews.slice();
+        const previewOthers = otherReviews.slice(0, SONG_THOUGHT_PREVIEW_COUNT);
 
         if (ownReview) {
           section.appendChild(buildReviewCard(ownReview, false));
         }
-        otherReviews.forEach((r) => section.appendChild(buildReviewCard(r, false)));
+        previewOthers.forEach((r) => section.appendChild(buildReviewCard(r, false)));
       } else {
         _reviews.slice(0, 3).forEach((r) => section.appendChild(buildReviewCard(r, true)));
       }
