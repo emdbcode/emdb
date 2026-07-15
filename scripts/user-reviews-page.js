@@ -858,7 +858,7 @@ body {
           btn.addEventListener('click', async (event) => {
             event.preventDefault();
             event.stopPropagation();
-            if (review.user_id === userId) return;
+            if (btn.disabled) return;
             if (!userId) {
               window.location.href = '/sign-in.html';
               return;
