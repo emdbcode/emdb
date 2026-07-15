@@ -162,16 +162,49 @@ function getPartialHref(name) {
   return `${getFileRootPrefix()}partials/${clean}`;
 }
 
+const HEADER_CACHE_KEY = 'emdb_header_partial_v1';
+
+function readCachedHeaderHtml() {
+  try {
+    return localStorage.getItem(HEADER_CACHE_KEY) || '';
+  } catch (err) {
+    return '';
+  }
+}
+
+function writeCachedHeaderHtml(html) {
+  const next = String(html || '');
+  if (!next) return;
+  try {
+    localStorage.setItem(HEADER_CACHE_KEY, next);
+  } catch (err) {
+    // Ignore cache write errors (private mode/quota limits).
+  }
+}
+
 async function loadSiteHeader() {
   const container = document.getElementById('site-header');
   if (!container) return;
+
+  const cachedHtml = readCachedHeaderHtml();
+  const renderedFromCache = !!cachedHtml;
+
+  if (renderedFromCache) {
+    container.innerHTML = cachedHtml;
+    initHeaderInteractions();
+  }
 
   try {
     const response = await fetch(getPartialHref('header.html'));
     if (!response.ok) throw new Error('Failed to fetch header');
     const html = await response.text();
-    container.innerHTML = html;
-    initHeaderInteractions();
+    writeCachedHeaderHtml(html);
+
+    // Render fetched header only when no cached shell was available.
+    if (!renderedFromCache) {
+      container.innerHTML = html;
+      initHeaderInteractions();
+    }
   } catch (error) {
     console.error('Header load error:', error);
   }
@@ -1810,6 +1843,7 @@ function initHeaderInteractions() {
     };
 
     searchInput.addEventListener('focus', () => {
+      warmIndex();
       if (!searchInput.value.trim()) {
         lastResults = [];
         searchSuggestions.innerHTML = '';
