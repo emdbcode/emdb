@@ -294,8 +294,9 @@ function initHeaderInteractions() {
   if (searchInput && searchSuggestions) {
     const openSuggestions = () => searchSuggestions.classList.add('open');
     const closeSuggestions = () => searchSuggestions.classList.remove('open');
-    const STORAGE_KEY = 'emdb_search_index_v26';
-    const STORAGE_META = 'emdb_search_index_meta_v25';
+    const STORAGE_KEY = 'emdb_search_index_v27';
+    const STORAGE_META = 'emdb_search_index_meta_v27';
+    const SEARCH_CACHE_SCHEMA_VERSION = 27;
     const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
     const RESULT_LIMIT = 500;
@@ -315,6 +316,43 @@ function initHeaderInteractions() {
 
     let supabaseClient = null;
     let supabaseClientPromise = null;
+
+    const storageGet = (key) => {
+      try {
+        return localStorage.getItem(key);
+      } catch (err) {
+        return null;
+      }
+    };
+
+    const storageSet = (key, value) => {
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    };
+
+    const storageRemove = (key) => {
+      try {
+        localStorage.removeItem(key);
+      } catch (err) {
+        // ignore storage removal failures
+      }
+    };
+
+    const isCacheLikelyComplete = (items) => {
+      if (!Array.isArray(items)) return false;
+      if (items.length < 200) return false;
+      const songCount = items.reduce((count, item) => (
+        item && item.type === 'Songs' ? count + 1 : count
+      ), 0);
+      const albumCount = items.reduce((count, item) => (
+        item && item.type === 'Albums' ? count + 1 : count
+      ), 0);
+      return songCount >= 100 && albumCount >= 20;
+    };
 
     const getSupabaseClient = async () => {
       if (supabaseClient) return supabaseClient;
@@ -1065,21 +1103,23 @@ function initHeaderInteractions() {
     };
 
     const buildIndex = async () => {
-      const cached = localStorage.getItem(STORAGE_KEY);
-      const cachedMeta = localStorage.getItem(STORAGE_META);
+      const cached = storageGet(STORAGE_KEY);
+      const cachedMeta = storageGet(STORAGE_META);
       if (cached && cachedMeta) {
         try {
           const parsed = JSON.parse(cached);
-          // Guard against stale/partial cache writes that can make search look empty.
-          if (Array.isArray(parsed) && parsed.length >= 50) {
+          const parsedMeta = JSON.parse(cachedMeta);
+          const hasCurrentSchema = Number(parsedMeta && parsedMeta.version) === SEARCH_CACHE_SCHEMA_VERSION;
+          // Guard against stale/partial cache writes that can make Safari look like it has missing results.
+          if (hasCurrentSchema && isCacheLikelyComplete(parsed)) {
             searchIndex = parsed;
             return searchIndex;
           }
-          localStorage.removeItem(STORAGE_KEY);
-          localStorage.removeItem(STORAGE_META);
+          storageRemove(STORAGE_KEY);
+          storageRemove(STORAGE_META);
         } catch (err) {
-          localStorage.removeItem(STORAGE_KEY);
-          localStorage.removeItem(STORAGE_META);
+          storageRemove(STORAGE_KEY);
+          storageRemove(STORAGE_META);
         }
       }
 
@@ -1167,12 +1207,20 @@ function initHeaderInteractions() {
       }
 
       searchIndex = dedupeByUrl([...items, ...articleItems]);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(searchIndex));
-        localStorage.setItem(STORAGE_META, JSON.stringify({ builtAt: Date.now() }));
-      } catch (err) {
-        localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem(STORAGE_META);
+      if (isCacheLikelyComplete(searchIndex)) {
+        const savedIndex = storageSet(STORAGE_KEY, JSON.stringify(searchIndex));
+        const savedMeta = storageSet(STORAGE_META, JSON.stringify({
+          builtAt: Date.now(),
+          version: SEARCH_CACHE_SCHEMA_VERSION,
+          itemCount: searchIndex.length
+        }));
+        if (!savedIndex || !savedMeta) {
+          storageRemove(STORAGE_KEY);
+          storageRemove(STORAGE_META);
+        }
+      } else {
+        storageRemove(STORAGE_KEY);
+        storageRemove(STORAGE_META);
       }
       return searchIndex;
     };
