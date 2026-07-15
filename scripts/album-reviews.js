@@ -1067,18 +1067,22 @@
     });
   }
 
-  // ── Open all-reviews modal ──────────────────────────────────────────────────
-  function openAllModal() {
-    injectStyles();
-    ensureAllModal();
+  function renderAllModalContent(options) {
+    const opts = options || {};
+    const resetSongSort = !!opts.resetSongSort;
     const body = document.getElementById('arAllBody');
     const titleEl = document.getElementById('arAllModalTitle');
+    if (!body) return;
+
     if (titleEl) titleEl.textContent = _sectionTitle;
     body.innerHTML = '';
     if (!_reviews.length) {
       body.innerHTML = '<p class="ar-no-reviews">No reviews yet.</p>';
-    } else if (_reviewEntityType === 'song') {
-      _songThoughtSort = 'new';
+      return;
+    }
+
+    if (_reviewEntityType === 'song') {
+      if (resetSongSort) _songThoughtSort = 'new';
       const filterBar = buildThoughtFilterBar();
       const listWrap = document.createElement('div');
       body.appendChild(filterBar);
@@ -1104,9 +1108,17 @@
       });
 
       renderThoughtModalList();
-    } else {
-      _reviews.forEach((r) => body.appendChild(buildReviewCard(r, true)));
+      return;
     }
+
+    _reviews.forEach((r) => body.appendChild(buildReviewCard(r, true)));
+  }
+
+  // ── Open all-reviews modal ──────────────────────────────────────────────────
+  function openAllModal() {
+    injectStyles();
+    ensureAllModal();
+    renderAllModalContent({ resetSongSort: true });
     const modal = document.getElementById('arAllModal');
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
@@ -1358,12 +1370,17 @@
       real_score: vm.likes - vm.dislikes,
       ui_score: getVoteDisplayScore(vm)
     });
+    // Show immediate feedback on the clicked card before any list re-sorting.
+    refreshVoteUi(reviewId);
     if (_reviewEntityType === 'song' && !opts.profileMode) {
       await loadReviews();
       renderReviewSection();
+      const allModal = document.getElementById('arAllModal');
+      if (allModal && allModal.classList.contains('open')) {
+        renderAllModalContent({ resetSongSort: false });
+      }
       return;
     }
-    refreshVoteUi(reviewId);
   }
 
   function refreshVoteUi(reviewId) {
