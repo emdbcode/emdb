@@ -2020,6 +2020,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         : esc(album.title || 'Album');
       const uv = normalizeVoteValue(_userVotes[review.id]);
       const score = Math.max(0, review.likes || 0);
+      const isOwnReview = !!_userId && review.user_id === _userId;
 
       const card = document.createElement('div');
       card.className = 'ar-card';
@@ -2039,7 +2040,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
 <button type="button" class="ar-more-btn">More</button>
 <div class="ar-card-foot">
   <div class="ar-vote-group">
-    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote">↑</button>
+    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote"${isOwnReview ? ' disabled' : ''}>↑</button>
     <span class="ar-vote-score">${score}</span>
   </div>
 </div>`;
@@ -2047,6 +2048,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       card.querySelectorAll('.ar-vote-btn').forEach((btn) => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
+          if (isOwnReview) return;
           handleVote(review.id, Number(btn.dataset.arVote), { voteTable: 'album_review_votes', profileMode: true });
         });
       });
@@ -2190,6 +2192,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       const coverUrl = song.cover_url || (album && album.cover_url) || DEFAULT_COVER;
       const uv = normalizeVoteValue(_userVotes[thought.id]);
       const score = Math.max(0, thought.likes || 0);
+      const isOwnThought = !!_userId && thought.user_id === _userId;
 
       const card = document.createElement('div');
       card.className = 'ar-card';
@@ -2208,7 +2211,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
 <p class="ar-text">${esc(thought.review_text || '')}</p>
 <div class="ar-card-foot">
   <div class="ar-vote-group">
-    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote">↑</button>
+    <button type="button" class="ar-vote-btn${uv === 1 ? ' ar-voted-up' : ''}" data-ar-vote="1" aria-label="Upvote"${isOwnThought ? ' disabled' : ''}>↑</button>
     <span class="ar-vote-score">${score}</span>
   </div>
 </div>`;
@@ -2216,6 +2219,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       card.querySelectorAll('.ar-vote-btn').forEach((btn) => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
+          if (isOwnThought) return;
           handleVote(thought.id, Number(btn.dataset.arVote), { voteTable: 'song_review_votes', profileMode: true });
         });
       });
