@@ -42,6 +42,7 @@ const AVATAR_FALLBACK_OPTIONS = [
   '/images/avatars/avatar-12.jpg',
   '/images/avatars/avatar-13.jpg',
   '/images/avatars/avatar-14.jpg',
+  '/images/avatars/avatar-15.jpg',
   '/images/avatars/avatar-16.jpg',
   '/images/avatars/avatar-17.jpg',
   '/images/avatars/avatar-18.jpg',
