@@ -164,6 +164,112 @@ function getPartialHref(name) {
 
 const HEADER_CACHE_KEY = 'emdb_header_partial_v1';
 
+function getEmbeddedHeaderHtml() {
+  return `
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <img src="/images/logos/emdb-logo.png" alt="EMDb logo">
+      <div class="logo-caption" id="logoCaption" aria-hidden="true">EMINEM MUSIC DATABASE</div>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menuPanel" aria-label="Toggle menu">
+      <span class="menu-icon" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+
+    <nav class="menu-inline" aria-label="Primary navigation">
+      <a href="/news/news-index.html">News</a>
+      <a href="/articles/articles-index.html">Articles</a>
+      <a href="/releases/releases-index.html">Discography</a>
+      <div class="menu-inline-group">
+        <button class="menu-inline-parent" type="button" aria-expanded="false">Rankings ▾</button>
+        <div class="menu-inline-sub" role="menu">
+          <a href="/rankings/albums-ranked.html" role="menuitem">Albums Ranked</a>
+          <a href="/rankings/top-100-eminem-songs.html" role="menuitem">Top 100 Eminem Songs</a>
+          <a href="/rankings/top-100-eminem-features.html" role="menuitem">Top 100 Eminem Features</a>
+          <a href="/rankings/all-songs-top-200.html" role="menuitem">All Songs Top 200</a>
+        </div>
+      </div>
+      <div class="menu-inline-group">
+        <button class="menu-inline-parent" type="button" aria-expanded="false">More ▾</button>
+        <div class="menu-inline-sub" role="menu">
+          <a href="/charts/awards.html" role="menuitem">Awards</a>
+          <a href="/charts/index-charts.html" role="menuitem">Charts</a>
+          <a href="/charts/index-critic-scores.html" role="menuitem">Critic Scores</a>
+          <a href="/user-reviews/index-user-reviews.html" role="menuitem">User Reviews</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="search-wrap">
+      <input
+        type="search"
+        id="siteSearch"
+        placeholder="Search EMDb"
+        aria-label="Search EMDb"
+        autocomplete="off"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        inputmode="search"
+      >
+      <div class="search-suggestions" id="searchSuggestions" role="listbox" aria-label="Search suggestions">
+        <div class="suggestion-title">Popular</div>
+        <button class="suggestion" role="option">Detroit Vs. Everybody</button>
+        <button class="suggestion" role="option">The Eminem Show</button>
+        <button class="suggestion" role="option">Royce da 5'9\"</button>
+        <button class="suggestion" role="option">Top 100 Eminem Features</button>
+      </div>
+    </div>
+
+    <div class="user-area" aria-label="User area">
+      <a class="sign-in-btn" id="sign-in-btn" href="/sign-in.html">Sign in</a>
+      <div id="profile-area" aria-live="polite"></div>
+      <div class="user-avatar" id="userAvatar" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <nav class="menu-panel" id="menuPanel" aria-label="Primary navigation">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">✕</button>
+    <div class="menu-links">
+      <a href="/news/news-index.html">News</a>
+      <a href="/articles/articles-index.html">Articles</a>
+      <a href="/releases/releases-index.html">Discography</a>
+    </div>
+    <div class="menu-group">
+      <span class="menu-group-title">Rankings</span>
+      <a href="/rankings/albums-ranked.html">Albums Ranked</a>
+      <a href="/rankings/top-100-eminem-songs.html">Top 100 Eminem Songs</a>
+      <a href="/rankings/top-100-eminem-features.html">Top 100 Eminem Features</a>
+      <a href="/rankings/all-songs-top-200.html">All Songs Top 200</a>
+    </div>
+    <div class="menu-group">
+      <span class="menu-group-title">More</span>
+      <a href="/charts/awards.html">Awards</a>
+      <a href="/charts/index-charts.html">Charts</a>
+      <a href="/charts/index-critic-scores.html">Critic Scores</a>
+      <a href="/user-reviews/index-user-reviews.html">User Reviews</a>
+    </div>
+    <div class="menu-social" aria-label="Social links">
+      <a class="social-link" href="#" aria-label="Facebook">
+        <img src="/images/logos/facebook-logo.png" alt="Facebook">
+      </a>
+      <a class="social-link" href="#" aria-label="Instagram">
+        <img src="/images/logos/instagram-logo.png" alt="Instagram">
+      </a>
+      <a class="social-link" href="#" aria-label="X">
+        <img src="/images/logos/x-logo.png" alt="X">
+      </a>
+      <a class="social-link" href="#" aria-label="YouTube">
+        <img src="/images/logos/youtube-logo_2.png" alt="YouTube">
+      </a>
+    </div>
+  </nav>
+</header>`;
+}
+
 function readCachedHeaderHtml() {
   try {
     return localStorage.getItem(HEADER_CACHE_KEY) || '';
@@ -187,10 +293,12 @@ async function loadSiteHeader() {
   if (!container) return;
 
   const cachedHtml = readCachedHeaderHtml();
-  const renderedFromCache = !!cachedHtml;
+  const fallbackHtml = getEmbeddedHeaderHtml();
+  const initialHtml = cachedHtml || fallbackHtml;
+  const renderedFromLocal = !!initialHtml;
 
-  if (renderedFromCache) {
-    container.innerHTML = cachedHtml;
+  if (renderedFromLocal) {
+    container.innerHTML = initialHtml;
     initHeaderInteractions();
   }
 
@@ -200,8 +308,8 @@ async function loadSiteHeader() {
     const html = await response.text();
     writeCachedHeaderHtml(html);
 
-    // Render fetched header only when no cached shell was available.
-    if (!renderedFromCache) {
+    // Only render fetched markup when nothing local could be rendered immediately.
+    if (!renderedFromLocal) {
       container.innerHTML = html;
       initHeaderInteractions();
     }
@@ -1944,11 +2052,7 @@ function initHeaderInteractions() {
       if (searchIndex || indexPromise) return;
       void ensureIndex().catch(() => {});
     };
-    if (typeof window.requestIdleCallback === 'function') {
-      window.requestIdleCallback(warmIndex, { timeout: 1500 });
-    } else {
-      setTimeout(warmIndex, 0);
-    }
+    warmIndex();
   }
 
   (function setupLogoCaption() {
