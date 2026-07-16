@@ -415,6 +415,7 @@ function initHeaderInteractions() {
 
     let searchIndex = null;
     let indexPromise = null;
+    let enrichPromise = null;
     let lastResults = [];
     let lastFilter = 'All';
     let lastQuery = '';
@@ -1269,67 +1270,96 @@ function initHeaderInteractions() {
         marshalls_house_tokens: []
       }));
 
-      const items = [];
-      let processed = 0;
-      for (let i = 0; i < baseItems.length; i += INDEX_BATCH_SIZE) {
-        const batch = baseItems.slice(i, i + INDEX_BATCH_SIZE);
-        const texts = await Promise.all(batch.map((item) => (
-          item.type === 'Collections'
-            ? Promise.resolve({ text: '', triviaText: '', encoreStudioText: '', marshallsHouseText: '', creditsText: '', coverUrl: '' })
-            : fetchPageText(item.url)
-        )));
-        texts.forEach((pageData, idx) => {
-          const item = batch[idx];
-          const titleTokens = tokensFromText(item.title);
-          const baseText = item.type === 'Collections' ? '' : (pageData.text || '');
-          const creditsText = item.type === 'Collections' ? '' : (pageData.creditsText || '');
-          const tokens = item.type === 'Collections'
-            ? titleTokens
-            : tokensFromText(`${item.title} ${baseText} ${creditsText}`);
-          const triviaTokens = item.type === 'Collections'
-            ? []
-            : tokensFromText(pageData.triviaText || '');
-          const encoreTokens = item.type === 'Collections'
-            ? []
-            : tokensFromText(pageData.encoreStudioText || '');
-          const marshallsHouseTokens = item.type === 'Collections'
-            ? []
-            : tokensFromText(pageData.marshallsHouseText || '');
-          const phraseTokens = item.type === 'Collections'
-            ? phraseTokensFromText(item.title)
-            : phraseTokensFromText(`${item.title} ${baseText} ${creditsText}`);
-          items.push({
-            title: item.title,
-            url: item.url,
-            type: item.type,
-            cover_url: item.cover_url || pageData.coverUrl || '',
-            tokens,
-            title_tokens: titleTokens,
-            phrase_tokens: phraseTokens,
-            trivia_tokens: triviaTokens,
-            encore_tokens: encoreTokens,
-            marshalls_house_tokens: marshallsHouseTokens
+      // Fast first-pass index so search is responsive immediately on first load.
+      const lightweightItems = baseItems.map((item) => {
+        const titleTokens = tokensFromText(item.title);
+        return {
+          title: item.title,
+          url: item.url,
+          type: item.type,
+          cover_url: item.cover_url || '',
+          tokens: titleTokens,
+          title_tokens: titleTokens,
+          phrase_tokens: phraseTokensFromText(item.title),
+          trivia_tokens: [],
+          encore_tokens: [],
+          marshalls_house_tokens: []
+        };
+      });
+
+      searchIndex = dedupeByUrl([...lightweightItems, ...articleItems]);
+
+      // Continue full enrichment in the background and swap in richer index when done.
+      if (!enrichPromise) {
+        enrichPromise = (async () => {
+          const items = [];
+          for (let i = 0; i < baseItems.length; i += INDEX_BATCH_SIZE) {
+            const batch = baseItems.slice(i, i + INDEX_BATCH_SIZE);
+            const texts = await Promise.all(batch.map((item) => (
+              item.type === 'Collections'
+                ? Promise.resolve({ text: '', triviaText: '', encoreStudioText: '', marshallsHouseText: '', creditsText: '', coverUrl: '' })
+                : fetchPageText(item.url)
+            )));
+            texts.forEach((pageData, idx) => {
+              const item = batch[idx];
+              const titleTokens = tokensFromText(item.title);
+              const baseText = item.type === 'Collections' ? '' : (pageData.text || '');
+              const creditsText = item.type === 'Collections' ? '' : (pageData.creditsText || '');
+              const tokens = item.type === 'Collections'
+                ? titleTokens
+                : tokensFromText(`${item.title} ${baseText} ${creditsText}`);
+              const triviaTokens = item.type === 'Collections'
+                ? []
+                : tokensFromText(pageData.triviaText || '');
+              const encoreTokens = item.type === 'Collections'
+                ? []
+                : tokensFromText(pageData.encoreStudioText || '');
+              const marshallsHouseTokens = item.type === 'Collections'
+                ? []
+                : tokensFromText(pageData.marshallsHouseText || '');
+              const phraseTokens = item.type === 'Collections'
+                ? phraseTokensFromText(item.title)
+                : phraseTokensFromText(`${item.title} ${baseText} ${creditsText}`);
+              items.push({
+                title: item.title,
+                url: item.url,
+                type: item.type,
+                cover_url: item.cover_url || pageData.coverUrl || '',
+                tokens,
+                title_tokens: titleTokens,
+                phrase_tokens: phraseTokens,
+                trivia_tokens: triviaTokens,
+                encore_tokens: encoreTokens,
+                marshalls_house_tokens: marshallsHouseTokens
+              });
+            });
+          }
+
+          const enrichedIndex = dedupeByUrl([...items, ...articleItems]);
+          searchIndex = enrichedIndex;
+
+          if (isCacheLikelyComplete(enrichedIndex)) {
+            const savedIndex = storageSet(STORAGE_KEY, JSON.stringify(enrichedIndex));
+            const savedMeta = storageSet(STORAGE_META, JSON.stringify({
+              builtAt: Date.now(),
+              version: SEARCH_CACHE_SCHEMA_VERSION,
+              itemCount: enrichedIndex.length
+            }));
+            if (!savedIndex || !savedMeta) {
+              storageRemove(STORAGE_KEY);
+              storageRemove(STORAGE_META);
+            }
+          } else {
+            storageRemove(STORAGE_KEY);
+            storageRemove(STORAGE_META);
+          }
+        })()
+          .catch(() => {})
+          .finally(() => {
+            enrichPromise = null;
           });
-        });
-        processed += batch.length;
       }
 
-      searchIndex = dedupeByUrl([...items, ...articleItems]);
-      if (isCacheLikelyComplete(searchIndex)) {
-        const savedIndex = storageSet(STORAGE_KEY, JSON.stringify(searchIndex));
-        const savedMeta = storageSet(STORAGE_META, JSON.stringify({
-          builtAt: Date.now(),
-          version: SEARCH_CACHE_SCHEMA_VERSION,
-          itemCount: searchIndex.length
-        }));
-        if (!savedIndex || !savedMeta) {
-          storageRemove(STORAGE_KEY);
-          storageRemove(STORAGE_META);
-        }
-      } else {
-        storageRemove(STORAGE_KEY);
-        storageRemove(STORAGE_META);
-      }
       return searchIndex;
     };
 
@@ -2603,6 +2633,9 @@ function setupSongCreditsNameSearch() {
       '.release-credit-value .credit-name-search-global:focus-visible {',
       '  color: #E21C21;',
       '}',
+      '.credit-name-token {',
+      '  white-space: nowrap;',
+      '}',
       '.track-details em a.track-release-link,',
       '.track-details em a.track-release-link:visited,',
       '.track-details em a.track-release-link {',
@@ -3040,6 +3073,36 @@ function setupSongCreditsNameSearch() {
     });
   };
 
+  const wrapAttachedSearchSuffixes = (root) => {
+    if (!root) return;
+    root.querySelectorAll('.credit-name-search-global').forEach((button) => {
+      if (button.closest('.credit-name-token')) return;
+      const next = button.nextSibling;
+      if (!next || next.nodeType !== Node.TEXT_NODE) return;
+
+      const raw = String(next.nodeValue || '');
+      if (!raw) return;
+
+      // Keep possessive/punctuation suffixes glued to the clickable name token.
+      const match = raw.match(/^((?:[’']s)?[.,!?;:)}\]"”']*)/);
+      const suffix = match ? match[1] : '';
+      if (!suffix) return;
+
+      const rest = raw.slice(suffix.length);
+      const token = document.createElement('span');
+      token.className = 'credit-name-token';
+
+      const parent = button.parentNode;
+      if (!parent) return;
+      parent.insertBefore(token, button);
+      token.appendChild(button);
+      token.appendChild(document.createTextNode(suffix));
+
+      if (rest) next.nodeValue = rest;
+      else next.remove();
+    });
+  };
+
   const enhanceRoot = (root) => {
     if (!root || root.dataset.creditSearchLinked === 'true') return;
     ensureNameSearchStyles();
@@ -3052,11 +3115,13 @@ function setupSongCreditsNameSearch() {
     if (isCollectionPage) {
       linkCollectionEntities(root);
     }
+    wrapAttachedSearchSuffixes(root);
     root.dataset.creditSearchLinked = 'true';
   };
 
   const run = () => {
     const selectors = ['.release-info', '.song-meta', '.credits-collapsible', '.tracklist'];
+    if (isArticlePage || isNewsPage) selectors.push('main');
     if (isCollectionPage) selectors.push('main');
     const roots = Array.from(document.querySelectorAll(selectors.join(', ')));
     if (!roots.length) return;
