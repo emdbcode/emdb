@@ -127,12 +127,12 @@
       if(btn1){
         btn1.addEventListener('click', function(){
           if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(9, true);
+            samplePlayer1.seekTo(8, true);
             if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
           } else {
             var iframe = document.getElementById('sampleVideo');
             if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [9, true] }), '*'); }catch(e){}
+              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [8, true] }), '*'); }catch(e){}
             }
           }
           btn1.blur();
