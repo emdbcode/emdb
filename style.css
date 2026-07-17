@@ -125,6 +125,21 @@ a:focus {
   text-decoration: underline !important;
 }
 
+/* Share menu links should never underline; hover/focus only changes color to red. */
+.share-menu a,
+.share-menu a:link,
+.share-menu a:visited {
+  text-decoration: none !important;
+}
+
+.share-menu a:hover,
+.share-menu a:focus,
+.share-menu a:focus-visible,
+.share-menu a:active {
+  color: #E21C21 !important;
+  text-decoration: none !important;
+}
+
 /* Inline eminem.com links inside note copy should match the note color, not the global link color. */
 .track-note a[href*="eminem.com"],
 .track-note a[href*="www.eminem.com"],

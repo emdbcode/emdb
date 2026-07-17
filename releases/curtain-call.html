@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Curtain Call: The Hits - Eminem | EMDb</title>
+<meta property="og:image" content="https://emdb.pro/images/album-covers/curtain-call/curtain-call-cover.jpg">
 <link rel="stylesheet" href="../style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 
@@ -35,6 +36,7 @@ body {
 
 /* ALBUM COVER + INFO CONTAINER */
 .album-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -517,6 +519,61 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 .credit-bubble.chorus { background: rgba(0, 0, 0, 0.076); color: #aaa; border-color: rgba(226,28,35,0.243); }
 
 
+
+/* permalink button (top-right of header) */
+.permalink {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  text-decoration: none;
+  line-height: 0;
+}
+.permalink img { display: block; width: 18px; height: 18px; }
+.permalink:hover img,
+.permalink:focus img { filter: brightness(1.15); transform: scale(1.06); transition: transform 0.12s ease, filter 0.12s ease; }
+.permalink:focus, .permalink:active { outline: none; box-shadow: none; }
+.permalink:focus img, .permalink:active img { transform: scale(1.06); filter: brightness(1.15); }
+@media (max-width: 520px) {
+  .permalink { top: 6px; right: 6px; padding: 2px; }
+  .permalink img { width: 14px; height: 14px; }
+}
+
+/* share menu popover (opened from .permalink) */
+.share-menu {
+  position: absolute;
+  top: 46px;
+  right: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: #0f0f0f;
+  border: 1px solid #222;
+  padding: 8px;
+  border-radius: 6px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  z-index: 1200;
+}
+.share-menu.open { display: flex; }
+.share-menu a,
+.share-menu button.share-action {
+  color: #eaeaea;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  text-align: left;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.share-menu a:hover,
+.share-menu button.share-action:hover { color: #E21C21; background: rgba(226,28,33,0.04); }
+
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -529,6 +586,16 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 <main>
   <!-- ALBUM COVER + INFO -->
   <div class="album-container" data-prev="encore.html" data-next="re-up.html" data-charts="../charts/charts-curtain-call.html" data-user-reviews="../user-reviews/curtain-call-user-reviews.html">
+<a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
+  <img src="../images/logos/share_white.png" alt="Share">
+</a>
+<div class="share-menu" id="shareMenu" aria-hidden="true">
+  <a id="wa-share" href="#" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+  <a id="x-share" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>
+  <a id="fb-share" href="#" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+  <button class="share-action" id="copy-share">Copy link</button>
+</div>
+
     <div class="album-single" id="albumSingleCurtainCall">
       <img src="../images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover">
     </div>
@@ -1489,5 +1556,63 @@ document.querySelectorAll('.critic-score').forEach(box => {
 <script src="../scripts/album-rating.js"></script>
 <script src="../scripts/album-reviews.js"></script>
 <script src="../header.js"></script>
+
+<script>
+(function setupShareMenu(){
+  const btn = document.getElementById('pagePermalink');
+  const menu = document.getElementById('shareMenu');
+  const wa = document.getElementById('wa-share');
+  const x = document.getElementById('x-share');
+  const fb = document.getElementById('fb-share');
+  const copyBtn = document.getElementById('copy-share');
+  if (!btn || !menu) return;
+
+  function closeMenu(){
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title || 'EMDb');
+    if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+    if (x) x.href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (menu.classList.contains('open')) return closeMenu();
+    openMenu();
+  });
+
+  if (copyBtn) copyBtn.addEventListener('click', async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => { copyBtn.textContent = 'Copy link'; closeMenu(); }, 1200);
+        return;
+      }
+    } catch (err) {
+      // fallthrough
+    }
+    window.open(url, '_blank');
+    closeMenu();
+  });
+
+  document.addEventListener('click', (ev) => {
+    if (!menu.classList.contains('open')) return;
+    if (btn.contains(ev.target) || menu.contains(ev.target)) return;
+    closeMenu();
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
+})();
+</script>
 </body>
 </html>
