@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eminem Albums Ranked by Critics | EMDb</title>
+  <meta property="og:title" content="Eminem Albums Ranked by Critics - EMDb">
+  <meta property="og:description" content="EMDb ranks Eminem's studio albums and major collaborative projects by aggregated critic scores.">
+  <meta property="og:image" content="https://emdb.pro/images/article-images/albums-ranked-critics.png">
+  <meta property="og:url" content="https://emdb.pro/articles/eminem-albums-ranked-by-critics.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="EMDb">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Eminem Albums Ranked by Critics",
+    "datePublished": "2026-07-22",
+    "dateModified": "2026-07-22",
+    "author": {
+      "@type": "Organization",
+      "name": "EMDb"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "EMDb"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://emdb.pro/articles/eminem-albums-ranked-by-critics.html"
+    },
+    "image": "https://emdb.pro/images/article-images/albums-ranked-critics.png"
+  }
+  </script>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #eaeaea;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .article-page {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem 2rem;
+      box-sizing: border-box;
+    }
+
+    .article-shell {
+      background: #151515;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      position: relative;
+    }
+
+    .permalink {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-block;
+      padding: 4px;
+      background: transparent;
+      border: 0;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .permalink img {
+      display: block;
+      width: 18px;
+      height: 18px;
+    }
+
+    .permalink:hover img,
+    .permalink:focus img {
+      filter: brightness(1.15);
+      transform: scale(1.06);
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    .permalink:focus,
+    .permalink:active {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .permalink:focus img,
+    .permalink:active img {
+      transform: scale(1.06);
+      filter: brightness(1.15);
+    }
+
+    @media (max-width: 520px) {
+      .permalink {
+        top: 6px;
+        right: 6px;
+        padding: 2px;
+      }
+
+      .permalink img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .share-menu {
+      position: absolute;
+      top: 46px;
+      right: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: #0f0f0f;
+      border: 1px solid #222;
+      padding: 8px;
+      border-radius: 6px;
+      min-width: 180px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      z-index: 1200;
+    }
+
+    .share-menu.open {
+      display: flex;
+    }
+
+    .share-menu a,
+    .share-menu button.share-action {
+      color: #eaeaea;
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      padding: 8px;
+      text-align: left;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .share-menu a:hover,
+    .share-menu button.share-action:hover {
+      color: #E21C21;
+      background: rgba(226, 28, 33, 0.04);
+    }
+
+    .article-title {
+      margin: 0 0 1rem 0;
+      color: #fff;
+      line-height: 1.25;
+      font-size: clamp(24px, 4vw, 34px);
+    }
+
+    .article-hero-thumb {
+      margin: 0 0 1rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #222;
+      width: 100%;
+    }
+
+    .article-hero-thumb img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .article-copy {
+      color: #ddd;
+      font-size: 15px;
+      line-height: 1.62;
+      counter-reset: rank-counter 15;
+    }
+
+    .article-copy p {
+      margin: 0 0 1rem 0;
+    }
+
+    .article-copy .note {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .article-copy .credit-name-search-global,
+    .article-copy .credit-name-search-global:visited {
+      color: #eaeaea;
+      text-decoration-line: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      text-decoration-color: rgba(179, 179, 179, 0.45);
+    }
+
+    .article-copy .credit-name-search-global:hover,
+    .article-copy .credit-name-search-global:focus,
+    .article-copy .credit-name-search-global:focus-visible {
+      color: #E21C21;
+      text-decoration-color: rgba(226, 28, 33, 0.5);
+    }
+
+    .rank-entry {
+      margin-top: 1.2rem;
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      column-gap: 0.75rem;
+      row-gap: 0;
+      align-items: start;
+      counter-increment: rank-counter -1;
+      --entry-shift-x: 10px;
+      --meta-shift-x: calc(var(--entry-shift-x) + 0px);
+      position: relative;
+    }
+
+    .album-hero {
+      margin: 0;
+      margin-left: var(--entry-shift-x);
+      grid-column: 1;
+      grid-row: 1 / span 3;
+      position: relative;
+      width: 100%;
+      max-width: 132px;
+      aspect-ratio: 1 / 1;
+      height: auto;
+    }
+
+    .album-hero::before {
+      content: counter(rank-counter);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: #E21C21;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+    }
+
+    .album-hero img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #222;
+      cursor: default;
+    }
+
+    .album-title-row {
+      grid-column: 2;
+      grid-row: 1;
+      position: relative;
+      display: block;
+      margin-left: var(--meta-shift-x);
+      margin-top: 16px;
+      padding-right: 0;
+      margin-bottom: 0;
+    }
+
+    .album-name {
+      font-size: clamp(20px, 5vw, 30px);
+      color: #ffffff;
+      line-height: 1.02;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .article-copy .album-name a,
+    .article-copy .album-name a:link,
+    .article-copy .album-name a:visited,
+    .article-copy .album-name a:hover,
+    .article-copy .album-name a:focus,
+    .article-copy .album-name a:focus-visible,
+    .article-copy .album-name a:active {
+      color: inherit;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+    }
+
+    .article-copy .album-name a:hover,
+    .article-copy .album-name a:focus,
+    .article-copy .album-name a:focus-visible,
+    .article-copy .album-name a:active {
+      color: #E21C21;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+    }
+
+    .article-copy .album-artist {
+      grid-column: 2;
+      grid-row: 2;
+      margin-left: var(--meta-shift-x);
+      font-size: clamp(18px, 5vw, 30px);
+      color: #E21C21;
+      margin-top: 1px;
+      margin-right: 0;
+      margin-bottom: 0;
+      line-height: 1.02;
+    }
+
+    .rank-entry > p {
+      grid-column: 1 / -1;
+    }
+
+    .rank-entry > .album-artist + p {
+      margin-top: 1.85rem;
+    }
+
+    .overall-score {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-width: 64px;
+      flex-shrink: 0;
+      position: static;
+    }
+
+    .album-hero .overall-score {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 35%);
+      z-index: 3;
+    }
+
+    .overall-label {
+      font-size: 12px;
+      color: #f2f2f2;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.38);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.98), 0 0 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .critic-score {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #000;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: default;
+    }
+
+    .article-copy a.critic-score,
+    .article-copy a.critic-score:link,
+    .article-copy a.critic-score:visited,
+    .article-copy a.critic-score:hover,
+    .article-copy a.critic-score:focus,
+    .article-copy a.critic-score:focus-visible,
+    .article-copy a.critic-score:active {
+      color: #000 !important;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-color: transparent !important;
+    }
+
+    .article-copy a.critic-score:hover,
+    .article-copy a.critic-score:focus,
+    .article-copy a.critic-score:focus-visible {
+      cursor: pointer;
+    }
+
+    .critic-red { background: #E21C21; }
+    .critic-orange { background: #FF8C00; }
+    .critic-yellow { background: #eadb03; }
+    .critic-green { background: #4CAF50; }
+    .critic-gold {
+      background: linear-gradient(180deg, #ffe680 0%, #f0c95a 45%, #d4af37 80%);
+      border: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.25);
+      color: #111;
+    }
+
+    .article-copy a.critic-score.critic-gold,
+    .article-copy a.critic-score.critic-gold:link,
+    .article-copy a.critic-score.critic-gold:visited,
+    .article-copy a.critic-score.critic-gold:hover,
+    .article-copy a.critic-score.critic-gold:focus,
+    .article-copy a.critic-score.critic-gold:focus-visible,
+    .article-copy a.critic-score.critic-gold:active {
+      color: #111 !important;
+    }
+
+    .quote-divider {
+      width: min(700px, calc(100% - 1rem));
+      height: 1px;
+      margin: 1.2rem auto 1.2rem auto;
+      background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%);
+    }
+
+    .quote-divider + .rank-entry {
+      margin-top: 2.3rem;
+    }
+
+    @media (max-width: 900px) {
+      .rank-entry {
+        grid-template-columns: 1fr;
+        row-gap: 0;
+      }
+
+      .rank-entry > :not(.album-hero),
+      .album-hero {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .album-hero {
+        max-width: 360px;
+        height: auto;
+        margin: 0 auto;
+      }
+
+      .album-hero img {
+        height: auto;
+        object-fit: cover;
+      }
+
+      .rank-entry > .album-artist + p {
+        margin-top: 1.45rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .album-title-row {
+        display: block;
+        padding-right: 0;
+      }
+
+      .overall-score {
+        margin-top: 0;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6817358620135492" crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J923YYWH3R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-J923YYWH3R');
+  </script>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="article-page">
+    <article class="article-shell article-copy">
+      <a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
+        <img src="/images/logos/share_white.png" alt="Share">
+      </a>
+      <div class="share-menu" id="shareMenu" aria-hidden="true">
+        <a id="wa-share" href="#" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+        <a id="x-share" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>
+        <a id="fb-share" href="#" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+        <button class="share-action" id="copy-share">Copy link</button>
+      </div>
+
+      <h1 class="article-title">Eminem Albums Ranked by Critics</h1>
+
+      <figure class="article-hero-thumb" aria-label="Article thumbnail">
+        <img src="/images/article-images/albums-ranked-critics.png" alt="Eminem Albums Ranked by Critics thumbnail">
+      </figure>
+
+      <p>With more Eminem critic reviews and album scores collected than any other website, EMDb is the truest resource for analysing how critics have viewed his catalogue. So, let’s use that information and take a look at how critics collectively rank Eminem’s studio albums — we’ll include his major collaborative projects with <button type="button" class="credit-name-search-global" data-search-term="D12">D12</button> and <button type="button" class="credit-name-search-global" data-search-term="Bad Meets Evil">Bad Meets Evil</button>, too. <span class="note">Note: Infinite is not included as the album went unreviewed.</span></p>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/revival/revival-cover.jpg" alt="Revival cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-revival.html">Revival</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-yellow" href="/charts/critic-scores-revival.html" aria-label="Overall score 4.5">4.5</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Starting at the bottom, unsurprisingly, we begin with <em>Revival</em>, which is currently also Eminem’s lowest-rated studio album among EMDb users.</p>
+
+        <p>During its rollout, <em>Revival</em> became a punching bag for critics. Consequence summed up its feelings by writing, “Revival is the most pleasureless record he’s ever made.”</p>
+
+        <p>Anthony Fantano of the popular YouTube channel theneedledrop also gave the album a 2/10. He opened his review by saying, “This album is bad, it’s really bad,” before mocking the closing moments of “Arose,” where Eminem flushes pills down a toilet. Fantano remarked that “it’s actually kind of fitting for this album to end with the sound of a toilet flushing.”</p>
+
+        <p>Many would argue that critics were overly harsh on <em>Revival</em>. As Eminem’s most heavily reviewed album to date, it quickly became fashionable to bash, with some reviewers seemingly jumping on the bandwagon.</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death of Slim Shady cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-death-of-slim-shady.html">The Death of Slim Shady</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-yellow" href="/charts/critic-scores-death-of-slim-shady.html" aria-label="Overall score 5.9">5.9</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p><em>The Death of Slim Shady (Coup De Grace)</em> wasn’t nearly as heavily criticised as the previous entry. While it received fewer positive reviews overall, it also attracted far fewer reviews than <em>Revival</em>, making a direct comparison difficult. Instead of being heavily praised or heavily criticised, most critics landed somewhere in the middle, with only three publications giving it particularly harsh scores.</p>
+
+        <p>Anthony Fantano, who described Eminem as a “mindless bully” for “perpetuating a cycle of abuse and cruelty” throughout the album, awarded it a “decent” 5/10. He also echoed a criticism shared by many fans and reviewers: that the album’s narrative is confusing, with its story seemingly reaching its climax too early, leaving subsequent tracks unrelated to the rest of the album. By comparison, <em>Encore</em>’s overarching storyline is bookended by its opening and closing tracks, with skits tying the narrative together in between.</p>
+
+        <p>One of the more positive reviews came from Daily Vault, who called the album “brilliant,” writing: “On <em>The Death of Slim Shady</em>, [Eminem] proves that he’s still in full possession of his talents, packing his lyrics with sharp barbs, references, and allusions to popular culture and an unrelenting desire to play out the engrossing drama of his various musical personae duking it out for lyrical dominance.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-d12-world.html">D12 World</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-yellow" href="/charts/critic-scores-d12-world.html" aria-label="Overall score 5.9">5.9</a></div>
+        </div>
+        <div class="album-artist">D12</div>
+
+        <p>What may come as a surprise to some, this beloved group effort failed to win over critics — though it didn’t exactly repel them either.</p>
+
+        <p>The Guardian’s closing remarks reflected its respectable 3/5 rating: “Eminem may have more charisma in his chainsaw, but D12 aren’t entirely to be dismissed.” AllMusic awarded the album the same score, but was less enthusiastic, writing: “The album feels more slapped together than their debut — and there’s a dry spell in the middle.”</p>
+
+        <p>Less impressed was the German publication laut.de, which handed <em>D12 World</em> a 2/5. While praising <button type="button" class="credit-name-search-global" data-search-term="Denaun Porter">Denaun Porter</button>’s production on “<a class="credit-name-search-global" href="/songs/d12-world/ill-be-damned.html">I’ll Be Damned</a>,” “<a class="credit-name-search-global" href="/songs/d12-world/u-r-the-one.html">U R The One</a>,” and “<a class="credit-name-search-global" href="/songs/d12-world/good-die-young.html">Good Die Young</a>,” the reviewer felt the group was “suffering” from “Eminem’s comic and bubblegum style.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-kamikaze.html">Kamikaze</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-kamikaze.html" aria-label="Overall score 6.1">6.1</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Fresh off tearing apart <em>Revival</em>, several critics followed it up with backhanded reviews of <em>Kamikaze</em>, though these were few and far between compared to the mostly positive reception the album received.</p>
+
+        <p>Consequence of Sound, which had all but written off <em>Revival</em>, returned with a largely positive review, writing: “As a whole, the album may not be impeccable, but it’s the best he’s released since 2010. In what seems like a war of generations, all Em is asking for is the respect he’s earned in the rap industry. This record’s good enough to grant him that.”</p>
+
+        <p>While many welcomed Eminem’s aggressive clap-back, there were some critics that actually preferred <em>Revival</em>. Stephen Thomas Erlewine of AllMusic, who awarded <em>Revival</em> 3/5, scored <em>Kamikaze</em> just 2/5, writing: “Coming after <em>Revival</em>, the 2017 album where he grappled with questions of mortality along with the moral rot of the Trump era, the retreat to spitting insults and reflexive anger is a bit of a disappointment, particularly because <em>Kamikaze</em> isn’t quite the jolt it was intended to be.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil’s Night cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-devils-night.html">Devil’s Night</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-devils-night.html" aria-label="Overall score 6.3">6.3</a></div>
+        </div>
+        <div class="album-artist">D12</div>
+
+        <p>D12’s debut was met with a mix of positive and mixed reviews, though it ultimately landed on the positive side thanks to strong scores from the likes of HipHopDX and AllMusic. The latter praised Eminem’s role as executive producer, writing: “As challenging as it may be for many to stomach the constant and incredibly explicit sex, violence, and drug references, there is a stunning album lurking beneath that deserves recognition. Functioning as the album’s executive producer and as the producer for most of the album’s beats, Eminem has done a wonderful job crafting this album and its foreboding feel.”</p>
+
+        <p>Nathan Brackett of <em>Rolling Stone</em>, while impressed, was less enthusiastic, stating: “The balance between humor, shock, raw talent and psychosis that Eminem achieved on his last two albums is off.”</p>
+
+        <p>Regardless of its critical reception, it’s fair to say that many fans of the group would disagree with its relatively low critic score — something reflected in its overall EMDb user rating.</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music to Be Murdered By cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-music-to-be-murdered-by.html">Music to Be Murdered By</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-music-to-be-murdered-by.html" aria-label="Overall score 6.4">6.4</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Although <em>Music to Be Murdered By</em> received virtually no outright negative reviews, it was met with a wave of mixed reactions. Boosting its overall score was a handful of good-to-excellent ratings, with the highest praise coming from <em>The Telegraph</em>, which awarded it full marks and called it “so lethally brilliant it should be a crime.”</p>
+
+        <p>One example of a more mixed review came from <em>Pitchfork</em>, where Paul A. Thompson wrote: “It is not, strictly speaking, a good record — Eminem hasn’t made one of those in a decade — but his latest boasts enough technical command and generates just enough arresting ideas to hold your attention.”</p>
+
+        <p>Among the other mixed reviews was Eminem’s “favourite critic” (joking), Anthony Fantano, who acknowledged the album’s strengths despite his criticisms. He said: “This record could have been a lot worse [...] I do genuinely think that he put out some very good tracks here. He wrote on some very good instrumentals, he had some good guests, while I don’t love it and there are spots where he does come off very bitter, like on the intro track, this is better — better than his last couple of LPs.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-recovery.html">Recovery</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-recovery.html" aria-label="Overall score 6.4">6.4</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>While this entry shares the same overall score as the previous album, <em>Recovery</em> achieved it from a much larger pool of reviews. Unlike <em>Music to Be Murdered By</em>, it received its fair share of negative critiques, but they were outweighed by an even greater number of positive ones.</p>
+
+        <p>One of the album’s strongest reviews came from Consequence’s Alex Young, who had been critical of <em><a href="/releases/relapse.html">Relapse</a></em>. “Let me be the first to say that Eminem fixed whatever was wrong. This is the most vivacious, authentic album he’s made in years.”</p>
+
+        <p>In contrast, over at <em>Pitchfork</em>, Jayson Greene — who had praised <em>Relapse</em> — was far less impressed. He wrote: “At his best, he has always made a fascinating scramble of his internal turmoil, but the guy rapping on <em>Recovery</em> just sounds devoid of any noticeable joy, personality, or wit. Not that he’s not trying. As on <em>Relapse</em>, Em almost passes out showing us he’s still got it, rapping in double and triple time, piling tricky syncopations on top of each other, constructing whole verses with end rhymes buried in the middle of phrases — basically any kind of pyrotechnical trick he can think of to wow the kind of rap listeners who venerate technical skill above all else.”</p>
+
+        <p>Interestingly, that divide has also long existed among fans. <em>Relapse</em> and <em>Recovery</em> are often seen as polar opposites, with those who love one frequently finding themselves less enthusiastic about the other.</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-hell-the-sequel.html">Hell: The Sequel</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-hell-the-sequel.html" aria-label="Overall score 6.8">6.8</a></div>
+        </div>
+        <div class="album-artist">Bad Meets Evil</div>
+
+        <p>This EP — <em>cough</em>, album—was met with mostly positive reviews. One of the strongest came from <em>The A.V. Club</em>’s Nathan Rabin, who wrote: “Bad Meets Evil is about lyricism in its purest form. Being reunited with a superior rapper like <button type="button" class="credit-name-search-global" data-search-term="Royce Da 5&#39;9&quot;">Royce Da 5’9”</button> brings out the long-dormant competitive side in Eminem, who spits proudly ignorant raps with machine-gun precision and verbal dexterity.”</p>
+
+        <p>Another glowing review came from former rivals <em>XXL</em>, which wrote: “Throughout the 11-track record, Em and Royce deliver exactly what their fans have been waiting for for a decade plus: lyrics to go.”</p>
+
+        <p>Less enthusiastic was <em>NME</em>, which concluded: “Sadly, this nine-track collection is all just a bit ‘meh’ [...] It’s definitely still worth a listen but, at best, this is just a warm-up for their hopefully much more exciting respective solo projects.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/encore/encore-cover.jpg" alt="Encore cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-encore.html">Encore</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-encore.html" aria-label="Overall score 7">7</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p><em>Encore</em>. It gets a bad rap. Not from Eminem, of course. And not from critics or fans, for the most part. Most of the criticism seems to come from the wider hip-hop community, where its many goofy moments have never been as warmly embraced.</p>
+
+        <p>Critics, on the whole, were favourable. Robert Christgau awarded the album full marks in his <em>Consumer Guide</em> review, writing: “Funny, catchy, clever, and irreverent past his allotted time, he can’t make records this good forever — no one else has.”</p>
+
+        <p>Although <em>Encore</em> avoided any truly scathing reviews, it still received its share of criticism. Alexis Petridis of <em>The Guardian</em> felt that “much of <em>Encore</em> is lacklustre,” adding that “His audible lack of interest during <em>Encore</em>’s least-inspired moments raises intriguing questions about what happens next.” Ironically, that next album he questions is next on the list.</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-relapse.html">Relapse</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-relapse.html" aria-label="Overall score 7">7</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Like <em>Encore</em>, <em>Relapse</em> also gets a bad rap — but for very different reasons. While the album is generally respected within the wider hip-hop community, it remains one of Eminem’s most divisive releases among fans. Those who prefer his darker, technical style often rank it among his very best, while fans of the more commercial, radio-friendly sound tend not to warm to its accent-heavy approach.</p>
+
+        <p>The album received more high marks than <em>Encore</em>, but it also attracted a handful of genuinely poor reviews, something <em>Encore</em> largely avoided. <em>The Evening Standard</em> awarded it a perfect score, with John Aizlewood calling it “Brave, brilliant and beholden to nobody,” adding that “Eminem has returned a giant.”</p>
+
+        <p>Among its less enthusiastic reviews was Andy Gill of <em>The Independent</em>, who wrote: “The album quickly becomes drably repetitive, while its dated tone is emphasised by the return of <button type="button" class="credit-name-search-global" data-search-term="Dr. Dre">Dr. Dre</button> as producer. Only the single ‘Crack a Bottle’ has any real style and swagger...”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-marshall-mathers-lp-2.html">The Marshall Mathers LP 2</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-marshall-mathers-lp-2.html" aria-label="Overall score 7.2">7.2</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Following the release of <em>The Marshall Mathers LP 2</em> came a flood of four-star reviews.</p>
+
+        <p>Kat Waplington of <em>Drowned in Sound</em> wrote: “This is Eminem’s best record in a decade — and one of the most impressive, entertaining and addictive hip-hop albums of the year.” Jay Soul of <em>RapReviews</em> was equally impressed, saying: “He’s back on form, clear-minded and has a point to prove — something he achieves with aplomb.”</p>
+
+        <p>But it wasn’t all praise. The album also attracted a healthy number of mixed reviews, including one from Ted Scheinman of <em>Slant Magazine</em>, who felt that while “the album has tantalizing moments of vintage performance,” the “residual misogyny and ‘faggot’-bashing is off-putting...”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-eminem-show.html">The Eminem Show</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-eminem-show.html" aria-label="Overall score 7.6">7.6</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Like the preceding album on the list, <em>The Eminem Show</em> also received a wave of four-star reviews. However, a few more higher marks were enough to secure its spot in third place.</p>
+
+        <p>Kris Ex of <em>Rolling Stone</em> opened his glowing review by claiming “...Eminem just may have made the best rap-rock album in history,” yet still only awarded it four stars.</p>
+
+        <p>Stephen Thomas Erlewine of <em>AllMusic</em> also awarded it 4/5, concluding his review by writing that the album “is further proof that Eminem is an artist of considerable range and dimension.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="The Slim Shady LP cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-slim-shady-lp.html">The Slim Shady LP</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-green" href="/charts/critic-scores-slim-shady-lp.html" aria-label="Overall score 7.9">7.9</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>Coming in second place is Eminem’s major-label debut, <em>The Slim Shady LP</em>. As it received considerably fewer reviews than the previous album on the list, it wouldn’t be surprising if the two switched places had critics reviewed them in equal numbers.</p>
+
+        <p>That said, <em>The Slim Shady LP</em> still managed to collect more scores above 8/10 despite its smaller review pool.</p>
+
+        <p>Stephen Thomas Erlewine of <em>AllMusic</em> awarded the album full marks, calling it “one of the great debuts in both hip-hop and modern pop music.” Over at <em>Rolling Stone</em>, Rob Sheffield gave it a respectable 3.5/5, writing: “Eminem has skills — he’s a warp-speed human rhyming dictionary with <button type="button" class="credit-name-search-global" data-search-term="LL Cool J">LL Cool J</button>’s gift for the killer dis.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <section class="rank-entry">
+        <figure class="album-hero">
+          <img src="/images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover">
+        </figure>
+        <div class="album-title-row">
+          <h2 class="album-name"><a href="/charts/critic-scores-marshall-mathers-lp.html">The Marshall Mathers LP</a></h2>
+          <div class="overall-score"><span class="overall-label">Overall</span><a class="critic-score critic-gold" href="/charts/critic-scores-marshall-mathers-lp.html" aria-label="Overall score 8.1">8.1</a></div>
+        </div>
+        <div class="album-artist">Eminem</div>
+
+        <p>At number one is <em>The Marshall Mathers LP</em>. No surprises there—many would argue it’s exactly where it belongs. The album came within a single review of having more scores above 8/10 than below, a remarkable achievement considering the volume of reviews it received.</p>
+
+        <p>Rather than ending on the praise, though, I thought it would be more interesting to look at a couple of the album’s harshest reviews.</p>
+
+        <p>Sal Cinquemani of <em>Slant Magazine</em> awarded the album just 1.5/5, writing: “...Eminem comes off as an undeveloped adult who’s still trying to get his parents’ attention. When accused of being homophobic, his comeback is predictably glib: ‘Nah, you’re just heterophobic.’ Even less impressive is his witless take on Gianni Versace’s death: ‘Whoops, somebody shot me/And I was just checking the mail/Get it? Checking the male.’”</p>
+
+        <p>Equally unimpressed was Caroline Sullivan of <em>The Guardian</em>, who wrote: “Like the fashionably depressed psychos who buy his records, Eminem is as good at self-pity, but fails to perceive his own role in his travails [...] <em>The Marshall Mathers LP</em> is a semi-testament to Dr. Dre’s tenebrous backing tracks, but they’re wasted on these self-obsessed rants.”</p>
+      </section>
+
+      <div class="quote-divider" aria-hidden="true"></div>
+
+      <p>Every album featured here can be rated and reviewed by EMDb users.</p>
+
+      <p>If you enjoyed this article, please follow EMDb on social media — we’ve got plenty more content on the way. And if you found the site useful, we’d really appreciate you sharing it with fellow Eminem fans. As a new website, we’re still flying under the radar, and every share genuinely helps EMDb grow.</p>
+
+      <p>Thanks for reading.</p>
+    </article>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+  <script>
+    (function placeOverallScoreBadges() {
+      const entries = document.querySelectorAll('.rank-entry');
+      entries.forEach((entry) => {
+        const cover = entry.querySelector('.album-hero');
+        const score = entry.querySelector('.overall-score');
+        if (!cover || !score) return;
+        if (score.parentElement !== cover) cover.appendChild(score);
+      });
+    })();
+
+    (function setupShareMenu() {
+      const btn = document.getElementById('pagePermalink');
+      const menu = document.getElementById('shareMenu');
+      const wa = document.getElementById('wa-share');
+      const x = document.getElementById('x-share');
+      const fb = document.getElementById('fb-share');
+      const copyBtn = document.getElementById('copy-share');
+      if (!btn || !menu) return;
+
+      function closeMenu() {
+        menu.classList.remove('open');
+        menu.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      function openMenu() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(document.title || 'EMDb');
+        if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+        if (x) x.href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+        if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+        menu.classList.add('open');
+        menu.setAttribute('aria-hidden', 'false');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (menu.classList.contains('open')) return closeMenu();
+        openMenu();
+      });
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const url = window.location.href;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(url);
+              copyBtn.textContent = 'Copied';
+              setTimeout(() => {
+                copyBtn.textContent = 'Copy link';
+                closeMenu();
+              }, 1200);
+              return;
+            }
+          } catch (err) {
+            // fallthrough
+          }
+          window.open(url, '_blank');
+          closeMenu();
+        });
+      }
+
+      document.addEventListener('click', (ev) => {
+        if (!menu.classList.contains('open')) return;
+        if (btn.contains(ev.target) || menu.contains(ev.target)) return;
+        closeMenu();
+      });
+
+      document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape') closeMenu();
+      });
+    })();
+  </script>
+</body>
+</html>
