@@ -167,6 +167,17 @@
                 color: #b5b5b5;
             }
 
+            /* Keep Shady Times dates aligned to the bottom across cards */
+            #newsTrack .slide a {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            #newsTrack .slide-subtitle {
+                margin-top: auto;
+            }
+
             .slide--placeholder {
                 background: #111;
             }
@@ -614,6 +625,15 @@
                     </div>
                     <div class="articles-grid">
                         <article class="article-card">
+                            <a href="/articles/d12-most-verses.html">
+                                <div class="article-thumb" style="background-image: url('/images/article-images/d12-most-verses.png');"></div>
+                                <div class="article-meta">
+                                    <p class="article-title">Who Had the Most Verses on D12’s Devil’s Night &amp; D12 World?</p>
+                                    <p class="article-tag">Rankings</p>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="article-card">
                             <a href="/articles/eminem-albums-ranked-by-critics.html">
                                 <div class="article-thumb" style="background-image: url('/images/article-images/albums-ranked-critics.png');"></div>
                                 <div class="article-meta">
@@ -622,20 +642,12 @@
                                 </div>
                             </a>
                         </article>
-                        <article class="article-card">
+                        <article class="article-card article-card--mobile-hide">
                             <a href="/articles/5-album-theory.html">
                                 <div class="article-thumb" style="background-image: url('/images/article-images/5-album-theory-small.jpg');"></div>
                                 <div class="article-meta">
                                     <p class="article-title">Can This "Five-Album Theory" Predict Eminem’s Next Release?</p>
                                     <p class="article-tag">Theory</p>
-                                </div>
-                            </a>
-                        </article>
-                        <article class="article-card article-card--mobile-hide">
-                            <a href="#" aria-label="Placeholder article card">
-                                <div class="article-thumb" style="background-image: url('/images/article-images/blank-emdb-pro.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
-                                <div class="article-meta">
-                                    <p class="article-title">We’re new. More articles coming soon.</p>
                                 </div>
                             </a>
                         </article>

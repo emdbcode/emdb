@@ -2889,6 +2889,12 @@ function setupSongCreditsNameSearch() {
           return;
         }
 
+        // Keep release status notes as plain text (not searchable/clickable).
+        if (/^previously\s+unreleased\.?$/i.test(text)) {
+          rebuilt.push(emphasized ? `<em>${escapeHtml(text)}</em>` : escapeHtml(text));
+          return;
+        }
+
         // Keep dedicated-page notes as plain text (not searchable/clickable).
         if (
           /^available\s+instrumentals\s+are\s+listed\s+separately\s+on\s+the\s+instrumentals\s+page\.?$/i.test(text)
