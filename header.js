@@ -2242,6 +2242,7 @@ function bootstrapLayoutPartials() {
   setupSampleBackButton();
   setupSampleJumpButtonLayout();
   setupCollectionShareMenu();
+  setupArticleNewsBottomSliders();
   linkifyEminemDotComMentions();
   setupSongCreditsNameSearch();
   loadSiteHeader();
@@ -2434,6 +2435,201 @@ function setupCollectionShareMenu() {
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape') closeMenu();
   });
+}
+
+function setupArticleNewsBottomSliders() {
+  const path = String(window.location.pathname || '');
+  const isArticleDetail = path.includes('/articles/') && !path.endsWith('/articles-index.html');
+  const isNewsDetail = path.includes('/news/') && !path.endsWith('/news-index.html');
+  if (!isArticleDetail && !isNewsDetail) return;
+
+  const main = document.querySelector('main');
+  if (!main) return;
+  const host = main.querySelector('.article-shell') || main;
+  if (!host) return;
+  if (host.querySelector('.emdb-bottom-sliders')) return;
+  if (host.querySelector('#albumsViewport, #sliderTrack, #singlesViewport, #singlesTrack')) return;
+
+  if (!document.getElementById('emdb-bottom-sliders-style')) {
+    const style = document.createElement('style');
+    style.id = 'emdb-bottom-sliders-style';
+    style.textContent = [
+      '.emdb-bottom-sliders { margin-top: 1.75rem; }',
+      '.emdb-bottom-sliders .releases-section { margin-top: 1.75rem; border-top: 1px solid #222; padding-top: 1rem; }',
+      '.emdb-bottom-sliders .slider-header { display: flex; align-items: baseline; justify-content: flex-start; gap: 8px; margin: 0 0 16px; }',
+      '.emdb-bottom-sliders .slider-eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #a5a5a5; line-height: 1; }',
+      '.emdb-bottom-sliders .slider-title { margin: 0; font-size: clamp(20px, 3vw, 26px); font-weight: 700; }',
+      '.emdb-bottom-sliders .slider-viewport { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid #1f1f1f; background: linear-gradient(135deg, #121212, #0c0c0c); }',
+      '.emdb-bottom-sliders .slider-track { display: flex; gap: 14px; padding: 14px; box-sizing: border-box; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 14px; scroll-behavior: smooth; cursor: grab; user-select: none; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; }',
+      '.emdb-bottom-sliders .slider-track::-webkit-scrollbar { display: none; }',
+      '.emdb-bottom-sliders .slider-track.is-dragging { cursor: grabbing; }',
+      '.emdb-bottom-sliders .slide { flex: 0 0 calc((100% - (5 - 1) * 14px) / 5); max-width: 240px; background: #111; border: 1px solid #1f1f1f; border-radius: 12px; padding: 12px; box-sizing: border-box; scroll-snap-align: start; display: grid; gap: 10px; justify-items: center; text-align: center; transition: border-color 0.18s ease, box-shadow 0.18s ease; }',
+      '.emdb-bottom-sliders .slide a { text-decoration: none; color: inherit; width: 100%; }',
+      '.emdb-bottom-sliders .slide img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; background: #0f0f0f; border: 1px solid #1f1f1f; box-shadow: 0 10px 24px rgba(0,0,0,0.4); transition: transform 0.18s ease, box-shadow 0.18s ease; }',
+      '.emdb-bottom-sliders .slide a:hover img, .emdb-bottom-sliders .slide a:focus-visible img { transform: translateY(-2px) scale(1.01); box-shadow: 0 14px 30px rgba(0,0,0,0.5); }',
+      '.emdb-bottom-sliders .slide:hover { border-color: #E21C21; box-shadow: 0 12px 28px rgba(0,0,0,0.35); }',
+      '.emdb-bottom-sliders .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 38px; height: 38px; border-radius: 8px; border: 1px solid #1f1f1f; background: rgba(17, 17, 17, 0.9); color: #eaeaea; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease; }',
+      '.emdb-bottom-sliders .slider-arrow:hover:not(:disabled) { border-color: #E21C21; background: rgba(22, 22, 22, 0.95); transform: translateY(-50%) translateY(-1px); }',
+      '.emdb-bottom-sliders .slider-arrow:disabled { opacity: 0.35; cursor: not-allowed; }',
+      '.emdb-bottom-sliders .slider-arrow--prev { left: 10px; }',
+      '.emdb-bottom-sliders .slider-arrow--next { right: 10px; }',
+      '@media (max-width: 1100px) { .emdb-bottom-sliders .slide { flex-basis: calc((100% - (4 - 1) * 14px) / 4); } }',
+      '@media (max-width: 900px) { .emdb-bottom-sliders .slide { flex-basis: calc((100% - (3 - 1) * 14px) / 3); } .emdb-bottom-sliders .slider-arrow { display: none !important; } }',
+      '@media (max-width: 680px) { .emdb-bottom-sliders .slide { flex-basis: calc((100% - (2.4 - 1) * 12px) / 2.4); } .emdb-bottom-sliders .slider-track { gap: 12px; } }',
+      '@media (max-width: 480px) { .emdb-bottom-sliders .slide { flex-basis: calc((100% - (2.2 - 1) * 10px) / 2.2); } .emdb-bottom-sliders .slider-track { gap: 10px; } }'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  const wrapper = document.createElement('section');
+  wrapper.className = 'emdb-bottom-sliders';
+  wrapper.innerHTML = `
+    <section class="releases-section" aria-label="Releases slider">
+      <div class="slider-header"><span class="slider-eyebrow">Explore</span><h2 class="slider-title">Eminem Albums</h2></div>
+      <div class="slider-viewport" id="emdbAlbumsViewport">
+        <button class="slider-arrow slider-arrow--prev" type="button" id="emdbSliderPrev" aria-label="Scroll left">‹</button>
+        <button class="slider-arrow slider-arrow--next" type="button" id="emdbSliderNext" aria-label="Scroll right">›</button>
+        <div class="slider-track" id="emdbSliderTrack">
+          <article class="slide"><a href="/releases/stans-soundtrack.html"><img src="/images/album-covers/non-album/stans-cover.jpg" alt="Stan's Soundtrack cover"></a></article>
+          <article class="slide"><a href="/releases/death-of-slim-shady.html"><img src="/images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death of Slim Shady cover"></a></article>
+          <article class="slide"><a href="/releases/curtain-call-2.html"><img src="/images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Curtain Call 2 cover"></a></article>
+          <article class="slide"><a href="/releases/music-to-be-murdered-by.html"><img src="/images/album-covers/music-to-be-murdered-by/music-to-be-murdered-by-cover.jpg" alt="Music to Be Murdered By cover"></a></article>
+          <article class="slide"><a href="/releases/kamikaze.html"><img src="/images/album-covers/kamikaze/kamikaze-cover.jpg" alt="Kamikaze cover"></a></article>
+          <article class="slide"><a href="/releases/revival.html"><img src="/images/album-covers/revival/revival-cover.jpg" alt="Revival cover"></a></article>
+          <article class="slide"><a href="/releases/shadyxv.html"><img src="/images/album-covers/shady-xv/shady-xv-cover.jpg" alt="SHADYXV cover"></a></article>
+          <article class="slide"><a href="/releases/marshall-mathers-lp-2.html"><img src="/images/album-covers/marshall-mathers-lp-2/marshall-mathers-lp-2-cover.jpg" alt="The Marshall Mathers LP 2 cover"></a></article>
+          <article class="slide"><a href="/releases/hell-the-sequel.html"><img src="/images/album-covers/hell-the-sequel/hell-the-sequel-cover.jpg" alt="Hell: The Sequel cover"></a></article>
+          <article class="slide"><a href="/releases/recovery.html"><img src="/images/album-covers/recovery/recovery-cover.jpg" alt="Recovery cover"></a></article>
+          <article class="slide"><a href="/releases/relapse.html"><img src="/images/album-covers/relapse/relapse-cover.jpg" alt="Relapse cover"></a></article>
+          <article class="slide"><a href="/releases/re-up.html"><img src="/images/album-covers/re-up/re-up-cover.jpg" alt="The Re-Up cover"></a></article>
+          <article class="slide"><a href="/releases/curtain-call.html"><img src="/images/album-covers/curtain-call/curtain-call-cover.jpg" alt="Curtain Call: The Hits cover"></a></article>
+          <article class="slide"><a href="/releases/encore.html"><img src="/images/album-covers/encore/encore-cover.jpg" alt="Encore cover"></a></article>
+          <article class="slide"><a href="/releases/d12-world.html"><img src="/images/album-covers/d12-world/d12-world-cover.jpg" alt="D12 World cover"></a></article>
+          <article class="slide"><a href="/releases/8-mile-soundtrack.html"><img src="/images/album-covers/8-mile/8-mile-cover.jpg" alt="8 Mile Soundtrack cover"></a></article>
+          <article class="slide"><a href="/releases/eminem-show.html"><img src="/images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover"></a></article>
+          <article class="slide"><a href="/releases/devils-night.html"><img src="/images/album-covers/devils-night/devils-night-cover.jpg" alt="Devil's Night cover"></a></article>
+          <article class="slide"><a href="/releases/marshall-mathers-lp.html"><img src="/images/album-covers/marshall-mathers-lp/marshall-mathers-lp-cover.jpg" alt="The Marshall Mathers LP cover"></a></article>
+          <article class="slide"><a href="/releases/slim-shady-lp.html"><img src="/images/album-covers/slim-shady-lp/slim-shady-lp-cover.jpg" alt="The Slim Shady LP cover"></a></article>
+          <article class="slide"><a href="/releases/slim-shady-ep.html"><img src="/images/album-covers/slim-shady-ep/slim-shady-ep-cover.jpg" alt="The Slim Shady EP cover"></a></article>
+          <article class="slide"><a href="/releases/infinite.html"><img src="/images/album-covers/infinite/infinite-cover.jpg" alt="Infinite cover"></a></article>
+        </div>
+      </div>
+    </section>
+    <section class="releases-section" aria-label="Singles slider">
+      <div class="slider-header"><span class="slider-eyebrow">Explore</span><h2 class="slider-title">Eminem Singles</h2></div>
+      <div class="slider-viewport" id="emdbSinglesViewport">
+        <button class="slider-arrow slider-arrow--prev" type="button" id="emdbSinglesPrev" aria-label="Scroll left">‹</button>
+        <button class="slider-arrow slider-arrow--next" type="button" id="emdbSinglesNext" aria-label="Scroll right">›</button>
+        <div class="slider-track" id="emdbSinglesTrack"></div>
+      </div>
+    </section>`;
+
+  host.appendChild(wrapper);
+
+  const initSlider = (viewportId, trackId, prevId, nextId) => {
+    const viewport = document.getElementById(viewportId);
+    const track = document.getElementById(trackId);
+    const prev = document.getElementById(prevId);
+    const next = document.getElementById(nextId);
+    if (!viewport || !track || !prev || !next) return null;
+
+    const scrollStep = () => Math.max(viewport.clientWidth * 0.8, 280);
+    let isDragging = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    const updateButtons = () => {
+      prev.disabled = track.scrollLeft <= 4;
+      const maxScroll = track.scrollWidth - track.clientWidth - 4;
+      next.disabled = track.scrollLeft >= maxScroll;
+    };
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -scrollStep(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
+
+    track.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.classList.add('is-dragging');
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const delta = startX - e.clientX;
+      track.scrollLeft = startScroll + delta;
+      updateButtons();
+      e.preventDefault();
+    });
+
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('is-dragging');
+    };
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', endDrag);
+    track.addEventListener('scroll', updateButtons);
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+    return { updateButtons };
+  };
+
+  const releasesSlider = initSlider('emdbAlbumsViewport', 'emdbSliderTrack', 'emdbSliderPrev', 'emdbSliderNext');
+
+  const setupSinglesSlider = async () => {
+    const track = document.getElementById('emdbSinglesTrack');
+    if (!track) return;
+    try {
+      const response = await fetch('/collections/singles-discography.html');
+      if (!response.ok) return;
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const singlesCards = Array.from(doc.querySelectorAll('.track-card.singles'));
+      if (!singlesCards.length) return;
+
+      const fuelIndex = singlesCards.findIndex((card) => {
+        const title = card.querySelector('.track-title a')?.textContent || '';
+        return title.trim().toLowerCase() === 'fuel';
+      });
+
+      const source = fuelIndex >= 0 ? singlesCards.slice(0, fuelIndex + 1).reverse() : singlesCards.reverse();
+      const fragment = document.createDocumentFragment();
+
+      source.forEach((card) => {
+        const link = card.querySelector('.track-title a') || card.querySelector('.track-thumb-link');
+        const image = card.querySelector('.track-thumb');
+        if (!link || !image) return;
+
+        const slide = document.createElement('article');
+        slide.className = 'slide';
+
+        const anchor = document.createElement('a');
+        anchor.href = link.getAttribute('href') || '#';
+
+        const img = document.createElement('img');
+        const src = image.getAttribute('src') || '';
+        img.src = src.replace(/^\.\.\//, '/');
+        img.alt = image.getAttribute('alt') || (link.textContent || 'Single cover').trim();
+
+        anchor.appendChild(img);
+        slide.appendChild(anchor);
+        fragment.appendChild(slide);
+      });
+
+      track.appendChild(fragment);
+      const singlesSlider = initSlider('emdbSinglesViewport', 'emdbSinglesTrack', 'emdbSinglesPrev', 'emdbSinglesNext');
+      if (singlesSlider) singlesSlider.updateButtons();
+    } catch (err) {
+      // Keep page usable if singles source fails to load.
+    }
+  };
+
+  if (releasesSlider) releasesSlider.updateButtons();
+  setupSinglesSlider();
 }
 
 function setupSampleBackButton() {
