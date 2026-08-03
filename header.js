@@ -2241,10 +2241,199 @@ function bootstrapLayoutPartials() {
   enforceTriviaBullets();
   setupSampleBackButton();
   setupSampleJumpButtonLayout();
+  setupCollectionShareMenu();
   linkifyEminemDotComMentions();
   setupSongCreditsNameSearch();
   loadSiteHeader();
   loadSiteFooter();
+}
+
+function setupCollectionShareMenu() {
+  const path = String(window.location.pathname || '');
+  if (!path.includes('/collections/')) return;
+
+  const main = document.querySelector('main');
+  if (!main) return;
+  if (document.getElementById('emdb-collection-share-wrap')) return;
+
+  if (!document.getElementById('emdb-collection-share-style')) {
+    const style = document.createElement('style');
+    style.id = 'emdb-collection-share-style';
+    style.textContent = [
+      '.emdb-collection-share-wrap {',
+      '  position: absolute;',
+      '  top: 8px;',
+      '  right: 8px;',
+      '  z-index: 1200;',
+      '}',
+      '.emdb-collection-share-btn {',
+      '  display: inline-block;',
+      '  padding: 4px;',
+      '  background: transparent;',
+      '  border: 0;',
+      '  text-decoration: none !important;',
+      '  line-height: 0;',
+      '  cursor: pointer;',
+      '}',
+      '.emdb-collection-share-btn img {',
+      '  display: block;',
+      '  width: 18px;',
+      '  height: 18px;',
+      '}',
+      '.emdb-collection-share-btn:hover img,',
+      '.emdb-collection-share-btn:focus-visible img {',
+      '  filter: brightness(1.15);',
+      '  transform: scale(1.06);',
+      '  transition: transform 0.12s ease, filter 0.12s ease;',
+      '}',
+      '.emdb-collection-share-menu {',
+      '  position: absolute;',
+      '  top: 34px;',
+      '  right: 0;',
+      '  display: none;',
+      '  flex-direction: column;',
+      '  gap: 6px;',
+      '  background: #0f0f0f;',
+      '  border: 1px solid #222;',
+      '  padding: 8px;',
+      '  border-radius: 6px;',
+      '  min-width: 180px;',
+      '  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);',
+      '}',
+      '.emdb-collection-share-menu.open {',
+      '  display: flex;',
+      '}',
+      '.emdb-collection-share-menu a,',
+      '.emdb-collection-share-menu button {',
+      '  color: #eaeaea;',
+      '  text-decoration: none !important;',
+      '  background: transparent;',
+      '  border: 0;',
+      '  padding: 8px;',
+      '  text-align: left;',
+      '  border-radius: 4px;',
+      '  font-size: 14px;',
+      '  cursor: pointer;',
+      '}',
+      '.emdb-collection-share-menu a:hover,',
+      '.emdb-collection-share-menu a:focus-visible,',
+      '.emdb-collection-share-menu button:hover,',
+      '.emdb-collection-share-menu button:focus-visible {',
+      '  color: #E21C21;',
+      '  background: rgba(226, 28, 33, 0.04);',
+      '  text-decoration: none !important;',
+      '}',
+      '@media (max-width: 520px) {',
+      '  .emdb-collection-share-wrap {',
+      '    top: calc(env(safe-area-inset-top, 0px) + 10px);',
+      '    right: calc(env(safe-area-inset-right, 0px) + 10px);',
+      '  }',
+      '  .emdb-collection-share-btn {',
+      '    padding: 2px;',
+      '  }',
+      '  .emdb-collection-share-btn img {',
+      '    width: 14px;',
+      '    height: 14px;',
+      '  }',
+      '}'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  if (getComputedStyle(main).position === 'static') {
+    main.style.position = 'relative';
+  }
+
+  const wrap = document.createElement('div');
+  wrap.id = 'emdb-collection-share-wrap';
+  wrap.className = 'emdb-collection-share-wrap';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'emdb-collection-share-btn';
+  btn.id = 'emdbCollectionShareBtn';
+  btn.setAttribute('aria-label', 'Share this page');
+  btn.setAttribute('title', 'Share this page');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'emdbCollectionShareMenu');
+  btn.innerHTML = '<img src="/images/logos/share_white.png" alt="Share">';
+
+  const menu = document.createElement('div');
+  menu.id = 'emdbCollectionShareMenu';
+  menu.className = 'emdb-collection-share-menu';
+  menu.setAttribute('aria-hidden', 'true');
+  menu.innerHTML = [
+    '<a id="emdb-collection-wa-share" href="#" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>',
+    '<a id="emdb-collection-x-share" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>',
+    '<a id="emdb-collection-fb-share" href="#" target="_blank" rel="noopener noreferrer">Share on Facebook</a>',
+    '<button type="button" id="emdb-collection-copy-share">Copy link</button>'
+  ].join('');
+
+  wrap.appendChild(btn);
+  wrap.appendChild(menu);
+  main.insertBefore(wrap, main.firstChild);
+
+  const wa = document.getElementById('emdb-collection-wa-share');
+  const x = document.getElementById('emdb-collection-x-share');
+  const fb = document.getElementById('emdb-collection-fb-share');
+  const copyBtn = document.getElementById('emdb-collection-copy-share');
+
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  const openMenu = () => {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title || 'EMDb');
+    if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+    if (x) x.href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    menu.classList.add('open');
+    menu.setAttribute('aria-hidden', 'false');
+    btn.setAttribute('aria-expanded', 'true');
+  };
+
+  btn.addEventListener('click', () => {
+    if (menu.classList.contains('open')) {
+      closeMenu();
+      return;
+    }
+    openMenu();
+  });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const url = window.location.href;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy link';
+            closeMenu();
+          }, 1200);
+          return;
+        }
+      } catch (err) {
+        // fallthrough
+      }
+      window.open(url, '_blank');
+      closeMenu();
+    });
+  }
+
+  document.addEventListener('click', (ev) => {
+    if (!menu.classList.contains('open')) return;
+    if (wrap.contains(ev.target)) return;
+    closeMenu();
+  });
+
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') closeMenu();
+  });
 }
 
 function setupSampleBackButton() {
