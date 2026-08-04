@@ -301,6 +301,76 @@
             .slider-arrow--prev { left: 10px; }
             .slider-arrow--next { right: 10px; }
 
+            .home-share-wrap {
+                position: absolute;
+                top: calc(env(safe-area-inset-top, 0px) + 98px);
+                right: calc(env(safe-area-inset-right, 0px) + 22px);
+                z-index: 1100;
+                display: none;
+            }
+
+            .home-share-btn {
+                display: inline-block;
+                padding: 2px;
+                background: transparent;
+                border: 0;
+                line-height: 0;
+                cursor: pointer;
+            }
+
+            .home-share-btn img {
+                display: block;
+                width: 14px;
+                height: 14px;
+            }
+
+            .home-share-menu {
+                position: absolute;
+                top: 30px;
+                right: 0;
+                display: none;
+                flex-direction: column;
+                gap: 6px;
+                background: #0f0f0f;
+                border: 1px solid #222;
+                padding: 8px;
+                border-radius: 6px;
+                min-width: 180px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            }
+
+            .home-share-menu.open {
+                display: flex;
+            }
+
+            .home-share-menu a,
+            .home-share-menu button {
+                color: #eaeaea;
+                text-decoration: none !important;
+                background: transparent;
+                border: 0;
+                padding: 8px;
+                text-align: left;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            .home-share-menu a:hover,
+            .home-share-menu a:focus-visible,
+            .home-share-menu button:hover,
+            .home-share-menu button:focus-visible {
+                color: #E21C21;
+                background: rgba(226, 28, 33, 0.04);
+                text-decoration: none !important;
+            }
+
+            @media (max-width: 900px), (pointer: coarse) {
+                .home-share-wrap {
+                    display: block;
+                }
+            }
+
             .articles {
                 margin-top: 48px;
                 padding: 12px 14px 8px;
@@ -492,6 +562,18 @@
 </head>
 <body>
     <div id="site-header"></div>
+
+    <div id="homeShareWrap" class="home-share-wrap">
+        <button type="button" class="home-share-btn" id="homeShareBtn" aria-label="Share this page" title="Share this page" aria-expanded="false" aria-controls="homeShareMenu">
+            <img src="/images/logos/share_white.png" alt="Share">
+        </button>
+        <div id="homeShareMenu" class="home-share-menu" aria-hidden="true">
+            <a id="home-wa-share" href="#" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+            <a id="home-x-share" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>
+            <a id="home-fb-share" href="#" target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+            <button type="button" id="home-copy-share">Copy link</button>
+        </div>
+    </div>
 
     <main>
                 <section aria-label="Featured releases">
@@ -1021,6 +1103,72 @@
         initSlider({ viewportId: 'albumsViewport', trackId: 'sliderTrack', prevId: 'sliderPrev', nextId: 'sliderNext' });
         initSlider({ viewportId: 'newsViewport', trackId: 'newsTrack', prevId: 'newsPrev', nextId: 'newsNext' });
         loadFeaturedAlbumScores();
+
+        const shareBtn = document.getElementById('homeShareBtn');
+        const shareMenu = document.getElementById('homeShareMenu');
+        const wa = document.getElementById('home-wa-share');
+        const x = document.getElementById('home-x-share');
+        const fb = document.getElementById('home-fb-share');
+        const copyBtn = document.getElementById('home-copy-share');
+
+        if (shareBtn && shareMenu) {
+            const closeMenu = () => {
+                shareMenu.classList.remove('open');
+                shareMenu.setAttribute('aria-hidden', 'true');
+                shareBtn.setAttribute('aria-expanded', 'false');
+            };
+
+            const openMenu = () => {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(document.title || 'EMDb');
+                if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`;
+                if (x) x.href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+                if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                shareMenu.classList.add('open');
+                shareMenu.setAttribute('aria-hidden', 'false');
+                shareBtn.setAttribute('aria-expanded', 'true');
+            };
+
+            shareBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (shareMenu.classList.contains('open')) {
+                    closeMenu();
+                    return;
+                }
+                openMenu();
+            });
+
+            if (copyBtn) {
+                copyBtn.addEventListener('click', async () => {
+                    const url = window.location.href;
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            await navigator.clipboard.writeText(url);
+                            copyBtn.textContent = 'Copied';
+                            setTimeout(() => {
+                                copyBtn.textContent = 'Copy link';
+                                closeMenu();
+                            }, 1200);
+                            return;
+                        }
+                    } catch (err) {
+                        // fall through
+                    }
+                    window.open(url, '_blank');
+                    closeMenu();
+                });
+            }
+
+            document.addEventListener('click', (ev) => {
+                if (!shareMenu.classList.contains('open')) return;
+                if (shareBtn.contains(ev.target) || shareMenu.contains(ev.target)) return;
+                closeMenu();
+            });
+
+            document.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Escape') closeMenu();
+            });
+        }
     })();
 </script>
 </body>
