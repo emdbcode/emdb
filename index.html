@@ -176,6 +176,28 @@
                 font-weight: 700;
             }
 
+                    .slide-rating {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 4px;
+                        margin: 2px 0 -1px;
+                        font-size: 16px;
+                        font-weight: 700;
+                        line-height: 1;
+                        color: #fff;
+                    }
+
+                    .slide-rating-star {
+                        color: #f5c518;
+                        font-size: 14px;
+                        line-height: 1;
+                    }
+
+                    .slide-rating-value {
+                        color: #fff;
+                    }
+
             .slide-subtitle {
                 margin: 0;
                 font-size: 13px;
@@ -227,6 +249,18 @@
                 :root {
                     --slider-cards: 2.2;
                     --slider-gap: 10px;
+                }
+
+                #sliderTrack .slide-subtitle {
+                    display: none;
+                }
+
+                .slide-rating {
+                    font-size: 14px;
+                }
+
+                .slide-rating-star {
+                    font-size: 14px;
                 }
             }
 
@@ -447,6 +481,7 @@
      crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J923YYWH3R"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -831,6 +866,100 @@
 <script src="/header.js"></script>
 <script>
     (() => {
+        const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
+
+        const parseReleaseSlug = (href) => {
+            try {
+                const url = new URL(href, window.location.href);
+                return (url.pathname.split('/').filter(Boolean).pop() || '').replace(/\.html?$/i, '');
+            } catch (err) {
+                return '';
+            }
+        };
+
+        const formatScore = (value) => {
+            const num = Number(value) || 0;
+            const rounded = Math.round(num * 10) / 10;
+            return rounded >= 10 ? '10' : rounded.toFixed(1);
+        };
+
+        const ensureSlideRating = (slide, score) => {
+            const title = slide.querySelector('.slide-title');
+            if (!title) return;
+            const link = title.parentElement;
+            if (!link) return;
+
+            let rating = slide.querySelector('.slide-rating');
+            if (!rating) {
+                rating = document.createElement('div');
+                rating.className = 'slide-rating';
+                rating.innerHTML = '<span class="slide-rating-star" aria-hidden="true">★</span><span class="slide-rating-value"></span>';
+                link.insertBefore(rating, title);
+            }
+
+            const value = rating.querySelector('.slide-rating-value');
+            if (value) value.textContent = score;
+        };
+
+        const loadFeaturedAlbumScores = async () => {
+            if (!window.supabase || typeof window.supabase.createClient !== 'function') return;
+
+            const slides = Array.from(document.querySelectorAll('#sliderTrack .slide'));
+            if (!slides.length) return;
+
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                    detectSessionInUrl: false,
+                }
+            });
+
+            const slideData = slides.map((slide) => {
+                const link = slide.querySelector('a');
+                const slug = parseReleaseSlug(link ? link.getAttribute('href') : '');
+                return { slide, slug };
+            }).filter((entry) => entry.slug);
+
+            if (!slideData.length) return;
+
+            const slugs = [...new Set(slideData.map((entry) => entry.slug))];
+            const { data: albums, error: albumError } = await client
+                .from('albums')
+                .select('id, slug')
+                .in('slug', slugs);
+
+            if (albumError) return;
+
+            const albumIdBySlug = new Map((albums || []).map((album) => [album.slug, album.id]));
+            const albumIds = [...new Set((albums || []).map((album) => album.id).filter(Boolean))];
+            if (!albumIds.length) return;
+
+            const { data: ratingRows, error: ratingError } = await client
+                .from('album_ratings')
+                .select('album_id, rating')
+                .in('album_id', albumIds);
+
+            if (ratingError) return;
+
+            const ratingMap = new Map();
+            albumIds.forEach((id) => ratingMap.set(id, []));
+            (ratingRows || []).forEach((row) => {
+                if (!ratingMap.has(row.album_id)) ratingMap.set(row.album_id, []);
+                ratingMap.get(row.album_id).push(Number(row.rating) || 0);
+            });
+
+            slideData.forEach(({ slide, slug }) => {
+                const albumId = albumIdBySlug.get(slug);
+                const ratings = albumId ? (ratingMap.get(albumId) || []) : [];
+                const score = ratings.length
+                    ? formatScore(ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length)
+                    : '0.0';
+                ensureSlideRating(slide, score);
+            });
+        };
+
         const initSlider = ({ viewportId, trackId, prevId, nextId }) => {
             const viewport = document.getElementById(viewportId);
             const track = document.getElementById(trackId);
@@ -891,6 +1020,7 @@
 
         initSlider({ viewportId: 'albumsViewport', trackId: 'sliderTrack', prevId: 'sliderPrev', nextId: 'sliderNext' });
         initSlider({ viewportId: 'newsViewport', trackId: 'newsTrack', prevId: 'newsPrev', nextId: 'newsNext' });
+        loadFeaturedAlbumScores();
     })();
 </script>
 </body>

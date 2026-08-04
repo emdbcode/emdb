@@ -2465,9 +2465,13 @@ function setupArticleNewsBottomSliders() {
       '.emdb-bottom-sliders .slider-track.is-dragging { cursor: grabbing; }',
       '.emdb-bottom-sliders .slide { flex: 0 0 calc((100% - (5 - 1) * 14px) / 5); max-width: 240px; background: #111; border: 1px solid #1f1f1f; border-radius: 12px; padding: 12px; box-sizing: border-box; scroll-snap-align: start; display: grid; gap: 10px; justify-items: center; text-align: center; transition: border-color 0.18s ease, box-shadow 0.18s ease; }',
       '.emdb-bottom-sliders .slide a { text-decoration: none; color: inherit; width: 100%; }',
+      '.emdb-bottom-sliders .slide a { display: grid; gap: 8px; }',
       '.emdb-bottom-sliders .slide img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; background: #0f0f0f; border: 1px solid #1f1f1f; box-shadow: 0 10px 24px rgba(0,0,0,0.4); transition: transform 0.18s ease, box-shadow 0.18s ease; }',
       '.emdb-bottom-sliders .slide a:hover img, .emdb-bottom-sliders .slide a:focus-visible img { transform: translateY(-2px) scale(1.01); box-shadow: 0 14px 30px rgba(0,0,0,0.5); }',
       '.emdb-bottom-sliders .slide:hover { border-color: #E21C21; box-shadow: 0 12px 28px rgba(0,0,0,0.35); }',
+      '.emdb-bottom-sliders .slide-rating { display: inline-flex; align-items: center; justify-content: center; gap: 4px; margin: 0; font-size: 14px; font-weight: 700; line-height: 1; color: #fff; text-decoration: none; }',
+      '.emdb-bottom-sliders .slide-rating-star { color: #f5c518; font-size: 14px; line-height: 1; }',
+      '.emdb-bottom-sliders .slide-rating-value { color: #fff; text-decoration: none; }',
       '.emdb-bottom-sliders .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 38px; height: 38px; border-radius: 8px; border: 1px solid #1f1f1f; background: rgba(17, 17, 17, 0.9); color: #eaeaea; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease; }',
       '.emdb-bottom-sliders .slider-arrow:hover:not(:disabled) { border-color: #E21C21; background: rgba(22, 22, 22, 0.95); transform: translateY(-50%) translateY(-1px); }',
       '.emdb-bottom-sliders .slider-arrow:disabled { opacity: 0.35; cursor: not-allowed; }',
@@ -2579,6 +2583,181 @@ function setupArticleNewsBottomSliders() {
 
   const releasesSlider = initSlider('emdbAlbumsViewport', 'emdbSliderTrack', 'emdbSliderPrev', 'emdbSliderNext');
 
+  const getSupabaseClient = async () => {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      return window.supabase.createClient('https://lbxpucsgwgtamolvjuep.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY', {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      });
+    }
+
+    if (!window.__emdbBottomSliderSupabasePromise) {
+      window.__emdbBottomSliderSupabasePromise = new Promise((resolve) => {
+        const existing = document.querySelector('script[data-emdb-bottom-slider-supabase="true"]');
+        if (existing) {
+          existing.addEventListener('load', () => resolve(), { once: true });
+          existing.addEventListener('error', () => resolve(null), { once: true });
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js';
+        script.async = true;
+        script.defer = true;
+        script.dataset.emdbBottomSliderSupabase = 'true';
+        script.addEventListener('load', () => resolve(), { once: true });
+        script.addEventListener('error', () => resolve(null), { once: true });
+        document.head.appendChild(script);
+      });
+    }
+
+    await window.__emdbBottomSliderSupabasePromise;
+
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      return window.supabase.createClient('https://lbxpucsgwgtamolvjuep.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY', {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      });
+    }
+
+    return null;
+  };
+
+  const formatAverageScore = (values) => {
+    const ratings = Array.isArray(values) ? values.map((value) => Number(value) || 0) : [];
+    if (!ratings.length) return '0.0';
+    const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+    const rounded = Math.round(average * 10) / 10;
+    return rounded >= 10 ? '10' : rounded.toFixed(1);
+  };
+
+  const renderCardRating = (slide, score) => {
+    const anchor = slide.querySelector('a');
+    const image = anchor ? anchor.querySelector('img') : null;
+    if (!anchor || !image) return;
+
+    let rating = slide.querySelector('.slide-rating');
+    if (!rating) {
+      rating = document.createElement('div');
+      rating.className = 'slide-rating';
+      rating.innerHTML = '<span class="slide-rating-star" aria-hidden="true">★</span><span class="slide-rating-value"></span>';
+      anchor.insertAdjacentElement('afterend', rating);
+    } else if (rating.parentElement !== slide) {
+      anchor.insertAdjacentElement('afterend', rating);
+    }
+
+    const value = rating.querySelector('.slide-rating-value');
+    if (value) value.textContent = score;
+  };
+
+  const parseReleaseSlug = (href) => {
+    try {
+      const url = new URL(href, window.location.href);
+      return (url.pathname.split('/').filter(Boolean).pop() || '').replace(/\.html?$/i, '');
+    } catch (err) {
+      return '';
+    }
+  };
+
+  const loadAlbumRatings = async () => {
+    const client = await getSupabaseClient();
+    if (!client) return;
+
+    const slides = Array.from(document.querySelectorAll('#emdbSliderTrack .slide'));
+    const slideData = slides.map((slide) => {
+      const link = slide.querySelector('a');
+      return { slide, slug: parseReleaseSlug(link ? link.getAttribute('href') : '') };
+    }).filter((entry) => entry.slug);
+
+    if (!slideData.length) return;
+
+    const slugs = [...new Set(slideData.map((entry) => entry.slug))];
+    const { data: albums, error: albumError } = await client
+      .from('albums')
+      .select('id, slug')
+      .in('slug', slugs);
+
+    if (albumError || !Array.isArray(albums) || !albums.length) return;
+
+    const albumIdBySlug = new Map(albums.map((album) => [album.slug, album.id]));
+    const albumIds = [...new Set(albums.map((album) => album.id).filter(Boolean))];
+    if (!albumIds.length) return;
+
+    const { data: ratingRows, error: ratingError } = await client
+      .from('album_ratings')
+      .select('album_id, rating')
+      .in('album_id', albumIds);
+
+    if (ratingError) return;
+
+    const ratingMap = new Map();
+    albumIds.forEach((id) => ratingMap.set(id, []));
+    (ratingRows || []).forEach((row) => {
+      if (!ratingMap.has(row.album_id)) ratingMap.set(row.album_id, []);
+      ratingMap.get(row.album_id).push(Number(row.rating) || 0);
+    });
+
+    slideData.forEach(({ slide, slug }) => {
+      const albumId = albumIdBySlug.get(slug);
+      const score = formatAverageScore(albumId ? ratingMap.get(albumId) : []);
+      renderCardRating(slide, score);
+    });
+  };
+
+  const loadSinglesRatings = async () => {
+    const client = await getSupabaseClient();
+    if (!client) return;
+
+    const track = document.getElementById('emdbSinglesTrack');
+    if (!track) return;
+
+    const slides = Array.from(track.querySelectorAll('.slide'));
+    const slideData = slides.map((slide) => {
+      const link = slide.querySelector('a');
+      return { slide, slug: parseReleaseSlug(link ? link.getAttribute('href') : '') };
+    }).filter((entry) => entry.slug);
+
+    if (!slideData.length) return;
+
+    const slugs = [...new Set(slideData.map((entry) => entry.slug))];
+    const { data: songs, error: songError } = await client
+      .from('songs')
+      .select('id, slug')
+      .in('slug', slugs);
+
+    if (songError || !Array.isArray(songs) || !songs.length) return;
+
+    const songIdBySlug = new Map(songs.map((song) => [song.slug, song.id]));
+    const songIds = [...new Set(songs.map((song) => song.id).filter(Boolean))];
+    if (!songIds.length) return;
+
+    const { data: ratingRows, error: ratingError } = await client
+      .from('song_ratings')
+      .select('song_id, rating')
+      .in('song_id', songIds);
+
+    if (ratingError) return;
+
+    const ratingMap = new Map();
+    songIds.forEach((id) => ratingMap.set(id, []));
+    (ratingRows || []).forEach((row) => {
+      if (!ratingMap.has(row.song_id)) ratingMap.set(row.song_id, []);
+      ratingMap.get(row.song_id).push(Number(row.rating) || 0);
+    });
+
+    slideData.forEach(({ slide, slug }) => {
+      const songId = songIdBySlug.get(slug);
+      const score = formatAverageScore(songId ? ratingMap.get(songId) : []);
+      renderCardRating(slide, score);
+    });
+  };
+
   const setupSinglesSlider = async () => {
     const track = document.getElementById('emdbSinglesTrack');
     if (!track) return;
@@ -2623,12 +2802,14 @@ function setupArticleNewsBottomSliders() {
       track.appendChild(fragment);
       const singlesSlider = initSlider('emdbSinglesViewport', 'emdbSinglesTrack', 'emdbSinglesPrev', 'emdbSinglesNext');
       if (singlesSlider) singlesSlider.updateButtons();
+      void loadSinglesRatings();
     } catch (err) {
       // Keep page usable if singles source fails to load.
     }
   };
 
   if (releasesSlider) releasesSlider.updateButtons();
+  void loadAlbumRatings();
   setupSinglesSlider();
 }
 
