@@ -2768,16 +2768,22 @@ details:not([open]) > summary.promo-summary:focus {
     return `${cleaned}${cleaned.includes('?') ? '&' : '?'}${params.join('&')}`;
   };
 
-  const postPlayerCommand = (funcName) => {
+  const postPlayerCommand = (funcName, args = []) => {
     try {
       playerFrame.contentWindow?.postMessage(JSON.stringify({
         event: 'command',
         func: funcName,
-        args: '',
+        args,
       }), '*');
     } catch (error) {
       /* best effort */
     }
+  };
+
+  const getVideoIdFromSrc = (src) => {
+    if (!src) return '';
+    const match = String(src).match(/\/embed\/([^?&/]+)/i);
+    return match ? match[1] : '';
   };
 
   const setPlaybackUi = () => {
@@ -2842,8 +2848,18 @@ details:not([open]) > summary.promo-summary:focus {
 
   const openTrack = (track, autoplay = true) => {
     if (!track || !track.src) return;
+    const videoId = getVideoIdFromSrc(track.src);
+    const frameReadyForApi = playerFrame.src && playerFrame.src !== 'about:blank';
+
+    if (frameReadyForApi && videoId) {
+      postPlayerCommand(autoplay ? 'loadVideoById' : 'cueVideoById', [videoId]);
+    } else {
+      // First load boots the player; subsequent track switches use API commands
+      // so browser Back does not walk through iframe src history.
+      playerFrame.src = makeAutoplaySrc(track.src, autoplay);
+    }
+
     currentTrack = track;
-    playerFrame.src = makeAutoplaySrc(track.src, autoplay);
     playerFrame.title = track.title;
     playerTitle.textContent = track.title;
     isPlaying = autoplay;
