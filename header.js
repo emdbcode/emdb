@@ -3613,35 +3613,47 @@ function setupSongCreditsNameSearch() {
       if (node.querySelector('.credit-name-search-global')) return;
       if (isCopyrightContext(node)) return;
 
+      const renderCollectionCreditLine = (lineText) => {
+        const text = decodeHtmlDeep(String(lineText || '')).trim();
+        if (!text || /^n\/?a$/i.test(text)) return '';
+
+        const prefixedCredits = text.match(/^((?:produced(?: and mixed)?|co-produced|additional production|mixed|written|performed)\s+by|feat\.?|featuring|with)\s+(.+)$/i);
+        if (prefixedCredits) {
+          const prefix = prefixedCredits[1].trim();
+          const value = prefixedCredits[2].trim();
+          if (!value || /^n\/?a$/i.test(value)) {
+            return escapeHtml(text);
+          }
+          return `${escapeHtml(prefix)} ${renderLinkedNames(value, node)}`;
+        }
+
+        const inlineFeatMatch = text.match(/^(.+?)\s+(feat\.?|featuring|with)\s+(.+)$/i);
+        if (inlineFeatMatch) {
+          const leadArtists = inlineFeatMatch[1].trim();
+          const featLabel = inlineFeatMatch[2].trim();
+          const featuredArtists = inlineFeatMatch[3].trim();
+          if (!leadArtists || !featuredArtists || /^n\/?a$/i.test(featuredArtists)) {
+            return escapeHtml(text);
+          }
+          return `${renderLinkedNames(leadArtists, node)} ${escapeHtml(featLabel)} ${renderLinkedNames(featuredArtists, node)}`;
+        }
+
+        return renderLinkedNames(text, node);
+      };
+
+      if (node.classList.contains('track-producer') && /<br\s*\/?>/i.test(node.innerHTML || '')) {
+        const lines = String(node.innerHTML || '')
+          .split(/<br\s*\/?>/i)
+          .map((part) => decodeHtmlDeep(part.replace(/<[^>]+>/g, '')).trim())
+          .filter(Boolean);
+        if (!lines.length) return;
+        node.innerHTML = lines.map((line) => renderCollectionCreditLine(line)).join('<br>');
+        return;
+      }
+
       const text = decodeHtmlDeep(String(node.textContent || '')).trim();
       if (!text || /^n\/?a$/i.test(text)) return;
-
-      const prefixedCredits = text.match(/^((?:produced(?: and mixed)?|co-produced|additional production|mixed|written|performed)\s+by|feat\.?|featuring|with)\s+(.+)$/i);
-      if (prefixedCredits) {
-        const prefix = prefixedCredits[1].trim();
-        const value = prefixedCredits[2].trim();
-        if (!value || /^n\/?a$/i.test(value)) {
-          node.innerHTML = escapeHtml(text);
-          return;
-        }
-        node.innerHTML = `${escapeHtml(prefix)} ${renderLinkedNames(value, node)}`;
-        return;
-      }
-
-      const inlineFeatMatch = text.match(/^(.+?)\s+(feat\.?|featuring|with)\s+(.+)$/i);
-      if (inlineFeatMatch) {
-        const leadArtists = inlineFeatMatch[1].trim();
-        const featLabel = inlineFeatMatch[2].trim();
-        const featuredArtists = inlineFeatMatch[3].trim();
-        if (!leadArtists || !featuredArtists || /^n\/?a$/i.test(featuredArtists)) {
-          node.innerHTML = escapeHtml(text);
-          return;
-        }
-        node.innerHTML = `${renderLinkedNames(leadArtists, node)} ${escapeHtml(featLabel)} ${renderLinkedNames(featuredArtists, node)}`;
-        return;
-      }
-
-      node.innerHTML = renderLinkedNames(text, node);
+      node.innerHTML = renderCollectionCreditLine(text);
     });
   };
 

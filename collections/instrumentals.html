@@ -47,6 +47,8 @@ body {
   display: flex;
   gap: 12px;
   align-items: flex-start;
+  width: 100%;
+  min-width: 0;
 }
 
 .track-thumb {
@@ -73,17 +75,53 @@ body {
 }
 
 .track-thumb-btn {
+  position: relative;
   border: none;
   padding: 0;
   background: transparent;
   cursor: pointer;
   line-height: 0;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .track-thumb-btn:focus-visible {
   outline: 2px solid #E21C21;
   outline-offset: 2px;
   border-radius: 10px;
+}
+
+.track-thumb-btn::after {
+  content: "▶ Play";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.52) 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.track-thumb-btn:hover::after,
+.track-thumb-btn:focus-visible::after,
+.track-card.is-playing .track-thumb-btn::after {
+  opacity: 1;
+}
+
+.track-thumb-btn[data-state="playing"]::after {
+  content: "❚❚ Pause";
+}
+
+.track-thumb-btn[data-state="paused"]::after,
+.track-thumb-btn[data-state="idle"]::after,
+.track-thumb-btn:not([data-state])::after {
+  content: "▶ Play";
 }
 
 .track-toggle-title {
@@ -99,7 +137,7 @@ body {
 
 .track-toggle-title:hover,
 .track-toggle-title:focus-visible {
-  color: #E21C21;
+  color: inherit;
 }
 
 .footnote {
@@ -138,6 +176,10 @@ body {
 
 .track-note {
   color: #ffffff;
+}
+
+.track-credit-line {
+  display: block;
 }
 
 .promo-info {
@@ -215,6 +257,80 @@ details:not([open]) > summary.promo-summary:focus {
   border-color: #E21C21;
 }
 
+.playlist-panel { display: flex; flex-direction: column; gap: 12px; }
+.playlist-player { width: 100%; }
+.player-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 6px 0 12px 0;
+}
+.playlist-container .section-heading {
+  font-size: clamp(18px, 4.5vw, 22px);
+  font-weight: 800;
+}
+.playlist-embed {
+  width: 100%;
+  height: 420px;
+  border-radius: 4px;
+  border: none;
+  position: static;
+  background: #000;
+}
+.now-playing-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-top: 1px solid #222;
+  padding-top: 10px;
+  flex-wrap: nowrap;
+}
+.now-playing-btn {
+  background: transparent;
+  border: none;
+  color: #E21C21;
+  font-size: 22px;
+  line-height: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.now-playing-btn:disabled { opacity: 0.4; cursor: default; }
+.now-playing-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.now-playing-title.expanded {
+  overflow-x: auto;
+  text-overflow: clip;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.now-playing-title.expanded::-webkit-scrollbar { display: none; }
+
+@media (max-width: 720px){
+  .playlist-embed { height: 320px; }
+  .now-playing-controls { gap: 8px; }
+  .now-playing-btn { font-size: 18px; width: 28px; height: 28px; }
+  .playlist-container .section-heading { font-size: clamp(18px, 5vw, 20px); }
+  .now-playing-title { max-width: 100%; font-size: 16px; font-weight: 800; }
+}
+
+.track-card.is-playing {
+  border-color: #E21C21;
+}
+
 .track-card[hidden] {
   display: none !important;
 }
@@ -223,6 +339,23 @@ details:not([open]) > summary.promo-summary:focus {
   font-weight: 400;
   color: #c8c8c8;
   font-size: 13px;
+}
+
+.track-album a,
+.track-album a:visited,
+.track-release a,
+.track-release a:visited {
+  display: inline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.track-album a:hover,
+.track-album a:focus-visible,
+.track-release a:hover,
+.track-release a:focus-visible {
+  color: #E21C21;
+  text-decoration: none;
 }
 
 .fn-mark {
@@ -283,6 +416,7 @@ details:not([open]) > summary.promo-summary:focus {
     margin-left: 0;
     justify-content: center;
   }
+
 }
 
 /* collection-dropdown-enhancements-style:start */
@@ -444,7 +578,7 @@ details:not([open]) > summary.promo-summary:focus {
           <h2 class="track-title">
             <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-5stargenerals" data-video-toggle="5stargenerals">5 Star Generals (Instrumental)</button>
           </h2>
-          <p class="track-artist">Shabaam Sahdeeq feat. Eminem, Skam, Kwest &amp; A.L.</p>
+          <p class="track-artist">Shabaam Sahdeeq feat. Eminem, Skam2?, Kwest &amp; A.L.</p>
           <p class="track-producer" hidden>Produced by DJ Spinna</p>
           <p class="track-release">Sound Clash / 5 Star Generals [Single]</p>
         </div>
@@ -522,7 +656,7 @@ details:not([open]) > summary.promo-summary:focus {
       <article class="track-card" id="track-jdgaf-lp">
         <div class="track-body">
           <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-jdgaf-lp" data-video-toggle="jdgaf-lp">
-            <img class="track-thumb" src="../images/album-covers/slim-shady-lp/just-don't-give-a-fuck-cover.jpg" alt="Just Don’t Give A Fuck (Instrumental) LP cover">
+            <img class="track-thumb" src="../images/album-covers/slim-shady-lp/just-dont-give-a-fuck-cover.jpg" alt="Just Don’t Give A Fuck (Instrumental) LP cover">
           </button>
           <div class="track-meta">
             <h2 class="track-title">
@@ -598,7 +732,7 @@ details:not([open]) > summary.promo-summary:focus {
       </div>
       <div class="track-video" id="video-rolemodel" hidden>
         <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/02dSE1tnWmk?si=K-dur8HeXhu4i2as" title="Role Model (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/9jOnIcDTVvw" title="Role Model (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
     </article>
@@ -627,7 +761,7 @@ details:not([open]) > summary.promo-summary:focus {
     <article class="track-card" id="track-imshady">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-imshady" data-video-toggle="imshady">
-          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/i'm-shady-cover.jpg" alt="I’m Shady (Instrumental) cover">
+          <img class="track-thumb" src="../images/album-covers/slim-shady-lp/im-shady-cover.jpg" alt="I’m Shady (Instrumental) cover">
         </button>
         <div class="track-meta">
           <h2 class="track-title">
@@ -648,7 +782,7 @@ details:not([open]) > summary.promo-summary:focus {
     <article class="track-card" id="track-macosa">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-macosa" data-video-toggle="macosa">
-          <img class="track-thumb" src="../images/album-covers/feat/outsidaz-macosa-cover.jpeg" alt="Macosa (Instrumental) cover">
+          <img class="track-thumb" src="../images/album-covers/feat/outsidaz-macosa-cover.jpg" alt="Macosa (Instrumental) cover">
         </button>
         <div class="track-meta">
           <h2 class="track-title">
@@ -669,7 +803,7 @@ details:not([open]) > summary.promo-summary:focus {
     <article class="track-card" id="track-weshine">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-weshine" data-video-toggle="weshine">
-          <img class="track-thumb" src="../images/album-covers/feat/da-ruckus-we-shine-(radio-remix)-cover.jpg" alt="We Shine (Instrumental) cover">
+          <img class="track-thumb" src="../images/album-covers/feat/da-ruckus-we-shine-radio-remix-cover.jpg" alt="We Shine (Instrumental) cover">
         </button>
         <div class="track-meta">
           <h2 class="track-title">
@@ -1026,7 +1160,7 @@ details:not([open]) > summary.promo-summary:focus {
     <article class="track-card" id="track-withoutme">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-withoutme" data-video-toggle="withoutme">
-          <img class="track-thumb" src="../images/album-covers/eminem-show/without-me-cover-edit.jpg" alt="Without Me (Instrumental) cover">
+          <img class="track-thumb" src="../images/album-covers/eminem-show/without-me-cover.jpg" alt="Without Me (Instrumental) cover">
         </button>
         <div class="track-meta">
           <h2 class="track-title">
@@ -1467,7 +1601,7 @@ details:not([open]) > summary.promo-summary:focus {
     <article class="track-card" id="track-dontcomedown">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-dontcomedown" data-video-toggle="dontcomedown">
-          <img class="track-thumb" src="../images/album-covers/feat/obie-trice-dont-come-down-cover.jpg" alt="Don’t Come Down (Instrumental) cover">
+          <img class="track-thumb" src="../images/album-covers/feat/dont-come-down-cover.jpg" alt="Don’t Come Down (Instrumental) cover">
         </button>
         <div class="track-meta">
           <h2 class="track-title">
@@ -2200,8 +2334,6 @@ details:not([open]) > summary.promo-summary:focus {
       </div>
     </article>
 
-    <article class="track-card" id="track-godzilla">
-
     <article class="track-card" id="track-calmdown">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-calmdown" data-video-toggle="calmdown">
@@ -2223,6 +2355,7 @@ details:not([open]) > summary.promo-summary:focus {
       </div>
     </article>
 
+    <article class="track-card" id="track-godzilla">
       <div class="track-body">
         <button class="track-thumb-btn" type="button" aria-expanded="false" aria-controls="video-godzilla" data-video-toggle="godzilla">
           <img class="track-thumb" src="../images/album-covers/music-to-be-murdered-by/godzilla-cover.jpg" alt="Godzilla (Instrumental) cover">
@@ -2248,6 +2381,21 @@ details:not([open]) > summary.promo-summary:focus {
 
       
   </section>
+
+  <div class="singles-container playlist-container" id="instrumentalPlayer" aria-label="Main instrumental player">
+    <div class="player-divider" aria-hidden="true"></div>
+    <div class="section-heading" id="musicPlayerHeading">Music Player</div>
+    <div class="playlist-panel">
+      <div class="video-player open playlist-player">
+        <iframe class="playlist-embed" id="playlistPlayer" src="about:blank" title="Now Playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="now-playing-controls">
+        <button class="now-playing-btn" id="instrumentalPrevBtn" type="button" aria-label="Previous track">⏮</button>
+        <div class="now-playing-title" id="nowPlayingTitle">Choose a track</div>
+        <button class="now-playing-btn" id="instrumentalNextBtn" type="button" aria-label="Next track">⏭</button>
+      </div>
+    </div>
+  </div>
 </main>
 <div id="site-footer"></div>
 <script src="/header.js"></script>
@@ -2263,6 +2411,120 @@ details:not([open]) > summary.promo-summary:focus {
       const ref = meta.querySelector('.track-producer') || meta.firstElementChild.nextSibling;
       meta.insertBefore(p, ref);
     }
+  });
+})();
+
+(function linkInstrumentalReleaseLines() {
+  const normalizeKey = (text) => String(text || '')
+    .toLowerCase()
+    .replace(/[’']/g, "'")
+    .replace(/&/g, 'and')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const releaseMatchers = [
+    { pattern: /\bthe\s+slim\s+shady\s+lp\b|\bslim\s+shady\s+lp\b/i, href: '/releases/slim-shady-lp.html' },
+    { pattern: /\bthe\s+marshall\s+mathers\s+lp\s*2\b|\bmarshall\s+mathers\s+lp\s*2\b/i, href: '/releases/marshall-mathers-lp-2.html' },
+    { pattern: /\bthe\s+marshall\s+mathers\s+lp\b|\bmarshall\s+mathers\s+lp\b/i, href: '/releases/marshall-mathers-lp.html' },
+    { pattern: /\bthe\s+eminem\s+show\b|\beminem\s+show\b/i, href: '/releases/eminem-show.html' },
+    { pattern: /\bdevil['’]?s\s+night\b|\bdevils\s+night\b/i, href: '/releases/devils-night.html' },
+    { pattern: /\bd12\s+world\b/i, href: '/releases/d12-world.html' },
+    { pattern: /\b8\s*mile\b/i, href: '/releases/8-mile-soundtrack.html' }
+  ];
+
+  const songHrefByLine = new Map([
+    [normalizeKey('Shit On You [Single]'), '/songs/devils-night/shit-on-you.html']
+  ]);
+
+  const songHrefByTitle = new Map([
+    [normalizeKey('3hree6ix5ive (Instrumental)'), '/songs/feat/3hree6ix5ive.html'],
+    [normalizeKey('5 Star Generals (Instrumental)'), '/songs/feat/5-star-generals.html'],
+    [normalizeKey('Just Don’t Give A Fuck (Instrumental) [EP Version]'), '/songs/slim-shady-ep/just-dont-give-a-fuck-original.html'],
+    [normalizeKey('Nuttin’ To Do (Instrumental)'), '/songs/non-album/nuttin-to-do.html'],
+    [normalizeKey('Scary Movies (Instrumental)'), '/songs/non-album/scary-movies.html'],
+    [normalizeKey('Just Don’t Give A Fuck (Instrumental) [LP Version]'), '/songs/slim-shady-lp/just-dont-give-a-fuck.html'],
+    [normalizeKey('Any Man (Instrumental)'), '/songs/non-album/any-man.html'],
+    [normalizeKey('Role Model (Instrumental)'), '/songs/slim-shady-lp/role-model.html'],
+    [normalizeKey('I’m Shady (Instrumental)'), '/songs/slim-shady-lp/im-shady.html'],
+    [normalizeKey('Macosa (Instrumental)'), '/songs/feat/macosa.html'],
+    [normalizeKey('We Shine (Instrumental)'), '/songs/feat/we-shine.html'],
+    [normalizeKey('Get You Mad (Instrumental)'), '/songs/slim-shady-lp/get-you-mad.html'],
+    [normalizeKey('The Anthem (Instrumental)'), '/songs/feat/anthem.html'],
+    [normalizeKey('Dead Wrong (Instrumental)'), '/songs/curtain-call/dead-wrong.html'],
+    [normalizeKey('Bitch Please II (Instrumental)'), '/songs/marshall-mathers-lp/bitch-please-ii.html'],
+    [normalizeKey('I Remember (Dedicated To Whitey Ford)'), '/songs/non-album/i-remember.html'],
+    [normalizeKey('Purple Pills (Instrumental)'), '/songs/devils-night/purple-pills.html'],
+    [normalizeKey('Pistol Pistol (Instrumental)'), '/songs/devils-night/pistol-pistol.html'],
+    [normalizeKey('Rock City (Instrumental)'), '/songs/feat/rock-city.html'],
+    [normalizeKey('Rap Name (Instrumental)'), '/songs/produced-only/rap-name.html'],
+    [normalizeKey('The Cross (Instrumental)'), '/songs/produced-only/cross.html'],
+    [normalizeKey('Shit Hits The Fan (Instrumental)'), '/songs/feat/shit-hits-the-fan.html'],
+    [normalizeKey('Got Some Teeth (Instrumental)'), '/songs/produced-only/got-some-teeth.html'],
+    [normalizeKey('Runnin’ [Dying To Live] (Instrumental)'), '/songs/produced-only/runnin-dying-to-live.html'],
+    [normalizeKey('One Day At A Time [Em’s Version] (Instrumental)'), '/songs/feat/one-day-at-a-time.html'],
+    [normalizeKey('Don’t Come Down (Instrumental)'), '/songs/produced-only/dont-come-down.html'],
+    [normalizeKey('My Band (Instrumental)'), '/songs/d12-world/my-band.html'],
+    [normalizeKey('40 Oz. (Instrumental)'), '/songs/d12-world/40-oz.html'],
+    [normalizeKey('40 Oz. (Remix by Lil Jon) [Instrumental]'), '/songs/non-album/40-oz-lil-jon-remix.html'],
+    [normalizeKey('American Psycho II (Instrumental)'), '/songs/d12-world/american-psycho-2.html'],
+    [normalizeKey('On Fire (Instrumental)'), '/songs/produced-only/on-fire-lloyd-banks.html'],
+    [normalizeKey('How Come (Instrumental)'), '/songs/d12-world/how-come.html'],
+    [normalizeKey('Warrior, Pt. 2 (Instrumental)'), '/songs/feat/warrior-pt-2.html'],
+    [normalizeKey('I’m Gone (Instrumental)'), '/songs/feat/im-gone.html'],
+    [normalizeKey('Thugs Get Lonely Too (Instrumental)'), '/songs/produced-only/thugs-get-lonely-too.html'],
+    [normalizeKey('Just Lose It (Instrumental)'), '/songs/encore/just-lose-it.html'],
+    [normalizeKey('Encore (Instrumental)'), '/songs/encore/encore-curtains.html'],
+    [normalizeKey('Ghetto Gospel (Instrumental)'), '/songs/produced-only/ghetto-gospel.html'],
+    [normalizeKey('Like Toy Soldiers (Instrumental)'), '/songs/encore/like-toy-soldiers.html'],
+    [normalizeKey('Rockstar (Instrumental)'), '/songs/produced-only/rockstar.html'],
+    [normalizeKey('Ass Like That (Instrumental)'), '/songs/encore/ass-like-that.html'],
+    [normalizeKey('Welcome 2 Detroit (Instrumental)'), '/songs/feat/welcome-2-detroit.html'],
+    [normalizeKey('When I’m Gone (Instrumental)'), '/songs/curtain-call/when-im-gone.html'],
+    [normalizeKey('Shake That (Instrumental)'), '/songs/curtain-call/shake-that.html'],
+    [normalizeKey('Hands Up (Instrumental)'), '/songs/produced-only/hands-up.html'],
+    [normalizeKey('Jamaican Girl (Instrumental)'), '/songs/produced-only/jamaican-girl.html'],
+    [normalizeKey('Smack That (Instrumental)'), '/songs/feat/smack-that.html'],
+    [normalizeKey('You Don’t Know (Instrumental)'), '/songs/re-up/you-dont-know.html'],
+    [normalizeKey('Jimmy Crack Corn (Vocal Remix) [Instrumental]'), '/songs/non-album/jimmy-crack-corn-remix.html'],
+    [normalizeKey('’Lac Motion (Instrumental)'), '/songs/produced-only/lac-motion.html'],
+    [normalizeKey('Crack A Bottle (Instrumental)'), '/songs/relapse/crack-a-bottle.html'],
+    [normalizeKey('We Made You (Instrumental)'), '/songs/relapse/we-made-you.html'],
+    [normalizeKey('Not Afraid (Instrumental)'), '/songs/recovery/not-afraid.html'],
+    [normalizeKey('Calm Down (Instrumental)'), '/songs/feat/calm-down.html'],
+    [normalizeKey('Godzilla (Instrumental)'), '/songs/music-to-be-murdered-by/godzilla.html']
+  ]);
+
+  document.querySelectorAll('.track-card').forEach((card) => {
+    const line = card.querySelector('.track-album, .track-release');
+    if (!line || line.querySelector('a')) return;
+
+    const lineText = (line.textContent || '').trim();
+    if (!lineText) return;
+
+    let href = null;
+    for (let i = 0; i < releaseMatchers.length; i += 1) {
+      if (releaseMatchers[i].pattern.test(lineText)) {
+        href = releaseMatchers[i].href;
+        break;
+      }
+    }
+
+    if (!href) {
+      href = songHrefByLine.get(normalizeKey(lineText)) || null;
+    }
+
+    if (!href) {
+      const titleText = card.querySelector('.track-toggle-title')?.textContent?.trim() || card.querySelector('.track-title')?.textContent?.trim() || '';
+      href = songHrefByTitle.get(normalizeKey(titleText)) || null;
+    }
+
+    if (!href) return;
+
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = lineText;
+    line.textContent = '';
+    line.appendChild(link);
   });
 })();
 
@@ -2311,6 +2573,10 @@ details:not([open]) > summary.promo-summary:focus {
       card.hidden = !show;
       card.classList.toggle('is-hidden-by-filter', !show);
     });
+
+    if (window.refreshInstrumentalPlayer) {
+      window.refreshInstrumentalPlayer();
+    }
   };
 
   filterButtons.forEach((btn) => {
@@ -2320,178 +2586,175 @@ details:not([open]) > summary.promo-summary:focus {
   applyFilter('eminem');
 })();
 
-// Toggle track videos and optionally reveal producer credits
+// Shared player for all instrumentals and title-only detail toggles.
 (() => {
-  const toggleRegistry = [];
+  const playerSection = document.getElementById('instrumentalPlayer');
+  const playerFrame = document.getElementById('playlistPlayer');
+  const playerTitle = document.getElementById('nowPlayingTitle');
+  const playerHeading = document.getElementById('musicPlayerHeading');
+  const prevBtn = document.getElementById('instrumentalPrevBtn');
+  const nextBtn = document.getElementById('instrumentalNextBtn');
+  const cards = Array.from(document.querySelectorAll('.track-card'));
+  if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn || !cards.length) return;
 
-  const ensureJsApiEnabled = (iframe) => {
-    if (!iframe) return;
-    const src = iframe.getAttribute('src') || '';
-    if (src.includes('enablejsapi=1')) return;
-    const separator = src.includes('?') ? '&' : '?';
-    iframe.setAttribute('src', `${src}${separator}enablejsapi=1`);
+  const tracks = [];
+  let currentTrack = null;
+  let isPlaying = false;
+
+  const makeAutoplaySrc = (src, autoplay) => {
+    if (!src) return '';
+    const cleaned = src
+      .replace(/([?&])autoplay=1(&|$)/, '$1')
+      .replace(/([?&])enablejsapi=1(&|$)/, '$1')
+      .replace(/([?&])origin=[^&]+(&|$)/, '$1')
+      .replace(/[?&]$/, '');
+    const params = [];
+    if (autoplay) params.push('autoplay=1');
+    params.push('enablejsapi=1');
+    if (window.location && window.location.origin && window.location.origin !== 'null') {
+      params.push(`origin=${encodeURIComponent(window.location.origin)}`);
+    }
+    return `${cleaned}${cleaned.includes('?') ? '&' : '?'}${params.join('&')}`;
   };
 
-  const pauseIframe = (videoEl) => {
-    const iframe = videoEl.querySelector('iframe');
-    if (!iframe) return;
-    ensureJsApiEnabled(iframe);
+  const postPlayerCommand = (funcName) => {
     try {
-      iframe.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-    } catch (_) {
-      /* no-op: best-effort pause */
+      playerFrame.contentWindow?.postMessage(JSON.stringify({
+        event: 'command',
+        func: funcName,
+        args: '',
+      }), '*');
+    } catch (error) {
+      /* best effort */
     }
   };
 
-  const closeOthers = (keepId) => {
-    toggleRegistry.forEach(({ video, producer, toggles }) => {
-      const isTarget = video.id === keepId;
-      if (isTarget) return;
-      if (!video.hidden) {
-        video.hidden = true;
-        if (producer) {
-          producer.hidden = true;
-          producer.classList.remove('is-visible');
-        }
-        toggles.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
+  const setPlaybackUi = () => {
+    cards.forEach((card) => {
+      const thumbButton = card.querySelector('.track-thumb-btn');
+      const isCurrent = currentTrack && card === currentTrack.card;
+      card.classList.toggle('is-playing', isCurrent && isPlaying);
+      card.classList.toggle('is-current-track', isCurrent);
+      if (thumbButton) {
+        if (isCurrent && isPlaying) thumbButton.dataset.state = 'playing';
+        else if (isCurrent) thumbButton.dataset.state = 'paused';
+        else thumbButton.dataset.state = 'idle';
       }
-      pauseIframe(video);
     });
+    playerHeading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
   };
 
-  const setupTrackToggle = ({ cardId, videoId, toggleKey }) => {
-    const card = document.getElementById(cardId);
-    if (!card) return;
+  const getVisibleTracks = () => tracks.filter((track) => !track.card.hidden);
 
-    const video = card.querySelector(`#${videoId}`);
-    const producer = card.querySelector('.track-producer');
-    const toggles = Array.from(card.querySelectorAll(`[data-video-toggle="${toggleKey}"]`));
-    if (!video || !toggles.length) return;
+  const syncControls = () => {
+    const visibleTracks = getVisibleTracks();
+    if (!visibleTracks.length) {
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      playerHeading.textContent = 'Music Player';
+      return;
+    }
 
-    toggleRegistry.push({ video, producer, toggles });
+    if (!currentTrack || currentTrack.card.hidden) {
+      currentTrack = visibleTracks[0];
+      playerFrame.src = makeAutoplaySrc(currentTrack.src, false);
+      playerFrame.title = currentTrack.title;
+      playerTitle.textContent = currentTrack.title;
+      isPlaying = false;
+      setPlaybackUi();
+    }
 
-    const resetClosed = () => {
-      video.hidden = true;
-      if (producer) {
-        producer.hidden = true;
-        producer.classList.remove('is-visible');
-      }
-      toggles.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
-      pauseIframe(video);
-    };
+    const currentIndex = visibleTracks.indexOf(currentTrack);
+    prevBtn.disabled = currentIndex <= 0;
+    nextBtn.disabled = currentIndex >= visibleTracks.length - 1;
+  };
 
-    const setExpanded = (isOpen) => {
-      toggles.forEach((btn) => btn.setAttribute('aria-expanded', String(isOpen)));
-    };
+  const openTrack = (track, autoplay = true) => {
+    if (!track || !track.src) return;
+    currentTrack = track;
+    playerFrame.src = makeAutoplaySrc(track.src, autoplay);
+    playerFrame.title = track.title;
+    playerTitle.textContent = track.title;
+    isPlaying = autoplay;
+    setPlaybackUi();
+    syncControls();
+  };
 
-    resetClosed();
+  const pauseCurrentTrack = () => {
+    if (!currentTrack) return;
+    postPlayerCommand('pauseVideo');
+    isPlaying = false;
+    setPlaybackUi();
+    syncControls();
+  };
 
-    toggles.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const willOpen = video.hidden;
-        if (willOpen) {
-          closeOthers(video.id);
+  cards.forEach((card) => {
+    const thumbButton = card.querySelector('.track-thumb-btn');
+    const titleButton = card.querySelector('.track-toggle-title');
+    const trackVideo = card.querySelector('.track-video');
+    const iframe = trackVideo ? trackVideo.querySelector('iframe') : null;
+    const title = titleButton ? titleButton.textContent.trim() : card.querySelector('.track-title')?.textContent.trim() || 'Instrumental';
+    const src = iframe ? (iframe.getAttribute('src') || '') : '';
+
+    tracks.push({ card, title, src });
+
+    if (titleButton) {
+      titleButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        card.classList.toggle('show-details');
+        const isOpen = card.classList.contains('show-details');
+        titleButton.setAttribute('aria-expanded', String(isOpen));
+        const detailToggle = card.querySelector('.track-toggle');
+        if (detailToggle) {
+          detailToggle.setAttribute('aria-expanded', String(isOpen));
+          detailToggle.textContent = isOpen ? '▴' : '▾';
+          detailToggle.classList.toggle('open', isOpen);
         }
-        video.hidden = !willOpen;
-        if (producer) {
-          producer.hidden = !willOpen;
-          producer.classList.toggle('is-visible', willOpen);
-        }
-        if (!willOpen) {
-          pauseIframe(video);
-        }
-        setExpanded(willOpen);
+        card.setAttribute('aria-pressed', String(isOpen));
       });
-    });
-  };
+    }
 
-  setupTrackToggle({ cardId: 'track-jdgaf', videoId: 'video-jdgaf', toggleKey: 'jdgaf' });
-  setupTrackToggle({ cardId: 'track-3hree6ix5ive', videoId: 'video-3hree6ix5ive', toggleKey: '3hree6ix5ive' });
-  setupTrackToggle({ cardId: 'track-5stargenerals', videoId: 'video-5stargenerals', toggleKey: '5stargenerals' });
-  setupTrackToggle({ cardId: 'track-ntd', videoId: 'video-ntd', toggleKey: 'ntd' });
-  setupTrackToggle({ cardId: 'track-sm', videoId: 'video-sm', toggleKey: 'sm' });
-  setupTrackToggle({ cardId: 'track-jdgaf-lp', videoId: 'video-jdgaf-lp', toggleKey: 'jdgaf-lp' });
-  setupTrackToggle({ cardId: 'track-mni', videoId: 'video-mni', toggleKey: 'mni' });
-  setupTrackToggle({ cardId: 'track-anyman', videoId: 'video-anyman', toggleKey: 'anyman' });
-  setupTrackToggle({ cardId: 'track-rolemodel', videoId: 'video-rolemodel', toggleKey: 'rolemodel' });
-  setupTrackToggle({ cardId: 'track-gc', videoId: 'video-gc', toggleKey: 'gc' });
-  setupTrackToggle({ cardId: 'track-imshady', videoId: 'video-imshady', toggleKey: 'imshady' });
-  setupTrackToggle({ cardId: 'track-macosa', videoId: 'video-macosa', toggleKey: 'macosa' });
-  setupTrackToggle({ cardId: 'track-weshine', videoId: 'video-weshine', toggleKey: 'weshine' });
-  setupTrackToggle({ cardId: 'track-getyoumad', videoId: 'video-getyoumad', toggleKey: 'getyoumad' });
-  setupTrackToggle({ cardId: 'track-anthem', videoId: 'video-anthem', toggleKey: 'anthem' });
-  setupTrackToggle({ cardId: 'track-deadwrong', videoId: 'video-deadwrong', toggleKey: 'deadwrong' });
-  setupTrackToggle({ cardId: 'track-watcher', videoId: 'video-watcher', toggleKey: 'watcher' });
-  setupTrackToggle({ cardId: 'track-wtd', videoId: 'video-wtd', toggleKey: 'wtd' });
-  setupTrackToggle({ cardId: 'track-fad', videoId: 'video-fad', toggleKey: 'fad' });
-  setupTrackToggle({ cardId: 'track-trss', videoId: 'video-trss', toggleKey: 'trss' });
-  setupTrackToggle({ cardId: 'track-bp2', videoId: 'video-bp2', toggleKey: 'bp2' });
-  setupTrackToggle({ cardId: 'track-twia', videoId: 'video-twia', toggleKey: 'twia' });
-  setupTrackToggle({ cardId: 'track-stan', videoId: 'video-stan', toggleKey: 'stan' });
-  setupTrackToggle({ cardId: 'track-soy', videoId: 'video-soy', toggleKey: 'soy' });
-  setupTrackToggle({ cardId: 'track-rockcity', videoId: 'video-rockcity', toggleKey: 'rockcity' });
-  setupTrackToggle({ cardId: 'track-iremember', videoId: 'video-iremember', toggleKey: 'iremember' });
-  setupTrackToggle({ cardId: 'track-ppills', videoId: 'video-ppills', toggleKey: 'ppills' });
-  setupTrackToggle({ cardId: 'track-pistol', videoId: 'video-pistol', toggleKey: 'pistol' });
-  setupTrackToggle({ cardId: 'track-fightmusic', videoId: 'video-fightmusic', toggleKey: 'fightmusic' });
-  setupTrackToggle({ cardId: 'track-buzz', videoId: 'video-buzz', toggleKey: 'buzz' });
-  setupTrackToggle({ cardId: 'track-withoutme', videoId: 'video-withoutme', toggleKey: 'withoutme' });
-  setupTrackToggle({ cardId: 'track-closet', videoId: 'video-closet', toggleKey: 'closet' });
-  setupTrackToggle({ cardId: 'track-collapse', videoId: 'video-collapse', toggleKey: 'collapse' });
-  setupTrackToggle({ cardId: 'track-superman', videoId: 'video-superman', toggleKey: 'superman' });
-  setupTrackToggle({ cardId: 'track-sftm', videoId: 'video-sftm', toggleKey: 'sftm' });
-  setupTrackToggle({ cardId: 'track-business', videoId: 'video-business', toggleKey: 'business' });
-  setupTrackToggle({ cardId: 'track-squaredance', videoId: 'video-squaredance', toggleKey: 'squaredance' });
-  setupTrackToggle({ cardId: 'track-swys', videoId: 'video-swys', toggleKey: 'swys' });
-  setupTrackToggle({ cardId: 'track-loseyourself', videoId: 'video-loseyourself', toggleKey: 'loseyourself' });
-  setupTrackToggle({ cardId: 'track-loveme', videoId: 'video-loveme', toggleKey: 'loveme' });
-  setupTrackToggle({ cardId: 'track-8mile', videoId: 'video-8mile', toggleKey: '8mile' });
-  setupTrackToggle({ cardId: 'track-rapgame', videoId: 'video-rapgame', toggleKey: 'rapgame' });
-  setupTrackToggle({ cardId: 'track-8milesandrunnin', videoId: 'video-8milesandrunnin', toggleKey: '8milesandrunnin' });
-  setupTrackToggle({ cardId: 'track-rabbitrun', videoId: 'video-rabbitrun', toggleKey: 'rabbitrun' });
-  setupTrackToggle({ cardId: 'track-rapname', videoId: 'video-rapname', toggleKey: 'rapname' });
-  setupTrackToggle({ cardId: 'track-cross', videoId: 'video-cross', toggleKey: 'cross' });
-  setupTrackToggle({ cardId: 'track-shtfan', videoId: 'video-shtfan', toggleKey: 'shtfan' });
-  setupTrackToggle({ cardId: 'track-gotsometeeth', videoId: 'video-gotsometeeth', toggleKey: 'gotsometeeth' });
-  setupTrackToggle({ cardId: 'track-runnin-dtl', videoId: 'video-runnin-dtl', toggleKey: 'runnin-dtl' });
-  setupTrackToggle({ cardId: 'track-onedayems', videoId: 'video-onedayems', toggleKey: 'onedayems' });
-  setupTrackToggle({ cardId: 'track-myband', videoId: 'video-myband', toggleKey: 'myband' });
+    if (iframe) {
+      iframe.remove();
+    }
+    if (trackVideo) {
+      trackVideo.remove();
+    }
 
-  setupTrackToggle({ cardId: 'track-dontcomedown', videoId: 'video-dontcomedown', toggleKey: 'dontcomedown' });
-  setupTrackToggle({ cardId: 'track-40oz', videoId: 'video-40oz', toggleKey: '40oz' });
-  setupTrackToggle({ cardId: 'track-40oz-remix', videoId: 'video-40oz-remix', toggleKey: '40oz-remix' });
-  setupTrackToggle({ cardId: 'track-ap2', videoId: 'video-ap2', toggleKey: 'ap2' });
-  setupTrackToggle({ cardId: 'track-onfire', videoId: 'video-onfire', toggleKey: 'onfire' });
-  setupTrackToggle({ cardId: 'track-warriorpt2', videoId: 'video-warriorpt2', toggleKey: 'warriorpt2' });
-  setupTrackToggle({ cardId: 'track-thugsgetlonely', videoId: 'video-thugsgetlonely', toggleKey: 'thugsgetlonely' });
-  setupTrackToggle({ cardId: 'track-ghettogospel', videoId: 'video-ghettogospel', toggleKey: 'ghettogospel' });
-  setupTrackToggle({ cardId: 'track-howcome', videoId: 'video-howcome', toggleKey: 'howcome' });
-  setupTrackToggle({ cardId: 'track-justloseit', videoId: 'video-justloseit', toggleKey: 'justloseit' });
-  setupTrackToggle({ cardId: 'track-encore', videoId: 'video-encore', toggleKey: 'encore' });
-  setupTrackToggle({ cardId: 'track-lts', videoId: 'video-lts', toggleKey: 'lts' });
-  setupTrackToggle({ cardId: 'track-mockingbird', videoId: 'video-mockingbird', toggleKey: 'mockingbird' });
-  setupTrackToggle({ cardId: 'track-rockstar', videoId: 'video-rockstar', toggleKey: 'rockstar' });
-  setupTrackToggle({ cardId: 'track-alt', videoId: 'video-alt', toggleKey: 'alt' });
-  setupTrackToggle({ cardId: 'track-whenimgone', videoId: 'video-whenimgone', toggleKey: 'whenimgone' });
-  setupTrackToggle({ cardId: 'track-shakethat', videoId: 'video-shakethat', toggleKey: 'shakethat' });
-  setupTrackToggle({ cardId: 'track-handsup', videoId: 'video-handsup', toggleKey: 'handsup' });
-  setupTrackToggle({ cardId: 'track-jamaicangirl', videoId: 'video-jamaicangirl', toggleKey: 'jamaicangirl' });
-  setupTrackToggle({ cardId: 'track-smackthat', videoId: 'video-smackthat', toggleKey: 'smackthat' });
-  setupTrackToggle({ cardId: 'track-lacmotion', videoId: 'video-lacmotion', toggleKey: 'lacmotion' });
-  setupTrackToggle({ cardId: 'track-ydk', videoId: 'video-ydk', toggleKey: 'ydk' });
-  setupTrackToggle({ cardId: 'track-jcc', videoId: 'video-jcc', toggleKey: 'jcc' });
-  setupTrackToggle({ cardId: 'track-cab', videoId: 'video-cab', toggleKey: 'cab' });
-  setupTrackToggle({ cardId: 'track-wmy', videoId: 'video-wmy', toggleKey: 'wmy' });
-  setupTrackToggle({ cardId: 'track-beautiful', videoId: 'video-beautiful', toggleKey: 'beautiful' });
-  setupTrackToggle({ cardId: 'track-notafraid', videoId: 'video-notafraid', toggleKey: 'notafraid' });
-  setupTrackToggle({ cardId: 'track-survival', videoId: 'video-survival', toggleKey: 'survival' });
-  setupTrackToggle({ cardId: 'track-berzerk', videoId: 'video-berzerk', toggleKey: 'berzerk' });
-  setupTrackToggle({ cardId: 'track-rapgod', videoId: 'video-rapgod', toggleKey: 'rapgod' });
-  setupTrackToggle({ cardId: 'track-monster', videoId: 'video-monster', toggleKey: 'monster' });
-  setupTrackToggle({ cardId: 'track-headlights', videoId: 'video-headlights', toggleKey: 'headlights' });
-  setupTrackToggle({ cardId: 'track-godzilla', videoId: 'video-godzilla', toggleKey: 'godzilla' });
-  setupTrackToggle({ cardId: 'track-welcome2detroit', videoId: 'video-welcome2detroit', toggleKey: 'welcome2detroit' });
-  setupTrackToggle({ cardId: 'track-calmdown', videoId: 'video-calmdown', toggleKey: 'calmdown' });
+    if (thumbButton && src) {
+      const trackRef = tracks[tracks.length - 1];
+      thumbButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (currentTrack === trackRef && isPlaying) {
+          pauseCurrentTrack();
+          return;
+        }
+        openTrack(trackRef, true);
+      });
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    const visibleTracks = getVisibleTracks();
+    if (!visibleTracks.length) return;
+    const index = Math.max(0, visibleTracks.indexOf(currentTrack) - 1);
+    openTrack(visibleTracks[index], true);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const visibleTracks = getVisibleTracks();
+    if (!visibleTracks.length) return;
+    const index = Math.min(visibleTracks.length - 1, visibleTracks.indexOf(currentTrack) + 1);
+    openTrack(visibleTracks[index], true);
+  });
+
+  window.refreshInstrumentalPlayer = syncControls;
+
+  syncControls();
+  if (tracks[0]) {
+    openTrack(tracks[0], false);
+  }
 })();
 </script>
 
@@ -2515,6 +2778,14 @@ details:not([open]) > summary.promo-summary:focus {
     const meta = card.querySelector('.track-meta');
     const title = meta ? meta.querySelector('.track-title') : null;
     if (!meta || !title || meta.querySelector('.track-toggle')) return;
+
+    const producer = meta.querySelector('.track-producer');
+    if (producer && producer.innerHTML.includes('Additional Production by')) {
+      const producerLines = producer.innerHTML.split(/<br\s*\/?\s*>/i).map((line) => line.trim()).filter(Boolean);
+      producer.innerHTML = producerLines.map((line) => (
+        line.startsWith('Additional Production by') ? `<span class="track-credit-line">${line}</span>` : line
+      )).join('<br>');
+    }
 
     const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
     promoBlocks.forEach((block) => {
@@ -2546,8 +2817,10 @@ details:not([open]) > summary.promo-summary:focus {
     details.className = 'track-details';
     const detailNodes = Array.from(meta.children).filter((el) => (
       el !== titleRow
-      && (el.classList.contains('track-producer')
+      && (el.classList.contains('track-artist')
+        || el.classList.contains('track-album')
         || el.classList.contains('track-release')
+        || el.classList.contains('track-producer')
         || el.classList.contains('promo-note'))
     ));
     detailNodes.forEach((node) => details.appendChild(node));
@@ -2559,7 +2832,11 @@ details:not([open]) > summary.promo-summary:focus {
 
     toggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      toggleDetails(card);
+      const showing = card.classList.toggle('show-details');
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+      card.setAttribute('aria-pressed', showing ? 'true' : 'false');
     });
     toggle.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -2571,7 +2848,11 @@ details:not([open]) > summary.promo-summary:focus {
       const target = event.target;
       if (!(target instanceof Element)) return;
       if (target.closest('a,button,details,summary,iframe,video')) return;
-      toggleDetails(card);
+      const showing = card.classList.toggle('show-details');
+      toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
+      toggle.textContent = '▾';
+      toggle.classList.toggle('open', showing);
+      card.setAttribute('aria-pressed', showing ? 'true' : 'false');
     });
 
     card.addEventListener('keydown', (event) => {
@@ -2580,6 +2861,7 @@ details:not([open]) > summary.promo-summary:focus {
         card.click();
       }
     });
+
   });
 })();
 </script>
