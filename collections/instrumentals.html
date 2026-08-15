@@ -2853,6 +2853,52 @@ details:not([open]) > summary.promo-summary:focus {
     syncControls();
   };
 
+  const handleMobileDetailsToggle = (card, isOpen) => {
+    if (!isMobileViewport()) return;
+    const trackRef = tracks.find((track) => track.card === card);
+    if (!trackRef || !trackRef.src) return;
+
+    if (isOpen) {
+      if (currentTrack === trackRef) {
+        if (!isPlaying) {
+          resumeCurrentTrack();
+        }
+      } else {
+        openTrack(trackRef, true);
+      }
+      return;
+    }
+
+    if (currentTrack === trackRef && isPlaying) {
+      pauseCurrentTrack();
+    }
+  };
+
+  const closeOtherOpenCards = (activeCard) => {
+    if (!isMobileViewport()) return;
+    cards.forEach((otherCard) => {
+      if (otherCard === activeCard || !otherCard.classList.contains('show-details')) return;
+      otherCard.classList.remove('show-details');
+      otherCard.setAttribute('aria-pressed', 'false');
+
+      const otherTitleBtn = otherCard.querySelector('.track-toggle-title');
+      if (otherTitleBtn) {
+        otherTitleBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      const otherToggle = otherCard.querySelector('.track-toggle');
+      if (otherToggle) {
+        otherToggle.setAttribute('aria-expanded', 'false');
+        otherToggle.classList.remove('open');
+        otherToggle.textContent = '▾';
+      }
+
+      handleMobileDetailsToggle(otherCard, false);
+    });
+  };
+
+  window.handleInstrumentalDetailsToggle = handleMobileDetailsToggle;
+
   cards.forEach((card) => {
     const thumbButton = card.querySelector('.track-thumb-btn');
     const titleButton = card.querySelector('.track-toggle-title');
@@ -2862,6 +2908,7 @@ details:not([open]) > summary.promo-summary:focus {
     const src = iframe ? (iframe.getAttribute('src') || '') : '';
 
     tracks.push({ card, title, src });
+    const trackRef = tracks[tracks.length - 1];
 
     if (titleButton) {
       titleButton.addEventListener('click', (event) => {
@@ -2877,6 +2924,11 @@ details:not([open]) > summary.promo-summary:focus {
           detailToggle.classList.toggle('open', isOpen);
         }
         card.setAttribute('aria-pressed', String(isOpen));
+
+        if (isOpen) {
+          closeOtherOpenCards(card);
+        }
+        handleMobileDetailsToggle(card, isOpen);
       });
     }
 
@@ -2888,7 +2940,6 @@ details:not([open]) > summary.promo-summary:focus {
     }
 
     if (thumbButton && src) {
-      const trackRef = tracks[tracks.length - 1];
       thumbButton.addEventListener('click', (event) => {
         event.preventDefault();
         if (currentTrack === trackRef && isPlaying) {
@@ -2931,6 +2982,36 @@ details:not([open]) > summary.promo-summary:focus {
 (() => {
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
+  const isMobileViewport = () => window.matchMedia('(max-width: 720px)').matches;
+
+  const notifyDetailsToggle = (card, showing) => {
+    if (typeof window.handleInstrumentalDetailsToggle === 'function') {
+      window.handleInstrumentalDetailsToggle(card, showing);
+    }
+  };
+
+  const closeOtherOpenCards = (activeCard) => {
+    if (!isMobileViewport()) return;
+    cards.forEach((otherCard) => {
+      if (otherCard === activeCard || !otherCard.classList.contains('show-details')) return;
+      otherCard.classList.remove('show-details');
+      otherCard.setAttribute('aria-pressed', 'false');
+
+      const otherToggle = otherCard.querySelector('.track-toggle');
+      if (otherToggle) {
+        otherToggle.setAttribute('aria-expanded', 'false');
+        otherToggle.classList.remove('open');
+        otherToggle.textContent = '▾';
+      }
+
+      const otherTitleBtn = otherCard.querySelector('.track-toggle-title');
+      if (otherTitleBtn) {
+        otherTitleBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      notifyDetailsToggle(otherCard, false);
+    });
+  };
 
   const toggleDetails = (card) => {
     const showing = card.classList.toggle('show-details');
@@ -2999,10 +3080,14 @@ details:not([open]) > summary.promo-summary:focus {
     toggle.addEventListener('click', (event) => {
       event.stopPropagation();
       const showing = card.classList.toggle('show-details');
+      if (showing) {
+        closeOtherOpenCards(card);
+      }
       toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
       toggle.textContent = '▾';
       toggle.classList.toggle('open', showing);
       card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+      notifyDetailsToggle(card, showing);
     });
     toggle.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -3015,10 +3100,14 @@ details:not([open]) > summary.promo-summary:focus {
       if (!(target instanceof Element)) return;
       if (target.closest('a,button,details,summary,iframe,video')) return;
       const showing = card.classList.toggle('show-details');
+      if (showing) {
+        closeOtherOpenCards(card);
+      }
       toggle.setAttribute('aria-expanded', showing ? 'true' : 'false');
       toggle.textContent = '▾';
       toggle.classList.toggle('open', showing);
       card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+      notifyDetailsToggle(card, showing);
     });
 
     card.addEventListener('keydown', (event) => {
