@@ -705,7 +705,7 @@ details:not([open]) > summary.promo-summary:focus {
             <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-anyman" data-video-toggle="anyman">Any Man (Instrumental)</button>
           </h2>
           <p class="track-artist">Eminem</p>
-          <p class="track-producer">Da Beatminerz</p>
+          <p class="track-producer">Produced by Da Beatminerz</p>
           <p class="track-album">Any Man [Single]</p>
         </div>
       </div>
@@ -2849,14 +2849,11 @@ details:not([open]) > summary.promo-summary:focus {
 
     const details = document.createElement('div');
     details.className = 'track-details';
-    const detailNodes = Array.from(meta.children).filter((el) => (
-      el !== titleRow
-      && (el.classList.contains('track-artist')
-        || el.classList.contains('track-album')
-        || el.classList.contains('track-release')
-        || el.classList.contains('track-producer')
-        || el.classList.contains('promo-note'))
-    ));
+    const detailClassOrder = ['track-artist', 'track-album', 'track-release', 'track-producer', 'promo-note'];
+    const detailNodes = detailClassOrder.reduce((nodes, className) => {
+      const matches = Array.from(meta.querySelectorAll(`:scope > .${className}`));
+      return nodes.concat(matches);
+    }, []);
     detailNodes.forEach((node) => details.appendChild(node));
     meta.appendChild(details);
 
