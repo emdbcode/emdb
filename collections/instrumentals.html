@@ -362,9 +362,11 @@ details:not([open]) > summary.promo-summary:focus {
   .playlist-container .section-heading { font-size: clamp(18px, 5vw, 20px); }
   .now-playing-title { max-width: 100%; font-size: 16px; font-weight: 800; }
   .playlist-container.is-floating {
-    width: min(340px, calc(100vw - 16px));
-    right: 8px;
-    bottom: 8px;
+    width: min(320px, calc(100vw - 28px));
+    left: 50%;
+    right: auto;
+    bottom: 22px;
+    transform: translateX(-50%);
     padding: 8px;
     border-radius: 8px;
   }
@@ -376,7 +378,7 @@ details:not([open]) > summary.promo-summary:focus {
     gap: 8px;
   }
   .playlist-container.is-floating .playlist-embed {
-    height: clamp(130px, 24vh, 170px);
+    height: clamp(120px, 22vh, 160px);
   }
   .playlist-container.is-floating .now-playing-controls {
     padding-top: 8px;
