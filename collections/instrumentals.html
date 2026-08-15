@@ -2688,6 +2688,14 @@ details:not([open]) > summary.promo-summary:focus {
     syncControls();
   };
 
+  const resumeCurrentTrack = () => {
+    if (!currentTrack) return;
+    postPlayerCommand('playVideo');
+    isPlaying = true;
+    setPlaybackUi();
+    syncControls();
+  };
+
   cards.forEach((card) => {
     const thumbButton = card.querySelector('.track-thumb-btn');
     const titleButton = card.querySelector('.track-toggle-title');
@@ -2728,6 +2736,10 @@ details:not([open]) > summary.promo-summary:focus {
         event.preventDefault();
         if (currentTrack === trackRef && isPlaying) {
           pauseCurrentTrack();
+          return;
+        }
+        if (currentTrack === trackRef) {
+          resumeCurrentTrack();
           return;
         }
         openTrack(trackRef, true);
