@@ -2805,20 +2805,34 @@ details:not([open]) > summary.promo-summary:focus {
 
   const syncControls = () => {
     const visibleTracks = getVisibleTracks();
-    if (!visibleTracks.length) {
+    if (!visibleTracks.length && !currentTrack) {
       prevBtn.disabled = true;
       nextBtn.disabled = true;
       playerHeading.textContent = 'Music Player';
       return;
     }
 
-    if (!currentTrack || currentTrack.card.hidden) {
+    if (!currentTrack) {
       currentTrack = visibleTracks[0];
       playerFrame.src = makeAutoplaySrc(currentTrack.src, false);
       playerFrame.title = currentTrack.title;
       playerTitle.textContent = currentTrack.title;
       isPlaying = false;
       setPlaybackUi();
+    }
+
+    if (!currentTrack) {
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      return;
+    }
+
+    // Keep the current track playing even if it becomes hidden by a filter.
+    // In that case, disable prev/next until the current track is visible again.
+    if (currentTrack.card.hidden) {
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      return;
     }
 
     const currentIndex = visibleTracks.indexOf(currentTrack);
