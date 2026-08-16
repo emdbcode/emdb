@@ -261,6 +261,7 @@ details:not([open]) > summary.promo-summary:focus {
 .playlist-player { width: 100%; }
 .playlist-container {
   position: static;
+  display: none;
 }
 .player-divider {
   width: 100%;
@@ -323,6 +324,7 @@ details:not([open]) > summary.promo-summary:focus {
 .now-playing-title.expanded::-webkit-scrollbar { display: none; }
 
 .playlist-container.is-floating {
+  display: block;
   position: fixed;
   right: 16px;
   bottom: 16px;
@@ -598,11 +600,11 @@ details:not([open]) > summary.promo-summary:focus {
   </header>
 
   <div class="filter-bar" aria-label="Filter tracklist">
-    <button class="filter-btn is-active" data-filter="eminem" type="button">Solo / Collab</button>
+    <button class="filter-btn is-active" data-filter="all" type="button">All</button>
+    <button class="filter-btn" data-filter="eminem" type="button">Solo / Collab</button>
     <button class="filter-btn" data-filter="group" type="button">Group</button>
     <button class="filter-btn" data-filter="feat" type="button">Feature</button>
     <button class="filter-btn" data-filter="other" type="button">Other</button>
-    <button class="filter-btn" data-filter="all" type="button">All</button>
   </div>
 
   <section class="track-list" aria-label="Non-album tracklist">
@@ -2135,7 +2137,7 @@ details:not([open]) > summary.promo-summary:focus {
       </div>
       <div class="track-video" id="video-jamaicangirl" hidden>
         <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/g5Yk7H8rAfs?si=MVw01fJ8ADFI9SFE" title="Jamaican Girl (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/6W-I9JTmFE0" title="Jamaican Girl (Instrumental)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
     </article>
@@ -2663,7 +2665,7 @@ details:not([open]) > summary.promo-summary:focus {
     btn.addEventListener('click', () => applyFilter(btn.dataset.filter || 'all'));
   });
 
-  applyFilter('eminem');
+  applyFilter('all');
 })();
 
 // Shared player for all instrumentals and title-only detail toggles.
@@ -2788,6 +2790,10 @@ details:not([open]) > summary.promo-summary:focus {
     return match ? match[1] : '';
   };
 
+  const bindPlayerStateListener = () => {
+    postPlayerCommand('addEventListener', ['onStateChange']);
+  };
+
   const setPlaybackUi = () => {
     cards.forEach((card) => {
       const thumbButton = card.querySelector('.track-thumb-btn');
@@ -2810,6 +2816,19 @@ details:not([open]) > summary.promo-summary:focus {
   };
 
   const getVisibleTracks = () => tracks.filter((track) => !track.card.hidden);
+
+  const getNextTrackForAutoplay = () => {
+    if (!currentTrack) return null;
+
+    const visibleTracks = getVisibleTracks();
+    const visibleIndex = visibleTracks.indexOf(currentTrack);
+    if (visibleIndex >= 0) {
+      return visibleTracks[visibleIndex + 1] || null;
+    }
+
+    const allIndex = tracks.indexOf(currentTrack);
+    return allIndex >= 0 ? (tracks[allIndex + 1] || null) : null;
+  };
 
   const syncControls = () => {
     const visibleTracks = getVisibleTracks();
@@ -2884,6 +2903,35 @@ details:not([open]) > summary.promo-summary:focus {
     setPlaybackUi();
     syncControls();
   };
+
+  const handlePlayerMessage = (event) => {
+    if (event.source !== playerFrame.contentWindow) return;
+
+    let payload = event.data;
+    if (typeof payload === 'string') {
+      try {
+        payload = JSON.parse(payload);
+      } catch (error) {
+        return;
+      }
+    }
+
+    if (!payload || payload.event !== 'onStateChange') return;
+    if (Number(payload.info) !== 0) return;
+
+    isPlaying = false;
+    const nextTrack = getNextTrackForAutoplay();
+    if (nextTrack) {
+      openTrack(nextTrack, true);
+      return;
+    }
+
+    setPlaybackUi();
+    syncControls();
+  };
+
+  playerFrame.addEventListener('load', bindPlayerStateListener);
+  window.addEventListener('message', handlePlayerMessage);
 
   const handleMobileDetailsToggle = (card, isOpen) => {
     if (!isMobileViewport()) return;
