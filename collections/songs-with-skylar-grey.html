@@ -645,6 +645,21 @@ details:not([open]) > summary.promo-summary:focus {
 <div id="site-footer"></div>
 <script src="/header.js"></script>
 <script>
+  (() => {
+  const metas = Array.from(document.querySelectorAll('.track-meta'));
+  metas.forEach((meta) => {
+    const producers = Array.from(meta.querySelectorAll(':scope > .track-producer'));
+    producers.forEach((producer) => {
+      let nextProducer = producer.nextElementSibling;
+      while (nextProducer && nextProducer.classList.contains('track-producer')) {
+        producer.innerHTML += `<br>${nextProducer.innerHTML}`;
+        const mergedNode = nextProducer;
+        nextProducer = nextProducer.nextElementSibling;
+        mergedNode.remove();
+      }
+    });
+  });
+})();
 
 
   (() => {
@@ -978,5 +993,6 @@ details:not([open]) > summary.promo-summary:focus {
 })();
 </script>
 
+<script src="/scripts/collection-floating-player.js"></script>
 </body>
 </html>

@@ -3850,6 +3850,17 @@ details:not([open]) > summary.promo-summary:focus {
     const title = meta ? meta.querySelector('.track-title') : null;
     if (!meta || !title || meta.querySelector('.track-toggle')) return;
 
+    const producerBlocks = Array.from(meta.querySelectorAll(':scope > .track-producer'));
+    producerBlocks.forEach((producer) => {
+      let nextProducer = producer.nextElementSibling;
+      while (nextProducer && nextProducer.classList.contains('track-producer')) {
+        producer.innerHTML += `<br>${nextProducer.innerHTML}`;
+        const mergedNode = nextProducer;
+        nextProducer = nextProducer.nextElementSibling;
+        mergedNode.remove();
+      }
+    });
+
     const promoBlocks = Array.from(meta.querySelectorAll(':scope > .promo-info'));
     promoBlocks.forEach((block) => {
       const note = block.querySelector('.promo-note');
@@ -3924,5 +3935,6 @@ details:not([open]) > summary.promo-summary:focus {
 })();
 </script>
 
+<script src="/scripts/collection-floating-player.js"></script>
 </body>
 </html>

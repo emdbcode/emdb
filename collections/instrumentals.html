@@ -1836,8 +1836,7 @@ details:not([open]) > summary.promo-summary:focus {
             <button class="track-toggle-title" type="button" aria-expanded="false" aria-controls="video-warriorpt2" data-video-toggle="warriorpt2">I’m Gone (Instrumental)</button>
           </h2>
           <p class="track-artist">DJ Kay Slay feat. Eminem &amp; Obie Trice</p>
-          <p class="track-producer" hidden>Produced by Eminem</p>
-          <p class="track-producer" hidden>Additional Production by Luis Resto</p>
+          <p class="track-producer" hidden>Produced by Eminem<br>Additional Production by Luis Resto</p>
           <p class="track-album">I’m Gone [Single]</p>
         </div>
       </div>
@@ -2481,6 +2480,23 @@ details:not([open]) > summary.promo-summary:focus {
 <div id="site-footer"></div>
 <script src="/header.js"></script>
 <script>
+// merge consecutive producer lines into a single track-producer block
+(function mergeTrackProducers() {
+  const metas = Array.from(document.querySelectorAll('.track-meta'));
+  metas.forEach((meta) => {
+    const producers = Array.from(meta.querySelectorAll(':scope > .track-producer'));
+    producers.forEach((producer) => {
+      let nextProducer = producer.nextElementSibling;
+      while (nextProducer && nextProducer.classList.contains('track-producer')) {
+        producer.innerHTML += `<br>${nextProducer.innerHTML}`;
+        const mergedNode = nextProducer;
+        nextProducer = nextProducer.nextElementSibling;
+        mergedNode.remove();
+      }
+    });
+  });
+})();
+
 // ensure every track-card shows a track-artist element; insert 'Eminem' when missing
 (function ensureTrackArtist() {
   const metas = Array.from(document.querySelectorAll('.track-meta'));
