@@ -354,6 +354,45 @@ details:not([open]) > summary.promo-summary:focus {
 .track-chart-link:focus-visible .track-chart-value {
   color: #E21C21;
 }
+
+.track-inline-ratings {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  min-height: 24px;
+}
+
+.track-inline-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+}
+
+.track-inline-rating .star {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.track-inline-rating.overall .star {
+  color: #f5c518;
+}
+
+.track-inline-rating.user .star {
+  color: #E21C21;
+}
+
+.track-inline-rating .value {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.track-inline-rating.is-hidden {
+  display: none;
+}
 /* collection-dropdown-enhancements-style:end */
 
 @media (max-width: 520px) {
@@ -799,6 +838,9 @@ details:not([open]) > summary.promo-summary:focus {
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
 
+  const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
+
   const normalizeTitleForSlug = (text) => (text || '')
     .toLowerCase()
     .replace(/[†‡]/g, '')
@@ -822,6 +864,7 @@ details:not([open]) > summary.promo-summary:focus {
   ]);
 
   const chartDocCache = new Map();
+  const ratingCardMap = new Map();
 
   const getChartSlugCandidates = (titleText, releaseHref) => {
     const normalized = normalizeTitleForSlug(titleText);
@@ -951,6 +994,58 @@ details:not([open]) > summary.promo-summary:focus {
     return line;
   };
 
+  const positionRatingRow = (card) => {
+    const ratingRow = card.querySelector('.track-inline-ratings');
+    if (!ratingRow) return;
+    const meta = card.querySelector('.track-meta');
+    const details = meta ? meta.querySelector(':scope > .track-details') : null;
+    const isOpen = card.classList.contains('show-details');
+
+    if (isOpen && details) {
+      const chartLine = details.querySelector(':scope > .track-chart-performance');
+      if (chartLine) {
+        if (ratingRow.parentElement !== details || ratingRow.nextElementSibling !== chartLine) {
+          details.insertBefore(ratingRow, chartLine);
+        }
+      } else if (ratingRow.parentElement !== details || ratingRow !== details.lastElementChild) {
+        details.appendChild(ratingRow);
+      }
+      return;
+    }
+
+    const albumRelease = meta ? meta.querySelector(':scope > .album-release') : null;
+    if (albumRelease) {
+      if (ratingRow.parentElement !== meta || ratingRow.previousElementSibling !== albumRelease) {
+        meta.insertBefore(ratingRow, albumRelease.nextSibling);
+      }
+      return;
+    }
+
+    const albumType = meta ? meta.querySelector(':scope > .album-type') : null;
+    if (albumType) {
+      if (ratingRow.parentElement !== meta || ratingRow.previousElementSibling !== albumType) {
+        meta.insertBefore(ratingRow, albumType.nextSibling);
+      }
+      return;
+    }
+
+    const titleRow = meta ? meta.querySelector(':scope > .track-title-row') : null;
+    if (titleRow && ratingRow.parentElement !== meta) {
+      meta.insertBefore(ratingRow, titleRow.nextSibling);
+    }
+  };
+
+  const updateRatingDisplay = (card, overallValue, userValue, showUser) => {
+    const ratingRow = card.querySelector('.track-inline-ratings');
+    if (!ratingRow) return;
+    const overallEl = ratingRow.querySelector('.track-inline-rating.overall .value');
+    const userEl = ratingRow.querySelector('.track-inline-rating.user .value');
+    const userBlock = ratingRow.querySelector('.track-inline-rating.user');
+    if (overallEl) overallEl.textContent = overallValue;
+    if (userEl) userEl.textContent = userValue;
+    if (userBlock) userBlock.classList.toggle('is-hidden', !showUser);
+  };
+
   const toggleDetails = (card) => {
     const showing = card.classList.toggle('show-details');
     const toggle = card.querySelector('.track-toggle');
@@ -965,6 +1060,7 @@ details:not([open]) > summary.promo-summary:focus {
       artistInDetails.style.display = activeFilter === 'all' && showing ? '' : 'none';
     }
     card.setAttribute('aria-pressed', showing ? 'true' : 'false');
+    positionRatingRow(card);
   };
 
   cards.forEach((card) => {
@@ -997,10 +1093,42 @@ details:not([open]) > summary.promo-summary:focus {
     const details = document.createElement('div');
     details.className = 'track-details';
 
+    const movableDetailNodes = Array.from(meta.children).filter((el) => (
+      el !== titleRow
+      && el !== artistDetail
+      && (el.classList.contains('album-label')
+        || el.classList.contains('promo-note'))
+    ));
+    movableDetailNodes.forEach((node) => details.appendChild(node));
+
     const titleLink = title.querySelector('a');
     const releaseHref = titleLink ? titleLink.getAttribute('href') : '';
     const chartLine = createChartPerformanceNode(title.textContent || '', releaseHref);
     details.appendChild(chartLine);
+
+    const ratingRow = document.createElement('div');
+    ratingRow.className = 'track-inline-ratings';
+    ratingRow.innerHTML = `
+      <span class="track-inline-rating overall" aria-label="Overall rating">
+        <span class="star">★</span>
+        <span class="value">-</span>
+      </span>
+      <span class="track-inline-rating user is-hidden" aria-label="Your rating">
+        <span class="star">★</span>
+        <span class="value">-</span>
+      </span>
+    `;
+    const albumType = meta.querySelector(':scope > .album-type');
+    if (albumType) {
+      meta.insertBefore(ratingRow, albumType.nextSibling);
+    } else {
+      meta.appendChild(ratingRow);
+    }
+
+    const slugFromHref = releaseHref ? (releaseHref.split('/').pop() || '').replace(/\.html$/i, '').toLowerCase() : '';
+    if (slugFromHref) {
+      ratingCardMap.set(slugFromHref, card);
+    }
 
     meta.appendChild(details);
 
@@ -1049,6 +1177,101 @@ details:not([open]) > summary.promo-summary:focus {
   });
 
   syncArtistVisibilityWithFilter();
+
+  const loadSupabaseScript = () => {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      const existing = document.querySelector('script[data-emdb-supabase]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => resolve(), { once: true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js';
+      script.async = true;
+      script.dataset.emdbSupabase = 'true';
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => resolve(), { once: true });
+      document.head.appendChild(script);
+    });
+  };
+
+  const loadAlbumRatings = async () => {
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') return;
+    if (!ratingCardMap.size) return;
+
+    const readClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    });
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const releaseSlugs = Array.from(ratingCardMap.keys());
+    const { data: albumRows, error: albumError } = await readClient
+      .from('albums')
+      .select('id,slug')
+      .in('slug', releaseSlugs);
+    if (albumError || !albumRows || !albumRows.length) return;
+
+    const albumIdBySlug = new Map(albumRows.map((row) => [String(row.slug || '').toLowerCase(), row.id]));
+    const albumIds = Array.from(new Set(albumRows.map((row) => row.id))).filter(Boolean);
+    if (!albumIds.length) return;
+
+    const { data: ratingRows } = await readClient
+      .from('album_ratings')
+      .select('album_id,rating')
+      .in('album_id', albumIds);
+
+    const overallMap = new Map();
+    (ratingRows || []).forEach((row) => {
+      const albumId = row.album_id;
+      const rating = Number(row.rating);
+      if (!albumId || !Number.isFinite(rating)) return;
+      const current = overallMap.get(albumId) || { total: 0, count: 0 };
+      current.total += rating;
+      current.count += 1;
+      overallMap.set(albumId, current);
+    });
+
+    let userMap = new Map();
+    try {
+      const { data: sessionData } = await client.auth.getSession();
+      const userId = sessionData?.session?.user?.id;
+      if (userId) {
+        const { data: userRows } = await client
+          .from('album_ratings')
+          .select('album_id,rating')
+          .eq('user_id', userId)
+          .in('album_id', albumIds);
+        userMap = new Map((userRows || []).map((row) => [row.album_id, Number(row.rating)]));
+      }
+    } catch (_error) {
+      /* no session/user rating available */
+    }
+
+    ratingCardMap.forEach((card, slug) => {
+      const albumId = albumIdBySlug.get(slug);
+      if (!albumId) {
+        updateRatingDisplay(card, '-', '-', false);
+        return;
+      }
+      const overall = overallMap.get(albumId);
+      const overallText = overall && overall.count ? (overall.total / overall.count).toFixed(1) : '-';
+      const userRating = userMap.get(albumId);
+      const hasUserRating = Number.isFinite(userRating) && userRating > 0;
+      const userText = hasUserRating ? String(userRating) : '-';
+      updateRatingDisplay(card, overallText, userText, hasUserRating);
+    });
+  };
+
+  cards.forEach((card) => positionRatingRow(card));
+  void loadSupabaseScript().then(() => loadAlbumRatings());
 })();
 </script>
 </body>

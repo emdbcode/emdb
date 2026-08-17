@@ -4,7 +4,6 @@
 
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
-  if (document.getElementById('collectionPlayer')) return;
 
   const styleId = 'collection-floating-player-style';
   if (!document.getElementById(styleId)) {
@@ -20,7 +19,7 @@
 }
 
 .track-play-btn {
-  display: none;
+  display: block !important;
   width: 72px;
   margin-top: 2px;
   border: 1px solid #333;
@@ -34,10 +33,6 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color 120ms ease, color 120ms ease, background-color 120ms ease;
-}
-
-.track-card.show-details .track-play-btn {
-  display: block;
 }
 
 .track-play-btn:hover,
@@ -56,6 +51,45 @@
 
 .track-card.is-current-track {
   border-color: #E21C21;
+}
+
+.track-inline-ratings {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  min-height: 24px;
+}
+
+.track-inline-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+}
+
+.track-inline-rating .star {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.track-inline-rating.overall .star {
+  color: #f5c518;
+}
+
+.track-inline-rating.user .star {
+  color: #E21C21;
+}
+
+.track-inline-rating.is-hidden {
+  display: none;
+}
+
+.track-inline-rating .value {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
 }
 
 .playlist-panel { display: flex; flex-direction: column; gap: 12px; }
@@ -163,6 +197,14 @@
     width: 64px;
     font-size: 9px;
   }
+
+  .track-inline-ratings {
+    gap: 8px;
+  }
+
+  .track-inline-rating {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 720px){
@@ -198,26 +240,29 @@
     document.head.appendChild(style);
   }
 
-  const host = document.querySelector('main.non-album-page') || document.querySelector('main') || document.body;
-  const playerWrapper = document.createElement('div');
-  playerWrapper.className = 'singles-container playlist-container';
-  playerWrapper.id = 'collectionPlayer';
-  playerWrapper.setAttribute('aria-label', 'Main collection player');
-  playerWrapper.innerHTML = `
-    <div class="player-divider" aria-hidden="true"></div>
-    <div class="section-heading" id="collectionPlayerHeading">Music Player</div>
-    <div class="playlist-panel">
-      <div class="video-player open playlist-player">
-        <iframe class="playlist-embed" id="collectionPlaylistPlayer" src="about:blank" title="Now Playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  let playerWrapper = document.getElementById('collectionPlayer');
+  if (!playerWrapper) {
+    const host = document.querySelector('main.non-album-page') || document.querySelector('main') || document.body;
+    playerWrapper = document.createElement('div');
+    playerWrapper.className = 'singles-container playlist-container';
+    playerWrapper.id = 'collectionPlayer';
+    playerWrapper.setAttribute('aria-label', 'Main collection player');
+    playerWrapper.innerHTML = `
+      <div class="player-divider" aria-hidden="true"></div>
+      <div class="section-heading" id="collectionPlayerHeading">Music Player</div>
+      <div class="playlist-panel">
+        <div class="video-player open playlist-player">
+          <iframe class="playlist-embed" id="collectionPlaylistPlayer" src="about:blank" title="Now Playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="now-playing-controls">
+          <button class="now-playing-btn" id="collectionPrevBtn" type="button" aria-label="Previous track">⏮</button>
+          <div class="now-playing-title" id="collectionNowPlayingTitle">Choose a track</div>
+          <button class="now-playing-btn" id="collectionNextBtn" type="button" aria-label="Next track">⏭</button>
+        </div>
       </div>
-      <div class="now-playing-controls">
-        <button class="now-playing-btn" id="collectionPrevBtn" type="button" aria-label="Previous track">⏮</button>
-        <div class="now-playing-title" id="collectionNowPlayingTitle">Choose a track</div>
-        <button class="now-playing-btn" id="collectionNextBtn" type="button" aria-label="Next track">⏭</button>
-      </div>
-    </div>
-  `;
-  host.appendChild(playerWrapper);
+    `;
+    host.appendChild(playerWrapper);
+  }
 
   const playerSection = document.getElementById('collectionPlayer');
   const playerFrame = document.getElementById('collectionPlaylistPlayer');
@@ -340,6 +385,168 @@
 
   const bindPlayerStateListener = () => {
     postPlayerCommand('addEventListener', ['onStateChange']);
+  };
+
+  const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
+
+  const parseSongPath = (href) => {
+    if (!href) return null;
+    try {
+      const url = new URL(href, window.location.href);
+      const match = url.pathname.match(/^\/songs\/([^/]+)\/([^/.]+)\.html$/i);
+      if (!match) return null;
+      return {
+        albumSlug: match[1].toLowerCase(),
+        songSlug: match[2].toLowerCase(),
+      };
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const positionRatingRow = (track) => {
+    if (!track || !track.ratingRow || !track.meta) return;
+    const details = track.meta.querySelector(':scope > .track-details');
+    if (track.card.classList.contains('show-details') && details) {
+      const chartLine = details.querySelector(':scope > .track-chart-performance');
+      if (chartLine) {
+        if (track.ratingRow.parentElement !== details || track.ratingRow.nextElementSibling !== chartLine) {
+          details.insertBefore(track.ratingRow, chartLine);
+        }
+      } else if (track.ratingRow.parentElement !== details || track.ratingRow !== details.lastElementChild) {
+        details.appendChild(track.ratingRow);
+      }
+      return;
+    }
+
+    const anchor = track.meta.querySelector(':scope > .track-album')
+      || track.meta.querySelector(':scope > .track-artist')
+      || track.meta.querySelector(':scope > .track-title-row')
+      || track.meta.firstElementChild;
+    if (!anchor) return;
+
+    if (track.ratingRow.parentElement !== track.meta) {
+      track.meta.insertBefore(track.ratingRow, anchor.nextSibling);
+      return;
+    }
+
+    if (track.ratingRow.previousElementSibling !== anchor) {
+      track.meta.insertBefore(track.ratingRow, anchor.nextSibling);
+    }
+  };
+
+  const updateRatingDisplay = (track, overallValue, userValue, showUser = true) => {
+    if (!track || !track.ratingRow) return;
+    const overallEl = track.ratingRow.querySelector('.track-inline-rating.overall .value');
+    const userBlock = track.ratingRow.querySelector('.track-inline-rating.user');
+    const userEl = track.ratingRow.querySelector('.track-inline-rating.user .value');
+    if (overallEl) overallEl.textContent = overallValue;
+    if (userEl) userEl.textContent = userValue;
+    if (userBlock) userBlock.classList.toggle('is-hidden', !showUser);
+  };
+
+  const loadRatings = async () => {
+    if (!window.supabase || typeof window.supabase.createClient !== 'function') return;
+
+    const keyedTracks = tracks.filter((track) => track.pathInfo && track.pathInfo.albumSlug && track.pathInfo.songSlug);
+    if (!keyedTracks.length) return;
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const readClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    });
+
+    const albumSlugs = Array.from(new Set(keyedTracks.map((track) => track.pathInfo.albumSlug)));
+    const songSlugs = Array.from(new Set(keyedTracks.map((track) => track.pathInfo.songSlug)));
+
+    const { data: albumRows, error: albumError } = await readClient
+      .from('albums')
+      .select('id,slug')
+      .in('slug', albumSlugs);
+    if (albumError || !albumRows || !albumRows.length) return;
+
+    const albumIdBySlug = new Map(albumRows.map((row) => [String(row.slug || '').toLowerCase(), row.id]));
+    const albumIds = Array.from(new Set(albumRows.map((row) => row.id))).filter(Boolean);
+    if (!albumIds.length) return;
+
+    const { data: songRows, error: songError } = await readClient
+      .from('songs')
+      .select('id,slug,album_id')
+      .in('slug', songSlugs)
+      .in('album_id', albumIds);
+    if (songError || !songRows || !songRows.length) return;
+
+    const songIdByKey = new Map();
+    songRows.forEach((row) => {
+      const rowSlug = String(row.slug || '').toLowerCase();
+      const albumSlug = albumRows.find((a) => a.id === row.album_id)?.slug;
+      const albumSlugLower = String(albumSlug || '').toLowerCase();
+      if (!rowSlug || !albumSlugLower) return;
+      songIdByKey.set(`${albumSlugLower}/${rowSlug}`, row.id);
+    });
+
+    const songIds = [];
+    keyedTracks.forEach((track) => {
+      const key = `${track.pathInfo.albumSlug}/${track.pathInfo.songSlug}`;
+      const songId = songIdByKey.get(key);
+      if (songId) {
+        track.songId = songId;
+        songIds.push(songId);
+      }
+    });
+
+    const uniqueSongIds = Array.from(new Set(songIds));
+    if (!uniqueSongIds.length) return;
+
+    const { data: ratingRows } = await readClient
+      .from('song_ratings')
+      .select('song_id,rating')
+      .in('song_id', uniqueSongIds);
+
+    const overallMap = new Map();
+    (ratingRows || []).forEach((row) => {
+      const songId = row.song_id;
+      const rating = Number(row.rating);
+      if (!songId || !Number.isFinite(rating)) return;
+      const current = overallMap.get(songId) || { total: 0, count: 0 };
+      current.total += rating;
+      current.count += 1;
+      overallMap.set(songId, current);
+    });
+
+    let userMap = new Map();
+    try {
+      const { data: sessionData } = await client.auth.getSession();
+      const userId = sessionData?.session?.user?.id;
+      if (userId) {
+        const { data: userRows } = await client
+          .from('song_ratings')
+          .select('song_id,rating')
+          .eq('user_id', userId)
+          .in('song_id', uniqueSongIds);
+        userMap = new Map((userRows || []).map((row) => [row.song_id, Number(row.rating)]));
+      }
+    } catch (error) {
+      /* no session/user rating available */
+    }
+
+    tracks.forEach((track) => {
+      if (!track.songId) {
+        updateRatingDisplay(track, '-', '-', false);
+        return;
+      }
+      const overall = overallMap.get(track.songId);
+      const overallText = overall && overall.count ? (overall.total / overall.count).toFixed(1) : '-';
+      const userRating = userMap.get(track.songId);
+      const hasUserRating = Number.isFinite(userRating) && userRating > 0;
+      const userText = hasUserRating ? String(userRating) : '-';
+      updateRatingDisplay(track, overallText, userText, hasUserRating);
+    });
   };
 
   const getVisibleTracks = () => tracks.filter((track) => !track.card.hidden && track.songHref);
@@ -559,6 +766,7 @@
     const titleLink = card.querySelector('.track-title a');
     const thumbLink = card.querySelector('.track-link, .track-thumb-link');
     const songHref = titleLink?.getAttribute('href') || thumbLink?.getAttribute('href') || '';
+    const pathInfo = parseSongPath(songHref);
 
     const thumbNode = thumbLink || card.querySelector('.track-thumb');
     if (thumbNode && !card.querySelector('.track-media-col')) {
@@ -581,15 +789,47 @@
       mediaCol.appendChild(playButton);
     }
 
+    const meta = card.querySelector('.track-meta');
+    const ratingRow = document.createElement('div');
+    ratingRow.className = 'track-inline-ratings';
+    ratingRow.innerHTML = `
+      <span class="track-inline-rating overall" aria-label="Overall rating">
+        <span class="star">★</span>
+        <span class="value">-</span>
+      </span>
+      <span class="track-inline-rating user" aria-label="Your rating">
+        <span class="star">★</span>
+        <span class="value">-</span>
+      </span>
+    `;
+    if (meta) {
+      meta.appendChild(ratingRow);
+    }
+
     const track = {
       card,
       title: titleText,
       songHref,
+      pathInfo,
       src: '',
       loadingPromise: null,
       playButton,
+      meta,
+      ratingRow,
+      songId: null,
     };
     tracks.push(track);
+
+    positionRatingRow(track);
+
+    const cardObserver = new MutationObserver((mutations) => {
+      const classMutation = mutations.some((m) => m.attributeName === 'class');
+      if (classMutation) {
+        positionRatingRow(track);
+      }
+      syncControls();
+    });
+    cardObserver.observe(card, { attributes: true, attributeFilter: ['hidden', 'class'] });
 
     playButton.addEventListener('click', (event) => {
       event.preventDefault();
@@ -630,16 +870,34 @@
     void openTrack(visibleTracks[index], true);
   });
 
-  const observer = new MutationObserver(() => {
-    syncControls();
-  });
-  cards.forEach((card) => {
-    observer.observe(card, { attributes: true, attributeFilter: ['hidden', 'class'] });
-  });
-
   window.refreshCollectionPlayer = syncControls;
   syncControls();
   setPlaybackUi();
+
+  tracks.forEach((track) => positionRatingRow(track));
+
+  const loadSupabaseScript = () => {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      const existing = document.querySelector('script[data-emdb-supabase]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => resolve(), { once: true });
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js';
+      script.async = true;
+      script.dataset.emdbSupabase = 'true';
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => resolve(), { once: true });
+      document.head.appendChild(script);
+    });
+  };
+
+  void loadSupabaseScript().then(() => loadRatings());
 
   if (tracks[0]) {
     void loadTrackVideoSrc(tracks[0]).then((src) => {
