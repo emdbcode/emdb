@@ -1220,10 +1220,11 @@ let ytPlayer = null;
       });
     }
 
-    function playAtIndex(index){
+    function playAtIndex(index, options = {}){
       if (index < 0 || index >= playlist.length) return;
+      const keepCollapsed = options.keepCollapsed === true || playerContainer.classList.contains('is-collapsed');
       showFloatingPlayer();
-      setCollapsed(false);
+      if (!keepCollapsed) setCollapsed(false);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       isPlaying = true;

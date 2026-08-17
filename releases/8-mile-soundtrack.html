@@ -1400,6 +1400,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       .trim();
     const stripApostrophes = (text) => (text || '').replace(/'/g, '');
     const titleVideoOverrides = new Map([
+      ['8 mile', '-T5I__Jdl3w'],
       ['adrenaline rush', '3TRYW7vzneo'],
       ['spit shine', 'sS68fYUqiX4'],
       ['time of my life', 'PERTVNGxebE'],
@@ -1584,10 +1585,11 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       });
     }
 
-    function playAtIndex(index){
+    function playAtIndex(index, options = {}){
       if (index < 0 || index >= playlist.length) return;
+      const keepCollapsed = options.keepCollapsed === true || playerContainer.classList.contains('is-collapsed');
       showFloatingPlayer();
-      setCollapsed(false);
+      if (!keepCollapsed) setCollapsed(false);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       isPlaying = true;
