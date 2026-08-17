@@ -603,6 +603,130 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 .share-menu a:hover,
 .share-menu button.share-action:hover { color: #E21C21; background: rgba(226,28,33,0.04); }
 
+
+/* floating-player-update:start */
+.playlist-container { display: none; }
+.now-playing-center {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.now-playing-title {
+  flex: 0 1 auto;
+}
+.player-expand-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #E21C21;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin: 0 0 6px;
+}
+.player-expand-btn:hover,
+.player-expand-btn:focus-visible {
+  color: #ff3a3f;
+  outline: none;
+}
+.player-collapse-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border: 1px solid #333;
+  background: #101010;
+  color: #cfcfcf;
+  border-radius: 6px;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 8px;
+  line-height: 1;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.player-collapse-btn:hover,
+.player-collapse-btn:focus-visible {
+  border-color: #E21C21;
+  color: #fff;
+  outline: none;
+}
+.playlist-container.is-floating {
+  display: block;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: min(420px, calc(100vw - 24px));
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+  background: rgba(11, 11, 11, 0.95);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  z-index: 999;
+  backdrop-filter: blur(3px);
+}
+.playlist-container.is-floating .section-heading {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.playlist-container.is-floating.is-dragging .section-heading {
+  cursor: grabbing;
+}
+.playlist-container.is-floating .playlist-embed {
+  height: clamp(200px, 35vh, 260px);
+}
+.playlist-container.is-collapsed .section-heading,
+.playlist-container.is-collapsed .playlist-player,
+.playlist-container.is-collapsed .player-collapse-btn {
+  display: none;
+}
+.playlist-container.is-collapsed .now-playing-controls {
+  border-top: none;
+  padding-top: 0;
+}
+.playlist-container.is-collapsed .player-expand-btn {
+  display: inline-block;
+}
+@media (max-width: 720px){
+  .playlist-container.is-floating {
+    width: min(320px, calc(100vw - 28px));
+    left: 50%;
+    right: auto;
+    bottom: 22px;
+    transform: translateX(-50%);
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .playlist-container.is-floating .section-heading {
+    font-size: 15px;
+    touch-action: auto;
+  }
+  .player-collapse-btn {
+    top: 6px;
+    right: 6px;
+    min-width: 42px;
+    height: 22px;
+    font-size: 12px;
+  }
+  .playlist-container.is-floating .playlist-panel {
+    gap: 8px;
+  }
+  .playlist-container.is-floating .playlist-embed {
+    height: clamp(120px, 22vh, 160px);
+  }
+  .playlist-container.is-floating .now-playing-controls {
+    padding-top: 8px;
+  }
+}
+/* floating-player-update:end */
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -1029,13 +1153,17 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
   <div class="singles-container playlist-container">
     <div class="section-heading" id="musicPlayerHeading">Music Player</div>
+    <button class="player-collapse-btn" id="playerCollapseBtn" type="button" aria-label="Hide player">Hide</button>
     <div class="playlist-panel">
       <div class="video-player open playlist-player">
         <iframe class="playlist-embed" id="playlistPlayer" src="" title="The Re-Up now playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="now-playing-controls">
         <button class="now-playing-btn" id="nowPrevBtn" type="button" aria-label="Previous song">⏮</button>
-        <div class="now-playing-title" id="nowPlayingTitle">Loading...</div>
+        <div class="now-playing-center">
+          <button class="player-expand-btn" id="playerExpandBtn" type="button" aria-label="Play or pause">▶</button>
+          <div class="now-playing-title" id="nowPlayingTitle">Loading...</div>
+        </div>
         <button class="now-playing-btn" id="nowNextBtn" type="button" aria-label="Next song">⏭</button>
       </div>
     </div>
@@ -1247,57 +1375,121 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     const prevBtn = document.getElementById('nowPrevBtn');
     const nextBtn = document.getElementById('nowNextBtn');
     const heading = document.getElementById('musicPlayerHeading');
-    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading) return;
+    const collapseBtn = document.getElementById('playerCollapseBtn');
+    const expandBtn = document.getElementById('playerExpandBtn');
+    const controls = document.querySelector('.now-playing-controls');
+    const playerContainer = document.querySelector('.playlist-container');
+    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading || !playerContainer || !collapseBtn || !expandBtn || !controls) return;
 
-    const videoIds = [
-      'C3xBCSJiXkw',
-      'TNqLeCZ5NkQ',
-      'mbs5V54__Xc',
-      'y8dz2tR_bdQ',
-      'u7uKso6OsD4',
-      'LETEJiDyb1g',
-      'z4uki5y7SCw',
-      'yTuCEXQgVVA',
-      'l0jaVuCZx1Q',
-      'ZRjLsvJ4gRs',
-      'S59eCnoKIC8',
-      '87H3oB20w7c',
-      'ZcK6_gdTgso',
-      'jADphhDtdno',
-      'SguPB36qq9k',
-      'UtaVkla5ujY',
-      'cYbDM1g0bXk',
-      'Wa6aXZeZqBk',
-      '9RU4fmaGlek',
-      'fD5Zv6GcMOc',
-      'UIzlo4FSyEo',
-      'ArWFWMCBhIQ',
-      'fNtxLtD4bVA'
-    ];
+    const showFloatingPlayer = () => {
+      if (!playerContainer.classList.contains('is-floating')) {
+        playerContainer.classList.add('is-floating');
+      }
+    };
+
+    const setCollapsed = (collapsed) => {
+      playerContainer.classList.toggle('is-collapsed', collapsed);
+      collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+      nowTitle.setAttribute('aria-expanded', String(!collapsed));
+    };
+
+    let activePointerId = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+    const isMobileViewport = () => window.matchMedia('(max-width: 720px)').matches;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const clampFloatingPosition = (left, top) => {
+      const rect = playerContainer.getBoundingClientRect();
+      const maxLeft = Math.max(8, window.innerWidth - rect.width - 8);
+      const maxTop = Math.max(8, window.innerHeight - rect.height - 8);
+      return {
+        left: clamp(left, 8, maxLeft),
+        top: clamp(top, 8, maxTop),
+      };
+    };
+
+    const keepFloatingInViewport = () => {
+      if (!playerContainer.classList.contains('was-dragged')) return;
+      const left = parseFloat(playerContainer.style.left || '0');
+      const top = parseFloat(playerContainer.style.top || '0');
+      if (!Number.isFinite(left) || !Number.isFinite(top)) return;
+      const clamped = clampFloatingPosition(left, top);
+      playerContainer.style.left = `${clamped.left}px`;
+      playerContainer.style.top = `${clamped.top}px`;
+    };
+
+    const resetFloatingPosition = () => {
+      playerContainer.classList.remove('was-dragged');
+      playerContainer.style.left = '';
+      playerContainer.style.top = '';
+      playerContainer.style.right = '';
+      playerContainer.style.bottom = '';
+    };
+
+    const startPlayerDrag = (event) => {
+      if (isMobileViewport()) return;
+      if (event.button !== undefined && event.button !== 0) return;
+
+      const rect = playerContainer.getBoundingClientRect();
+      activePointerId = event.pointerId;
+      dragOffsetX = event.clientX - rect.left;
+      dragOffsetY = event.clientY - rect.top;
+
+      playerContainer.classList.add('is-dragging', 'was-dragged');
+      playerContainer.style.right = 'auto';
+      playerContainer.style.bottom = 'auto';
+      heading.setPointerCapture?.(event.pointerId);
+      event.preventDefault();
+    };
+
+    const movePlayerDrag = (event) => {
+      if (activePointerId !== event.pointerId) return;
+      const nextLeft = event.clientX - dragOffsetX;
+      const nextTop = event.clientY - dragOffsetY;
+      const clamped = clampFloatingPosition(nextLeft, nextTop);
+      playerContainer.style.left = `${clamped.left}px`;
+      playerContainer.style.top = `${clamped.top}px`;
+    };
+
+    const endPlayerDrag = (event) => {
+      if (activePointerId !== event.pointerId) return;
+      activePointerId = null;
+      playerContainer.classList.remove('is-dragging');
+      heading.releasePointerCapture?.(event.pointerId);
+    };
+
+    heading.addEventListener('pointerdown', startPlayerDrag);
+    heading.addEventListener('pointermove', movePlayerDrag);
+    heading.addEventListener('pointerup', endPlayerDrag);
+    heading.addEventListener('pointercancel', endPlayerDrag);
+
+    window.addEventListener('resize', () => {
+      if (isMobileViewport()) {
+        resetFloatingPosition();
+        return;
+      }
+      keepFloatingInViewport();
+    });
 
     const trackRows = Array.from(document.querySelectorAll('.tracklist .track'));
     const tracks = trackRows.map((row, index) => {
-      const titleEl = row.querySelector('.track-title');
-      const artistEl = row.querySelector('.track-feat');
+      const link = row.querySelector('.track-title a');
       return {
         row,
+        link,
         index,
-        title: titleEl ? titleEl.textContent.trim() : '',
-        artist: artistEl ? artistEl.textContent.trim() : '',
-        videoId: videoIds[index] || ''
+        title: (row.querySelector('.track-title') || {}).textContent || '',
+        videoId: (row.dataset.video || '').trim()
       };
     });
 
     let currentIndex = 0;
     let isPlaying = false;
-    let playlist = tracks.filter(track => track.videoId).map(track => ({
-      videoId: track.videoId,
-      title: track.title,
-      artist: track.artist
-    }));
+    let playlist = [];
     let pausedIndex = -1;
     let hasPlayedOnce = false;
-    let ytPlayer = null;
+let ytPlayer = null;
 
     function ensurePlayButtons(){
       tracks.forEach(track => {
@@ -1319,15 +1511,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       });
     }
 
-    function formatNowPlaying(item){
-      if (!item) return '';
-      return item.artist ? `${item.title} — ${item.artist}` : item.title;
-    }
-
     function updateUI(){
       const current = playlist[currentIndex];
       heading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
-      if (current) nowTitle.setAttribute('title', formatNowPlaying(current));
+      if (current) nowTitle.setAttribute('title', current.title || '');
+      expandBtn.textContent = isPlaying ? '❚❚' : '▶';
+      expandBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
       tracks.forEach(track => {
         const btn = track.row.querySelector('.track-play-btn');
         if (!btn) return;
@@ -1341,20 +1530,6 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       });
       prevBtn.disabled = currentIndex <= 0;
       nextBtn.disabled = currentIndex >= playlist.length - 1;
-    }
-
-    function closeOpenVideoPlayers(){
-      document.querySelectorAll('.video-player.open:not(.playlist-player)').forEach(p => {
-        p.classList.remove('open');
-        const onEnd = function(e){
-          if (e.propertyName === 'max-height' && !p.classList.contains('open')){
-            p.innerHTML = '';
-            p.style.display = '';
-            p.removeEventListener('transitionend', onEnd);
-          }
-        };
-        p.addEventListener('transitionend', onEnd);
-      });
     }
 
     function setVideo(videoId, autoplay){
@@ -1372,7 +1547,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       if (index < 0 || index >= playlist.length) return;
       currentIndex = index;
       const current = playlist[currentIndex];
-      nowTitle.textContent = formatNowPlaying(current);
+      nowTitle.textContent = current.title || '';
       nowTitle.classList.remove('expanded');
       nowTitle.setAttribute('aria-expanded', 'false');
       nowTitle.scrollLeft = 0;
@@ -1380,8 +1555,24 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       updateUI();
     }
 
+    function closeOpenVideoPlayers(){
+      document.querySelectorAll('.video-player.open:not(.playlist-player)').forEach(p => {
+        p.classList.remove('open');
+        const onEnd = function(e){
+          if (e.propertyName === 'max-height' && !p.classList.contains('open')){
+            p.innerHTML = '';
+            p.style.display = '';
+            p.removeEventListener('transitionend', onEnd);
+          }
+        };
+        p.addEventListener('transitionend', onEnd);
+      });
+    }
+
     function playAtIndex(index){
       if (index < 0 || index >= playlist.length) return;
+      showFloatingPlayer();
+      setCollapsed(false);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       isPlaying = true;
@@ -1398,12 +1589,17 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       } else {
         player.src = `https://www.youtube.com/embed/${current.videoId}?enablejsapi=1`;
       }
+      showFloatingPlayer();
+      setCollapsed(true);
       updateUI();
     }
 
-    function resumeCurrent(){
+    function resumeCurrent(options = {}){
+      const keepCollapsed = options.keepCollapsed === true;
       const current = playlist[currentIndex];
       if (!current) return;
+      showFloatingPlayer();
+      if (!keepCollapsed) setCollapsed(false);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       if (ytPlayer) {
@@ -1478,11 +1674,53 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       window.onYouTubeIframeAPIReady = initYouTubePlayer;
     }
 
-    if (!playlist.length) {
-      nowTitle.textContent = 'No videos available';
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-      return;
+    async function loadVideoIds(){
+      const videoOverrides = new Map([
+        ['walk on water', 'FnLgDgWboh8']
+      ]);
+
+      const normalizeTrackTitle = (text) => (text || '')
+        .toLowerCase()
+        .replace(/[’']/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const fetches = tracks.map(async track => {
+        if (track.videoId) return;
+        if (!track.link || !track.link.getAttribute('href')) return;
+        const overrideVideoId = videoOverrides.get(normalizeTrackTitle(track.title));
+        if (overrideVideoId) {
+          track.videoId = overrideVideoId;
+          return;
+        }
+        try {
+          const response = await fetch(track.link.getAttribute('href'), { credentials: 'same-origin' });
+          if (!response.ok) return;
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const videoEl = doc.querySelector('.song-video[data-video]') || doc.querySelector('#songVideo[data-video]');
+          const videoId = videoEl ? videoEl.getAttribute('data-video') : '';
+          track.videoId = videoId || '';
+        } catch (err) {
+          track.videoId = '';
+        }
+      });
+
+      await Promise.all(fetches);
+      playlist = tracks.filter(track => track.videoId).map(track => ({
+        videoId: track.videoId,
+        title: track.title
+      }));
+
+      if (!playlist.length) {
+        nowTitle.textContent = 'No videos available';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      setIndex(0, false);
+      loadYouTubeApi();
     }
 
     ensurePlayButtons();
@@ -1491,6 +1729,10 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     nowTitle.setAttribute('tabindex', '0');
     nowTitle.setAttribute('aria-expanded', 'false');
     nowTitle.addEventListener('click', () => {
+      if (playerContainer.classList.contains('is-collapsed')) {
+        setCollapsed(false);
+        return;
+      }
       const expanded = nowTitle.classList.toggle('expanded');
       nowTitle.setAttribute('aria-expanded', String(expanded));
       if (expanded) {
@@ -1512,6 +1754,27 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         nowTitle.click();
       }
     });
+
+    collapseBtn.addEventListener('click', () => {
+      setCollapsed(true);
+    });
+
+    expandBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        pauseCurrent();
+      } else {
+        resumeCurrent({ keepCollapsed: true });
+      }
+    });
+
+    controls.addEventListener('click', (event) => {
+      if (!playerContainer.classList.contains('is-collapsed')) return;
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('button')) return;
+      setCollapsed(false);
+    });
+
     window.pausePlaylistPlayer = () => {
       if (!playlist.length) return;
       if (isPlaying) {
@@ -1520,8 +1783,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         ytPlayer.pauseVideo();
       }
     };
-    setIndex(0, false);
-    loadYouTubeApi();
+    loadVideoIds();
   })();
 
   /* Show both vote/review counts when hovering EMDb or Critic blocks */
