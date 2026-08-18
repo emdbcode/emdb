@@ -1296,6 +1296,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
+      if (keepCollapsed) setCollapsed(true);
     }
 
     function pauseCurrent(){
@@ -1337,7 +1338,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         event.stopPropagation();
         if (index === currentIndex) {
           if (isPlaying) pauseCurrent();
-          else resumeCurrent();
+          else resumeCurrent({ keepCollapsed: playerContainer.classList.contains('is-collapsed') });
           return;
         }
         playAtIndex(index);

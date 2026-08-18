@@ -1578,6 +1578,7 @@ let ytPlayer = null;
       pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
+      if (keepCollapsed) setCollapsed(true);
     }
 
     function pauseCurrent(){
@@ -1623,7 +1624,7 @@ let ytPlayer = null;
           if (idx === -1) return;
           if (idx === currentIndex) {
             if (isPlaying) pauseCurrent();
-            else resumeCurrent();
+            else resumeCurrent({ keepCollapsed: playerContainer.classList.contains('is-collapsed') });
             return;
           }
           playAtIndex(idx);

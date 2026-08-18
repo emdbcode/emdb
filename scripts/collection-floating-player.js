@@ -157,6 +157,66 @@
   scrollbar-width: none;
 }
 .now-playing-title.expanded::-webkit-scrollbar { display: none; }
+.now-playing-center {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.now-playing-center .now-playing-title { flex: 0 1 auto; }
+.player-expand-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #E21C21;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin: 0 0 6px;
+}
+.player-collapse-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border: 1px solid #333;
+  background: #101010;
+  color: #cfcfcf;
+  border-radius: 6px;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 8px;
+  line-height: 1;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.player-expand-btn:hover,
+.player-expand-btn:focus-visible {
+  color: #ff3a3f;
+  outline: none;
+}
+.player-collapse-btn:hover {
+  color: #cfcfcf;
+  border-color: #E21C21;
+}
+.player-collapse-btn:focus-visible {
+  color: #fff;
+  border-color: #E21C21;
+  outline: none;
+}
+.playlist-container.is-collapsed .section-heading,
+.playlist-container.is-collapsed .playlist-player,
+.playlist-container.is-collapsed .player-collapse-btn { display: none; }
+.playlist-container.is-collapsed .now-playing-controls {
+  border-top: none;
+  padding-top: 0;
+}
+.playlist-container.is-collapsed .player-expand-btn { display: inline-block; }
 
 .playlist-container.is-floating {
   display: block;
@@ -272,12 +332,40 @@
   const nextBtn = document.getElementById('collectionNextBtn');
   if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn) return;
 
+  const playerPanel = playerSection.querySelector('.playlist-panel');
+  const controls = playerSection.querySelector('.now-playing-controls');
+  if (!playerPanel || !controls) return;
+
+  let collapseBtn = playerSection.querySelector('.player-collapse-btn');
+  if (!collapseBtn) {
+    collapseBtn = document.createElement('button');
+    collapseBtn.className = 'player-collapse-btn';
+    collapseBtn.type = 'button';
+    collapseBtn.textContent = 'Hide';
+    collapseBtn.setAttribute('aria-label', 'Hide player');
+    playerPanel.before(collapseBtn);
+  }
+
+  let expandBtn = controls.querySelector('.player-expand-btn');
+  if (!expandBtn) {
+    const center = document.createElement('div');
+    center.className = 'now-playing-center';
+    expandBtn = document.createElement('button');
+    expandBtn.className = 'player-expand-btn';
+    expandBtn.type = 'button';
+    expandBtn.textContent = '▶';
+    expandBtn.setAttribute('aria-label', 'Play or pause');
+    playerTitle.before(center);
+    center.append(expandBtn, playerTitle);
+  }
+
   const tracks = [];
   let currentTrack = null;
   let isPlaying = false;
   let activePointerId = null;
   let dragOffsetX = 0;
   let dragOffsetY = 0;
+  let isCollapsed = false;
 
   const isMobileViewport = () => window.matchMedia('(max-width: 720px)').matches;
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -298,6 +386,13 @@
     playerSection.style.top = '';
     playerSection.style.right = '';
     playerSection.style.bottom = '';
+  };
+
+  const setCollapsed = (collapsed) => {
+    isCollapsed = collapsed;
+    playerSection.classList.toggle('is-collapsed', collapsed);
+    collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+    playerTitle.setAttribute('aria-expanded', String(!collapsed));
   };
 
   const keepFloatingInViewport = () => {
@@ -622,8 +717,10 @@
     });
 
     playerHeading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
-    playerSection.classList.toggle('is-floating', isPlaying);
-    if (!isPlaying) {
+    expandBtn.textContent = isPlaying ? '❚❚' : '▶';
+    expandBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+    playerSection.classList.toggle('is-floating', Boolean(currentTrack));
+    if (!currentTrack) {
       resetFloatingPosition();
     } else {
       keepFloatingInViewport();
@@ -707,6 +804,7 @@
     if (!currentTrack) return;
     postPlayerCommand('pauseVideo');
     isPlaying = false;
+    setCollapsed(true);
     setPlaybackUi();
     syncControls();
   };
@@ -868,6 +966,29 @@
     if (!visibleTracks.length || !currentTrack) return;
     const index = Math.min(visibleTracks.length - 1, visibleTracks.indexOf(currentTrack) + 1);
     void openTrack(visibleTracks[index], true);
+  });
+
+  collapseBtn.addEventListener('click', () => setCollapsed(true));
+
+  expandBtn.addEventListener('click', () => {
+    if (isPlaying) pauseCurrentTrack();
+    else resumeCurrentTrack();
+  });
+
+  playerTitle.setAttribute('role', 'button');
+  playerTitle.setAttribute('tabindex', '0');
+  playerTitle.addEventListener('click', () => {
+    if (isCollapsed) setCollapsed(false);
+  });
+  playerTitle.addEventListener('keydown', (event) => {
+    if ((event.key === 'Enter' || event.key === ' ') && isCollapsed) {
+      event.preventDefault();
+      setCollapsed(false);
+    }
+  });
+  playerSection.addEventListener('click', (event) => {
+    if (!isCollapsed || event.target.closest('button')) return;
+    setCollapsed(false);
   });
 
   window.refreshCollectionPlayer = syncControls;

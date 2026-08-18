@@ -322,6 +322,58 @@ details:not([open]) > summary.promo-summary:focus {
   scrollbar-width: none;
 }
 .now-playing-title.expanded::-webkit-scrollbar { display: none; }
+.now-playing-center {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.now-playing-center .now-playing-title { flex: 0 1 auto; }
+.player-expand-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #E21C21;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin: 0 0 6px;
+}
+.player-collapse-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border: 1px solid #333;
+  background: #101010;
+  color: #cfcfcf;
+  border-radius: 6px;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 8px;
+  line-height: 1;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.player-expand-btn:hover,
+.player-expand-btn:focus-visible {
+  color: #ff3a3f;
+  outline: none;
+}
+.player-collapse-btn:hover {
+  color: #cfcfcf;
+  border-color: #E21C21;
+}
+.player-collapse-btn:focus-visible {
+  color: #fff;
+  border-color: #E21C21;
+  outline: none;
+}
 
 .playlist-container.is-floating {
   display: block;
@@ -356,6 +408,16 @@ details:not([open]) > summary.promo-summary:focus {
 .playlist-container.is-floating .playlist-embed {
   height: clamp(200px, 35vh, 260px);
 }
+.playlist-container.is-collapsed .section-heading,
+.playlist-container.is-collapsed .playlist-player,
+.playlist-container.is-collapsed .player-collapse-btn {
+  display: none;
+}
+.playlist-container.is-collapsed .now-playing-controls {
+  border-top: none;
+  padding-top: 0;
+}
+.playlist-container.is-collapsed .player-expand-btn { display: inline-block; }
 
 @media (max-width: 720px){
   .playlist-embed { height: 320px; }
@@ -2465,13 +2527,17 @@ details:not([open]) > summary.promo-summary:focus {
   <div class="singles-container playlist-container" id="instrumentalPlayer" aria-label="Main instrumental player">
     <div class="player-divider" aria-hidden="true"></div>
     <div class="section-heading" id="musicPlayerHeading">Music Player</div>
+    <button class="player-collapse-btn" id="instrumentalCollapseBtn" type="button" aria-label="Hide player">Hide</button>
     <div class="playlist-panel">
       <div class="video-player open playlist-player">
         <iframe class="playlist-embed" id="playlistPlayer" src="about:blank" title="Now Playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="now-playing-controls">
         <button class="now-playing-btn" id="instrumentalPrevBtn" type="button" aria-label="Previous track">⏮</button>
-        <div class="now-playing-title" id="nowPlayingTitle">Choose a track</div>
+        <div class="now-playing-center">
+          <button class="player-expand-btn" id="instrumentalExpandBtn" type="button" aria-label="Play or pause">▶</button>
+          <div class="now-playing-title" id="nowPlayingTitle">Choose a track</div>
+        </div>
         <button class="now-playing-btn" id="instrumentalNextBtn" type="button" aria-label="Next track">⏭</button>
       </div>
     </div>
@@ -2692,8 +2758,10 @@ details:not([open]) > summary.promo-summary:focus {
   const playerHeading = document.getElementById('musicPlayerHeading');
   const prevBtn = document.getElementById('instrumentalPrevBtn');
   const nextBtn = document.getElementById('instrumentalNextBtn');
+  const collapseBtn = document.getElementById('instrumentalCollapseBtn');
+  const expandBtn = document.getElementById('instrumentalExpandBtn');
   const cards = Array.from(document.querySelectorAll('.track-card'));
-  if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn || !cards.length) return;
+  if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn || !collapseBtn || !expandBtn || !cards.length) return;
 
   const tracks = [];
   let currentTrack = null;
@@ -2701,6 +2769,7 @@ details:not([open]) > summary.promo-summary:focus {
   let activePointerId = null;
   let dragOffsetX = 0;
   let dragOffsetY = 0;
+  let isCollapsed = false;
   const isMobileViewport = () => window.matchMedia('(max-width: 720px)').matches;
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -2721,6 +2790,13 @@ details:not([open]) > summary.promo-summary:focus {
     playerSection.style.top = '';
     playerSection.style.right = '';
     playerSection.style.bottom = '';
+  };
+
+  const setCollapsed = (collapsed) => {
+    isCollapsed = collapsed;
+    playerSection.classList.toggle('is-collapsed', collapsed);
+    collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+    playerTitle.setAttribute('aria-expanded', String(!collapsed));
   };
 
   const keepFloatingInViewport = () => {
@@ -2823,8 +2899,10 @@ details:not([open]) > summary.promo-summary:focus {
       }
     });
     playerHeading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
-    playerSection.classList.toggle('is-floating', isPlaying);
-    if (!isPlaying) {
+    expandBtn.textContent = isPlaying ? '❚❚' : '▶';
+    expandBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+    playerSection.classList.toggle('is-floating', Boolean(currentTrack));
+    if (!currentTrack) {
       resetFloatingPosition();
     } else {
       keepFloatingInViewport();
@@ -2856,15 +2934,6 @@ details:not([open]) > summary.promo-summary:focus {
     }
 
     if (!currentTrack) {
-      currentTrack = visibleTracks[0];
-      playerFrame.src = makeAutoplaySrc(currentTrack.src, false);
-      playerFrame.title = currentTrack.title;
-      playerTitle.textContent = currentTrack.title;
-      isPlaying = false;
-      setPlaybackUi();
-    }
-
-    if (!currentTrack) {
       prevBtn.disabled = true;
       nextBtn.disabled = true;
       return;
@@ -2883,12 +2952,12 @@ details:not([open]) > summary.promo-summary:focus {
     nextBtn.disabled = currentIndex >= visibleTracks.length - 1;
   };
 
-  const openTrack = (track, autoplay = true) => {
+  const openTrack = (track, autoplay = true, forceFrameLoad = false) => {
     if (!track || !track.src) return;
     const videoId = getVideoIdFromSrc(track.src);
     const frameReadyForApi = playerFrame.src && playerFrame.src !== 'about:blank';
 
-    if (frameReadyForApi && videoId) {
+    if (frameReadyForApi && videoId && !forceFrameLoad) {
       postPlayerCommand(autoplay ? 'loadVideoById' : 'cueVideoById', [videoId]);
     } else {
       // First load boots the player; subsequent track switches use API commands
@@ -2908,6 +2977,7 @@ details:not([open]) > summary.promo-summary:focus {
     if (!currentTrack) return;
     postPlayerCommand('pauseVideo');
     isPlaying = false;
+    setCollapsed(true);
     setPlaybackUi();
     syncControls();
   };
@@ -2938,7 +3008,7 @@ details:not([open]) > summary.promo-summary:focus {
     isPlaying = false;
     const nextTrack = getNextTrackForAutoplay();
     if (nextTrack) {
-      openTrack(nextTrack, true);
+      openTrack(nextTrack, true, true);
       return;
     }
 
@@ -3065,12 +3135,32 @@ details:not([open]) > summary.promo-summary:focus {
     openTrack(visibleTracks[index], true);
   });
 
+  collapseBtn.addEventListener('click', () => setCollapsed(true));
+
+  expandBtn.addEventListener('click', () => {
+    if (isPlaying) pauseCurrentTrack();
+    else resumeCurrentTrack();
+  });
+
+  playerTitle.setAttribute('role', 'button');
+  playerTitle.setAttribute('tabindex', '0');
+  playerTitle.addEventListener('click', () => {
+    if (isCollapsed) setCollapsed(false);
+  });
+  playerTitle.addEventListener('keydown', (event) => {
+    if ((event.key === 'Enter' || event.key === ' ') && isCollapsed) {
+      event.preventDefault();
+      setCollapsed(false);
+    }
+  });
+  playerSection.addEventListener('click', (event) => {
+    if (!isCollapsed || event.target.closest('button')) return;
+    setCollapsed(false);
+  });
+
   window.refreshInstrumentalPlayer = syncControls;
 
   syncControls();
-  if (tracks[0]) {
-    openTrack(tracks[0], false);
-  }
 })();
 </script>
 

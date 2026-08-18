@@ -12,6 +12,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.player-expand-btn[aria-label="Pause"] {
+  transform: scale(0.75);
+}
+
 /* Base link reset to avoid blue/purple flash before component styles load */
 a,
 a:visited {

@@ -824,7 +824,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   <!-- SINGLES SECTION -->
   <div class="singles-container">
     <div class="section-heading">Singles</div>
-    <a class="single-section-singles" href="../songs/songs-slim-shady-ep/just-dont-give-a-fuck-original.html">
+    <a class="single-section-singles" href="../songs/slim-shady-ep/just-dont-give-a-fuck-original.html">
       <img src="../images/album-covers/slim-shady-ep/just-don't-give-a-fuck-ep-single-cover.jpg" alt="Just Don't Give A Fuck cover">
       <div class="single-info-singles">
         <span class="song-title-singles">Just Don't Give A Fuck</span>
@@ -1240,6 +1240,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
+      if (keepCollapsed) setCollapsed(true);
     }
 
     function pauseCurrent(){
@@ -1281,7 +1282,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         event.stopPropagation();
         if (index === currentIndex) {
           if (isPlaying) pauseCurrent();
-          else resumeCurrent();
+          else resumeCurrent({ keepCollapsed: playerContainer.classList.contains('is-collapsed') });
           return;
         }
         playAtIndex(index);
