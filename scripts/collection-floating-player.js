@@ -120,39 +120,46 @@
   font-variant-numeric: tabular-nums;
 }
 
-.collection-rating-popup {
+.collection-rating-popup.rating-popup {
   position: fixed;
   inset: 0;
-  z-index: 1100;
+  background: rgba(0,0,0,0.75);
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
 }
-.collection-rating-popup.open { display: flex; }
-.collection-rating-dialog {
-  width: min(360px, 100%);
-  padding: 16px;
+.collection-rating-popup.rating-popup.open { display: flex; }
+.collection-rating-popup .popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
   border-radius: 6px;
   background: #111;
   text-align: center;
+  max-width: 92vw;
+  width: auto;
+  box-sizing: border-box;
+  z-index: 1000;
 }
-.collection-rating-title { margin: 0 0 12px; font-size: 16px; }
-.collection-rating-stars { display: flex; justify-content: center; gap: 6px; }
-.collection-rating-star {
-  border: 0;
-  background: transparent;
+.collection-rating-popup .popup-title { margin-bottom: 10px; font-size: 16px; }
+.collection-rating-popup .popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.collection-rating-popup .star-item { display: flex; flex-direction: column; align-items: center; width: auto; margin: 2px; flex: 0 0 auto; }
+.collection-rating-popup .star {
   color: #666;
-  padding: 2px;
-  font-size: 28px;
+  font-size: clamp(18px, 6vw, 30px);
   line-height: 1;
   cursor: pointer;
+  display: block;
+  pointer-events: auto;
 }
-.collection-rating-star.active,
-.collection-rating-star:hover { color: #E21C21; }
-.collection-rating-number { display: block; margin-top: 3px; color: #aaa; font-size: 12px; }
+.collection-rating-popup .star.active,
+.collection-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.collection-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+@media (max-width: 420px) {
+  .collection-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .collection-rating-popup .popup-stars { gap: 3px; }
+  .collection-rating-popup .star-number { font-size: 11px; }
+}
 
 .playlist-panel { display: flex; flex-direction: column; gap: 12px; }
 .playlist-player { width: 100%; }
@@ -549,11 +556,11 @@
   let activeRatingTrack = null;
   const ratingPopup = inlineRatingsEnabled ? document.createElement('div') : null;
   if (ratingPopup) {
-    ratingPopup.className = 'collection-rating-popup';
+    ratingPopup.className = 'collection-rating-popup rating-popup';
     ratingPopup.innerHTML = `
-      <div class="collection-rating-dialog" role="dialog" aria-modal="true" aria-labelledby="collectionRatingTitle">
-        <div class="collection-rating-title" id="collectionRatingTitle">Rate this song</div>
-        <div class="collection-rating-stars" aria-label="Choose a rating"></div>
+      <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="collectionRatingTitle">
+        <div class="popup-title" id="collectionRatingTitle">Rate this song</div>
+        <div class="popup-stars" aria-label="Choose a rating"></div>
       </div>
     `;
     document.body.appendChild(ratingPopup);
@@ -773,19 +780,24 @@
       return;
     }
     activeRatingTrack = track;
-    ratingPopup.querySelector('.collection-rating-title').textContent = `Rate ${track.title}`;
+    ratingPopup.querySelector('.popup-title').textContent = `Rate ${track.title}`;
     ratingPopup.classList.add('open');
   };
 
   if (ratingPopup) {
-    const stars = ratingPopup.querySelector('.collection-rating-stars');
+    const stars = ratingPopup.querySelector('.popup-stars');
     for (let value = 1; value <= 10; value += 1) {
-      const star = document.createElement('button');
-      star.type = 'button';
-      star.className = 'collection-rating-star';
-      star.innerHTML = `★<span class="collection-rating-number">${value}</span>`;
+      const item = document.createElement('div');
+      item.className = 'star-item';
+      const star = document.createElement('span');
+      star.className = 'star';
+      star.textContent = '★';
       star.addEventListener('click', () => void saveCollectionRating(value));
-      stars.appendChild(star);
+      const label = document.createElement('div');
+      label.className = 'star-number';
+      label.textContent = String(value);
+      item.append(star, label);
+      stars.appendChild(item);
     }
     ratingPopup.addEventListener('click', (event) => {
       if (event.target === ratingPopup) closeRatingPopup();
