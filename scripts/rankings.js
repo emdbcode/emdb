@@ -21,8 +21,79 @@
   const config = window.EMDbRankingsPage || {};
   const listEl = document.getElementById('rankingsList');
   const statusEl = document.getElementById('rankingsStatus');
+  let supabaseClient = null;
+  let currentUserId = null;
+  let activeRatingItem = null;
 
   if (!listEl || !statusEl) return;
+
+  const ratingPopup = document.createElement('div');
+  ratingPopup.className = 'ranking-rating-popup rating-popup';
+  ratingPopup.innerHTML = `
+    <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="rankingRatingTitle">
+      <div class="popup-title" id="rankingRatingTitle">Rate this item</div>
+      <div class="popup-stars" aria-label="Choose a rating"></div>
+    </div>
+  `;
+  document.body.appendChild(ratingPopup);
+
+  const popupStyles = document.createElement('style');
+  popupStyles.textContent = `
+.ranking-score .rate-ranking-btn {
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #101010;
+  color: #cfcfcf;
+  padding: 5px 6px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.ranking-score .rate-ranking-btn:hover,
+.ranking-score .rate-ranking-btn:focus-visible {
+  border-color: #E21C21;
+  color: #fff;
+  background: #1a1a1a;
+  outline: none;
+}
+.ranking-score .rate-ranking-btn .score-star { color: #E21C21; }
+.ranking-rating-popup.rating-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.ranking-rating-popup.rating-popup.open { display: flex; }
+.ranking-rating-popup .popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 92vw;
+  width: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.ranking-rating-popup .popup-title { margin-bottom: 10px; font-size: 16px; }
+.ranking-rating-popup .popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.ranking-rating-popup .star-item { display: flex; flex-direction: column; align-items: center; width: auto; margin: 2px; flex: 0 0 auto; }
+.ranking-rating-popup .star { font-size: clamp(18px, 6vw, 30px); cursor: pointer; color: #666; line-height: 1; display: block; pointer-events: auto; }
+.ranking-rating-popup .star.active,
+.ranking-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.ranking-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+@media (max-width: 420px) {
+  .ranking-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .ranking-rating-popup .popup-stars { gap: 3px; }
+  .ranking-rating-popup .star-number { font-size: 11px; }
+}`;
+  document.head.appendChild(popupStyles);
 
   function setStatus(message, isError) {
     statusEl.textContent = message || '';
@@ -47,6 +118,58 @@
     }
     return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
+
+  function closeRatingPopup() {
+    ratingPopup.classList.remove('open');
+    activeRatingItem = null;
+  }
+
+  async function openRatingPopup(item) {
+    if (!currentUserId) {
+      const { data } = await supabaseClient.auth.getSession();
+      currentUserId = data?.session?.user?.id || null;
+    }
+    if (!currentUserId) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    activeRatingItem = item;
+    ratingPopup.querySelector('.popup-title').textContent = `Rate ${item.title}`;
+    ratingPopup.classList.add('open');
+  }
+
+  async function saveRating(value) {
+    if (!activeRatingItem || !supabaseClient || !currentUserId) return;
+    const isAlbum = config.type === 'albums';
+    const idColumn = isAlbum ? 'album_id' : 'song_id';
+    const table = isAlbum ? 'album_ratings' : 'song_ratings';
+    const { error } = await supabaseClient.from(table).upsert({
+      [idColumn]: activeRatingItem.id,
+      user_id: currentUserId,
+      rating: value,
+    }, { onConflict: `${idColumn},user_id` });
+    if (error) return;
+    closeRatingPopup();
+    void init();
+  }
+
+  const popupStars = ratingPopup.querySelector('.popup-stars');
+  for (let value = 1; value <= 10; value += 1) {
+    const item = document.createElement('div');
+    item.className = 'star-item';
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.textContent = '★';
+    star.addEventListener('click', () => void saveRating(value));
+    const label = document.createElement('div');
+    label.className = 'star-number';
+    label.textContent = String(value);
+    item.append(star, label);
+    popupStars.appendChild(item);
+  }
+  ratingPopup.addEventListener('click', (event) => {
+    if (event.target === ratingPopup) closeRatingPopup();
+  });
 
   async function fetchAll(query) {
     const results = [];
@@ -178,8 +301,16 @@
       const userScore = document.createElement('span');
       userScore.className = 'user-inline-score';
       const userInlineValue = formatInlineScore(item.userScore);
-      if (userInlineValue === '-') userScore.classList.add('is-empty');
-      userScore.innerHTML = `<span class="score-star" aria-hidden="true">★</span><span class="score-value">${userInlineValue}</span>`;
+      if (userInlineValue === '-') {
+        const rateButton = document.createElement('button');
+        rateButton.type = 'button';
+        rateButton.className = 'rate-ranking-btn';
+        rateButton.innerHTML = '<span class="score-star" aria-hidden="true">★</span> Rate';
+        rateButton.addEventListener('click', () => void openRatingPopup(item));
+        userScore.appendChild(rateButton);
+      } else {
+        userScore.innerHTML = `<span class="score-star" aria-hidden="true">★</span><span class="score-value">${userInlineValue}</span>`;
+      }
       score.appendChild(userScore);
 
       main.appendChild(score);
@@ -252,6 +383,7 @@
     try {
       setStatus('Loading rankings...', false);
       const client = createClient();
+      supabaseClient = client;
       const { data: sessionData } = await client.auth.getSession();
       const userId = sessionData && sessionData.session && sessionData.session.user
         ? sessionData.session.user.id
