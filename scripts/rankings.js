@@ -60,7 +60,11 @@
   background: #1a1a1a;
   outline: none;
 }
-.ranking-score .rate-ranking-btn .score-star { color: #E21C21; }
+.ranking-score .rate-ranking-btn .score-star {
+  color: #E21C21;
+  font-size: 14px;
+  margin-right: 0;
+}
 .ranking-rating-popup.rating-popup {
   position: fixed;
   inset: 0;
