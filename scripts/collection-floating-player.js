@@ -5,6 +5,7 @@
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
   const inlineRatingsEnabled = true;
+  const editableRatingsEnabled = document.body.hasAttribute('data-editable-collection-ratings');
 
   const styleId = 'collection-floating-player-style';
   if (!document.getElementById(styleId)) {
@@ -110,6 +111,8 @@
 .track-inline-rating .rate-track-btn .star { color: #E21C21; }
 .track-inline-rating.user.is-awaiting-rating > .star,
 .track-inline-rating.user.is-awaiting-rating > .value { display: none; }
+.track-inline-rating.user.is-editable { cursor: pointer; }
+.track-inline-rating.user.is-editable:focus-visible { outline: 2px solid rgba(226,28,33,0.35); outline-offset: 2px; }
 
 .track-inline-rating.is-hidden {
   display: none;
@@ -155,6 +158,7 @@
 .collection-rating-popup .star.active,
 .collection-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
 .collection-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+.collection-rating-popup .popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
 @media (max-width: 420px) {
   .collection-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
   .collection-rating-popup .popup-stars { gap: 3px; }
@@ -561,6 +565,7 @@
       <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="collectionRatingTitle">
         <div class="popup-title" id="collectionRatingTitle">Rate this song</div>
         <div class="popup-stars" aria-label="Choose a rating"></div>
+        <div class="popup-close" role="button" tabindex="0">Remove rating</div>
       </div>
     `;
     document.body.appendChild(ratingPopup);
@@ -627,10 +632,28 @@
     if (!inlineRatingsEnabled) return;
     const rateButton = userBlock.querySelector('.rate-track-btn');
     userBlock.classList.toggle('is-awaiting-rating', !showUser);
+    userBlock.classList.toggle('is-editable', editableRatingsEnabled && showUser);
     if (showUser) {
       rateButton?.remove();
+      if (editableRatingsEnabled) {
+        userBlock.setAttribute('role', 'button');
+        userBlock.setAttribute('tabindex', '0');
+        userBlock.setAttribute('aria-label', `Edit your rating for ${track.title}`);
+        userBlock.onclick = () => void openRatingPopup(track);
+        userBlock.onkeydown = (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            void openRatingPopup(track);
+          }
+        };
+      }
       return;
     }
+    userBlock.removeAttribute('role');
+    userBlock.removeAttribute('tabindex');
+    userBlock.removeAttribute('aria-label');
+    userBlock.onclick = null;
+    userBlock.onkeydown = null;
     if (!rateButton) {
       const button = document.createElement('button');
       button.type = 'button';
@@ -765,6 +788,19 @@
     void loadRatings();
   };
 
+  const removeCollectionRating = async () => {
+    if (!activeRatingTrack || !ratingClient || !currentUserId) return;
+    const { error } = await ratingClient
+      .from('song_ratings')
+      .delete()
+      .eq('song_id', activeRatingTrack.songId)
+      .eq('user_id', currentUserId);
+    if (error) return;
+    updateRatingDisplay(activeRatingTrack, activeRatingTrack.overallRating || '-', '-', false);
+    closeRatingPopup();
+    void loadRatings();
+  };
+
   const openRatingPopup = async (track) => {
     if (!ratingPopup || !track?.songId) return;
     if (!ratingClient) {
@@ -781,6 +817,11 @@
     }
     activeRatingTrack = track;
     ratingPopup.querySelector('.popup-title').textContent = `Rate ${track.title}`;
+    const currentRating = Number(track.ratingRow.querySelector('.track-inline-rating.user .value')?.textContent || 0);
+    ratingPopup.querySelectorAll('.star').forEach((star, index) => {
+      star.classList.toggle('active', index < currentRating);
+    });
+    ratingPopup.querySelector('.popup-close').style.display = currentRating > 0 ? '' : 'none';
     ratingPopup.classList.add('open');
   };
 
@@ -801,6 +842,14 @@
     }
     ratingPopup.addEventListener('click', (event) => {
       if (event.target === ratingPopup) closeRatingPopup();
+    });
+    const removeButton = ratingPopup.querySelector('.popup-close');
+    removeButton.addEventListener('click', () => void removeCollectionRating());
+    removeButton.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        void removeCollectionRating();
+      }
     });
   }
 
