@@ -21,7 +21,6 @@ const avatarDropdownToggle = document.getElementById('avatarDropdownToggle');
 const avatarDropdownMenu = document.getElementById('avatarDropdownMenu');
 const avatarDropdownThumb = document.getElementById('avatarDropdownThumb');
 const avatarDropdownLabel = document.getElementById('avatarDropdownLabel');
-const avatarSearchInput = document.getElementById('avatarSearch');
 const avatarOptionsList = document.getElementById('avatarOptionsList');
 const usernameMessage = document.getElementById('usernameMessage');
 const avatarMessage = document.getElementById('avatarMessage');
@@ -110,25 +109,6 @@ const buildAvatarLabel = (avatarPath) => {
   return base === 'avatar-1' ? 'avatar-1 (default)' : base;
 };
 
-const normalizeAvatarSearchText = (value) => String(value || '')
-  .toLowerCase()
-  .replace(/[_-]+/g, ' ')
-  .replace(/[^a-z0-9 ]+/g, ' ')
-  .replace(/\s+/g, ' ')
-  .trim();
-
-const avatarMatchesQuery = (avatarPath, query) => {
-  const normalizedQuery = normalizeAvatarSearchText(query);
-  if (!normalizedQuery) return true;
-
-  const label = buildAvatarLabel(avatarPath);
-  const normalizedLabel = normalizeAvatarSearchText(label);
-  if (normalizedLabel.includes(normalizedQuery)) return true;
-
-  const queryTokens = normalizedQuery.split(' ').filter(Boolean);
-  return queryTokens.every((token) => normalizedLabel.includes(token));
-};
-
 const sortAvatarOptions = (paths) => {
   const hasAvatarWord = (value) => /avatar/i.test(String(value || '').split('/').pop() || '');
   return [...paths].sort((a, b) => {
@@ -142,22 +122,9 @@ const sortAvatarOptions = (paths) => {
 const populateAvatarOptions = () => {
   if (!avatarOptionsList) return;
   const selected = normalizeAvatar(avatarPathInput ? avatarPathInput.value : '');
-  const query = avatarSearchInput ? avatarSearchInput.value.trim().toLowerCase() : '';
   avatarOptionsList.innerHTML = '';
 
-  const filtered = avatarOptions.filter((avatarPath) => {
-    return avatarMatchesQuery(avatarPath, query);
-  });
-
-  if (!filtered.length) {
-    const empty = document.createElement('div');
-    empty.className = 'avatar-empty';
-    empty.textContent = 'No avatars match your search.';
-    avatarOptionsList.appendChild(empty);
-    return;
-  }
-
-  filtered.forEach((avatarPath) => {
+  avatarOptions.forEach((avatarPath) => {
     const option = document.createElement('button');
     option.type = 'button';
     option.className = `avatar-option-item${avatarPath === selected ? ' is-selected' : ''}`;
@@ -188,10 +155,6 @@ const setAvatarDropdownOpen = (open) => {
   if (!avatarDropdownMenu || !avatarDropdownToggle) return;
   avatarDropdownMenu.hidden = !open;
   avatarDropdownToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  if (open && avatarSearchInput) {
-    avatarSearchInput.focus();
-    avatarSearchInput.select();
-  }
 };
 
 async function hydrateAvatarOptionsFromDirectory() {
@@ -408,12 +371,6 @@ if (avatarDropdownToggle) {
   avatarDropdownToggle.addEventListener('click', () => {
     const isOpen = avatarDropdownMenu && !avatarDropdownMenu.hidden;
     setAvatarDropdownOpen(!isOpen);
-  });
-}
-
-if (avatarSearchInput) {
-  avatarSearchInput.addEventListener('input', () => {
-    populateAvatarOptions();
   });
 }
 
