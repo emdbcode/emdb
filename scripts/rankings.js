@@ -33,6 +33,7 @@
     <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="rankingRatingTitle">
       <div class="popup-title" id="rankingRatingTitle">Rate this item</div>
       <div class="popup-stars" aria-label="Choose a rating"></div>
+      <div class="popup-close" role="button" tabindex="0">Remove rating</div>
     </div>
   `;
   document.body.appendChild(ratingPopup);
@@ -92,6 +93,7 @@
 .ranking-rating-popup .star.active,
 .ranking-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
 .ranking-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+.ranking-rating-popup .popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
 @media (max-width: 420px) {
   .ranking-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
   .ranking-rating-popup .popup-stars { gap: 3px; }
@@ -139,6 +141,11 @@
     }
     activeRatingItem = item;
     ratingPopup.querySelector('.popup-title').textContent = `Rate ${item.title}`;
+    const currentRating = Number(item.userScore) || 0;
+    ratingPopup.querySelectorAll('.star').forEach((star, index) => {
+      star.classList.toggle('active', index < currentRating);
+    });
+    ratingPopup.querySelector('.popup-close').style.display = currentRating > 0 ? '' : 'none';
     ratingPopup.classList.add('open');
   }
 
@@ -152,6 +159,21 @@
       user_id: currentUserId,
       rating: value,
     }, { onConflict: `${idColumn},user_id` });
+    if (error) return;
+    closeRatingPopup();
+    void init();
+  }
+
+  async function removeRating() {
+    if (!activeRatingItem || !supabaseClient || !currentUserId) return;
+    const isAlbum = config.type === 'albums';
+    const idColumn = isAlbum ? 'album_id' : 'song_id';
+    const table = isAlbum ? 'album_ratings' : 'song_ratings';
+    const { error } = await supabaseClient
+      .from(table)
+      .delete()
+      .eq(idColumn, activeRatingItem.id)
+      .eq('user_id', currentUserId);
     if (error) return;
     closeRatingPopup();
     void init();
@@ -173,6 +195,14 @@
   }
   ratingPopup.addEventListener('click', (event) => {
     if (event.target === ratingPopup) closeRatingPopup();
+  });
+  const removeButton = ratingPopup.querySelector('.popup-close');
+  removeButton.addEventListener('click', () => void removeRating());
+  removeButton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      void removeRating();
+    }
   });
 
   async function fetchAll(query) {
@@ -314,6 +344,16 @@
         userScore.appendChild(rateButton);
       } else {
         userScore.innerHTML = `<span class="score-star" aria-hidden="true">★</span><span class="score-value">${userInlineValue}</span>`;
+        userScore.setAttribute('role', 'button');
+        userScore.setAttribute('tabindex', '0');
+        userScore.setAttribute('aria-label', `Edit your rating for ${item.title}`);
+        userScore.addEventListener('click', () => void openRatingPopup(item));
+        userScore.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            void openRatingPopup(item);
+          }
+        });
       }
       score.appendChild(userScore);
 

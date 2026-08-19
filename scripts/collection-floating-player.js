@@ -5,7 +5,7 @@
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
   const inlineRatingsEnabled = true;
-  const editableRatingsEnabled = document.body.hasAttribute('data-editable-collection-ratings');
+  const editableRatingsEnabled = true;
 
   const styleId = 'collection-floating-player-style';
   if (!document.getElementById(styleId)) {
