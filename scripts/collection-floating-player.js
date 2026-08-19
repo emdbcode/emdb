@@ -4,6 +4,7 @@
 
   const cards = Array.from(document.querySelectorAll('.track-card'));
   if (!cards.length) return;
+  const inlineRatingsEnabled = true;
 
   const styleId = 'collection-floating-player-style';
   if (!document.getElementById(styleId)) {
@@ -83,6 +84,33 @@
   color: #E21C21;
 }
 
+.track-inline-rating .rate-track-btn {
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #101010;
+  color: #cfcfcf;
+  padding: 5px 6px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.track-inline-rating .rate-track-btn:hover,
+.track-inline-rating .rate-track-btn:focus-visible {
+  border-color: #E21C21;
+  color: #fff;
+  background: #1a1a1a;
+  outline: none;
+}
+
+.track-inline-rating .rate-track-btn .star { color: #E21C21; }
+.track-inline-rating.user.is-awaiting-rating > .star,
+.track-inline-rating.user.is-awaiting-rating > .value { display: none; }
+
 .track-inline-rating.is-hidden {
   display: none;
 }
@@ -91,6 +119,40 @@
   color: #fff;
   font-variant-numeric: tabular-nums;
 }
+
+.collection-rating-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.75);
+}
+.collection-rating-popup.open { display: flex; }
+.collection-rating-dialog {
+  width: min(360px, 100%);
+  padding: 16px;
+  border-radius: 6px;
+  background: #111;
+  text-align: center;
+}
+.collection-rating-title { margin: 0 0 12px; font-size: 16px; }
+.collection-rating-stars { display: flex; justify-content: center; gap: 6px; }
+.collection-rating-star {
+  border: 0;
+  background: transparent;
+  color: #666;
+  padding: 2px;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+.collection-rating-star.active,
+.collection-rating-star:hover { color: #E21C21; }
+.collection-rating-number { display: block; margin-top: 3px; color: #aaa; font-size: 12px; }
 
 .playlist-panel { display: flex; flex-direction: column; gap: 12px; }
 .playlist-player { width: 100%; }
@@ -482,6 +544,21 @@
     postPlayerCommand('addEventListener', ['onStateChange']);
   };
 
+  let ratingClient = null;
+  let currentUserId = null;
+  let activeRatingTrack = null;
+  const ratingPopup = inlineRatingsEnabled ? document.createElement('div') : null;
+  if (ratingPopup) {
+    ratingPopup.className = 'collection-rating-popup';
+    ratingPopup.innerHTML = `
+      <div class="collection-rating-dialog" role="dialog" aria-modal="true" aria-labelledby="collectionRatingTitle">
+        <div class="collection-rating-title" id="collectionRatingTitle">Rate this song</div>
+        <div class="collection-rating-stars" aria-label="Choose a rating"></div>
+      </div>
+    `;
+    document.body.appendChild(ratingPopup);
+  }
+
   const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
 
@@ -538,7 +615,23 @@
     const userEl = track.ratingRow.querySelector('.track-inline-rating.user .value');
     if (overallEl) overallEl.textContent = overallValue;
     if (userEl) userEl.textContent = userValue;
-    if (userBlock) userBlock.classList.toggle('is-hidden', !showUser);
+    if (!userBlock) return;
+    userBlock.classList.toggle('is-hidden', !inlineRatingsEnabled && !showUser);
+    if (!inlineRatingsEnabled) return;
+    const rateButton = userBlock.querySelector('.rate-track-btn');
+    userBlock.classList.toggle('is-awaiting-rating', !showUser);
+    if (showUser) {
+      rateButton?.remove();
+      return;
+    }
+    if (!rateButton) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'rate-track-btn';
+      button.innerHTML = '<span class="star" aria-hidden="true">★</span> Rate';
+      button.addEventListener('click', () => void openRatingPopup(track));
+      userBlock.appendChild(button);
+    }
   };
 
   const loadRatings = async () => {
@@ -548,6 +641,7 @@
     if (!keyedTracks.length) return;
 
     const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    ratingClient = client;
     const readClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         persistSession: false,
@@ -618,6 +712,7 @@
     try {
       const { data: sessionData } = await client.auth.getSession();
       const userId = sessionData?.session?.user?.id;
+      currentUserId = userId || null;
       if (userId) {
         const { data: userRows } = await client
           .from('song_ratings')
@@ -637,12 +732,65 @@
       }
       const overall = overallMap.get(track.songId);
       const overallText = overall && overall.count ? (overall.total / overall.count).toFixed(1) : '-';
+      track.overallRating = overallText;
       const userRating = userMap.get(track.songId);
       const hasUserRating = Number.isFinite(userRating) && userRating > 0;
       const userText = hasUserRating ? String(userRating) : '-';
       updateRatingDisplay(track, overallText, userText, hasUserRating);
     });
   };
+
+  const closeRatingPopup = () => {
+    ratingPopup?.classList.remove('open');
+    activeRatingTrack = null;
+  };
+
+  const saveCollectionRating = async (value) => {
+    if (!activeRatingTrack || !ratingClient || !currentUserId) return;
+    const { error } = await ratingClient.from('song_ratings').upsert({
+      song_id: activeRatingTrack.songId,
+      user_id: currentUserId,
+      rating: value,
+    }, { onConflict: 'song_id,user_id' });
+    if (error) return;
+    updateRatingDisplay(activeRatingTrack, activeRatingTrack.overallRating || '-', String(value), true);
+    closeRatingPopup();
+    void loadRatings();
+  };
+
+  const openRatingPopup = async (track) => {
+    if (!ratingPopup || !track?.songId) return;
+    if (!ratingClient) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    if (!currentUserId) {
+      const { data } = await ratingClient.auth.getSession();
+      currentUserId = data?.session?.user?.id || null;
+    }
+    if (!currentUserId) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    activeRatingTrack = track;
+    ratingPopup.querySelector('.collection-rating-title').textContent = `Rate ${track.title}`;
+    ratingPopup.classList.add('open');
+  };
+
+  if (ratingPopup) {
+    const stars = ratingPopup.querySelector('.collection-rating-stars');
+    for (let value = 1; value <= 10; value += 1) {
+      const star = document.createElement('button');
+      star.type = 'button';
+      star.className = 'collection-rating-star';
+      star.innerHTML = `★<span class="collection-rating-number">${value}</span>`;
+      star.addEventListener('click', () => void saveCollectionRating(value));
+      stars.appendChild(star);
+    }
+    ratingPopup.addEventListener('click', (event) => {
+      if (event.target === ratingPopup) closeRatingPopup();
+    });
+  }
 
   const getVisibleTracks = () => tracks.filter((track) => !track.card.hidden && track.songHref);
 
