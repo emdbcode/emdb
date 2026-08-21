@@ -168,10 +168,23 @@
 
     .article-copy {
       color: #ddd;
-      font-size: 15px;
+      font-family: "Times New Roman", Times, serif;
+			font-size: 17px;
       line-height: 1.62;
       counter-reset: rank-counter 15;
     }
+
+    .article-title {
+      font-family: "Times New Roman", Times, serif;
+    }
+
+      .article-copy h1,
+      .article-copy h2,
+      .article-copy h3,
+      .article-copy h4,
+      .article-copy .article-title {
+        font-family: Arial, Helvetica, sans-serif;
+      }
 
     .article-copy p {
       margin: 0 0 1rem 0;
@@ -300,6 +313,7 @@
       grid-column: 2;
       grid-row: 2;
       margin-left: var(--meta-shift-x);
+      font-family: Arial, Helvetica, sans-serif;
       font-size: clamp(18px, 5vw, 30px);
       color: #E21C21;
       margin-top: 1px;
@@ -324,6 +338,7 @@
       min-width: 64px;
       flex-shrink: 0;
       position: static;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .album-hero .overall-score {
