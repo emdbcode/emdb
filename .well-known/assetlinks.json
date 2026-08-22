@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "pro.emdb.twa",
+      "sha256_cert_fingerprints": [
+        "74:C9:33:56:6F:F2:77:F4:83:81:81:78:AE:9A:E8:9A:F9:8B:BB:31:B5:42:DF:64:25:2F:C7:E6:95:89:DA:4E"
+      ]
+    }
+  }
+]
