@@ -9,7 +9,7 @@
 
   <meta
     name="description"
-    content="Follow EMDb on X for the latest Eminem music news, facts, trivia and updates."
+    content="The latest Eminem news, updates and stories from EMDb's Shady Times."
   >
 
   <link rel="stylesheet" href="/style.css">
@@ -44,24 +44,111 @@
   </script>
 
   <style>
-    .emx-page {
+    .news-page {
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    .emx-page h1 {
-      margin-bottom: 20px;
+    .news-page h1 {
+      margin-bottom: 30px;
     }
 
-    .emx-timeline-wrap {
+    .news-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .news-image {
+      flex: 0 0 260px;
+      width: 260px;
+      height: 160px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #222;
+    }
+
+    .news-image img {
       width: 100%;
-      min-height: 400px;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .emx-fallback {
-      text-align: center;
-      margin-top: 20px;
+    .news-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .news-type {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    .news-title {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .news-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .news-title a:hover {
+      text-decoration: underline;
+    }
+
+    .news-description {
+      margin: 0 0 12px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .news-meta {
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .news-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .news-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .news-item {
+        display: block;
+      }
+
+      .news-image {
+        width: 100%;
+        height: 210px;
+        margin-bottom: 15px;
+      }
+
+      .news-title {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -71,41 +158,171 @@
   <div id="site-header"></div>
 
   <main>
-    <div class="emx-page">
+    <div class="news-page">
 
       <h1>Shady Times</h1>
 
-      <div class="emx-timeline-wrap">
+      <div class="news-feed">
 
-        <div
-          class="sk-ww-twitter-feed"
-          data-embed-id="25713623"
-        ></div>
+        <!-- QUICK NEWS -->
+        <article class="news-item">
+
+          <div class="news-image">
+            <div
+              style="
+                width:100%;
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#222;
+                color:#888;
+                font-size:14px;
+              "
+            >
+              News Image
+            </div>
+          </div>
+
+          <div class="news-content">
+
+            <div class="news-type">QUICK NEWS</div>
+
+            <h2 class="news-title">
+              <a href="https://x.com/emdbnews" target="_blank" rel="noopener noreferrer">
+                Eminem spotted at a basketball game
+              </a>
+            </h2>
+
+            <p class="news-description">
+              Eminem was spotted attending a basketball game.
+            </p>
+
+            <div class="news-meta">
+              September 14, 2026 · @emdbnews
+            </div>
+
+            <a
+              class="news-link"
+              href="https://x.com/emdbnews"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on X →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- FULL ARTICLE -->
+        <article class="news-item">
+
+          <div class="news-image">
+            <div
+              style="
+                width:100%;
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#222;
+                color:#888;
+                font-size:14px;
+              "
+            >
+              Article Image
+            </div>
+          </div>
+
+          <div class="news-content">
+
+            <div class="news-type">FULL ARTICLE</div>
+
+            <h2 class="news-title">
+              <a href="/articles/example.html">
+                Example Eminem news article
+              </a>
+            </h2>
+
+            <p class="news-description">
+              This is where your longer EMDb stories will appear alongside Quick News.
+            </p>
+
+            <div class="news-meta">
+              September 13, 2026 · EMDb
+            </div>
+
+            <a
+              class="news-link"
+              href="/articles/example.html"
+            >
+              Read Article →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- QUICK NEWS -->
+        <article class="news-item">
+
+          <div class="news-image">
+            <div
+              style="
+                width:100%;
+                height:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#222;
+                color:#888;
+                font-size:14px;
+              "
+            >
+              News Image
+            </div>
+          </div>
+
+          <div class="news-content">
+
+            <div class="news-type">QUICK NEWS</div>
+
+            <h2 class="news-title">
+              <a href="https://x.com/emdbnews" target="_blank" rel="noopener noreferrer">
+                Another Eminem news update
+              </a>
+            </h2>
+
+            <p class="news-description">
+              A short update like this can cover the smaller stories that don't need a full article.
+            </p>
+
+            <div class="news-meta">
+              September 12, 2026 · @emdbnews
+            </div>
+
+            <a
+              class="news-link"
+              href="https://x.com/emdbnews"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on X →
+            </a>
+
+          </div>
+
+        </article>
 
       </div>
-
-      <p class="emx-fallback">
-        Follow
-        <a
-          href="https://x.com/emdbnews"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          @emdbnews on X
-        </a>
-      </p>
 
     </div>
   </main>
 
-  <!-- Site header/footer scripts -->
   <script src="/header.js"></script>
-
-  <!-- SociableKIT X Feed -->
-  <script
-    src="https://widgets.sociablekit.com/twitter-feed/widget.js"
-    defer
-  ></script>
 
 </body>
 </html>
