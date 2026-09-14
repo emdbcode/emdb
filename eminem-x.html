@@ -3,43 +3,26 @@
 <head>
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Shady Times | EMDb</title>
 
-  <meta
-    name="description"
-    content="The latest Eminem news, updates and stories from EMDb's Shady Times."
-  >
+  <meta name="description" content="The latest Eminem news, updates and stories from EMDb's Shady Times.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/style.css">
-
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="icon" href="/favicon.ico">
   <link rel="manifest" href="/manifest.json">
 
   <!-- Google AdSense -->
-  <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6303367995277682"
-    crossorigin="anonymous"
-  ></script>
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
 
   <!-- Google Analytics -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-  ></script>
-
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-XXXXXXXXXX');
   </script>
 
@@ -50,277 +33,58 @@
       padding: 20px;
     }
 
-    .news-page h1 {
+    .news-intro {
       margin-bottom: 30px;
     }
 
-    .news-feed {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .news-item {
-      display: flex;
-      gap: 20px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .news-image {
-      flex: 0 0 260px;
-      width: 260px;
-      height: 160px;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #222;
-    }
-
-    .news-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .news-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .news-type {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+    .news-intro h1 {
       margin-bottom: 8px;
-      opacity: 0.7;
     }
 
-    .news-title {
-      margin: 0 0 8px;
-      font-size: 22px;
-      line-height: 1.25;
+    .news-intro p {
+      margin: 0;
+      opacity: 0.8;
     }
 
-    .news-title a {
-      color: inherit;
-      text-decoration: none;
+    .x-feed {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    .news-title a:hover {
-      text-decoration: underline;
-    }
-
-    .news-description {
-      margin: 0 0 12px;
-      line-height: 1.5;
-      opacity: 0.85;
-    }
-
-    .news-meta {
-      font-size: 13px;
-      opacity: 0.6;
-    }
-
-    .news-link {
-      display: inline-block;
-      margin-top: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .news-link:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 700px) {
-      .news-item {
-        display: block;
-      }
-
-      .news-image {
-        width: 100%;
-        height: 210px;
-        margin-bottom: 15px;
-      }
-
-      .news-title {
-        font-size: 20px;
-      }
+    .x-feed iframe {
+      max-width: 100% !important;
     }
   </style>
 </head>
 
 <body>
 
-  <div id="site-header"></div>
+  <div id="header"></div>
 
-  <main>
-    <div class="news-page">
+  <main class="news-page">
 
+    <div class="news-intro">
       <h1>Shady Times</h1>
+      <p>The latest Eminem news, updates and stories from EMDb.</p>
+    </div>
 
-      <div class="news-feed">
+    <div class="x-feed">
 
-        <!-- NEWS FLASH -->
-        <article class="news-item">
-
-          <div class="news-image">
-            <div
-              style="
-                width:100%;
-                height:100%;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:#222;
-                color:#888;
-                font-size:14px;
-              "
-            >
-              News Image
-            </div>
-          </div>
-
-          <div class="news-content">
-
-            <div class="news-type">NEWS FLASH</div>
-
-            <h2 class="news-title">
-              <a href="https://x.com/emdbnews" target="_blank" rel="noopener noreferrer">
-                Eminem spotted at a basketball game
-              </a>
-            </h2>
-
-            <p class="news-description">
-              Eminem was spotted attending a basketball game.
-            </p>
-
-            <div class="news-meta">
-              September 14, 2026 · @emdbnews
-            </div>
-
-            <a
-              class="news-link"
-              href="https://x.com/emdbnews"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on X →
-            </a>
-
-          </div>
-
-        </article>
-
-
-        <!-- FULL ARTICLE -->
-        <article class="news-item">
-
-          <div class="news-image">
-            <div
-              style="
-                width:100%;
-                height:100%;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:#222;
-                color:#888;
-                font-size:14px;
-              "
-            >
-              Article Image
-            </div>
-          </div>
-
-          <div class="news-content">
-
-            <div class="news-type">FULL ARTICLE</div>
-
-            <h2 class="news-title">
-              <a href="/articles/example.html">
-                Example Eminem news article
-              </a>
-            </h2>
-
-            <p class="news-description">
-              This is where your longer EMDb stories will appear alongside NEWS FLASH.
-            </p>
-
-            <div class="news-meta">
-              September 13, 2026 · EMDb
-            </div>
-
-            <a
-              class="news-link"
-              href="/articles/example.html"
-            >
-              Read Article →
-            </a>
-
-          </div>
-
-        </article>
-
-
-        <!-- NEWS FLASH -->
-        <article class="news-item">
-
-          <div class="news-image">
-            <div
-              style="
-                width:100%;
-                height:100%;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:#222;
-                color:#888;
-                font-size:14px;
-              "
-            >
-              News Image
-            </div>
-          </div>
-
-          <div class="news-content">
-
-            <div class="news-type">NEWS FLASH</div>
-
-            <h2 class="news-title">
-              <a href="https://x.com/emdbnews" target="_blank" rel="noopener noreferrer">
-                Another Eminem news update
-              </a>
-            </h2>
-
-            <p class="news-description">
-              A short update like this can cover the smaller stories that don't need a full article.
-            </p>
-
-            <div class="news-meta">
-              September 12, 2026 · @emdbnews
-            </div>
-
-            <a
-              class="news-link"
-              href="https://x.com/emdbnews"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on X →
-            </a>
-
-          </div>
-
-        </article>
-
-      </div>
+      <a
+        class="twitter-timeline"
+        data-theme="dark"
+        data-chrome="noheader nofooter noborders"
+        data-tweet-limit="20"
+        href="https://x.com/emdbnews">
+        Posts by @emdbnews
+      </a>
 
     </div>
+
   </main>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
   <script src="/header.js"></script>
 
