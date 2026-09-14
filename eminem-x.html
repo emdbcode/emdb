@@ -1,70 +1,69 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eminem on X | EMDb</title>
+
+  <title>Shady Times | EMDb</title>
+
+  <meta
+    name="description"
+    content="Follow EMDb on X for the latest Eminem music news, facts, trivia and updates."
+  >
 
   <link rel="stylesheet" href="/style.css">
 
-  <style>
-    .emx-page {
-      max-width: 620px;
-      margin: 40px auto 80px;
-      padding: 0 20px;
-    }
-
-    .emx-page h1 {
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
-      margin: 0 0 20px;
-    }
-
-    .emx-timeline-wrap {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 14px;
-      overflow: hidden;
-      min-height: 600px;
-    }
-
-    .emx-fallback {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #aaa;
-    }
-
-    .emx-fallback a {
-      color: #ddd;
-      text-decoration: underline;
-    }
-
-    .emx-fallback a:hover,
-    .emx-fallback a:focus {
-      color: #E21C21;
-    }
-  </style>
-
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/manifest.json">
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6817358620135492"
-    crossorigin="anonymous"></script>
+  <!-- Google AdSense -->
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6303367995277682"
+    crossorigin="anonymous"
+  ></script>
 
-  <!-- Google tag (gtag.js) -->
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J923YYWH3R"></script>
+  <!-- Google Analytics -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+  ></script>
 
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
-    gtag('config', 'G-J923YYWH3R');
+
+    gtag('config', 'G-XXXXXXXXXX');
   </script>
 
+  <style>
+    .emx-page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .emx-page h1 {
+      margin-bottom: 20px;
+    }
+
+    .emx-timeline-wrap {
+      width: 100%;
+      min-height: 400px;
+    }
+
+    .emx-fallback {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -74,47 +73,39 @@
   <main>
     <div class="emx-page">
 
-```
-  <h1>Eminem on X</h1>
+      <h1>Shady Times</h1>
 
-  <div class="emx-timeline-wrap">
-    <a
-      class="twitter-timeline"
-      data-theme="dark"
-      data-dnt="true"
-      href="https://x.com/eminemdb"
-    >
-      Posts by EMDb
-    </a>
-  </div>
+      <div class="emx-timeline-wrap">
 
-  <p class="emx-fallback">
-    If the embed does not load, open
-    <a
-      href="https://x.com/eminemdb"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      @eminemdb on X
-    </a>.
-  </p>
+        <div
+          class="sk-ww-twitter-feed"
+          data-embed-id="25713623"
+        ></div>
 
-</div>
-```
+      </div>
 
+      <p class="emx-fallback">
+        Follow
+        <a
+          href="https://x.com/emdbnews"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @emdbnews on X
+        </a>
+      </p>
+
+    </div>
   </main>
 
-  <div id="site-footer"></div>
-
+  <!-- Site header/footer scripts -->
   <script src="/header.js"></script>
 
-  <!-- X / Twitter embed -->
-
+  <!-- SociableKIT X Feed -->
   <script
-    async
-    src="https://platform.twitter.com/widgets.js"
-    charset="utf-8">
-  </script>
+    src="https://widgets.sociablekit.com/twitter-feed/widget.js"
+    defer
+  ></script>
 
 </body>
 </html>
