@@ -27,10 +27,25 @@
       padding: clamp(1rem, 2.5vw, 1.5rem);
     }
 
-    .news-shell h1 {
+    .news-shell-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
       margin: 0 0 1rem 0;
+    }
+
+    .news-shell-eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #a5a5a5;
+      line-height: 1;
+    }
+
+    .news-shell h1 {
+      margin: 0;
       color: #fff;
-      font-size: clamp(24px, 4vw, 34px);
+      font-size: clamp(20px, 3vw, 26px);
       line-height: 1.25;
     }
 
@@ -147,13 +162,16 @@
 
   <main class="news-page">
     <section class="news-shell">
-      <h1>Eminem News</h1>
+      <div class="news-shell-header">
+        <span class="news-shell-eyebrow">All News</span>
+        <h1>Shady Times</h1>
+      </div>
 
       <div class="news-grid">
         <article class="news-card">
           <a href="/news/50-cent-confirms-new-song-with-eminem-tupac.html">
             <img src="/images/news-images/50-em-pac.jpg" alt="50 Cent Confirms New Song with Eminem and Tupac Coming Soon">
-            <h2>50 Cent Confirms New Song with Eminem &amp; Tupac Coming Soon</h2>
+            <h2>New Song 2Pac,Eminem &amp; 50 Cent Coming Soon</h2>
             <p class="news-date">July 24, 2026</p>
           </a>
         </article>

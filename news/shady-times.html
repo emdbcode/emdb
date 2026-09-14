@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Eminem News | Shady Times | EMDb</title>
+
+  <meta
+    name="description"
+    content="The latest Eminem news, updates and stories from EMDb's Shady Times."
+  >
+
+  <link rel="stylesheet" href="/style.css">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Google AdSense -->
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6303367995277682"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Google Analytics -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+  ></script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <style>
+    .news-page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .news-page-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .news-page-eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #a5a5a5;
+      line-height: 1;
+    }
+
+    .news-page h1 {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+    }
+
+    .news-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      align-items: stretch;
+    }
+
+    .news-image {
+      flex: 0 0 150px;
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #222;
+      aspect-ratio: 1 / 1;
+    }
+
+    .news-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      aspect-ratio: 1 / 1;
+      background: #111;
+    }
+
+    .news-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 150px;
+    }
+
+    .news-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .news-page .news-title a,
+    .news-page .news-title a:visited {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    .news-page .news-title a:hover,
+    .news-page .news-title a:focus-visible {
+      color: #e21c21 !important;
+      text-decoration: none !important;
+    }
+
+    .news-description {
+      display: none;
+    }
+
+    .news-meta {
+      font-size: 12px;
+      opacity: 0.6;
+      line-height: 1.5;
+      margin-top: 0;
+    }
+
+    .news-meta:last-child {
+      margin-top: auto;
+    }
+
+
+    @media (max-width: 700px) {
+      .news-item {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .news-image {
+        flex: 0 0 110px;
+        width: 110px;
+        height: 110px;
+        min-width: 110px;
+        margin-bottom: 0;
+      }
+
+      .news-title {
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .news-content {
+        justify-content: flex-start;
+        height: 110px;
+      }
+
+      .news-meta:last-child {
+        margin-top: auto;
+      }
+
+      .news-meta {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <div class="news-page">
+
+      <div class="news-page-header">
+        <span class="news-page-eyebrow">Latest News</span>
+        <h1>Shady Times</h1>
+      </div>
+
+      <div class="news-feed">
+
+        <article class="news-item">
+          <div class="news-image">
+            <img src="/images/news-images/50-em-pac.jpg" alt="50 Cent Confirms New Song with Eminem and Tupac Coming Soon">
+          </div>
+
+          <div class="news-content">
+            <h2 class="news-title">
+              <a href="/news/50-cent-confirms-new-song-with-eminem-tupac.html">
+                New Song by 2Pac, Eminem &amp; 50 Cent Coming Soon
+              </a>
+            </h2>
+
+            <div class="news-meta">
+              by EMDb
+            </div>
+
+            <div class="news-meta">
+              July 24, 2026
+            </div>
+          </div>
+        </article>
+
+        <article class="news-item">
+          <div class="news-image">
+            <img src="/images/news-images/jay-z-eminem-yankee-stadium-2026.jpg" alt="Jay-Z Brings Out Eminem At Yankee Stadium">
+          </div>
+
+          <div class="news-content">
+            <h2 class="news-title">
+              <a href="/news/jay-z-eminem-yankee-stadium-2026.html">
+                Eminem Joins Jay-Z on Stage at Yankee Stadium
+              </a>
+            </h2>
+
+            <div class="news-meta">
+              by EMDb
+            </div>
+
+            <div class="news-meta">
+              July 12, 2026
+            </div>
+          </div>
+        </article>
+
+        <article class="news-item">
+          <div class="news-image">
+            <img src="/images/news-images/my-dads-gone-crazy-single-thumb.jpg" alt="Father's Day The Shady Way">
+          </div>
+
+          <div class="news-content">
+            <h2 class="news-title">
+              <a href="/news/my-dads-gone-crazy-fathers-day-single.html">
+                Father’s Day The Shady Way
+              </a>
+            </h2>
+
+            <div class="news-meta">
+              by EMDb
+            </div>
+
+            <div class="news-meta">
+              June 28, 2026
+            </div>
+          </div>
+        </article>
+
+        <article class="news-item">
+          <div class="news-image">
+            <img src="/images/news-images/d12-thank-shady.jpg" alt="D12 Thank Eminem Following New Album">
+          </div>
+
+          <div class="news-content">
+            <h2 class="news-title">
+              <a href="/news/d12-thank-eminem-d12-forever.html">
+                D12 Thank Eminem Following New Album
+              </a>
+            </h2>
+
+            <div class="news-meta">
+              by EMDb
+            </div>
+
+            <div class="news-meta">
+              June 19, 2026
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="/header.js"></script>
+
+</body>
+</html>

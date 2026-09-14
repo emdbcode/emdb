@@ -27,10 +27,25 @@
       padding: clamp(1rem, 2.5vw, 1.5rem);
     }
 
-    .articles-shell h1 {
+    .articles-shell-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
       margin: 0 0 1rem 0;
+    }
+
+    .articles-shell-eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #a5a5a5;
+      line-height: 1;
+    }
+
+    .articles-shell h1 {
+      margin: 0;
       color: #fff;
-      font-size: clamp(24px, 4vw, 34px);
+      font-size: clamp(20px, 3vw, 26px);
       line-height: 1.25;
     }
 
@@ -125,7 +140,10 @@
 
   <main class="articles-page">
     <section class="articles-shell">
-      <h1>Eminem Articles</h1>
+      <div class="articles-shell-header">
+        <span class="articles-shell-eyebrow">All Articles</span>
+        <h1>Marshall Matters</h1>
+      </div>
 
       <div class="articles-grid">
         <article class="article-card">
