@@ -500,6 +500,8 @@ function initHeaderInteractions() {
     let suppressBlurClose = false;
     let searchRequestVersion = 0;
     let searchInputFrame = 0;
+    // Set once the search input is wired up; lets background enrichment refresh an active search.
+    let onIndexEnriched = null;
 
     let supabaseClient = null;
     let supabaseClientPromise = null;
@@ -1415,6 +1417,8 @@ function initHeaderInteractions() {
 
           const enrichedIndex = dedupeByUrl([...items, ...articleItems]);
           searchIndex = enrichedIndex;
+          // Re-run any in-progress search so results include credits/lyrics matches from the full index.
+          if (onIndexEnriched) onIndexEnriched();
 
           if (isCacheLikelyComplete(enrichedIndex)) {
             const savedIndex = storageSet(STORAGE_KEY, JSON.stringify(enrichedIndex));
@@ -2104,6 +2108,10 @@ function initHeaderInteractions() {
         searchInputFrame = 0;
         handleSearchInput(requestVersion);
       });
+    };
+
+    onIndexEnriched = () => {
+      if (searchInput.value.trim()) scheduleSearch();
     };
 
     searchInput.addEventListener('focus', () => {
