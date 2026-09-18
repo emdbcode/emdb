@@ -143,6 +143,84 @@
   };
 })();
 
+function ensureGeniusFallbackStyles() {
+  if (document.getElementById('emdb-genius-fallback-style')) return;
+  const style = document.createElement('style');
+  style.id = 'emdb-genius-fallback-style';
+  style.textContent = [
+    '.rg_embed_link {',
+    '  display: block;',
+    '  color: #d7d7d7;',
+    '  text-decoration: none;',
+    '  line-height: 1.6;',
+    '  margin: 0.35rem 0;',
+    '  transition: color 0.15s ease, opacity 0.15s ease;',
+    '}',
+    '.rg_embed_link a.emdb-genius-link,',
+    '.rg_embed_link .emdb-genius-link {',
+    '  color: #d7d7d7;',
+    '  text-decoration: none;',
+    '}',
+    '.rg_embed_link:hover,',
+    '.rg_embed_link a.emdb-genius-link:hover,',
+    '.rg_embed_link .emdb-genius-link:hover {',
+    '  color: #f34a4a;',
+    '  text-decoration: none;',
+    '}',
+    '.rg_embed_link[data-emdb-genius-fallback="true"] {',
+    '  cursor: pointer;',
+    '}'
+  ].join('\n');
+  document.head.appendChild(style);
+}
+
+function fixBrokenGeniusEmbeds() {
+  ensureGeniusFallbackStyles();
+
+  const geniusLinks = document.querySelectorAll('.rg_embed_link');
+  if (!geniusLinks.length) return;
+
+  const hasRealGeniusIframe = Boolean(document.querySelector('.rg_embed_iframe, iframe[src*="genius.com"], iframe[src*="genius.com/songs/"]'));
+  if (hasRealGeniusIframe) return;
+
+  document.querySelectorAll('script[src*="genius.com/songs/"][src*="embed.js"]').forEach((script) => {
+    script.remove();
+  });
+
+  geniusLinks.forEach((node) => {
+    if (node.dataset.emdbGeniusFallback === 'true') return;
+    node.dataset.emdbGeniusFallback = 'true';
+    node.style.cursor = 'pointer';
+
+    const existingAnchor = node.querySelector('a[href*="genius.com"]');
+    const anchor = existingAnchor || document.createElement('a');
+    const href = anchor.href || `https://genius.com/songs/${node.dataset.songId || ''}`;
+    anchor.href = href;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    anchor.classList.add('emdb-genius-link');
+
+    if (!existingAnchor) {
+      const label = (node.textContent || '').trim() || 'Read lyrics on Genius';
+      anchor.textContent = label;
+      node.textContent = '';
+      node.appendChild(anchor);
+    }
+
+    node.addEventListener('click', (event) => {
+      if (event.target.closest('a')) return;
+      window.open(href, '_blank', 'noopener,noreferrer');
+    }, { passive: true });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', fixBrokenGeniusEmbeds, { once: true });
+} else {
+  fixBrokenGeniusEmbeds();
+}
+window.addEventListener('load', () => setTimeout(fixBrokenGeniusEmbeds, 500));
+
 function getFileRootPrefix() {
   const path = String(window.location.pathname || '');
   const segments = path.split('/').filter(Boolean);
