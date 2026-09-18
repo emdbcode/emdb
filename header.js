@@ -143,84 +143,6 @@
   };
 })();
 
-function ensureGeniusFallbackStyles() {
-  if (document.getElementById('emdb-genius-fallback-style')) return;
-  const style = document.createElement('style');
-  style.id = 'emdb-genius-fallback-style';
-  style.textContent = [
-    '.rg_embed_link {',
-    '  display: block;',
-    '  color: #d7d7d7;',
-    '  text-decoration: none;',
-    '  line-height: 1.6;',
-    '  margin: 0.35rem 0;',
-    '  transition: color 0.15s ease, opacity 0.15s ease;',
-    '}',
-    '.rg_embed_link a.emdb-genius-link,',
-    '.rg_embed_link .emdb-genius-link {',
-    '  color: #d7d7d7;',
-    '  text-decoration: none;',
-    '}',
-    '.rg_embed_link:hover,',
-    '.rg_embed_link a.emdb-genius-link:hover,',
-    '.rg_embed_link .emdb-genius-link:hover {',
-    '  color: #f34a4a;',
-    '  text-decoration: none;',
-    '}',
-    '.rg_embed_link[data-emdb-genius-fallback="true"] {',
-    '  cursor: pointer;',
-    '}'
-  ].join('\n');
-  document.head.appendChild(style);
-}
-
-function fixBrokenGeniusEmbeds() {
-  ensureGeniusFallbackStyles();
-
-  const geniusLinks = document.querySelectorAll('.rg_embed_link');
-  if (!geniusLinks.length) return;
-
-  const hasRealGeniusIframe = Boolean(document.querySelector('.rg_embed_iframe, iframe[src*="genius.com"], iframe[src*="genius.com/songs/"]'));
-  if (hasRealGeniusIframe) return;
-
-  document.querySelectorAll('script[src*="genius.com/songs/"][src*="embed.js"]').forEach((script) => {
-    script.remove();
-  });
-
-  geniusLinks.forEach((node) => {
-    if (node.dataset.emdbGeniusFallback === 'true') return;
-    node.dataset.emdbGeniusFallback = 'true';
-    node.style.cursor = 'pointer';
-
-    const existingAnchor = node.querySelector('a[href*="genius.com"]');
-    const anchor = existingAnchor || document.createElement('a');
-    const href = anchor.href || `https://genius.com/songs/${node.dataset.songId || ''}`;
-    anchor.href = href;
-    anchor.target = '_blank';
-    anchor.rel = 'noopener noreferrer';
-    anchor.classList.add('emdb-genius-link');
-
-    if (!existingAnchor) {
-      const label = (node.textContent || '').trim() || 'Read lyrics on Genius';
-      anchor.textContent = label;
-      node.textContent = '';
-      node.appendChild(anchor);
-    }
-
-    node.addEventListener('click', (event) => {
-      if (event.target.closest('a')) return;
-      window.open(href, '_blank', 'noopener,noreferrer');
-    }, { passive: true });
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', fixBrokenGeniusEmbeds, { once: true });
-} else {
-  fixBrokenGeniusEmbeds();
-}
-window.addEventListener('load', () => setTimeout(fixBrokenGeniusEmbeds, 500));
-
 function getFileRootPrefix() {
   const path = String(window.location.pathname || '');
   const segments = path.split('/').filter(Boolean);
@@ -500,8 +422,6 @@ function initHeaderInteractions() {
     let suppressBlurClose = false;
     let searchRequestVersion = 0;
     let searchInputFrame = 0;
-    // Set once the search input is wired up; lets background enrichment refresh an active search.
-    let onIndexEnriched = null;
 
     let supabaseClient = null;
     let supabaseClientPromise = null;
@@ -1350,7 +1270,7 @@ function initHeaderInteractions() {
         marshalls_house_tokens: []
       }));
 
-      // Fast first-pass tokens are only used as a fallback if enrichment fails outright.
+      // Fast first-pass index so search is responsive immediately on first load.
       const lightweightItems = baseItems.map((item) => {
         const titleTokens = tokensFromText(item.title);
         return {
@@ -1367,10 +1287,9 @@ function initHeaderInteractions() {
         };
       });
 
-      // Don't publish the title-only index yet: doing so let a second in-flight search read
-      // this incomplete index instead of waiting for the full enrichment pass below, which was
-      // the root cause of intermittent "only a few results" searches (worse on Safari, where the
-      // full index rarely got the chance to finish before someone searched again).
+      searchIndex = dedupeByUrl([...lightweightItems, ...articleItems]);
+
+      // Continue full enrichment in the background and swap in richer index when done.
       if (!enrichPromise) {
         enrichPromise = (async () => {
           const items = [];
@@ -1418,8 +1337,6 @@ function initHeaderInteractions() {
 
           const enrichedIndex = dedupeByUrl([...items, ...articleItems]);
           searchIndex = enrichedIndex;
-          // Re-run any in-progress search so results include credits/lyrics matches from the full index.
-          if (onIndexEnriched) onIndexEnriched();
 
           if (isCacheLikelyComplete(enrichedIndex)) {
             const savedIndex = storageSet(STORAGE_KEY, JSON.stringify(enrichedIndex));
@@ -1443,13 +1360,6 @@ function initHeaderInteractions() {
           });
       }
 
-      // Wait for the full-text pass so the very first search returns complete matches
-      // instead of only the title-only lightweight index (this was causing "a few results" bugs).
-      await enrichPromise;
-      // If enrichment threw before setting searchIndex, fall back to title-only matches rather than nothing.
-      if (!searchIndex) {
-        searchIndex = dedupeByUrl([...lightweightItems, ...articleItems]);
-      }
       return searchIndex;
     };
 
@@ -2116,10 +2026,6 @@ function initHeaderInteractions() {
         searchInputFrame = 0;
         handleSearchInput(requestVersion);
       });
-    };
-
-    onIndexEnriched = () => {
-      if (searchInput.value.trim()) scheduleSearch();
     };
 
     searchInput.addEventListener('focus', () => {
