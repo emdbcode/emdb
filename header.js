@@ -486,7 +486,9 @@ function initHeaderInteractions() {
     const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
     const RESULT_LIMIT = 500;
-    const INDEX_BATCH_SIZE = 12;
+    // Higher concurrency shortens real-world crawl time on the live host (HTTP/2 multiplexing);
+    // batches of 12 made the full-text index take too long on production network latency.
+    const INDEX_BATCH_SIZE = 40;
     const TYPE_LABELS = ['Songs', 'Albums', 'Collections', 'Articles'];
     const DEFAULT_THUMB = '/images/logos/songs-with-cover.jpg';
     const COLLECTION_DEFAULT_COVER = '/images/logos/songs-with-cover.jpg';
