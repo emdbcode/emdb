@@ -1350,7 +1350,7 @@ function initHeaderInteractions() {
         marshalls_house_tokens: []
       }));
 
-      // Fast first-pass index so search is responsive immediately on first load.
+      // Fast first-pass tokens are only used as a fallback if enrichment fails outright.
       const lightweightItems = baseItems.map((item) => {
         const titleTokens = tokensFromText(item.title);
         return {
@@ -1367,9 +1367,10 @@ function initHeaderInteractions() {
         };
       });
 
-      searchIndex = dedupeByUrl([...lightweightItems, ...articleItems]);
-
-      // Continue full enrichment in the background and swap in richer index when done.
+      // Don't publish the title-only index yet: doing so let a second in-flight search read
+      // this incomplete index instead of waiting for the full enrichment pass below, which was
+      // the root cause of intermittent "only a few results" searches (worse on Safari, where the
+      // full index rarely got the chance to finish before someone searched again).
       if (!enrichPromise) {
         enrichPromise = (async () => {
           const items = [];
@@ -1442,6 +1443,13 @@ function initHeaderInteractions() {
           });
       }
 
+      // Wait for the full-text pass so the very first search returns complete matches
+      // instead of only the title-only lightweight index (this was causing "a few results" bugs).
+      await enrichPromise;
+      // If enrichment threw before setting searchIndex, fall back to title-only matches rather than nothing.
+      if (!searchIndex) {
+        searchIndex = dedupeByUrl([...lightweightItems, ...articleItems]);
+      }
       return searchIndex;
     };
 
