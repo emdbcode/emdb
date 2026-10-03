@@ -90,6 +90,7 @@
 .ranking-rating-popup .popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
 .ranking-rating-popup .star-item { display: flex; flex-direction: column; align-items: center; width: auto; margin: 2px; flex: 0 0 auto; }
 .ranking-rating-popup .star { font-size: clamp(18px, 6vw, 30px); cursor: pointer; color: #666; line-height: 1; display: block; pointer-events: auto; }
+.ranking-rating-popup .star.preview,
 .ranking-rating-popup .star.active,
 .ranking-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
 .ranking-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
@@ -187,12 +188,18 @@
     star.className = 'star';
     star.textContent = '★';
     star.addEventListener('click', () => void saveRating(value));
+    star.addEventListener('mouseenter', () => {
+      popupStars.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('preview', i < value));
+    });
     const label = document.createElement('div');
     label.className = 'star-number';
     label.textContent = String(value);
     item.append(star, label);
     popupStars.appendChild(item);
   }
+  popupStars.addEventListener('mouseleave', () => {
+    popupStars.querySelectorAll('.star').forEach((s) => s.classList.remove('preview'));
+  });
   ratingPopup.addEventListener('click', (event) => {
     if (event.target === ratingPopup) closeRatingPopup();
   });

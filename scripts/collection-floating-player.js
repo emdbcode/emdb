@@ -155,6 +155,7 @@
   display: block;
   pointer-events: auto;
 }
+.collection-rating-popup .star.preview,
 .collection-rating-popup .star.active,
 .collection-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
 .collection-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
@@ -834,12 +835,18 @@
       star.className = 'star';
       star.textContent = '★';
       star.addEventListener('click', () => void saveCollectionRating(value));
+      star.addEventListener('mouseenter', () => {
+        stars.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('preview', i < value));
+      });
       const label = document.createElement('div');
       label.className = 'star-number';
       label.textContent = String(value);
       item.append(star, label);
       stars.appendChild(item);
     }
+    stars.addEventListener('mouseleave', () => {
+      stars.querySelectorAll('.star').forEach((s) => s.classList.remove('preview'));
+    });
     ratingPopup.addEventListener('click', (event) => {
       if (event.target === ratingPopup) closeRatingPopup();
     });
