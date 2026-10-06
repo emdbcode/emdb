@@ -205,7 +205,7 @@
     try {
       const { data, error } = await supabaseReadClient
         .from('song_ratings')
-        .select('rating')
+        .select('rating,vote_weight')
         .eq('song_id', songId);
 
       if (error) {
@@ -215,8 +215,9 @@
       }
 
       const count = Array.isArray(data) ? data.length : 0;
-      const avg = count ? (data.reduce((sum, r) => sum + Number(r.rating || 0), 0) / count) : 0;
-      renderOverall(count, avg);
+      const totalWeight = count ? data.reduce((sum, r) => sum + Number(r.vote_weight ?? 1), 0) : 0;
+      const avg = totalWeight ? (data.reduce((sum, r) => sum + Number(r.rating || 0) * Number(r.vote_weight ?? 1), 0) / totalWeight) : 0;
+      renderOverall(totalWeight, avg);
     } catch (err) {
       console.error('Overall rating fetch failed:', err);
       renderOverall(0, 0);

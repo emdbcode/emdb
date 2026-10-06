@@ -1007,7 +1007,7 @@
 
             const { data: ratingRows, error: ratingError } = await client
                 .from('album_ratings')
-                .select('album_id, rating')
+                .select('album_id, rating, vote_weight')
                 .in('album_id', albumIds);
 
             if (ratingError) return;
@@ -1016,14 +1016,15 @@
             albumIds.forEach((id) => ratingMap.set(id, []));
             (ratingRows || []).forEach((row) => {
                 if (!ratingMap.has(row.album_id)) ratingMap.set(row.album_id, []);
-                ratingMap.get(row.album_id).push(Number(row.rating) || 0);
+                ratingMap.get(row.album_id).push({ rating: Number(row.rating) || 0, weight: Number(row.vote_weight ?? 1) });
             });
 
             slideData.forEach(({ slide, slug }) => {
                 const albumId = albumIdBySlug.get(slug);
                 const ratings = albumId ? (ratingMap.get(albumId) || []) : [];
-                const score = ratings.length
-                    ? formatScore(ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length)
+                const totalWeight = ratings.reduce((sum, entry) => sum + entry.weight, 0);
+                const score = totalWeight
+                    ? formatScore(ratings.reduce((sum, entry) => sum + entry.rating * entry.weight, 0) / totalWeight)
                     : '0.0';
                 ensureSlideRating(slide, score);
             });

@@ -235,8 +235,10 @@
       const id = row[keyName];
       const rating = Number(row.rating);
       if (!id || !Number.isFinite(rating)) return;
-      const current = totals.get(id) || { total: 0, count: 0 };
-      current.total += rating;
+      const current = totals.get(id) || { total: 0, count: 0, weight: 0 };
+      const weight = Number(row.vote_weight ?? 1);
+      current.total += rating * weight;
+      current.weight += weight;
       current.count += 1;
       totals.set(id, current);
     });
@@ -244,8 +246,8 @@
     const ratings = new Map();
     totals.forEach((value, id) => {
       ratings.set(id, {
-        score: value.count ? value.total / value.count : null,
-        ratingCount: value.count
+        score: value.weight ? value.total / value.weight : null,
+        ratingCount: value.weight
       });
     });
     return ratings;
@@ -385,7 +387,7 @@
   async function loadAlbums(client, userId) {
     const [albums, ratings, userRatings] = await Promise.all([
       fetchAll(client.from('albums').select('id,title,slug,cover_url').order('title', { ascending: true })),
-      fetchAll(client.from('album_ratings').select('album_id,rating')),
+      fetchAll(client.from('album_ratings').select('album_id,rating,vote_weight')),
       userId
         ? fetchAll(client.from('album_ratings').select('album_id,rating').eq('user_id', userId))
         : Promise.resolve([])
@@ -420,7 +422,7 @@
 
     const [songs, ratings, userRatings] = await Promise.all([
       fetchAll(query),
-      fetchAll(client.from('song_ratings').select('song_id,rating')),
+      fetchAll(client.from('song_ratings').select('song_id,rating,vote_weight')),
       userId
         ? fetchAll(client.from('song_ratings').select('song_id,rating').eq('user_id', userId))
         : Promise.resolve([])

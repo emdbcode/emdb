@@ -2718,9 +2718,10 @@ function setupArticleNewsBottomSliders() {
   };
 
   const formatAverageScore = (values) => {
-    const ratings = Array.isArray(values) ? values.map((value) => Number(value) || 0) : [];
-    if (!ratings.length) return '0.0';
-    const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+    const entries = Array.isArray(values) ? values : [];
+    const totalWeight = entries.reduce((sum, entry) => sum + entry.weight, 0);
+    if (!totalWeight) return '0.0';
+    const average = entries.reduce((sum, entry) => sum + entry.rating * entry.weight, 0) / totalWeight;
     const rounded = Math.round(average * 10) / 10;
     return rounded >= 10 ? '10' : rounded.toFixed(1);
   };
@@ -2779,7 +2780,7 @@ function setupArticleNewsBottomSliders() {
 
     const { data: ratingRows, error: ratingError } = await client
       .from('album_ratings')
-      .select('album_id, rating')
+      .select('album_id, rating, vote_weight')
       .in('album_id', albumIds);
 
     if (ratingError) return;
@@ -2788,7 +2789,7 @@ function setupArticleNewsBottomSliders() {
     albumIds.forEach((id) => ratingMap.set(id, []));
     (ratingRows || []).forEach((row) => {
       if (!ratingMap.has(row.album_id)) ratingMap.set(row.album_id, []);
-      ratingMap.get(row.album_id).push(Number(row.rating) || 0);
+      ratingMap.get(row.album_id).push({ rating: Number(row.rating) || 0, weight: Number(row.vote_weight ?? 1) });
     });
 
     slideData.forEach(({ slide, slug }) => {
@@ -2827,7 +2828,7 @@ function setupArticleNewsBottomSliders() {
 
     const { data: ratingRows, error: ratingError } = await client
       .from('song_ratings')
-      .select('song_id, rating')
+      .select('song_id, rating, vote_weight')
       .in('song_id', songIds);
 
     if (ratingError) return;
@@ -2836,7 +2837,7 @@ function setupArticleNewsBottomSliders() {
     songIds.forEach((id) => ratingMap.set(id, []));
     (ratingRows || []).forEach((row) => {
       if (!ratingMap.has(row.song_id)) ratingMap.set(row.song_id, []);
-      ratingMap.get(row.song_id).push(Number(row.rating) || 0);
+      ratingMap.get(row.song_id).push({ rating: Number(row.rating) || 0, weight: Number(row.vote_weight ?? 1) });
     });
 
     slideData.forEach(({ slide, slug }) => {

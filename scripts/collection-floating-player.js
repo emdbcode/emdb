@@ -725,7 +725,7 @@
 
     const { data: ratingRows } = await readClient
       .from('song_ratings')
-      .select('song_id,rating')
+      .select('song_id,rating,vote_weight')
       .in('song_id', uniqueSongIds);
 
     const overallMap = new Map();
@@ -733,9 +733,10 @@
       const songId = row.song_id;
       const rating = Number(row.rating);
       if (!songId || !Number.isFinite(rating)) return;
+      const weight = Number(row.vote_weight ?? 1);
       const current = overallMap.get(songId) || { total: 0, count: 0 };
-      current.total += rating;
-      current.count += 1;
+      current.total += rating * weight;
+      current.count += weight;
       overallMap.set(songId, current);
     });
 

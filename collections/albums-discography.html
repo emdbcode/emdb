@@ -393,6 +393,75 @@ details:not([open]) > summary.promo-summary:focus {
 .track-inline-rating.is-hidden {
   display: none;
 }
+
+.track-inline-rating .rate-track-btn {
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #101010;
+  color: #cfcfcf;
+  padding: 5px 6px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.track-inline-rating .rate-track-btn:hover,
+.track-inline-rating .rate-track-btn:focus-visible {
+  border-color: #E21C21;
+  color: #fff;
+  background: #1a1a1a;
+  outline: none;
+}
+
+.track-inline-rating .rate-track-btn .star { color: #E21C21; }
+.track-inline-rating.user.is-awaiting-rating > .star,
+.track-inline-rating.user.is-awaiting-rating > .value { display: none; }
+.track-inline-rating.user.is-editable { cursor: pointer; }
+.track-inline-rating.user.is-editable:focus-visible { outline: 2px solid rgba(226,28,33,0.35); outline-offset: 2px; }
+
+.collection-rating-popup.rating-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.collection-rating-popup.rating-popup.open { display: flex; }
+.collection-rating-popup .popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 92vw;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.collection-rating-popup .popup-title { margin-bottom: 10px; font-size: 16px; }
+.collection-rating-popup .popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.collection-rating-popup .star-item { display: flex; flex-direction: column; align-items: center; margin: 2px; flex: 0 0 auto; }
+.collection-rating-popup .star {
+  color: #666;
+  font-size: clamp(18px, 6vw, 30px);
+  line-height: 1;
+  cursor: pointer;
+  display: block;
+}
+.collection-rating-popup .star.preview,
+.collection-rating-popup .star.active,
+.collection-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.collection-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+.collection-rating-popup .popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
+@media (max-width: 420px) {
+  .collection-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .collection-rating-popup .popup-stars { gap: 3px; }
+  .collection-rating-popup .star-number { font-size: 11px; }
+}
 /* collection-dropdown-enhancements-style:end */
 
 @media (max-width: 520px) {
@@ -1043,8 +1112,150 @@ details:not([open]) > summary.promo-summary:focus {
     const userBlock = ratingRow.querySelector('.track-inline-rating.user');
     if (overallEl) overallEl.textContent = overallValue;
     if (userEl) userEl.textContent = userValue;
-    if (userBlock) userBlock.classList.toggle('is-hidden', !showUser);
+    if (!userBlock) return;
+
+    userBlock.classList.remove('is-hidden');
+    userBlock.classList.toggle('is-awaiting-rating', !showUser);
+    userBlock.classList.toggle('is-editable', showUser);
+    const rateButton = userBlock.querySelector('.rate-track-btn');
+    const albumName = (card.querySelector('.album-title')?.textContent || 'album').trim();
+
+    if (showUser) {
+      rateButton?.remove();
+      userBlock.setAttribute('role', 'button');
+      userBlock.setAttribute('tabindex', '0');
+      userBlock.setAttribute('aria-label', `Edit your rating for ${albumName}`);
+      userBlock.onclick = (event) => {
+        event.stopPropagation();
+        void openRatingPopup(card);
+      };
+      userBlock.onkeydown = (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          event.stopPropagation();
+          void openRatingPopup(card);
+        }
+      };
+      return;
+    }
+
+    userBlock.removeAttribute('role');
+    userBlock.removeAttribute('tabindex');
+    userBlock.removeAttribute('aria-label');
+    userBlock.onclick = null;
+    userBlock.onkeydown = null;
+    if (!rateButton) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'rate-track-btn';
+      button.innerHTML = '<span class="star" aria-hidden="true">★</span> Rate';
+      button.addEventListener('click', () => void openRatingPopup(card));
+      userBlock.appendChild(button);
+    }
   };
+
+  let ratingClient = null;
+  let currentUserId = null;
+  let activeRatingCard = null;
+  const cardAlbumIds = new Map();
+  const ratingPopup = document.createElement('div');
+  ratingPopup.className = 'collection-rating-popup rating-popup';
+  ratingPopup.innerHTML = `
+    <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="albumRatingTitle">
+      <div class="popup-title" id="albumRatingTitle">Rate this album</div>
+      <div class="popup-stars" aria-label="Choose a rating"></div>
+      <div class="popup-close" role="button" tabindex="0">Remove rating</div>
+    </div>
+  `;
+  document.body.appendChild(ratingPopup);
+
+  const closeRatingPopup = () => {
+    ratingPopup.classList.remove('open');
+    activeRatingCard = null;
+  };
+
+  const saveAlbumRating = async (value) => {
+    const albumId = activeRatingCard ? cardAlbumIds.get(activeRatingCard) : null;
+    if (!albumId || !ratingClient || !currentUserId) return;
+    const { error } = await ratingClient.from('album_ratings').upsert({
+      album_id: albumId,
+      user_id: currentUserId,
+      rating: value,
+    }, { onConflict: 'album_id,user_id' });
+    if (error) return;
+    closeRatingPopup();
+    void loadAlbumRatings();
+  };
+
+  const removeAlbumRating = async () => {
+    const albumId = activeRatingCard ? cardAlbumIds.get(activeRatingCard) : null;
+    if (!albumId || !ratingClient || !currentUserId) return;
+    const { error } = await ratingClient
+      .from('album_ratings')
+      .delete()
+      .eq('album_id', albumId)
+      .eq('user_id', currentUserId);
+    if (error) return;
+    closeRatingPopup();
+    void loadAlbumRatings();
+  };
+
+  const openRatingPopup = async (card) => {
+    if (!cardAlbumIds.get(card)) return;
+    if (!ratingClient) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    if (!currentUserId) {
+      const { data } = await ratingClient.auth.getSession();
+      currentUserId = data?.session?.user?.id || null;
+    }
+    if (!currentUserId) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    activeRatingCard = card;
+    const albumName = (card.querySelector('.album-title')?.textContent || 'album').trim();
+    ratingPopup.querySelector('.popup-title').textContent = `Rate ${albumName}`;
+    const currentRating = Number(card.querySelector('.track-inline-rating.user .value')?.textContent || 0) || 0;
+    ratingPopup.querySelectorAll('.star').forEach((star, index) => {
+      star.classList.toggle('active', index < currentRating);
+    });
+    ratingPopup.querySelector('.popup-close').style.display = currentRating > 0 ? '' : 'none';
+    ratingPopup.classList.add('open');
+  };
+
+  const popupStars = ratingPopup.querySelector('.popup-stars');
+  for (let value = 1; value <= 10; value += 1) {
+    const item = document.createElement('div');
+    item.className = 'star-item';
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.textContent = '★';
+    star.addEventListener('click', () => void saveAlbumRating(value));
+    star.addEventListener('mouseenter', () => {
+      popupStars.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('preview', i < value));
+    });
+    const label = document.createElement('div');
+    label.className = 'star-number';
+    label.textContent = String(value);
+    item.append(star, label);
+    popupStars.appendChild(item);
+  }
+  popupStars.addEventListener('mouseleave', () => {
+    popupStars.querySelectorAll('.star').forEach((s) => s.classList.remove('preview'));
+  });
+  ratingPopup.addEventListener('click', (event) => {
+    if (event.target === ratingPopup) closeRatingPopup();
+  });
+  const removeButton = ratingPopup.querySelector('.popup-close');
+  removeButton.addEventListener('click', () => void removeAlbumRating());
+  removeButton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      void removeAlbumRating();
+    }
+  });
 
   const toggleDetails = (card) => {
     const showing = card.classList.toggle('show-details');
@@ -1211,6 +1422,7 @@ details:not([open]) > summary.promo-summary:focus {
       },
     });
     const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    ratingClient = client;
 
     const releaseSlugs = Array.from(ratingCardMap.keys());
     const { data: albumRows, error: albumError } = await readClient
@@ -1225,7 +1437,7 @@ details:not([open]) > summary.promo-summary:focus {
 
     const { data: ratingRows } = await readClient
       .from('album_ratings')
-      .select('album_id,rating')
+      .select('album_id,rating,vote_weight')
       .in('album_id', albumIds);
 
     const overallMap = new Map();
@@ -1233,9 +1445,10 @@ details:not([open]) > summary.promo-summary:focus {
       const albumId = row.album_id;
       const rating = Number(row.rating);
       if (!albumId || !Number.isFinite(rating)) return;
+      const weight = Number(row.vote_weight ?? 1);
       const current = overallMap.get(albumId) || { total: 0, count: 0 };
-      current.total += rating;
-      current.count += 1;
+      current.total += rating * weight;
+      current.count += weight;
       overallMap.set(albumId, current);
     });
 
@@ -1257,6 +1470,7 @@ details:not([open]) > summary.promo-summary:focus {
 
     ratingCardMap.forEach((card, slug) => {
       const albumId = albumIdBySlug.get(slug);
+      if (albumId) cardAlbumIds.set(card, albumId);
       if (!albumId) {
         updateRatingDisplay(card, '-', '-', false);
         return;

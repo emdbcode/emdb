@@ -1064,16 +1064,17 @@ async function loadAlbumRatings(userId) {
   if (albumIds.length) {
     const { data: ratingsAll, error: ratingsError } = await supabaseClient
       .from('album_ratings')
-      .select('album_id, rating')
+      .select('album_id, rating, vote_weight')
       .in('album_id', albumIds);
 
     if (!ratingsError && ratingsAll && ratingsAll.length) {
       const stats = {};
       ratingsAll.forEach((r) => {
         const id = r.album_id;
+        const weight = Number(r.vote_weight ?? 1);
         if (!stats[id]) stats[id] = { sum: 0, count: 0 };
-        stats[id].sum += Number(r.rating || 0);
-        stats[id].count += 1;
+        stats[id].sum += Number(r.rating || 0) * weight;
+        stats[id].count += weight;
       });
       Object.keys(stats).forEach((id) => {
         const s = stats[id];
@@ -1358,16 +1359,17 @@ async function loadSongRatings(userId) {
   if (songIds.length) {
     const { data: ratingsAll, error: ratingsError } = await supabaseClient
       .from('song_ratings')
-      .select('song_id, rating')
+      .select('song_id, rating, vote_weight')
       .in('song_id', songIds);
 
     if (!ratingsError && ratingsAll && ratingsAll.length) {
       const stats = {};
       ratingsAll.forEach((r) => {
         const id = r.song_id;
+        const weight = Number(r.vote_weight ?? 1);
         if (!stats[id]) stats[id] = { sum: 0, count: 0 };
-        stats[id].sum += Number(r.rating || 0);
-        stats[id].count += 1;
+        stats[id].sum += Number(r.rating || 0) * weight;
+        stats[id].count += weight;
       });
       Object.keys(stats).forEach((id) => {
         const s = stats[id];
