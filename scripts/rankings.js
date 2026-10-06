@@ -387,7 +387,7 @@
   async function loadAlbums(client, userId) {
     const [albums, ratings, userRatings] = await Promise.all([
       fetchAll(client.from('albums').select('id,title,slug,cover_url').order('title', { ascending: true })),
-      fetchAll(client.from('album_ratings').select('album_id,rating,vote_weight')),
+      fetchAll(client.from('album_ratings').select('album_id,rating,vote_weight').order('album_id').order('user_id')),
       userId
         ? fetchAll(client.from('album_ratings').select('album_id,rating').eq('user_id', userId))
         : Promise.resolve([])
@@ -422,7 +422,7 @@
 
     const [songs, ratings, userRatings] = await Promise.all([
       fetchAll(query),
-      fetchAll(client.from('song_ratings').select('song_id,rating,vote_weight')),
+      fetchAll(client.from('song_ratings').select('song_id,rating,vote_weight').order('song_id').order('user_id')),
       userId
         ? fetchAll(client.from('song_ratings').select('song_id,rating').eq('user_id', userId))
         : Promise.resolve([])

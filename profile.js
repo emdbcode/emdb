@@ -1357,10 +1357,19 @@ async function loadSongRatings(userId) {
   const songIds = [...new Set(data.map((item) => (item.songs && item.songs.id) || null).filter(Boolean))];
   let songStats = new Map();
   if (songIds.length) {
-    const { data: ratingsAll, error: ratingsError } = await supabaseClient
-      .from('song_ratings')
-      .select('song_id, rating, vote_weight')
-      .in('song_id', songIds);
+    const ratingsAll = [];
+    let ratingsError = null;
+    for (let from = 0; ; from += 1000) {
+      const { data: page, error: pageError } = await supabaseClient
+        .from('song_ratings')
+        .select('song_id, rating, vote_weight')
+        .in('song_id', songIds)
+        .order('song_id').order('user_id')
+        .range(from, from + 999);
+      if (pageError || !page) { ratingsError = pageError || true; break; }
+      ratingsAll.push(...page);
+      if (page.length < 1000) break;
+    }
 
     if (!ratingsError && ratingsAll && ratingsAll.length) {
       const stats = {};

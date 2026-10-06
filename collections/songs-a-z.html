@@ -85,6 +85,97 @@ body {
   font-style: italic;
 }
 
+.song-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.song-row .track-inline-ratings {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-height: 24px;
+}
+
+.track-inline-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+}
+
+.track-inline-rating .star { font-size: 14px; line-height: 1; }
+.track-inline-rating.overall .star { color: #f5c518; }
+.track-inline-rating.user .star { color: #E21C21; }
+.track-inline-rating .value { color: #fff; font-variant-numeric: tabular-nums; }
+
+.track-inline-rating .rate-track-btn {
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #101010;
+  color: #cfcfcf;
+  padding: 5px 6px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.track-inline-rating .rate-track-btn:hover,
+.track-inline-rating .rate-track-btn:focus-visible {
+  border-color: #E21C21;
+  color: #fff;
+  background: #1a1a1a;
+  outline: none;
+}
+
+.track-inline-rating .rate-track-btn .star { color: #E21C21; }
+.track-inline-rating.user.is-awaiting-rating > .star,
+.track-inline-rating.user.is-awaiting-rating > .value { display: none; }
+.track-inline-rating.user.is-editable { cursor: pointer; }
+.track-inline-rating.user.is-editable:focus-visible { outline: 2px solid rgba(226,28,33,0.35); outline-offset: 2px; }
+
+.collection-rating-popup.rating-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.collection-rating-popup.rating-popup.open { display: flex; }
+.collection-rating-popup .popup-content {
+  background: #111;
+  padding: 1rem 0.9rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 92vw;
+  box-sizing: border-box;
+}
+.collection-rating-popup .popup-title { margin-bottom: 10px; font-size: 16px; }
+.collection-rating-popup .popup-stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: nowrap; }
+.collection-rating-popup .star-item { display: flex; flex-direction: column; align-items: center; margin: 2px; flex: 0 0 auto; }
+.collection-rating-popup .star { color: #666; font-size: clamp(18px, 6vw, 30px); line-height: 1; cursor: pointer; display: block; }
+.collection-rating-popup .star.preview,
+.collection-rating-popup .star.active,
+.collection-rating-popup .star:hover { color: #E21C21 !important; text-shadow: 0 0 8px rgba(226,28,33,0.6); }
+.collection-rating-popup .star-number { font-size: 12px; color: #aaa; margin-top: 4px; }
+.collection-rating-popup .popup-close { font-size: 13px; color: #aaa; cursor: pointer; }
+@media (max-width: 420px) {
+  .collection-rating-popup .star { font-size: clamp(16px, 7.5vw, 24px); }
+  .collection-rating-popup .popup-stars { gap: 3px; }
+  .collection-rating-popup .star-number { font-size: 11px; }
+}
+
 
 
 .year-nav {
@@ -1822,6 +1913,240 @@ body {
       });
     }
   })();
+</script>
+<script>
+(() => {
+  const SUPABASE_URL = 'https://lbxpucsgwgtamolvjuep.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxieHB1Y3Nnd2d0YW1vbHZqdWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0OTM1MjcsImV4cCI6MjA4NzA2OTUyN30.KvC6zRMZtE8owQiXleNqlQvaoKoYL-NQQJr0928K3iY';
+  const rows = Array.from(document.querySelectorAll('.song-row'));
+  if (!rows.length) return;
+
+  const slugOf = (row) => {
+    const href = row.querySelector('a')?.getAttribute('href') || '';
+    return decodeURIComponent((href.split('/').pop() || '').replace(/\.html$/i, '')).toLowerCase();
+  };
+  const titleOf = (row) => (row.querySelector('a')?.childNodes[0]?.textContent || row.querySelector('a')?.textContent || 'song').trim();
+
+  rows.forEach((row) => {
+    const ratingRow = document.createElement('span');
+    ratingRow.className = 'track-inline-ratings';
+    ratingRow.innerHTML = `
+      <span class="track-inline-rating overall" aria-label="Overall rating"><span class="star">★</span><span class="value">-</span></span>
+      <span class="track-inline-rating user is-hidden" aria-label="Your rating" style="display:none"><span class="star">★</span><span class="value">-</span></span>`;
+    row.appendChild(ratingRow);
+  });
+
+  let client = null;
+  let currentUserId = null;
+  let activeRow = null;
+  const rowSongIds = new Map();
+
+  const updateRatingDisplay = (row, overallText, userValue) => {
+    const overallEl = row.querySelector('.track-inline-rating.overall .value');
+    const userBlock = row.querySelector('.track-inline-rating.user');
+    const userEl = userBlock.querySelector('.value');
+    const hasUser = Number.isFinite(userValue) && userValue > 0;
+    overallEl.textContent = overallText;
+    userEl.textContent = hasUser ? String(userValue) : '-';
+    userBlock.style.display = '';
+    userBlock.classList.toggle('is-awaiting-rating', !hasUser);
+    userBlock.classList.toggle('is-editable', hasUser);
+    const rateButton = userBlock.querySelector('.rate-track-btn');
+    if (hasUser) {
+      rateButton?.remove();
+      userBlock.setAttribute('role', 'button');
+      userBlock.setAttribute('tabindex', '0');
+      userBlock.setAttribute('aria-label', `Edit your rating for ${titleOf(row)}`);
+      userBlock.onclick = () => void openRatingPopup(row);
+      userBlock.onkeydown = (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          void openRatingPopup(row);
+        }
+      };
+      return;
+    }
+    userBlock.removeAttribute('role');
+    userBlock.removeAttribute('tabindex');
+    userBlock.removeAttribute('aria-label');
+    userBlock.onclick = null;
+    userBlock.onkeydown = null;
+    if (!rateButton) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'rate-track-btn';
+      button.innerHTML = '<span class="star" aria-hidden="true">★</span> Rate';
+      button.addEventListener('click', () => void openRatingPopup(row));
+      userBlock.appendChild(button);
+    }
+  };
+
+  const popup = document.createElement('div');
+  popup.className = 'collection-rating-popup rating-popup';
+  popup.innerHTML = `
+    <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="songRatingTitle">
+      <div class="popup-title" id="songRatingTitle">Rate this song</div>
+      <div class="popup-stars" aria-label="Choose a rating"></div>
+      <div class="popup-close" role="button" tabindex="0">Remove rating</div>
+    </div>`;
+  document.body.appendChild(popup);
+
+  const closePopup = () => {
+    popup.classList.remove('open');
+    activeRow = null;
+  };
+
+  const saveRating = async (value) => {
+    const songId = activeRow ? rowSongIds.get(activeRow) : null;
+    if (!songId || !client || !currentUserId) return;
+    const { error } = await client.from('song_ratings').upsert({
+      song_id: songId,
+      user_id: currentUserId,
+      rating: value,
+    }, { onConflict: 'song_id,user_id' });
+    if (error) return;
+    closePopup();
+    void loadRatings();
+  };
+
+  const removeRating = async () => {
+    const songId = activeRow ? rowSongIds.get(activeRow) : null;
+    if (!songId || !client || !currentUserId) return;
+    const { error } = await client.from('song_ratings').delete().eq('song_id', songId).eq('user_id', currentUserId);
+    if (error) return;
+    closePopup();
+    void loadRatings();
+  };
+
+  const openRatingPopup = async (row) => {
+    if (!rowSongIds.get(row)) return;
+    if (!client) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    if (!currentUserId) {
+      const { data } = await client.auth.getSession();
+      currentUserId = data?.session?.user?.id || null;
+    }
+    if (!currentUserId) {
+      window.location.href = '/sign-in.html';
+      return;
+    }
+    activeRow = row;
+    popup.querySelector('.popup-title').textContent = `Rate ${titleOf(row)}`;
+    const current = Number(row.querySelector('.track-inline-rating.user .value')?.textContent || 0) || 0;
+    popup.querySelectorAll('.star').forEach((star, index) => star.classList.toggle('active', index < current));
+    popup.querySelector('.popup-close').style.display = current > 0 ? '' : 'none';
+    popup.classList.add('open');
+  };
+
+  const popupStars = popup.querySelector('.popup-stars');
+  for (let value = 1; value <= 10; value += 1) {
+    const item = document.createElement('div');
+    item.className = 'star-item';
+    const star = document.createElement('span');
+    star.className = 'star';
+    star.textContent = '★';
+    star.addEventListener('click', () => void saveRating(value));
+    star.addEventListener('mouseenter', () => {
+      popupStars.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('preview', i < value));
+    });
+    const label = document.createElement('div');
+    label.className = 'star-number';
+    label.textContent = String(value);
+    item.append(star, label);
+    popupStars.appendChild(item);
+  }
+  popupStars.addEventListener('mouseleave', () => {
+    popupStars.querySelectorAll('.star').forEach((s) => s.classList.remove('preview'));
+  });
+  popup.addEventListener('click', (event) => {
+    if (event.target === popup) closePopup();
+  });
+  const removeButton = popup.querySelector('.popup-close');
+  removeButton.addEventListener('click', () => void removeRating());
+  removeButton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      void removeRating();
+    }
+  });
+
+  const fetchAll = async (buildQuery) => {
+    const results = [];
+    for (let from = 0; ; from += 1000) {
+      const { data, error } = await buildQuery().range(from, from + 999);
+      if (error || !data) return results;
+      results.push(...data);
+      if (data.length < 1000) return results;
+    }
+  };
+
+  const loadRatings = async () => {
+    const readClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    });
+    client = client || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const [songs, ratings] = await Promise.all([
+      fetchAll(() => readClient.from('songs').select('id,slug').order('id')),
+      fetchAll(() => readClient.from('song_ratings').select('song_id,rating,vote_weight').order('song_id').order('user_id')),
+    ]);
+    const idBySlug = new Map();
+    songs.forEach((song) => {
+      const key = String(song.slug || '').toLowerCase();
+      if (!idBySlug.has(key)) idBySlug.set(key, song.id);
+    });
+
+    const overall = new Map();
+    ratings.forEach((row) => {
+      const rating = Number(row.rating);
+      if (!Number.isFinite(rating)) return;
+      const weight = Number(row.vote_weight ?? 1);
+      const current = overall.get(row.song_id) || { total: 0, weight: 0 };
+      current.total += rating * weight;
+      current.weight += weight;
+      overall.set(row.song_id, current);
+    });
+
+    let userMap = new Map();
+    try {
+      const { data } = await client.auth.getSession();
+      currentUserId = data?.session?.user?.id || null;
+      if (currentUserId) {
+        const userRows = await fetchAll(() => client.from('song_ratings').select('song_id,rating').eq('user_id', currentUserId).order('song_id'));
+        userMap = new Map(userRows.map((row) => [row.song_id, Number(row.rating)]));
+      }
+    } catch (_error) {
+      /* signed out */
+    }
+
+    rows.forEach((row) => {
+      const songId = idBySlug.get(slugOf(row));
+      if (!songId) return;
+      rowSongIds.set(row, songId);
+      const stats = overall.get(songId);
+      const overallText = stats && stats.weight ? (stats.total / stats.weight).toFixed(1) : '-';
+      updateRatingDisplay(row, overallText, userMap.get(songId));
+    });
+  };
+
+  const loadSupabaseScript = () => {
+    if (window.supabase && typeof window.supabase.createClient === 'function') return Promise.resolve();
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js';
+      script.async = true;
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => resolve(), { once: true });
+      document.head.appendChild(script);
+    });
+  };
+
+  void loadSupabaseScript().then(() => {
+    if (window.supabase && typeof window.supabase.createClient === 'function') void loadRatings();
+  });
+})();
 </script>
 </body>
 </html>

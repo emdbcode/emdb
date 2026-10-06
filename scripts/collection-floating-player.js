@@ -723,10 +723,18 @@
     const uniqueSongIds = Array.from(new Set(songIds));
     if (!uniqueSongIds.length) return;
 
-    const { data: ratingRows } = await readClient
-      .from('song_ratings')
-      .select('song_id,rating,vote_weight')
-      .in('song_id', uniqueSongIds);
+    const ratingRows = [];
+    for (let from = 0; ; from += 1000) {
+      const { data, error } = await readClient
+        .from('song_ratings')
+        .select('song_id,rating,vote_weight')
+        .in('song_id', uniqueSongIds)
+        .order('song_id').order('user_id')
+        .range(from, from + 999);
+      if (error || !data) break;
+      ratingRows.push(...data);
+      if (data.length < 1000) break;
+    }
 
     const overallMap = new Map();
     (ratingRows || []).forEach((row) => {

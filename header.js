@@ -2826,10 +2826,19 @@ function setupArticleNewsBottomSliders() {
     const songIds = [...new Set(songs.map((song) => song.id).filter(Boolean))];
     if (!songIds.length) return;
 
-    const { data: ratingRows, error: ratingError } = await client
-      .from('song_ratings')
-      .select('song_id, rating, vote_weight')
-      .in('song_id', songIds);
+    const ratingRows = [];
+    let ratingError = null;
+    for (let from = 0; ; from += 1000) {
+      const { data: page, error: pageError } = await client
+        .from('song_ratings')
+        .select('song_id, rating, vote_weight')
+        .in('song_id', songIds)
+        .order('song_id').order('user_id')
+        .range(from, from + 999);
+      if (pageError || !page) { ratingError = pageError || true; break; }
+      ratingRows.push(...page);
+      if (page.length < 1000) break;
+    }
 
     if (ratingError) return;
 
