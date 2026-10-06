@@ -859,6 +859,8 @@ body {
       <div class="album-single" id="songCover">
         <img src="/images/album-covers/non-album/d12-detroit-what-cover.jpg" alt="Skit - Eminem cover">
       </div>
+      <button class="play-btn" id="playBtn" aria-expanded="false" aria-controls="songVideo">▶︎ Play</button>
+      <div class="song-video" id="songVideo" data-video="QFnGsPCEiO8" aria-hidden="true"></div>
       <div class="ratings-container" style="margin-top:0px;">
         <div class="rating-block">
           <div class="rating-label">EMDb Rating</div>
@@ -1340,6 +1342,45 @@ document.querySelectorAll('.critic-score').forEach(box => {
       }
     }
     t.parentNode.replaceChild(frag, t);
+  });
+})();
+
+// SONG VIDEO PLAY BUTTON — lazy-load iframe into .song-video
+(function setupSongVideo(){
+  const playBtn = document.getElementById('playBtn');
+  const songVideo = document.getElementById('songVideo');
+  if (!playBtn || !songVideo) return;
+  const videoId = songVideo.dataset.video;
+  let iframeEl = null;
+
+  function openVideo(){
+    if (!iframeEl){
+      iframeEl = document.createElement('iframe');
+      iframeEl.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+      iframeEl.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframeEl.setAttribute('allowfullscreen','');
+      iframeEl.title = 'Skit - Eminem';
+      songVideo.appendChild(iframeEl);
+    }
+    songVideo.classList.add('open');
+    songVideo.setAttribute('aria-hidden','false');
+    playBtn.setAttribute('aria-expanded','true');
+    playBtn.textContent = 'Close';
+    playBtn.classList.add('open');
+  }
+
+  function closeVideo(){
+    songVideo.classList.remove('open');
+    songVideo.setAttribute('aria-hidden','true');
+    playBtn.setAttribute('aria-expanded','false');
+    playBtn.textContent = '▶︎ Play';
+    playBtn.classList.remove('open');
+    if (iframeEl){ iframeEl.remove(); iframeEl = null; }
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (songVideo.classList.contains('open')) closeVideo();
+    else openVideo();
   });
 })();
 
