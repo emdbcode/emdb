@@ -1074,6 +1074,60 @@ body {
     });
   })();
 
+  (function setupRatingVoteCounts(){
+    const ratingsContainer = document.querySelector('.ratings-container');
+    const emdbBlock = ratingsContainer?.querySelector('.rating-block');
+    if (!ratingsContainer || !emdbBlock) return;
+
+    let hideTimer = null;
+    let visibleByTap = false;
+    const isMobileViewport = () => window.matchMedia('(max-width: 767px)').matches;
+
+    const enter = () => {
+      if (!(visibleByTap && isMobileViewport())) {
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      ratingsContainer.classList.add('show-votes');
+      emdbBlock.classList.add('show-votes-tap');
+    };
+
+    const leave = () => {
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = null;
+      ratingsContainer.classList.remove('show-votes');
+      emdbBlock.classList.remove('show-votes-tap');
+    };
+
+    const scheduleHide = () => {
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        visibleByTap = false;
+        leave();
+      }, 2500);
+    };
+
+    emdbBlock.addEventListener('mouseenter', enter);
+    emdbBlock.addEventListener('mouseleave', leave);
+    emdbBlock.addEventListener('focusin', enter);
+    emdbBlock.addEventListener('focusout', leave);
+    emdbBlock.addEventListener('click', (event) => {
+      if (!isMobileViewport() || event.target.closest('a, button')) return;
+
+      if (visibleByTap) {
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = null;
+        visibleByTap = false;
+        leave();
+        return;
+      }
+
+      visibleByTap = true;
+      enter();
+      scheduleHide();
+    });
+  })();
+
   (function setupMobileSongMeta(){
     const header = document.querySelector('.album-container');
     const mediaCol = header ? header.querySelector('.media-col') : null;
