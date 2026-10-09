@@ -117,10 +117,28 @@ body {
   align-self: stretch;
 }
 @media(max-width:767px){
+  .album-container {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
   .media-col {
     width: 100%;
     gap: 6px;
     align-items: center;
+  }
+  .album-container > .release-info {
+    width: 100%;
+    max-width: 292px;
+    margin: 0 auto;
+    text-align: center;
+    border-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .album-container > .release-info .album-header {
+    justify-content: center;
+  }
+  .album-container > .release-info .album-name.nav-trigger {
+    justify-content: center;
   }
   .media-col .album-single,
   .media-col .song-video,
@@ -800,7 +818,7 @@ body {
 <div id="site-header"></div>
 <main>
   <!-- SONG HEADER -->
-  <div class="album-container" data-prev="" data-next="">
+  <div class="album-container" data-prev="/songs/feat/god-speak-interlude.html" data-next="">
     <a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
       <img src="/images/logos/share_white.png" alt="Share">
     </a>
@@ -1058,8 +1076,11 @@ body {
 
   (function setupMobileSongMeta(){
     const header = document.querySelector('.album-container');
-    const meta = document.querySelector('.release-info .song-meta');
-    if (!header || !meta) return;
+    const mediaCol = header ? header.querySelector('.media-col') : null;
+    const releaseInfo = header ? header.querySelector('.release-info') : null;
+    const songVideo = document.getElementById('songVideo');
+    const meta = releaseInfo ? releaseInfo.querySelector('.song-meta') : null;
+    if (!header || !mediaCol || !releaseInfo || !meta) return;
 
     const divider = document.createElement('div');
     divider.className = 'mobile-divider';
@@ -1069,16 +1090,19 @@ body {
 
     function syncMeta(){
       if (window.innerWidth <= 767) {
+        if (releaseInfo.parentElement !== mediaCol) {
+          mediaCol.insertBefore(releaseInfo, songVideo ? songVideo.nextSibling : null);
+        }
         if (!metaSection.contains(meta)) {
           metaSection.appendChild(meta);
         }
         if (!divider.isConnected) header.appendChild(divider);
         if (!metaSection.isConnected) header.appendChild(metaSection);
       } else {
-        const releaseInfo = document.querySelector('.release-info');
         if (releaseInfo && !releaseInfo.contains(meta)) releaseInfo.appendChild(meta);
         if (divider.isConnected) divider.remove();
         if (metaSection.isConnected) metaSection.remove();
+        if (releaseInfo.parentElement !== header) header.appendChild(releaseInfo);
       }
     }
 
