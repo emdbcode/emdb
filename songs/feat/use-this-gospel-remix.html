@@ -1051,35 +1051,100 @@ body {
     });
   })();
 
-  (function setupMobileSongMeta(){
-    const header = document.querySelector('.album-container');
-    const meta = document.querySelector('.release-info .song-meta');
-    if (!header || !meta) return;
+// Move `.release-info` below the inline song video on small screens, restore on desktop
+(function mobilePlaceReleaseInfo(){
+  const albumContainer = document.querySelector('.album-container');
+  if (!albumContainer) return;
+  const mediaCol = albumContainer.querySelector('.media-col');
+  const releaseInfo = albumContainer.querySelector('.release-info');
+  const playBtn = document.getElementById('playBtn');
+  const songVideo = document.getElementById('songVideo');
+  if (!mediaCol || !releaseInfo || !playBtn) return;
 
-    const divider = document.createElement('div');
-    divider.className = 'mobile-divider';
-
-    const metaSection = document.createElement('div');
-    metaSection.className = 'song-meta-section';
-
-    function syncMeta(){
-      if (window.innerWidth <= 767) {
-        if (!metaSection.contains(meta)) {
-          metaSection.appendChild(meta);
-        }
-        if (!divider.isConnected) header.appendChild(divider);
-        if (!metaSection.isConnected) header.appendChild(metaSection);
-      } else {
-        const releaseInfo = document.querySelector('.release-info');
-        if (releaseInfo && !releaseInfo.contains(meta)) releaseInfo.appendChild(meta);
-        if (divider.isConnected) divider.remove();
-        if (metaSection.isConnected) metaSection.remove();
+  function place() {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      if (releaseInfo.parentElement !== mediaCol) {
+        // move releaseInfo into media column (after inline song video)
+        mediaCol.insertBefore(releaseInfo, songVideo ? songVideo.nextSibling : playBtn.nextSibling);
+      }
+    } else {
+      if (releaseInfo.parentElement !== albumContainer) {
+        albumContainer.appendChild(releaseInfo);
       }
     }
+  }
 
-    syncMeta();
-    window.addEventListener('resize', syncMeta);
-  })();
+  // initial placement
+  place();
+
+  // debounce resize handling
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(place, 150);
+  });
+})();
+
+// Move `.song-meta` beneath the ratings block on small screens, restore on desktop
+(function mobilePlaceSongMeta(){
+  const albumContainer = document.querySelector('.album-container');
+  if (!albumContainer) return;
+  const mediaCol = albumContainer.querySelector('.media-col');
+  const ratings = mediaCol ? mediaCol.querySelector('.ratings-container') : null;
+  const releaseInfo = albumContainer.querySelector('.release-info');
+  const songMeta = releaseInfo ? releaseInfo.querySelector('.song-meta') : null;
+  const creditsBlock = releaseInfo ? releaseInfo.querySelector('.credits-block') : null;
+  const metaContainer = creditsBlock || songMeta;
+  if (!mediaCol || !ratings || !releaseInfo || !metaContainer) return;
+
+  function place() {
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    if (isMobile) {
+      // ensure wrapper exists
+      let wrapper = mediaCol.querySelector('.song-meta-section');
+      if (!wrapper) {
+        wrapper = document.createElement('div');
+        wrapper.className = 'song-meta-section';
+        // insert after ratings container
+        mediaCol.insertBefore(wrapper, ratings.nextSibling);
+      }
+
+      // ensure divider always exists between ratings and the wrapper
+      let divider = mediaCol.querySelector('.mobile-divider');
+      if (!divider) {
+        divider = document.createElement('div');
+        divider.className = 'mobile-divider';
+      }
+      // keep divider directly before wrapper to preserve consistent spacing
+      mediaCol.insertBefore(divider, wrapper);
+
+      if (metaContainer.parentElement !== wrapper) {
+        wrapper.appendChild(metaContainer);
+      }
+    } else {
+      // desktop: move back into release-info and remove wrapper if empty
+      if (metaContainer.parentElement !== releaseInfo) {
+        releaseInfo.appendChild(metaContainer);
+      }
+      const wrapper = mediaCol.querySelector('.song-meta-section');
+      if (wrapper && wrapper.childElementCount == 0) wrapper.remove();
+      const divider = mediaCol.querySelector('.mobile-divider');
+      if (divider) divider.remove();
+    }
+  }
+
+  // initial placement
+  place();
+
+  // debounce resize handling
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(place, 150);
+  });
+})();
+
 
   (function setupInlineSongVideo(){
     const btn = document.getElementById('playBtn');
