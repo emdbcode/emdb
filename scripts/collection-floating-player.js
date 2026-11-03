@@ -901,6 +901,15 @@
     if (track.src) return track.src;
     if (track.loadingPromise) return track.loadingPromise;
 
+    const directVideoId = String(track.card.dataset.video || '').trim();
+    if (directVideoId) {
+      if (!/^[A-Za-z0-9_-]{11}$/.test(directVideoId)) {
+        throw new Error('Invalid direct video ID');
+      }
+      track.src = `https://www.youtube.com/embed/${directVideoId}`;
+      return track.src;
+    }
+
     const pageUrl = new URL(track.songHref, window.location.href).toString();
     track.loadingPromise = fetch(pageUrl, { credentials: 'same-origin' })
       .then((response) => {
@@ -1088,7 +1097,10 @@
     const titleText = card.querySelector('.track-title')?.textContent?.trim() || 'Track';
     const titleLink = card.querySelector('.track-title a');
     const thumbLink = card.querySelector('.track-link, .track-thumb-link');
-    const songHref = titleLink?.getAttribute('href') || thumbLink?.getAttribute('href') || '';
+    const songHref = titleLink?.getAttribute('href')
+      || thumbLink?.getAttribute('href')
+      || card.dataset.gallery
+      || '';
     const pathInfo = parseSongPath(songHref);
 
     const thumbNode = thumbLink || card.querySelector('.track-thumb');

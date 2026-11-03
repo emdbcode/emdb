@@ -3686,6 +3686,7 @@ function setupSongCreditsNameSearch() {
   const linkInlineNames = (root) => {
     root.querySelectorAll('.written-by .meta-value, .credit-pair .meta-value').forEach((node) => {
       if (node.querySelector('.credit-name-search-global')) return;
+      if (node.closest('.released-row')) return;
       if (isCopyrightContext(node)) return;
       const text = (node.textContent || '').trim();
       if (!text) return;
