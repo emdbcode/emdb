@@ -60,7 +60,7 @@ Song Facts
 
 • In 2015, footage from <em>The Music of Lennon & McCartney</em> was repurposed to create a new promotional-like video for the song, with the original mono audio replaced by a new mix by Giles Martin and Sam Okell for <em>1+</em>, the deluxe edition of <em>1</em>.
 
-• The song has been covered by numerous artists, including Otis Redding and Whitesnake, with live renditions also performed by Jimi Hendrix and Electric Light Orchestra.
+• The song has been covered by numerous artists, including Otis Redding and Whitesnake, with live renditions also performed by The Jimi Hendrix Experience and Electric Light Orchestra.
 
 Promotional Films
 
@@ -90,10 +90,10 @@ That was a co-written effort; we were both there making it all up but I would gi
 Alternate Mixes and Versions
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-us-cover.jpg
-US stereo version
+Original Stereo Mix
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/a-collection-of-beatles-oldies.jpg
-1966 Stereo Mix
+1966 Mix
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/1-2015-cover.jpg
 2015 Mix
@@ -111,14 +111,8 @@ Take 1 – Instrumental Backing Track
 Takes 2 and 3 – Instrumental Backing Track
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/good-evening-new-york-city.jpeg
-Live At Citi Field, NYC, 2009
-
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/paul-is-live-cover.jpg
-Live in New York - Paul McCartney
-
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/back-in-the-us-cover.jpg
-Live in Chicago - Paul McCartney
+Live At Citi Field, NYC, 2009 - Paul McCartney
 
 Lyrics
 
-<div id='rg_embed_link_123863' class='rg_embed_link' data-song-id='123863'>Read <a href='https://genius.com/The-beatles-we-can-work-it-out-lyrics'>“We Can Work It Out” by The Beatles</a> on Genius</div> <script crossorigin src='//genius.com/songs/123863/embed.js'></script>
+<div id='rg_embed_link_114778' class='rg_embed_link' data-song-id='114778'>Read <a href='https://genius.com/The-beatles-day-tripper-lyrics'>“Day Tripper” by The Beatles</a> on Genius</div> <script crossorigin src='//genius.com/songs/114778/embed.js'></script>
