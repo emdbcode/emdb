@@ -640,6 +640,10 @@ body {
     background:rgba(0,0,0,0.5) !important;
   }
 }
+@media (max-width:767px) {
+  .alternate-version:not(.is-playing) .track-play-btn { opacity:0; }
+  .alternate-version:not(.is-playing) .track-play-btn:focus-visible { opacity:1; }
+}
 .alternate-version .track-meta { min-width:0; }
 .alternate-version .track-title { margin:0; color:#ddd; font-size:14px; font-weight:normal; line-height:1.4; }
 .alternate-version .track-inline-ratings { display:none; }
