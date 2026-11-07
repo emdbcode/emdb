@@ -948,6 +948,7 @@
       } else {
         button.textContent = 'Play';
       }
+      button.setAttribute('aria-label', `${button.textContent} ${track.title}`);
     });
 
     playerHeading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
@@ -1079,7 +1080,14 @@
     }
 
     if (!payload || payload.event !== 'onStateChange') return;
-    if (Number(payload.info) !== 0) return;
+    const state = Number(payload.info);
+    if ((state === 1 || state === 2) && currentTrack) {
+      isPlaying = state === 1;
+      setPlaybackUi();
+      syncControls();
+      return;
+    }
+    if (state !== 0) return;
 
     isPlaying = false;
     const nextTrack = getNextTrackForAutoplay();
