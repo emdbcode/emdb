@@ -1038,7 +1038,9 @@
     if (!currentTrack) return;
     postPlayerCommand('pauseVideo');
     isPlaying = false;
-    setCollapsed(true);
+    if (!currentTrack.card.closest('[data-player-keep-open-on-pause]')) {
+      setCollapsed(true);
+    }
     setPlaybackUi();
     syncControls();
   };
