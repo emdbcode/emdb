@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Norwegian Wood (This Bird Has Flown) - The Beatles | EMDb</title>
-  <meta property="og:title" content="Norwegian Wood (This Bird Has Flown) – The Beatles | EMDb">
-  <meta property="og:description" content="Details, credits, and ratings for “Norwegian Wood (This Bird Has Flown)” by The Beatles.">
+<title>Nowhere Man - The Beatles | EMDb</title>
+  <meta property="og:title" content="Nowhere Man – The Beatles | EMDb">
+  <meta property="og:description" content="Details, credits, and ratings for “Nowhere Man” by The Beatles.">
   <meta property="og:image" content="https://emdb.pro/beatles-project/album-covers/rubber-soul-cover.jpeg">
-  <meta property="og:url" content="https://emdb.pro/beatles-project/songs/norwegian-wood.html">
+  <meta property="og:url" content="https://emdb.pro/beatles-project/songs/nowhere-man.html">
   <meta property="og:type" content="music.song">
   <meta property="og:site_name" content="EMDb">
 
   <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Norwegian Wood (This Bird Has Flown) – The Beatles | EMDb">
-  <meta name="twitter:description" content="Details, credits, and ratings for “Norwegian Wood (This Bird Has Flown)” by The Beatles.">
+  <meta name="twitter:title" content="Nowhere Man – The Beatles | EMDb">
+  <meta name="twitter:description" content="Details, credits, and ratings for “Nowhere Man” by The Beatles.">
   <meta name="twitter:image" content="https://emdb.pro/beatles-project/album-covers/rubber-soul-cover.jpeg">
 <link rel="stylesheet" href="/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
@@ -304,6 +304,12 @@ body {
 .performer .meta-name { font-weight:normal; color: #ddd; }
 .performer .meta-role { color:#AAA; }
 .performer.note { color:#aaa; font-size:13px; padding-left:0; }
+.additional-engineers { margin: 0 0 8px; }
+.production-label { display:flex; align-items:center; }
+.additional-engineers-toggle { display:inline-flex; align-items:center; gap:6px; margin:0; padding:0; border:0; background:none; color:inherit; font:inherit; font-weight:bold; line-height:inherit; cursor:pointer; text-align:left; }
+.additional-engineers-toggle:focus-visible { outline:2px solid rgba(226,28,33,0.5); outline-offset:2px; }
+.additional-engineers-toggle .toggle-icon { display:inline-block; font-size:12px; line-height:1; transform-origin:50% 50%; transition:transform 0.18s ease; }
+.additional-engineers-toggle[aria-expanded="true"] .toggle-icon { transform:rotate(180deg); }
 /* info icon button (no background/box). toggles the note text and turns red when active */
 .info-btn { font-family: Arial, sans-serif; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; font-style: normal; line-height: 1; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transform: translateY(0); align-self: flex-start; }
 .info-btn:hover { color: #aaa; }
@@ -491,7 +497,8 @@ body {
 
   padding-bottom: 0;}
 .credits-collapsible.is-scrollable > .performers-list,
-.credits-collapsible.is-scrollable > .writers-list { padding-right: 16px; }
+.credits-collapsible.is-scrollable > .writers-list,
+.credits-collapsible.is-scrollable .additional-engineers .performers-list { padding-right: 16px; }
 .credits-collapsible.is-scrollable .performer { max-width: 100%; box-sizing: border-box; }
 .credits-collapsible.is-scrollable .performer-details { min-width: 0; }
 .credits-collapsible.is-scrollable.dragging { cursor: grabbing; }
@@ -622,10 +629,20 @@ body {
   opacity:0;
   transition:opacity 140ms ease;
 }
-.alternate-version:hover .track-play-btn,
-.alternate-version:focus-within .track-play-btn {
+.alternate-version.is-playing .track-play-btn,
+.alternate-version .track-play-btn:focus-visible {
   opacity:1;
   background:rgba(0,0,0,0.5) !important;
+}
+@media (hover:hover) {
+  .alternate-version:hover .track-play-btn {
+    opacity:1;
+    background:rgba(0,0,0,0.5) !important;
+  }
+}
+@media (max-width:767px) {
+  .alternate-version:not(.is-playing) .track-play-btn { opacity:0; }
+  .alternate-version:not(.is-playing) .track-play-btn:focus-visible { opacity:1; }
 }
 .alternate-version .track-meta { min-width:0; }
 .alternate-version .track-title { margin:0; color:#ddd; font-size:14px; font-weight:normal; line-height:1.4; }
@@ -637,9 +654,6 @@ body {
     -webkit-line-clamp:2;
     overflow:hidden;
   }
-}
-@media (hover:none) {
-  .alternate-version .track-play-btn { opacity:1; background:rgba(0,0,0,0.25); }
 }
 /* Video Player - smooth open/close */
 .video-player {
@@ -874,6 +888,34 @@ body {
     display: none;
   }
 }
+#sectionMenu { display:none; }
+@media (max-width: 767px) {
+  #sectionMenu {
+    display:flex;
+    left:auto;
+    right:0;
+    border-right:0;
+    border-left:1px solid #1f1f24;
+    transform:translateX(100%);
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform 0.26s ease, box-shadow 0.26s ease, visibility 0s linear 0.26s;
+  }
+  #sectionMenu.open {
+    transform:translateX(0);
+    box-shadow:-6px 0 18px rgba(0,0,0,0.35);
+    visibility:visible;
+    pointer-events:auto;
+    transition-delay:0s;
+  }
+  #sectionMenu .menu-close { left:auto; right:18px; }
+  #sectionMenu h2 { margin:0; font-size:inherit; font-weight:normal; }
+  #sectionMenu h2 a { display:block; border-bottom:1px solid #1a1a22; }
+  #sectionMenu a:focus-visible,
+  #sectionMenu button:focus-visible { outline:2px solid #E21C21; outline-offset:2px; }
+  #sectionMenu .section-menu-close.initial-focus { outline:none; }
+  [id^="section-"], #arReviewsSection { scroll-margin-top:80px; }
+}
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -890,11 +932,23 @@ body {
   gtag('config', 'G-J923YYWH3R');
 </script>
 </head>
-<body>
+<body id="page-top">
 <div id="site-header"></div>
+<nav class="menu-panel section-menu" id="sectionMenu" aria-label="Page sections" aria-hidden="true" inert>
+  <button type="button" class="menu-close section-menu-close" aria-label="Close section menu">✕</button>
+  <div class="menu-links">
+    <h2><a href="#page-top"><strong>Nowhere Man</strong></a></h2>
+    <a href="#section-performers">Personnel and Dates</a>
+    <a href="#section-facts">Trivia</a>
+    <a href="#section-quote">Words from John and Paul</a>
+    <a href="#section-mixes">Mixes and Versions</a>
+    <a href="#arReviewsSection">User Thoughts</a>
+    <a href="#section-lyrics">Lyrics</a>
+  </div>
+</nav>
 <main>
   <!-- SONG HEADER -->
-  <div class="album-container" data-prev="/beatles-project/songs/drive-my-car.html">
+  <div class="album-container" id="section-song" data-prev="/beatles-project/songs/you-wont-see-me.html" data-next="/beatles-project/songs/think-for-yourself.html">
     <a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
       <img src="/images/logos/share_white.png" alt="Share">
     </a>
@@ -909,8 +963,8 @@ body {
         <img src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
       </div>
       <button class="play-btn" id="playBtn" aria-expanded="false" aria-controls="songVideo">▶︎ Play</button>
-      <div class="song-video" id="songVideo" data-video="bhDkCGTaYMw" aria-hidden="true"></div>
-      <div class="ratings-container" style="margin-top:0px;">
+      <div class="song-video" id="songVideo" data-video="oHcMZjgiC6Y" aria-hidden="true"></div>
+      <div class="ratings-container" id="section-ratings" style="margin-top:0px;">
         <div class="rating-block">
           <div class="rating-label">EMDb Rating</div>
           <div class="rating-star overall-star">★</div>
@@ -928,7 +982,7 @@ body {
       <div class="album-title">
         <div class="album-header">
           <div class="album-name nav-trigger" id="songNavToggle" role="button" aria-expanded="false" aria-haspopup="true" tabindex="0">
-            Norwegian Wood (This Bird Has Flown)
+            Nowhere Man
             <div class="nav-popover" id="songNavPopover" aria-hidden="true">
                 <button class="nav-popover-item" id="nextSong" aria-label="Next song">
                   <span class="pop-icon">ᐳ</span>
@@ -947,26 +1001,31 @@ body {
       <div class="credits-block" id="creditsBlock" style="margin-top: 0;">
 
       <div class="song-meta credits-collapsible" id="creditsContent">
-        <p class="credit-label"><strong>Performers</strong></p>
+        <p class="credit-label" id="section-performers"><strong>Performers</strong></p>
         <div class="performers-list">
-          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name">John Lennon</span><span class="meta-role">Lead Vocal, Acoustic Guitar</span></span></div>
+          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name">John Lennon</span><span class="meta-role">Lead Vocal, Harmony Vocal, Acoustic Guitar, Lead Electric Guitar</span></span></div>
           <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/paul-mccartney.jpg" alt="Paul McCartney"><span class="performer-details"><span class="meta-name">Paul McCartney</span><span class="meta-role">Harmony Vocal, Bass</span></span></div>
-          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-harrison.jpg" alt="George Harrison"><span class="performer-details"><span class="meta-name">George Harrison</span><span class="meta-role">12-String Acoustic Guitar, Sitar</span></span></div>
+          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-harrison.jpg" alt="George Harrison"><span class="performer-details"><span class="meta-name">George Harrison</span><span class="meta-role">Harmony Vocal, Lead Electric Guitar</span></span></div>
           <span class="role-break" aria-hidden="true"></span>
-          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name">Ringo Starr</span><span class="meta-role">Bass Drum, Cymbals, Tambourine, Claps, Thigh Slaps</span></span></div>
+          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name">Ringo Starr</span><span class="meta-role">Drums</span></span></div>
         </div>
-        <p class="credit-label"><strong>Production and Engineering</strong></p>
+        <p class="credit-label production-label" id="section-production"><button type="button" class="additional-engineers-toggle" aria-expanded="false" aria-controls="additionalEngineers">Production and Engineering<span class="toggle-icon" aria-hidden="true">▾</span></button></p>
         <div class="performers-list">
           <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-martin.jpg" alt="George Martin"><span class="performer-details"><span class="meta-name">George Martin</span><span class="meta-role">Producer, Mixing Engineer</span></span></div>
           <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/norman-smith.jpg" alt="Norman Smith"><span class="performer-details"><span class="meta-name">Norman Smith</span><span class="meta-role">Mixing Engineer</span></span></div>
-          <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name">Ken Scott</span><span class="meta-role">Additional Engineer</span></span></div>
         </div>
-        <p class="credit-label"><strong>Composition & Lyrics</strong></p>
+        <div class="additional-engineers" id="additionalEngineers" hidden>
+          <div class="performers-list">
+            <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name">Ken Scott</span><span class="meta-role">Additional Engineer</span></span></div>
+            <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name">Ron Pender</span><span class="meta-role">Additional Engineer</span></span></div>
+          </div>
+        </div>
+        <p class="credit-label" id="section-composition"><strong>Composition & Lyrics</strong></p>
         <div class="writers-list">
           <div class="performer"><img class="performer-avatar" src="../profiles/lennon-mccartney.jpg" alt="Lennon–McCartney"><span class="performer-details"><span class="meta-name">Lennon–McCartney</span><span class="meta-role">Songwriters</span></span></div>
         </div>
-        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
-        <p class="credit-pair recorded-row"><strong>Recorded</strong><span class="meta-value no-gap">12 and 21 October 1965, <button type="button" class="credit-name-search-global" data-search-term="EMI Studios, London">EMI Studios, London</button></span></p>
+        <p class="credit-pair recorded-row" id="section-recorded"><strong>Recorded</strong><span class="meta-value no-gap">21-22 October 1965, <button type="button" class="credit-name-search-global" data-search-term="EMI Studios, London">EMI Studios, London</button></span></p>
+        <p class="credit-pair released-row" id="section-released"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
         <p class="meta-inline"><strong>℗</strong> Calderstone Productions Limited (UMG)</p>
         
       </div>
@@ -976,80 +1035,73 @@ body {
      </div>
 
 
-     <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
-    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Song Facts</h3>
+     <div class="song-extra" id="section-facts" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Trivia</h3>
     <ul style="margin:0 0.5rem 0; padding-left:1.1rem; font-size:15px; line-height:1.5;">
-      <li style="margin-bottom:8px;">“Norwegian Wood (This Bird Has Flown)” is primarily written by John, with contributions from Paul on the middle eight.</li>
-      <li style="margin-bottom:8px;">The song is the first example of a rock band using the sitar on a recording, which was played by George.</li>
-      <li style="margin-bottom:8px;">George first encountered a sitar while filming the Indian restaurant scene in <em>Help!</em>, where it was played by one of the background musicians. George went on to expand his use of the sitar on Beatles tracks such as “Love You To”, “Tomorrow Never Knows”, “Within You Without You”, and “The Inner Light”.</li>
-      <li style="margin-bottom:8px;"><p style="margin:0 0 8px;">Bob Dylan’s <a href="../gallery/4th-time-around-bob-dylan.html">4th Time Around</a>” is often viewed as a parody of “Norwegian Wood” and interpreted as Dylan’s response to the song. Dylan reportedly reacted to hearing “Norwegian Wood” by saying, “What is this? It’s me, Bob. He’s doing me!”</p><p style="margin:0 0 8px;">Prior to his song’s release, Dylan played “4th Time Around” on tape for the Beatles. Weeks later, Dylan confronted John in a <a href="../gallery/bob-dylan-confronts-john-lennon.html">filmed exchange</a> over a remark John had made to Paul upon hearing the song: that it ought to be published by Northern Songs, the Beatles’ publishing company.</p><p style="margin:0;">When asked about Dylan’s track in an 1968 <em>Rolling Stone</em> interview, John said the song made him feel paranoid and that he told Dylan he didn’t like it.</p></li>
-      <li>In 1967, the song was released exclusively in Australia as the title track of an EP, alongside three other tracks from <em>Rubber Soul</em>.</li>
+      <li style="margin-bottom:8px;">Written by John, “Nowhere Man” was the first Beatles song to be entirely unrelated to love or romance, marking a notable shift towards more philosophical songwriting.</li>
+      <li style="margin-bottom:8px;">John based the title character on himself, recalling, “I thought of myself as Nowhere Man”. In this light, the song can be viewed as a companion piece to two earlier introspective songs he wrote, “Help!” and “I’m a Loser”.</li>
+      <li style="margin-bottom:8px;">The song has been compared to Bob Dylan’s “Ballad of a Thin Man”, with both songs describing characters who are out of touch with the world around them. John later referenced Dylan’s song in <em>The Beatles</em> track “Yer Blues”, singing, “I feel so suicidal / Just like Dylan’s Mr. Jones”.</li>
+      <li style="margin-bottom:8px;">The riffs between the verses and bridges were played by George alone, while the eight-bar solo was performed in unison by George and John on their baby blue Fender Stratocasters.</li>
+      <li style="margin-bottom:8px;">The song was omitted from <em>Rubber Soul</em> in North America and set aside for release as a mono single in February 1966 outside the UK. American listeners had to wait until June to hear it in stereo, when it appeared on the US compilation album <em>Yesterday and Today</em>.</li>
+      <li style="margin-bottom:8px;">The non-UK single, released on 21 February 1966, reached No. 1 in Australia and Canada and peaked at No. 3 on the US Billboard Hot 100.</li>
+      <li style="margin-bottom:8px;">In the UK, “Nowhere Man” was released as the title track of an EP on 8 July 1966, alongside three other tracks from <em>Rubber Soul</em>. It peaked at number 4 on the UK EP Chart and was also released in other countries, with some editions featuring different track listings.</li>
+      <li>In 1967, the Carpenters, who recorded a total of five Beatles songs, made their own rendition of the song. However, it remained unreleased until 2001, when Richard Carpenter revisited the recording, adding instrumentation and production before including it on <em>As Time Goes By</em>.</li>
     </ul>
   </div>
 
-   <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
-    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from John, Paul, and George</h3>
+   <div class="song-extra" id="section-quote" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from John and Paul</h3>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <p class="quote-text">‘Norwegian Wood’ is my song completely. It was about an affair I was having. I was very careful and paranoid because I didn’t want my wife, Cyn, to know that there really was something going on outside of the household. I’d always had some kind of affairs going, so I was trying to be sophisticated in writing about an affair, but in such a smoke-screen way that you couldn’t tell. But I can’t remember any specific woman it had to do with.</p>
-      <footer class="quote-attrib">— John Lennon (1980), <em>The Playboy Interviews</em>, 1981</footer>
+      <div class="quote-text">I’d spent five hours that morning trying to write a song that was meaningful and good and I finally gave up and lay down. Then ‘Nowhere Man’ came, words and music, the whole damn thing, as I lay down.</div>
+      <footer class="quote-attrib">— John Lennon, <em>The Playboy Interviews</em>, 1981</footer>
     </blockquote>
     <div class="quote-divider"></div>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <div class="quote-text"><p style="margin:0 0 8px;">I came in and he had this first stanza, which was brilliant: ‘I once had a girl, or should I say, she once had me’. That was all he had, no title, no nothing. I said, ‘Oh yes, well, ha, we’re there’. And it wrote itself. Once you’ve got the great idea, they do tend to write themselves, providing you know how to write songs.</p><p style="margin:0 0 8px;">So I picked it up at the second verse, it’s a story. It’s him trying to pull a bird, it was about an affair. John told Playboy that he hadn’t the faintest idea where the title came from but I do. Peter Asher had his room done out in wood, a lot of people were decorating their places in wood. Norwegian wood. It was pine really, cheap pine. But it’s not as good a title, ‘Cheap Pine’, baby. [...]</p><p style="margin:0;">So she makes him sleep in the bath and then finally in the last verse I had this idea to set the Norwegian wood on fire as revenge, so we did it very tongue in cheek. She led him on, then said, ‘You’d better sleep in the bath’. In our world the guy had to have some sort of revenge. It could have meant I lit a fire to keep myself warm, and wasn’t the decor of her house wonderful? But it didn’t, it meant I burned the fucking place down, and then we left it there and went into the instrumental.</p></div>
+      <div class="quote-text">When I came out to write with [John] the next day, [after a night out], he was kipping on the couch, very bleary-eyed. It was really an anti-John song, written by John. He told me later, he didn't tell me then, he said he’d written it about himself, feeling like he wasn't going anywhere. I think actually it was about the state of his marriage. It was in a period where he was a bit dissatisfied with what was going on; however, it led to a very good song. He treated it as a third-person song, but he was clever enough to say, ’Isn't he a bit like you and me?’ — ‘me’ being the final word.</div>
       <footer class="quote-attrib">— Paul McCartney, <em>Many Years from Now</em>, 1997</footer>
-    </blockquote>
-    <div class="quote-divider"></div>
-    <blockquote class="fancy-quote">
-      <span class="quote-mark">“</span>
-      <div class="quote-text"><p style="margin:0 0 8px;">I went and bought a sitar from a little shop at the top of Oxford Street called Indiacraft — it stocked little carvings and incense. It was a real crummy-quality one, actually, but I bought it and mucked about with it a bit.</p><p style="margin:0 0 8px;">Anyway, we were at the point where we'd recorded the ‘Norwegian Wood’ backing track, and it needed something. We would usually start looking through the cupboard to see if we could come up with something, a new sound, and I picked the sitar up — it was just lying around; I hadn't really figured out what to do with it.</p><p style="margin:0;">It was quite spontaneous: I found the notes that played the lick. It fitted and it worked.</p></div>
-      <footer class="quote-attrib">— George Harrison, <em>The Beatles Anthology</em>, 2000</footer>
     </blockquote>
   </div>
 
-  <section class="song-extra" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#ddd;">
+  <section class="song-extra" id="section-mixes" data-player-keep-open-on-pause style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#ddd;">
     <h3 style="color:#fff;margin:0 0 1rem 0;">Mixes and Versions</h3>
     <div class="alternate-versions-grid">
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-original-stereo.html" data-video="bhDkCGTaYMw">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-original-stereo.html" data-video="oHcMZjgiC6Y">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
         <div class="track-meta"><h4 class="track-title">Original Stereo</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-mono.html" data-video="0USuFscvJVE">
-        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-mono-cover.jpeg" alt="Rubber Soul mono cover">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-mono.html" data-video="a-CIN9MM1yE">
+        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
         <div class="track-meta"><h4 class="track-title">Mono</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-us-stereo-version.html" data-video="tllsZgtELYM">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-us-stereo-version.html" data-video="0txB8ljNQUM">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-us-cover.jpg" alt="Rubber Soul US cover">
         <div class="track-meta"><h4 class="track-title">US Stereo Version</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-1987-mix.html" data-video="CI_zWIqwQZY">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-1987-mix.html" data-video="fYdIaiTXHuU">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
-        <div class="track-meta"><h4 class="track-title">1987 Mix</h4></div>
+        <div class="track-meta"><h4 class="track-title">1987 mix</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-2023-mix.html" data-video="F8Bry3cZD0Q">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-1999-mix.html" data-video="RiTwf45cH6M">
+        <img class="track-thumb" src="/beatles-project/album-covers/yellow-submarine-songbook-cover.jpg" alt="Yellow Submarine Songbook cover">
+        <div class="track-meta"><h4 class="track-title">1999 Mix</h4></div>
+      </article>
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-2023-mix.html" data-video="LlgIWAERfcg">
         <img class="track-thumb" src="/beatles-project/album-covers/beatles-1962-1966.jpeg" alt="The Beatles 1962–1966 cover">
-        <div class="track-meta"><h4 class="track-title">2023 Mix</h4></div>
+        <div class="track-meta"><h4 class="track-title">2023 mix</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-2026-mix.html" data-video="hqDgdRrh9Pk">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-2026-mix.html" data-video="rbDKO_vj55I">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg" alt="Rubber Soul 2026 Mix cover">
-        <div class="track-meta"><h4 class="track-title">2026 Mix</h4></div>
+        <div class="track-meta"><h4 class="track-title">2026 mix</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-take-1-anthology-version.html" data-video="PuJZYI5qomk">
-        <img class="track-thumb" src="/beatles-project/album-covers/anthology-2-cover.jpg" alt="Anthology 2 cover">
-        <div class="track-meta"><h4 class="track-title">Take 1 [with Overdubs]</h4></div>
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-first-version-take-2.html" data-video="UutcmUtSETE">
+        <img class="track-thumb" src="/beatles-project/album-covers/anthology-4-cover.jpg" alt="Anthology 4 cover">
+        <div class="track-meta"><h4 class="track-title">First Version – Take 2</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-first-version-take-1.html" data-video="UutcmUtSETE">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/nowhere-man-second-version-take-5.html" data-video="Z6dV2_4VuFY">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">First Version - Take 1</h4></div>
-      </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-second-version-take-2.html" data-video="gkvP88ALauk">
-        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Second Version - Take 2</h4></div>
-      </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-third-version-take-3.html" data-video="8TKySZNAwBo">
-        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Third Version - Take 3</h4></div>
+        <div class="track-meta"><h4 class="track-title">Second Version – Take 5 – Instrumental Backing Track</h4></div>
       </article>
     </div>
   </section>
@@ -1059,6 +1111,7 @@ body {
   class="ar-section"
   style="max-width:900px;margin:1.25rem auto;box-sizing:content-box;"
   data-review-kind="song"
+  data-review-init="song"
   data-review-title="User Thoughts"
   data-min-length="0"
   data-max-length="100"
@@ -1067,10 +1120,9 @@ body {
 
 
   <!-- LYRICS SECTION -->
-  <div class="song-extra lyrics-section" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#000;">
+  <div class="song-extra lyrics-section" id="section-lyrics" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#000;">
     <h3 style="color:#fff;margin:0 0 0.5rem 0;">Lyrics</h3>
-    <div id='rg_embed_link_71851' class='rg_embed_link' data-song-id='71851'>Read <a href='https://genius.com/The-beatles-norwegian-wood-this-bird-has-flown-lyrics'>“Norwegian Wood (This Bird Has Flown)” by The Beatles</a> on Genius</div>
-    <script crossorigin src='//genius.com/songs/71851/embed.js'></script>
+    <div id='rg_embed_link_123823' class='rg_embed_link' data-song-id='123823'>Read <a href='https://genius.com/The-beatles-nowhere-man-lyrics'>“Nowhere Man” by The Beatles</a> on Genius</div> <script crossorigin src='//genius.com/songs/123823/embed.js'></script>
   </div>
     <!-- USER RATING POPUP -->
   <div class="rating-popup" id="ratingPopup">
@@ -1090,7 +1142,10 @@ body {
   // Album cover rotator for song header (click to cycle covers)
   (function setupSongCoverRotator(){
     const albumUrls = [
-      '/beatles-project/album-covers/rubber-soul-cover.jpeg'
+      '/beatles-project/album-covers/rubber-soul-cover.jpeg',
+      '/beatles-project/album-covers/nowhere-man-cover-us.jpg',
+      '/beatles-project/album-covers/nowhere-man-cover-germany.jpg',
+      '/beatles-project/album-covers/nowhere-man-cover-japan.jpg'
     ];
     let currentIndex = 0;
     const albumDiv = document.getElementById('songCover');
@@ -1284,6 +1339,15 @@ body {
       window.__creditsResize = setTimeout(sync, 150);
     });
     creditsContent.addEventListener('scroll', scheduleSync, { passive: true });
+    const additionalEngineersToggle = creditsContent.querySelector('.additional-engineers-toggle');
+    const additionalEngineers = document.getElementById('additionalEngineers');
+    if (additionalEngineersToggle && additionalEngineers) {
+      additionalEngineersToggle.addEventListener('click', () => {
+        additionalEngineers.hidden = !additionalEngineers.hidden;
+        additionalEngineersToggle.setAttribute('aria-expanded', String(!additionalEngineers.hidden));
+        scheduleSync();
+      });
+    }
     if (window.ResizeObserver) {
       const ro = new ResizeObserver(() => sync());
       ro.observe(creditsContent);
@@ -1479,7 +1543,7 @@ document.querySelectorAll('.critic-score').forEach(box => {
       iframeEl.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
       iframeEl.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
       iframeEl.setAttribute('allowfullscreen','');
-      iframeEl.title = 'Norwegian Wood (This Bird Has Flown)';
+      iframeEl.title = "Nowhere Man";
       songVideo.appendChild(iframeEl);
     }
     songVideo.classList.add('open');
@@ -1708,6 +1772,93 @@ document.querySelectorAll('.critic-score').forEach(box => {
   window.addEventListener('resize', updateTooltips);
 })();
 
+</script>
+<script>
+(function setupSectionMenu(){
+  const menu = document.getElementById('sectionMenu');
+  const closeButton = menu.querySelector('.section-menu-close');
+  const mobile = window.matchMedia('(max-width: 767px)');
+  let touchStart = null;
+  let previousFocus = null;
+
+  function openMenu(){
+    if (!mobile.matches || menu.classList.contains('open')) return;
+    previousFocus = document.activeElement;
+    menu.inert = false;
+    menu.setAttribute('aria-hidden', 'false');
+    menu.classList.add('open');
+    closeButton.classList.add('initial-focus');
+    closeButton.focus({preventScroll:true});
+  }
+
+  function closeMenu(restoreFocus = true){
+    if (!menu.classList.contains('open')) return;
+    if (restoreFocus && previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus({preventScroll:true});
+    else if (menu.contains(document.activeElement)) document.activeElement.blur();
+    menu.classList.remove('open');
+    menu.inert = true;
+    menu.setAttribute('aria-hidden', 'true');
+    previousFocus = null;
+  }
+
+  closeButton.addEventListener('click', () => closeMenu());
+  closeButton.addEventListener('blur', () => closeButton.classList.remove('initial-focus'));
+  document.addEventListener('click', event => {
+    if (menu.classList.contains('open') && !menu.contains(event.target)) closeMenu();
+  });
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.hash.slice(1));
+      closeMenu(false);
+      if (target) {
+        target.setAttribute('tabindex', '-1');
+        target.focus({preventScroll:true});
+      }
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (!menu.classList.contains('open')) return;
+    if (event.key === 'Tab') closeButton.classList.remove('initial-focus');
+    if (event.key === 'Escape') {
+      closeMenu();
+    } else if (event.key === 'Tab') {
+      const items = menu.querySelectorAll('a[href], button');
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  document.addEventListener('touchstart', event => {
+    if (!mobile.matches || event.touches.length !== 1) {
+      touchStart = null;
+      return;
+    }
+    const touch = event.touches[0];
+    touchStart = {x:touch.clientX, y:touch.clientY, edge:touch.clientX >= window.innerWidth - 24};
+  }, {passive:true});
+  document.addEventListener('touchend', event => {
+    if (!touchStart || event.changedTouches.length !== 1) {
+      touchStart = null;
+      return;
+    }
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStart.x;
+    const dy = touch.clientY - touchStart.y;
+    if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (!menu.classList.contains('open') && touchStart.edge && dx < 0) openMenu();
+      else if (menu.classList.contains('open') && dx > 0) closeMenu();
+    }
+    touchStart = null;
+  }, {passive:true});
+  document.addEventListener('touchcancel', () => { touchStart = null; }, {passive:true});
+  window.addEventListener('resize', () => { if (!mobile.matches) closeMenu(false); });
+})();
 </script>
 <script src="/scripts/album-reviews.js"></script>
 <script src="/scripts/song-rating.js"></script>
