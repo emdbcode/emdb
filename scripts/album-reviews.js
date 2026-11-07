@@ -1863,10 +1863,25 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
   }
 
   async function initSongPage() {
-    _client = getClient();
-    if (!_client) return;
-
     configureModeFromSection();
+    const showUnavailable = (reason) => {
+      console.error('User Thoughts unavailable:', reason);
+      injectStyles();
+      const section = document.getElementById('arReviewsSection');
+      if (!section) return;
+      const heading = document.createElement('h2');
+      heading.className = 'ar-section-title';
+      heading.textContent = _sectionTitle;
+      const message = document.createElement('p');
+      message.textContent = 'User Thoughts are currently unavailable for this song.';
+      section.replaceChildren(heading, message);
+    };
+    _client = getClient();
+    if (!_client) {
+      showUnavailable('Review service could not be initialized.');
+      return;
+    }
+
     loadDeletedReviewsCache();
     loadAwardedReviewXpCache();
 
@@ -1886,7 +1901,10 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       _albumTitle = song.title || getAlbumTitleFromPage() || '';
     } else {
       const directSongId = Number(window.songId);
-      if (!Number.isFinite(directSongId) || directSongId <= 0) return;
+      if (!Number.isFinite(directSongId) || directSongId <= 0) {
+        showUnavailable(`Song not found for slug: ${slug}`);
+        return;
+      }
       _albumId = directSongId;
       _albumTitle = getAlbumTitleFromPage() || 'Song';
     }
@@ -2235,8 +2253,12 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
   const _path = window.location.pathname;
   const _href = window.location.href;
   const _isAlbumPage = /\/releases\/[^/]+\.html/.test(_path) || /releases\/[^/]+\.html/.test(_href);
-  const _isSongPage = (/\/songs\/[^/]+\/[^/]+\.html/.test(_path) || /songs\/[^/]+\/[^/]+\.html/.test(_href))
-    && !!document.getElementById('arReviewsSection');
+  const _reviewSection = document.getElementById('arReviewsSection');
+  const _isSongPage = !!_reviewSection && (
+    _reviewSection.dataset.reviewInit === 'song'
+    || /\/songs\/[^/]+\/[^/]+\.html/.test(_path)
+    || /songs\/[^/]+\/[^/]+\.html/.test(_href)
+  );
 
   if (_isAlbumPage) {
     if (document.readyState === 'loading') {
