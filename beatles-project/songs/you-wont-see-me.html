@@ -881,30 +881,31 @@ body {
     display: none;
   }
 }
-.section-menu-overlay { display:none; }
+#sectionMenu { display:none; }
 @media (max-width: 767px) {
-  .section-menu-overlay:not([hidden]) { display:block; position:fixed; inset:0; z-index:1300; }
-  .section-menu-backdrop { position:absolute; inset:0; width:100%; height:100%; border:0; background:rgba(0,0,0,.6); }
-  .section-menu {
-    position:absolute;
-    top:0;
+  #sectionMenu {
+    display:flex;
+    left:auto;
     right:0;
-    height:100%;
-    width:min(300px, 85vw);
-    box-sizing:border-box;
-    overflow-y:auto;
-    padding:calc(1rem + env(safe-area-inset-top)) 1.25rem calc(1rem + env(safe-area-inset-bottom));
-    background:#222;
-    color:#fff;
-    box-shadow:-4px 0 16px rgba(0,0,0,.4);
+    border-right:0;
+    border-left:1px solid #1f1f24;
+    transform:translateX(100%);
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform 0.26s ease, box-shadow 0.26s ease, visibility 0s linear 0.26s;
   }
-  .section-menu-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-  .section-menu-header h2 { margin:0; font-size:18px; }
-  .section-menu-header h2 a { padding:0; border:0; }
-  .section-menu-close { border:0; background:none; color:inherit; font-size:28px; cursor:pointer; }
-  .section-menu a { display:block; padding:12px 0; border-bottom:1px solid #444; color:inherit; text-decoration:none; }
-  .section-menu a:focus-visible,
-  .section-menu button:focus-visible { outline:2px solid #E21C21; outline-offset:2px; }
+  #sectionMenu.open {
+    transform:translateX(0);
+    box-shadow:-6px 0 18px rgba(0,0,0,0.35);
+    visibility:visible;
+    pointer-events:auto;
+    transition-delay:0s;
+  }
+  #sectionMenu .menu-close { left:auto; right:18px; }
+  #sectionMenu h2 { margin:0; font-size:inherit; font-weight:normal; }
+  #sectionMenu h2 a { display:block; border-bottom:1px solid #1a1a22; }
+  #sectionMenu a:focus-visible,
+  #sectionMenu button:focus-visible { outline:2px solid #E21C21; outline-offset:2px; }
   [id^="section-"], #arReviewsSection { scroll-margin-top:80px; }
 }
 </style>
@@ -925,21 +926,18 @@ body {
 </head>
 <body id="page-top">
 <div id="site-header"></div>
-<div class="section-menu-overlay" id="sectionMenuOverlay" hidden>
-  <button type="button" class="section-menu-backdrop" aria-label="Close section menu" tabindex="-1"></button>
-  <nav class="section-menu" id="sectionMenu" aria-label="Page sections">
-    <div class="section-menu-header">
-      <h2><a href="#page-top">You Won’t See Me</a></h2>
-      <button type="button" class="section-menu-close" aria-label="Close section menu">×</button>
-    </div>
+<nav class="menu-panel section-menu" id="sectionMenu" aria-label="Page sections" aria-hidden="true" inert>
+  <button type="button" class="menu-close section-menu-close" aria-label="Close section menu">✕</button>
+  <div class="menu-links">
+    <h2><a href="#page-top">You Won’t See Me</a></h2>
     <a href="#section-performers">Personell &amp; Dates</a>
     <a href="#section-facts">Song facts</a>
     <a href="#section-quote">Words from Paul McCartney</a>
     <a href="#section-mixes">Mixes and Versions</a>
     <a href="#arReviewsSection">User Thoughts</a>
     <a href="#section-lyrics">Lyrics</a>
-  </nav>
-</div>
+  </div>
+</nav>
 <main>
   <!-- SONG HEADER -->
   <div class="album-container" id="section-song" data-prev="/beatles-project/songs/norwegian-wood.html">
@@ -1742,7 +1740,6 @@ document.querySelectorAll('.critic-score').forEach(box => {
 </script>
 <script>
 (function setupSectionMenu(){
-  const overlay = document.getElementById('sectionMenuOverlay');
   const menu = document.getElementById('sectionMenu');
   const closeButton = menu.querySelector('.section-menu-close');
   const mobile = window.matchMedia('(max-width: 767px)');
@@ -1750,21 +1747,28 @@ document.querySelectorAll('.critic-score').forEach(box => {
   let previousFocus = null;
 
   function openMenu(){
-    if (!mobile.matches || !overlay.hidden) return;
+    if (!mobile.matches || menu.classList.contains('open')) return;
     previousFocus = document.activeElement;
-    overlay.hidden = false;
+    menu.inert = false;
+    menu.setAttribute('aria-hidden', 'false');
+    menu.classList.add('open');
     closeButton.focus();
   }
 
   function closeMenu(restoreFocus = true){
-    if (overlay.hidden) return;
-    overlay.hidden = true;
+    if (!menu.classList.contains('open')) return;
     if (restoreFocus && previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus({preventScroll:true});
+    else if (menu.contains(document.activeElement)) document.activeElement.blur();
+    menu.classList.remove('open');
+    menu.inert = true;
+    menu.setAttribute('aria-hidden', 'true');
     previousFocus = null;
   }
 
   closeButton.addEventListener('click', () => closeMenu());
-  overlay.querySelector('.section-menu-backdrop').addEventListener('click', () => closeMenu());
+  document.addEventListener('click', event => {
+    if (menu.classList.contains('open') && !menu.contains(event.target)) closeMenu();
+  });
   menu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       const target = document.getElementById(link.hash.slice(1));
@@ -1776,7 +1780,7 @@ document.querySelectorAll('.critic-score').forEach(box => {
     });
   });
   document.addEventListener('keydown', event => {
-    if (overlay.hidden) return;
+    if (!menu.classList.contains('open')) return;
     if (event.key === 'Escape') {
       closeMenu();
     } else if (event.key === 'Tab') {
@@ -1809,8 +1813,8 @@ document.querySelectorAll('.critic-score').forEach(box => {
     const dx = touch.clientX - touchStart.x;
     const dy = touch.clientY - touchStart.y;
     if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-      if (overlay.hidden && touchStart.edge && dx < 0) openMenu();
-      else if (!overlay.hidden && dx > 0) closeMenu();
+      if (!menu.classList.contains('open') && touchStart.edge && dx < 0) openMenu();
+      else if (menu.classList.contains('open') && dx > 0) closeMenu();
     }
     touchStart = null;
   }, {passive:true});
