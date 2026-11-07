@@ -34,13 +34,13 @@ Recorded
 
 Song Facts
 
-• “I'm Looking Through You” is a Lennon–McCartney song written by Paul about his then-girlfriend Jane Asher, making it a companion piece to the earlier track on the album “You Won’t See Me”.
+• “I’m Looking Through You” was written by Paul about his then-girlfriend Jane Asher, making it a companion piece to the earlier track on the album “You Won’t See Me”.
 
-• The group spent at least 18 hours working on the song across four sessions, held on 24 October and 6, 10 and 11 November. The version heard on the finished recording was assembled during the album's final two sessions.
+• The group spent at least 18 hours working on the song across four sessions, held on 24 October and 6, 10 and 11 November. The version heard on the finished recording was assembled during the album’s final two sessions.
 
 • Barry Tashian of The Remains recalled that, while touring with the Beatles on their final US tour in August 1966, he asked Ringo about the unusual percussion sound on “You Won’t See Me”. Ringo told him he was “privy to a great secret” before revealing that he had “just tapped on a pack of matches with his finger”.
 
-• The tape copy of the stereo mix sent to Capitol Records for the US version of <em>Rubber Soul</em> included two false starts by Paul on acoustic guitar. Assuming they were intended to be part of the recording, Capitol's team left them in, giving the US version a unique opening.
+• The tape copy of the stereo mix sent to Capitol Records for the US version of <em>Rubber Soul</em> included two false starts by Paul on acoustic guitar. Assuming they were intended to be part of the recording, Capitol’s team left them in, giving the US version a unique opening.
 
 • In 1966, the song was released exclusively in Portugal as the title track of an EP, alongside three other tracks from <em>Rubber Soul</em>.
 
@@ -55,13 +55,16 @@ I would write it out in a song and then I’ve got rid of the emotion. I don’t
 — Paul McCartney, <em>Many Years from Now</em>, 1997
 
 
-Alternate Mixes and Versions
+Mixes and Versions
 
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-mono-cover.jpeg
+/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
+Original Stereo
+
+/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
 Mono
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-us-cover.jpg
-Us stereo version
+US stereo version
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
 1987 mix

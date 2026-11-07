@@ -38,27 +38,30 @@ Song Facts
 
 • The song was omitted from the North American editions of <em>Rubber Soul</em> and later included on the US compilation album <em>Yesterday and Today</em>, released in June 1966.
 
-• In late October 1965, the Hollies’ producer, Ron Richards, brought the group a demo of “If I Needed Someone” that he had received from George Martin. Versions by the Beatles and the Hollies were released simultaneously in the UK on 3 December 1965. The Hollies’ version appeared as a single, peaking at No. 20, a considerably lower position than their previous seven releases, all of which had reached the Top 10.
+• In late October 1965, the Hollies’ producer, Ron Richards, brought the group a demo of “If I Needed Someone” that he had received from the Beatles’ producer, George Martin. Versions by the Beatles and the Hollies were released simultaneously in the UK on 3 December 1965. The Hollies’ version appeared as a single, peaking at No. 20, considerably lower than their previous seven releases, all of which had reached the Top 10.
 
-• In December 1965, New Musical Express writer Alan Smith accompanied the Beatles on one of their final UK tours. During the tour, he asked George about the Hollies’ version of “If I Needed Someone”. He later reported:
-“George was getting ready for the first house performance, and I asked him about songwriting. ‘I see you’ve written one for the Hollies.’ George turned sharply away from the mirror. ‘Tell people that I didn’t write it for the Hollies,’ he said bluntly. ‘It’s called ‘If I Needed Someone’ and they’ve done it as their new single, but their version is not my kind of music. I think it’s rubbish the way they’ve done it! They’ve spoilt it. The Hollies are all right musically, but the way they do their records, they sound like session men who’ve just got together in a studio without ever seeing each other before. Technically good, yes. But that’s all.’”
+• In December 1965, New Musical Express writer Alan Smith accompanied the Beatles on one of their final UK tours. During the tour, he asked George about the Hollies’ version of the song. He later reported:
+“George was getting ready for the first house performance, and I asked him about songwriting. ‘I see you’ve written one for the Hollies’. George turned sharply away from the mirror. ‘Tell people that I didn’t write it for the Hollies’, he said bluntly. ‘It’s called ‘If I Needed Someone’ and they’ve done it as their new single, but their version is not my kind of music. I think it’s rubbish the way they’ve done it! They’ve spoilt it. The Hollies are all right musically, but the way they do their records, they sound like session men who’ve just got together in a studio without ever seeing each other before. Technically good, yes. But that’s all’”.
 
-In the following issue of NME, Graham Nash, the Hollies’ lead singer, responded to Harrison’s comments:
+In the following issue of NME, Graham Nash, the Hollies’ lead singer, responded to George’s comments:
 “Not only do these comments disappoint and hurt us, but we’re sick and tired of everything the Beatles say or do being taken as law. The thing that hurt us the most was George Harrison’s knock at us as musicians. [...] We did this song against a lot of people’s advice. We just felt that after nine records, we could afford to do something like this without being accused of jumping on the Beatles’ bandwagon. We thought it a good song. And still do.”
 
 Words from George Harrison
 
-If I Needed Someone' is like a million other songs written around a D chord. If you move your finger about you get various little melodies. That guitar line, or variations on it, is found in many a song, and it amazes me that people still find new permutations of the same notes.
+‘If I Needed Someone’ is like a million other songs written around a D chord. If you move your finger about you get various little melodies. That guitar line, or variations on it, is found in many a song, and it amazes me that people still find new permutations of the same notes.
 
 — George Harrison, <em>I, Me, Mine</em>, 1980
 
-Alternate Mixes and Versions
+Mixes and Versions
 
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-mono-cover.jpeg
+/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
+Original Stereo
+
+/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
 Mono
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-us-cover.jpg
-Us stereo version
+US stereo version
 
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
 1987 mix

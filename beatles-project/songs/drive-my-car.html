@@ -298,8 +298,8 @@ body {
 .performers-list,
 .writers-list { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
 .performer { padding:0 6px 2px 0; display:flex; flex-direction:row; align-items:center; gap:7px; }
-.performer-avatar { width:48px; height:48px; flex:0 0 48px; object-fit:cover; border-radius:50%; }
-.performer-details { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:48px; text-align:left; }
+.performer-avatar { width:42px; height:42px; flex:0 0 42px; object-fit:cover; border-radius:50%; }
+.performer-details { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:42px; text-align:left; }
 .performers-list .role-break { display: none; }
 .performer .meta-name { font-weight:normal; color: #ddd; }
 .performer .meta-role { color:#AAA; }
@@ -490,6 +490,10 @@ body {
   cursor: grab;
 
   padding-bottom: 0;}
+.credits-collapsible.is-scrollable > .performers-list,
+.credits-collapsible.is-scrollable > .writers-list { padding-right: 16px; }
+.credits-collapsible.is-scrollable .performer { max-width: 100%; box-sizing: border-box; }
+.credits-collapsible.is-scrollable .performer-details { min-width: 0; }
 .credits-collapsible.is-scrollable.dragging { cursor: grabbing; }
 .credits-block::after {
   content: "";
@@ -626,6 +630,14 @@ body {
 .alternate-version .track-meta { min-width:0; }
 .alternate-version .track-title { margin:0; color:#ddd; font-size:14px; font-weight:normal; line-height:1.4; }
 .alternate-version .track-inline-ratings { display:none; }
+@media (min-width:768px) {
+  .alternate-version .track-title {
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+}
 @media (hover:none) {
   .alternate-version .track-play-btn { opacity:1; background:rgba(0,0,0,0.25); }
 }
@@ -954,8 +966,8 @@ body {
         <div class="writers-list">
           <div class="performer"><img class="performer-avatar" src="../profiles/lennon-mccartney.jpg" alt="Lennon–McCartney"><span class="performer-details"><span class="meta-name">Lennon–McCartney</span><span class="meta-role">Songwriters</span></span></div>
         </div>
-        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
         <p class="credit-pair recorded-row"><strong>Recorded</strong><span class="meta-value no-gap">13 October 1965, <button type="button" class="credit-name-search-global" data-search-term="EMI Studios, London">EMI Studios, London</button></span></p>
+        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
         <p class="meta-inline"><strong>℗</strong> Calderstone Productions Limited (UMG)</p>
         
       </div>
@@ -968,12 +980,12 @@ body {
      <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Song Facts</h3>
     <ul style="margin:0 0.5rem 0; padding-left:1.1rem; font-size:15px; line-height:1.5; display:grid; gap:8px;">
-      <li>“Drive My Car” is primarily written by Paul McCartney, with lyrical contributions from John Lennon.</li>
+      <li>“Drive My Car” is primarily written by Paul, with lyrical contributions from John.</li>
       <li>The song was completed in a single session, from 7:00 p.m. to 12:15 a.m., on the second day of recording for the album. The session ran two and a quarter hours over its scheduled time, marking the first time the Beatles worked in the studio past midnight.</li>
-      <li>George Harrison claimed that he came up with the song's baseline melody, which was inspired by the baseline of “<a href="/beatles-project/gallery/respect-otis-redding.html">Respect” by Otis Redding.</a></li>
-      <li>The song was released as a single exclusively in Belgium, where it topped the national singles chart.</li>
-      <li>The song was omitted from <em>Rubber Soul</em> in North America and replaced by “I’ve Just Seen a Face” as Capitol reshaped the album into more of a folk-rock record to suit American radio trends at the time. It was not released in the US until June 1966, when it appeared as the opening track on the US compilation album <em>Yesterday and Today</em>.</li>
-      <li>In May 1966, the song was released exclusively in Spain as the title track of an EP, alongside three other tracks from <em>Rubber Soul</em>.</li>
+      <li>George claimed that he came up with the song's baseline melody, which was inspired by the baseline of “<a href="/beatles-project/gallery/respect-otis-redding.html">Respect</a>” by Otis Redding.</li>
+      <li>“Drive My Car” was released as a single in Belgium, where it topped the national singles chart. The singles was also released in parts of Africa, including the Republic of the Congo and Nigeria.</li>
+      <li>The song was omitted from <em>Rubber Soul</em> in North America and replaced by “I’ve Just Seen a Face” as Capitol reshaped the album to give it a stronger folk-rock identity. It was not released in the US until June 1966, when it appeared as the opening track on the US compilation album <em>Yesterday and Today</em>.</li>
+      <li>In May 1966, the song was released in Spain as the title track of an EP, alongside three other tracks from <em>Rubber Soul</em>.</li>
       <li>Paul has performed the song live on numerous occasions, including during the <a href="/beatles-project/gallery/super-bowl-xxxix-paul-mccartney.html">halftime show at Super Bowl XXXIX</a> in 2005.</li>
     </ul>
   </div>
@@ -982,57 +994,61 @@ body {
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from Paul McCartney</h3>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <div class="quote-text"><p style="margin:0 0 8px;">One of the stickiest [writing sessions in 1965] was "Drive My Car," because we couldn't get past one phrase that we had, "You can buy me golden rings." We struggled for hours; I think we struggled too long. Then we had a break and suddenly it came: "Wait a minute. Drive my car!" Then we got into the fun of that scenario: "Oh, you can drive my car. What is it? What's he doing? Is he offering a job as a chauffeur, or what? And then it became much more ambiguous, which we liked, instead of golden rings which was a bit poofy. "Golden rings' became 'beep beep, yeah'.</p><p style="margin:0;">[Me and John] both came up with that. Suddenly we were in LA: cars, chauffeurs, open-top Cadillacs, and it was a whole other thing.</p></div>
+      <div class="quote-text"><p style="margin:0 0 8px;">One of the stickiest [writing sessions in 1965] was ‘Drive My Car’, because we couldn’t get past one phrase that we had, ‘You can buy me golden rings’. We struggled for hours; I think we struggled too long. Then we had a break and suddenly it came: ‘Wait a minute. Drive my car!’ Then we got into the fun of that scenario: ‘Oh, you can drive my car. What is it? What’s he doing? Is he offering a job as a chauffeur, or what?’ And then it became much more ambiguous, which we liked, instead of golden rings which was a bit poofy.</p><p style="margin:0;">[Me and John] both came up with that. Suddenly we were in LA: cars, chauffeurs, open-top Cadillacs, and it was a whole other thing.</p></div>
       <footer class="quote-attrib">— Paul McCartney, <em>The Beatles Anthology</em>, 2000</footer>
     </blockquote>
   </div>
 
   <section class="song-extra" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#ddd;">
-    <h3 style="color:#fff;margin:0 0 1rem 0;">Alternate Mixes and Versions</h3>
+    <h3 style="color:#fff;margin:0 0 1rem 0;">Mixes and Versions</h3>
     <div class="alternate-versions-grid">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-original-stereo.html" data-video="OfQV-DkQqY0">
+        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
+        <div class="track-meta"><h4 class="track-title">Original Stereo</h4></div>
+      </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-mono.html" data-video="GmFcCszBl8s">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-mono-cover.jpeg" alt="Rubber Soul cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Mono)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Mono</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-us-stereo-version.html" data-video="TE11LD5Brg0">
         <img class="track-thumb" src="/beatles-project/album-covers/yesterday-and-today-cover-1.jpg" alt="Yesterday and Today cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (US Stereo Version)</h4></div>
+        <div class="track-meta"><h4 class="track-title">US Stereo Version</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-1987-mix.html" data-video="0USuFscvJVE">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (1987 Mix)</h4></div>
+        <div class="track-meta"><h4 class="track-title">1987 Mix</h4></div>
+      </article>
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-2023-mix.html" data-video="TzSQJRELzBw">
+        <img class="track-thumb" src="/beatles-project/album-covers/beatles-1962-1966.jpeg" alt="The Beatles 1962–1966 cover">
+        <div class="track-meta"><h4 class="track-title">2023 Mix</h4></div>
+      </article>
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-2026-mix.html" data-video="WjwuXrlVmyM">
+        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg" alt="Rubber Soul 2026 Mix cover">
+        <div class="track-meta"><h4 class="track-title">2026 Mix</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-the-word-what-youre-doinghtml.html" data-video="bFRJI1SSH5o">
         <img class="track-thumb" src="/beatles-project/album-covers/love-cover.jpeg" alt="Love cover">
         <div class="track-meta"><h4 class="track-title">Drive My Car / The Word / What You're Doing</h4></div>
       </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-2023-mix.html" data-video="TzSQJRELzBw">
-        <img class="track-thumb" src="/beatles-project/album-covers/beatles-1962-1966.jpeg" alt="The Beatles 1962–1966 cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (2023 Mix)</h4></div>
-      </article>
-      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-2026-mix.html" data-video="WjwuXrlVmyM">
-        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg" alt="Rubber Soul 2026 Mix cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (2026 Mix)</h4></div>
-      </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-takes-1-and-2-instrumental.html" data-video="BcfmutfDOl8">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Takes 1 And 2 - Instrumental Backing Track)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Takes 1 & 2 - Instrumental Backing Track</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-live-in-kansas-city.html" data-video="Irh5qdSAYAI">
         <img class="track-thumb" src="/beatles-project/album-covers/paul-is-live-cover.jpg" alt="Paul Is Live cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Live in Kansas City, 1993) - Paul McCartney</h4></div>
+        <div class="track-meta"><h4 class="track-title">Live in Kansas City, 1993 - Paul McCartney</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-live-8.html" data-video="5tYDQLr8R7U">
         <img class="track-thumb" src="/beatles-project/album-covers/live-8-cover.jpg" alt="Live 8 cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Live at Live 8, 2 July, 2005) - Paul McCartney & George Michael</h4></div>
+        <div class="track-meta"><h4 class="track-title">Live at Live 8, 2 July, 2005 - Paul McCartney & George Michael</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-live-at-amoeba-2007.html" data-video="lFsqN0BiLMg">
         <img class="track-thumb" src="/beatles-project/album-covers/amoeba-gig-cover.jpeg" alt="Amoeba Gig cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Live at Amoeba, 2007) - Paul McCartney</h4></div>
+        <div class="track-meta"><h4 class="track-title">Live at Amoeba, 2007 - Paul McCartney</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/drive-my-car-live-at-citi-field-nyc.html" data-video="afcd8ttBkzI">
         <img class="track-thumb" src="/beatles-project/album-covers/good-evening-new-york-city.jpeg" alt="Good Evening New York City cover">
-        <div class="track-meta"><h4 class="track-title">Drive My Car (Live at Citi Field, NYC, 2009) - Paul McCartney</h4></div>
+        <div class="track-meta"><h4 class="track-title">Live at Citi Field, NYC, 2009 - Paul McCartney</h4></div>
       </article>
     </div>
   </section>
@@ -1662,6 +1678,29 @@ document.querySelectorAll('.critic-score').forEach(box => {
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
 }
 )();
+
+// Use the browser's native tooltip only when a desktop title is clamped.
+(function setupAlternateVersionTooltips(){
+  const cards = document.querySelectorAll('.alternate-version');
+  const desktop = window.matchMedia('(min-width: 768px)');
+
+  function updateTooltips(){
+    cards.forEach(card => {
+      card.classList.remove('has-overflow');
+      card.removeAttribute('title');
+      if (!desktop.matches) return;
+
+      const title = card.querySelector('.track-title');
+      if (title && title.scrollHeight > title.clientHeight + 1) {
+        card.title = title.textContent.trim();
+        card.classList.add('has-overflow');
+      }
+    });
+  }
+
+  updateTooltips();
+  window.addEventListener('resize', updateTooltips);
+})();
 
 </script>
 <script src="/scripts/album-reviews.js"></script>

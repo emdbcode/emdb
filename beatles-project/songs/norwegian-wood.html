@@ -298,8 +298,8 @@ body {
 .performers-list,
 .writers-list { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
 .performer { padding:0 6px 2px 0; display:flex; flex-direction:row; align-items:center; gap:7px; }
-.performer-avatar { width:48px; height:48px; flex:0 0 48px; object-fit:cover; border-radius:50%; }
-.performer-details { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:48px; text-align:left; }
+.performer-avatar { width:42px; height:42px; flex:0 0 42px; object-fit:cover; border-radius:50%; }
+.performer-details { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:42px; text-align:left; }
 .performers-list .role-break { display: none; }
 .performer .meta-name { font-weight:normal; color: #ddd; }
 .performer .meta-role { color:#AAA; }
@@ -483,13 +483,17 @@ body {
 
   padding-bottom: 0;}
 .credits-collapsible.is-scrollable {
-  max-height: 350px;
+  max-height: var(--credits-max-height, 350px);
   overflow: auto;
   scrollbar-color: #222 #181818;
   scrollbar-width: thin;
   cursor: grab;
 
   padding-bottom: 0;}
+.credits-collapsible.is-scrollable > .performers-list,
+.credits-collapsible.is-scrollable > .writers-list { padding-right: 16px; }
+.credits-collapsible.is-scrollable .performer { max-width: 100%; box-sizing: border-box; }
+.credits-collapsible.is-scrollable .performer-details { min-width: 0; }
 .credits-collapsible.is-scrollable.dragging { cursor: grabbing; }
 .credits-block::after {
   content: "";
@@ -626,6 +630,14 @@ body {
 .alternate-version .track-meta { min-width:0; }
 .alternate-version .track-title { margin:0; color:#ddd; font-size:14px; font-weight:normal; line-height:1.4; }
 .alternate-version .track-inline-ratings { display:none; }
+@media (min-width:768px) {
+  .alternate-version .track-title {
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+}
 @media (hover:none) {
   .alternate-version .track-play-btn { opacity:1; background:rgba(0,0,0,0.25); }
 }
@@ -953,8 +965,8 @@ body {
         <div class="writers-list">
           <div class="performer"><img class="performer-avatar" src="../profiles/lennon-mccartney.jpg" alt="Lennon–McCartney"><span class="performer-details"><span class="meta-name">Lennon–McCartney</span><span class="meta-role">Songwriters</span></span></div>
         </div>
-        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
         <p class="credit-pair recorded-row"><strong>Recorded</strong><span class="meta-value no-gap">12 and 21 October 1965, <button type="button" class="credit-name-search-global" data-search-term="EMI Studios, London">EMI Studios, London</button></span></p>
+        <p class="credit-pair released-row"><strong>Released</strong><span class="meta-value no-gap">3 December, 1965</span></p>
         <p class="meta-inline"><strong>℗</strong> Calderstone Productions Limited (UMG)</p>
         
       </div>
@@ -967,11 +979,10 @@ body {
      <div class="song-extra" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Song Facts</h3>
     <ul style="margin:0 0.5rem 0; padding-left:1.1rem; font-size:15px; line-height:1.5;">
-      <li style="margin-bottom:8px;">“Norwegian Wood (This Bird Has Flown)” is the first example of a rock band using the sitar in one of their songs, played by George Harrison.</li>
-      <li style="margin-bottom:8px;">Harrison first encountered a sitar while filming the Indian restaurant scene in Help!, where it was played by one of the background musicians.</li>
-      <li style="margin-bottom:8px;">Harrison went on to expand his use of the sitar on Beatles tracks such as “Love You To,” “Tomorrow Never Knows,” “Within You Without You,” and “The Inner Light.”</li>
-      <li style="margin-bottom:8px;">John Lennon was the song’s primary writer, completing the lyrics and middle eight with Paul McCartney.</li>
-      <li style="margin-bottom:8px;"><p style="margin:0 0 8px;">Bob Dylan’s <a href="../gallery/4th-time-around-bob-dylan.html">4th Time Around</a>” is often viewed as a parody of “Norwegian Wood” and interpreted as Dylan’s response to the song. Dylan reportedly reacted to hearing “Norwegian Wood” by saying, “What is this? It’s me, Bob. He’s doing me!”</p><p style="margin:0 0 8px;">Prior to his song’s release, Dylan played “4th Time Around” on tape for the Beatles. Weeks later, Dylan confronted Lennon in a <a href="../gallery/bob-dylan-confronts-john-lennon.html">filmed exchange</a> over a remark Lennon had made to McCartney upon hearing the song: that it ought to be published by Northern Songs, the Beatles’ publishing company.</p><p style="margin:0;">When asked about Dylan’s track in an 1968 <em>Rolling Stone</em> interview, Lennon said the song made him feel paranoid and that he told Dylan he didn’t like it.</p></li>
+      <li style="margin-bottom:8px;">“Norwegian Wood (This Bird Has Flown)” is primarily written by John, with contributions from Paul on the middle eight.</li>
+      <li style="margin-bottom:8px;">The song is the first example of a rock band using the sitar on a recording, which was played by George.</li>
+      <li style="margin-bottom:8px;">George first encountered a sitar while filming the Indian restaurant scene in <em>Help!</em>, where it was played by one of the background musicians. George went on to expand his use of the sitar on Beatles tracks such as “Love You To”, “Tomorrow Never Knows”, “Within You Without You”, and “The Inner Light”.</li>
+      <li style="margin-bottom:8px;"><p style="margin:0 0 8px;">Bob Dylan’s <a href="../gallery/4th-time-around-bob-dylan.html">4th Time Around</a>” is often viewed as a parody of “Norwegian Wood” and interpreted as Dylan’s response to the song. Dylan reportedly reacted to hearing “Norwegian Wood” by saying, “What is this? It’s me, Bob. He’s doing me!”</p><p style="margin:0 0 8px;">Prior to his song’s release, Dylan played “4th Time Around” on tape for the Beatles. Weeks later, Dylan confronted John in a <a href="../gallery/bob-dylan-confronts-john-lennon.html">filmed exchange</a> over a remark John had made to Paul upon hearing the song: that it ought to be published by Northern Songs, the Beatles’ publishing company.</p><p style="margin:0;">When asked about Dylan’s track in an 1968 <em>Rolling Stone</em> interview, John said the song made him feel paranoid and that he told Dylan he didn’t like it.</p></li>
       <li>In 1967, the song was released exclusively in Australia as the title track of an EP, alongside three other tracks from <em>Rubber Soul</em>.</li>
     </ul>
   </div>
@@ -980,61 +991,65 @@ body {
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from John, Paul, and George</h3>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <p class="quote-text">"Norwegian Wood" is my song completely. It was about an affair I was having. I was very careful and paranoid because I didn’t want my wife, Cyn, to know that there really was something going on outside of the household. I’d always had some kind of affairs going, so I was trying to be sophisticated in writing about an affair, but in such a smoke-screen way that you couldn’t tell. But I can’t remember any specific woman it had to do with.</p>
-      <footer class="quote-attrib">— John Lennon (1980), <em>Playboy</em>, 1981</footer>
+      <p class="quote-text">‘Norwegian Wood’ is my song completely. It was about an affair I was having. I was very careful and paranoid because I didn’t want my wife, Cyn, to know that there really was something going on outside of the household. I’d always had some kind of affairs going, so I was trying to be sophisticated in writing about an affair, but in such a smoke-screen way that you couldn’t tell. But I can’t remember any specific woman it had to do with.</p>
+      <footer class="quote-attrib">— John Lennon (1980), <em>The Playboy Interviews</em>, 1981</footer>
     </blockquote>
     <div class="quote-divider"></div>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <div class="quote-text"><p style="margin:0 0 8px;">I came in and he had this first stanza, which was brilliant: "I once had a girl, or should I say, she once had me." That was all he had, no title, no nothing. I said, "Oh yes, well, ha, we’re there." And it wrote itself. Once you’ve got the great idea, they do tend to write themselves, providing you know how to write songs.</p><p style="margin:0 0 8px;">So I picked it up at the second verse, it’s a story. It’s him trying to pull a bird, it was about an affair. John told Playboy that he hadn’t the faintest idea where the title came from but I do. Peter Asher had his room done out in wood, a lot of people were decorating their places in wood. Norwegian wood. It was pine really, cheap pine. But it’s not as good a title, "Cheap Pine", baby [...]</p><p style="margin:0;">So she makes him sleep in the bath and then finally in the last verse I had this idea to set the Norwegian wood on fire as revenge, so we did it very tongue in cheek. She led him on, then said, "You’d better sleep in the bath." In our world the guy had to have some sort of revenge. It could have meant I lit a fire to keep myself warm, and wasn’t the decor of her house wonderful? But it didn’t, it meant I burned the fucking place down, and then we left it there and went into the instrumental.</p></div>
+      <div class="quote-text"><p style="margin:0 0 8px;">I came in and he had this first stanza, which was brilliant: ‘I once had a girl, or should I say, she once had me’. That was all he had, no title, no nothing. I said, ‘Oh yes, well, ha, we’re there’. And it wrote itself. Once you’ve got the great idea, they do tend to write themselves, providing you know how to write songs.</p><p style="margin:0 0 8px;">So I picked it up at the second verse, it’s a story. It’s him trying to pull a bird, it was about an affair. John told Playboy that he hadn’t the faintest idea where the title came from but I do. Peter Asher had his room done out in wood, a lot of people were decorating their places in wood. Norwegian wood. It was pine really, cheap pine. But it’s not as good a title, ‘Cheap Pine’, baby. [...]</p><p style="margin:0;">So she makes him sleep in the bath and then finally in the last verse I had this idea to set the Norwegian wood on fire as revenge, so we did it very tongue in cheek. She led him on, then said, ‘You’d better sleep in the bath’. In our world the guy had to have some sort of revenge. It could have meant I lit a fire to keep myself warm, and wasn’t the decor of her house wonderful? But it didn’t, it meant I burned the fucking place down, and then we left it there and went into the instrumental.</p></div>
       <footer class="quote-attrib">— Paul McCartney, <em>Many Years from Now</em>, 1997</footer>
     </blockquote>
     <div class="quote-divider"></div>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
-      <div class="quote-text"><p style="margin:0 0 8px;">I went and bought a sitar from a little shop at the top of Oxford Street called Indiacraft — it stocked little carvings and incense. It was a real crummy-quality one, actually, but I bought it and mucked about with it a bit.</p><p style="margin:0 0 8px;">Anyway, we were at the point where we'd recorded the “Norwegian Wood” backing track, and it needed something. We would usually start looking through the cupboard to see if we could come up with something, a new sound, and I picked the sitar up — it was just lying around; I hadn't really figured out what to do with it.</p><p style="margin:0;">It was quite spontaneous: I found the notes that played the lick. It fitted and it worked.</p></div>
+      <div class="quote-text"><p style="margin:0 0 8px;">I went and bought a sitar from a little shop at the top of Oxford Street called Indiacraft — it stocked little carvings and incense. It was a real crummy-quality one, actually, but I bought it and mucked about with it a bit.</p><p style="margin:0 0 8px;">Anyway, we were at the point where we'd recorded the ‘Norwegian Wood’ backing track, and it needed something. We would usually start looking through the cupboard to see if we could come up with something, a new sound, and I picked the sitar up — it was just lying around; I hadn't really figured out what to do with it.</p><p style="margin:0;">It was quite spontaneous: I found the notes that played the lick. It fitted and it worked.</p></div>
       <footer class="quote-attrib">— George Harrison, <em>The Beatles Anthology</em>, 2000</footer>
     </blockquote>
   </div>
 
   <section class="song-extra" style="max-width:900px;margin:1.25rem auto;padding:1.5rem;border-radius:6px;border:1px solid #222;background-color:#151515;color:#ddd;">
-    <h3 style="color:#fff;margin:0 0 1rem 0;">Alternate Mixes and Versions</h3>
+    <h3 style="color:#fff;margin:0 0 1rem 0;">Mixes and Versions</h3>
     <div class="alternate-versions-grid">
+      <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-original-stereo.html" data-video="bhDkCGTaYMw">
+        <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
+        <div class="track-meta"><h4 class="track-title">Original Stereo</h4></div>
+      </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-mono.html" data-video="0USuFscvJVE">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-mono-cover.jpeg" alt="Rubber Soul mono cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (Mono)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Mono</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-us-stereo-version.html" data-video="tllsZgtELYM">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-us-cover.jpg" alt="Rubber Soul US cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (US Stereo Version)</h4></div>
+        <div class="track-meta"><h4 class="track-title">US Stereo Version</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-1987-mix.html" data-video="CI_zWIqwQZY">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (1987 Mix)</h4></div>
+        <div class="track-meta"><h4 class="track-title">1987 Mix</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-2023-mix.html" data-video="F8Bry3cZD0Q">
         <img class="track-thumb" src="/beatles-project/album-covers/beatles-1962-1966.jpeg" alt="The Beatles 1962–1966 cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (2023 Mix)</h4></div>
+        <div class="track-meta"><h4 class="track-title">2023 Mix</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-2026-mix.html" data-video="hqDgdRrh9Pk">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg" alt="Rubber Soul 2026 Mix cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (2026 Mix)</h4></div>
+        <div class="track-meta"><h4 class="track-title">2026 Mix</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-take-1-anthology-version.html" data-video="PuJZYI5qomk">
         <img class="track-thumb" src="/beatles-project/album-covers/anthology-2-cover.jpg" alt="Anthology 2 cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (Take 1 - with Overdubs)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Take 1 [with Overdubs]</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-first-version-take-1.html" data-video="UutcmUtSETE">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (First Version - Take 1)</h4></div>
+        <div class="track-meta"><h4 class="track-title">First Version - Take 1</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-second-version-take-2.html" data-video="gkvP88ALauk">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (Second Version - Take 2)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Second Version - Take 2</h4></div>
       </article>
       <article class="track-card alternate-version" data-gallery="/beatles-project/gallery/norwegian-wood-third-version-take-3.html" data-video="8TKySZNAwBo">
         <img class="track-thumb" src="/beatles-project/album-covers/rubber-soul-sessions-cover.jpg" alt="Rubber Soul Sessions cover">
-        <div class="track-meta"><h4 class="track-title">Norwegian Wood (This Bird Has Flown) (Third Version - Take 3)</h4></div>
+        <div class="track-meta"><h4 class="track-title">Third Version - Take 3</h4></div>
       </article>
     </div>
   </section>
@@ -1221,12 +1236,13 @@ body {
 
     const { creditsContent, creditsBlock } = ensureCreditsStructure();
     if (!creditsContent) return;
-    const maxHeight = 350;
+    const songTitle = document.getElementById('songNavToggle');
     let rafId = 0;
 
     function sync(){
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
       if (isMobile) {
+        creditsContent.style.removeProperty('--credits-max-height');
         creditsContent.classList.remove('is-scrollable', 'at-bottom', 'dragging');
         if (creditsBlock) {
           creditsBlock.classList.remove('has-scroll', 'at-bottom');
@@ -1234,6 +1250,10 @@ body {
         return;
       }
 
+      const titleLineHeight = songTitle ? parseFloat(getComputedStyle(songTitle).lineHeight) : 0;
+      const extraTitleHeight = songTitle ? Math.max(0, songTitle.getBoundingClientRect().height - titleLineHeight) : 0;
+      const maxHeight = Math.max(100, 350 - extraTitleHeight);
+      creditsContent.style.setProperty('--credits-max-height', `${maxHeight}px`);
       const needsScroll = creditsContent.scrollHeight > maxHeight + 4;
       creditsContent.classList.toggle('is-scrollable', needsScroll);
       if (creditsBlock) {
@@ -1664,6 +1684,29 @@ document.querySelectorAll('.critic-score').forEach(box => {
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
 }
 )();
+
+// Use the browser's native tooltip only when a desktop title is clamped.
+(function setupAlternateVersionTooltips(){
+  const cards = document.querySelectorAll('.alternate-version');
+  const desktop = window.matchMedia('(min-width: 768px)');
+
+  function updateTooltips(){
+    cards.forEach(card => {
+      card.classList.remove('has-overflow');
+      card.removeAttribute('title');
+      if (!desktop.matches) return;
+
+      const title = card.querySelector('.track-title');
+      if (title && title.scrollHeight > title.clientHeight + 1) {
+        card.title = title.textContent.trim();
+        card.classList.add('has-overflow');
+      }
+    });
+  }
+
+  updateTooltips();
+  window.addEventListener('resize', updateTooltips);
+})();
 
 </script>
 <script src="/scripts/album-reviews.js"></script>
