@@ -1,7 +1,5 @@
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-cover.jpeg
 /Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-us-cover.jpg
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg
-/Users/hwdn/Desktop/EMDb/beatles-project/album-covers/rubber-soul-sessions-cover.jpg
 
 Rubber Soul
 The Beatles
@@ -17,89 +15,89 @@ Critic Score 9.9 (9 Reviews)
 Tracklist
 
 1. Drive My Car – 2:28
-Paul McCartney: lead vocals, lead electric guitar, bass
-John Lennon: co-lead vocals, piano, tambourine
+Paul McCartney: lead vocal, harmony vocal, electric guitar, bass, piano
+John Lennon: lead vocal, harmony, tambourine
 George Harrison: harmony vocals, electric guitar
 Ringo Starr: drums, cowbell
 Written by: Lennon–McCartney
 
-2. Norwegian Wood (This Bird Has Flown) – 2:05 John Lennon: lead vocals, acoustic guitar
-Paul McCartney: harmony vocals, bass
-George Harrison: sitar, 12-string acoustic guitar
-Ringo Starr: bass drum, cymbals, tambourine
+2. Norwegian Wood (This Bird Has Flown) – 2:05 John Lennon: lead vocal, acoustic guitar
+Paul McCartney: harmony vocal, bass
+George Harrison: 12-string acoustic guitar, sitar
+Ringo Starr: bass drum, cymbals, tambourine, claps, thigh slaps
 Written by: Lennon–McCartney
 
-3. You Won't See Me – 3:22 Paul McCartney: lead vocals, bass, piano
-John Lennon: backing vocals
-George Harrison: backing vocals, electric guitar, tambourine
-Ringo Starr: drums
+3. You Won't See Me – 3:22 Paul McCartney: lead vocal, harmony vocal, bass, piano, claps
+John Lennon: backing vocal, tambourine
+George Harrison: backing vocal, electric guitar
+Ringo Starr: drums, percussion
 Mal Evans: Hammond organ
 Written by: Lennon–McCartney
 
-4. Nowhere Man – 2:40 John Lennon: lead vocals, acoustic guitar, electric guitar
-Paul McCartney: harmony vocals, bass
-George Harrison: harmony vocals, lead electric guitar
+4. Nowhere Man – 2:40 John Lennon: Lead Vocal, Harmony Vocal, Acoustic Guitar, Lead Electric Guitar
+Paul McCartney: harmony vocal, bass
+George Harrison: harmony vocal, lead electric guitar
 Ringo Starr: drums
 Written by: Lennon–McCartney 
-5. Think For Yourself – 2:18 George Harrison: lead vocals, electric guitar
-John Lennon: harmony vocals, Vox Continental organ, tambourine
-Paul McCartney: harmony vocals, bass
+5. Think For Yourself – 2:18 George Harrison: lead vocal, harmony vocal, electric guitar, tambourine
+John Lennon: harmony vocal, electric guitar, electric piano
+Paul McCartney: harmony vocal, bass, fuzz bass
 Ringo Starr: drums, maracas
 Written by: George Harrison
 
-6. The Word – 2:41 John Lennon: lead vocals, electric guitar
-Paul McCartney: backing vocals, bass, piano
-George Harrison: backing vocals, lead electric guitar
+6. The Word – 2:41 John Lennon: lead vocal, harmony vocal, electric guitar
+Paul McCartney: harmony vocal, bass, piano
+George Harrison: harmony vocal, lead electric guitar
 Ringo Starr: drums, maracas
 George Martin: harmonium
 Written by: Lennon–McCartney 
-7. Michelle – 2:43 Paul McCartney: lead vocals, acoustic guitar, bass
-John Lennon: backing vocals, acoustic guitar
-George Harrison: backing vocals, electric lead guitar, 12-string acoustic guitar
+7. Michelle – 2:43 Paul McCartney: lead vocal, harmony vocal, acoustic guitar, bass
+John Lennon: harmony vocal, nylon string acoustic guitar
+George Harrison: harmony vocal, electric lead guitar, 12-string acoustic guitar
 Ringo Starr: drums
 Written by: Lennon–McCartney
 
-1. What Goes On – 2:48 Ringo Starr: lead vocals, drums
-John Lennon: harmony vocals, electric guitar
-Paul McCartney: harmony vocals, bass
+1. What Goes On – 2:48 Ringo Starr: lead vocal, drums
+John Lennon: harmony vocal, electric guitar
+Paul McCartney: harmony vocal, bass
 George Harrison: lead electric guitar
 Written by: Lennon–McCartney–Starkey
 
-2. Girl – 2:30 John Lennon: lead vocals, acoustic guitar
-Paul McCartney: backing vocals, bass
-George Harrison: backing vocals, 12-string acoustic guitar
+2. Girl – 2:30 John Lennon: lead vocal, acoustic guitar
+Paul McCartney: backing vocal, bass
+George Harrison: backing vocal, 12-string acoustic lead guitar
 Ringo Starr: drums
 Written by: Lennon–McCartney
 
-3. I'm Looking Through You – 2:26 Paul McCartney: lead vocals, bass
-John Lennon: harmony vocals, acoustic guitar
-George Harrison: electric guitar, tambourine
-Ringo Starr: drums, organ, percussion
+3. I'm Looking Through You – 2:26 Paul McCartney: lead vocal, acoustic guitar, bass
+John Lennon: harmony vocal
+George Harrison: electric lead guitar
+Ringo Starr: drums, matchbox percussion, tambourine, Hammond Organ
 Written by: Lennon–McCartney
 
-4. In My Life – 2:27 John Lennon: lead vocals, electric guitar
-Paul McCartney: harmony vocals, bass
-George Harrison: harmony vocals, lead electric guitar
-Ringo Starr: drums
-George Martin: piano, tambourine
+4. In My Life – 2:27 John Lennon: lead vocal, electric guitar
+Paul McCartney: harmony vocal, bass
+George Harrison: electric lead guitar
+Ringo Starr: drums, tambourine
+George Martin: piano
 Written by: Lennon–McCartney
 
-5. Wait – 2:14 John Lennon: lead vocals, electric guitar, tambourine
-Paul McCartney: co-lead vocals, bass
-George Harrison: lead electric guitar
+5. Wait – 2:14 John Lennon: lead vocal, electric guitar, tambourine
+Paul McCartney: lead vocal, bass
+George Harrison: electric lead guitar
 Ringo Starr: drums, maracas
 Written by: Lennon–McCartney
 
-6. If I Needed Someone – 2:21 George Harrison: lead vocals, 12-string electric guitar
-John Lennon: harmony vocals, electric guitar
-Paul McCartney: harmony vocals, bass
+6. If I Needed Someone – 2:21 George Harrison: lead vocal, 12-string electric guitar
+John Lennon: harmony vocal, electric guitar
+Paul McCartney: harmony vocal, bass
 Ringo Starr: drums, tambourine
 Written by: George Harrison
 
-7. Run For Your Life – 2:18 John Lennon: lead vocals, acoustic guitar, electric guitar
-Paul McCartney: harmony vocals, bass
-George Harrison: harmony vocals, lead electric guitar
-Ringo Starr: drums, tambourine
+7. Run For Your Life – 2:18 John Lennon: lead vocal, acoustic guitar, electric slide guitar
+Paul McCartney: harmony vocal, bass
+George Harrison: harmony vocal, electric lead guitar
+Ringo Starr: bass drum, tambourine
 Written by: Lennon–McCartney
 
 Total length: 35 minutes
@@ -107,11 +105,11 @@ Total length: 35 minutes
 Sessions
 
 Wait (Take 3 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 1:11
 
 Run For Your Life (Takes 1–5 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 4:10
 
 Norwegian Wood (This Bird Has Flown) (First Version – Take 1)
@@ -123,27 +121,27 @@ From <em>Anthology 2</em> (1996)
 1:59
 
 Norwegian Wood (This Bird Has Flown) (Second Version – Take 2)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:20
 
 Norwegian Wood (This Bird Has Flown) (Third Version – Take 3)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:23
 
 Drive My Car (Takes 1 and 2 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 1:43
 
 Day Tripper (Songwriting Work Tape)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:20
 
 Day Tripper (Take 1 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:06
 
 Day Tripper (Takes 2 and 3 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 4:08
 
 Day Tripper
@@ -151,7 +149,7 @@ Non-album single, later included on <em>Past Masters</em> (1988)
 2:49
 
 If I Needed Someone (Take 1 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:52
 
 In My Life (Take 1)
@@ -159,15 +157,15 @@ From <em>Anthology 4</em> (2025) & <em>Rubber Soul: Special Edition</em> (2026)
 2:41
 
 In My Life (Extract With Unused Organ Solo)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 0:40
 
 We Can Work It Out (Paul's Demo)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 0:55
 
 We Can Work It Out (Take 1 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:01
 
 We Can Work It Out
@@ -179,31 +177,31 @@ From <em>Anthology 4</em> (2025) & <em>Rubber Soul: Special Edition</em> (2026)
 2:27
 
 Nowhere Man (Second Version – Take 5 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:55
 
 I'm Looking Through You (First Version – Take 1)
-From <em>Rubber Soul: Special Edition</em> (2026) [an alternate mix of this take was first released in 1996, on <em>Anthology 2</em>]
-2:54
+From <em>Rubber Soul: Special Edition</em> (2026). A shorter edit featuring a different mix was previously released on <em>Anthology 2</em> (1996).
+3:15
 
 I'm Looking Through You (Second Version – Take 2)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 1:13
 
 I'm Looking Through You (Second Version – Take 3)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 3:23
 
 Michelle (Guitar Rehearsal)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 1:03
 
 Michelle (Take 1)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 3:17
 
 What Goes On (Take 1 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 3:02
 
 12-Bar Original 
@@ -211,31 +209,27 @@ From <em>Anthology 2</em> (1996)
 2:54
 
 The Word (Takes 1 and 2 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:29
 
 Girl (Take 2 – Instrumental Backing Track)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:50
 
 Beatle Talk (Think For Yourself Vocal Overdubs)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 7:43
 
 Little Girl (John's Demo)
-From <em>Rubber Soul: Special Edition (2026)</em>
+From <em>Rubber Soul: Special Edition</em> (2026)
 2:18
 
 Personnel
 
-John Lennon:
-
-Paul McCartney:
-
-George Harrison:
-
-Ringo Starr: Drums,
-
+• John Lennon: Lead Vocal, Backing Vocal, Harmony Vocal, Acoustic Guitar, Electric Guitar, Tambourine
+• Paul McCartney: Lead Vocal, Backing Vocal, Harmony Vocal, Bass, Fuzz Bass, Electric Guitar, Acoustic Guitar, Piano, Claps
+• George Harrison: Lead Vocal, Backing Vocal, Harmony Vocal, 12-String Acoustic Guitar, 12-String Electric Guitar, Electric Guitar, Sitar, Tambourine
+• Ringo Starr: Lead Vocal, Drums, Bass Drum, Cymbals, Cowbell, Maracas, Tambourine, Percussion, Claps, Thigh Slaps, Matchbox Percussion, Hammond Organ
 • George Martin: Producer; Mixing Engineer; Piano (“In My Life”); Harmonium (“The Word”)
 • Norman Smith: Recording Engineer; Mixing Engineer
 • Jerry Boys: Additional Engineering
@@ -248,3 +242,4 @@ Ringo Starr: Drums,
 • Mal Evans: Hammond Organ (“You Won’t See Me”)
 • Robert Freeman: Photography
 • Charles Front: Illustration
+<em>Personnel credits apply to the original 14-track album only and do not include additional session tracks featured on this page.</em>
