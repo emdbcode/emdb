@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Eminem Show - Eminem | EMDb</title>
-<meta property="og:title" content="The Eminem Show - Eminem | EMDb">
-<meta property="og:description" content="Every Eminem release — explore, rate, review.">
-<meta property="og:image" content="https://emdb.pro/images/album-covers/eminem-show/eminem-show-cover.jpg">
-<meta property="og:url" content="https://emdb.pro/releases/eminem-show.html">
+<title>Rubber Soul - The Beatles | EMDb</title>
+<meta property="og:title" content="Rubber Soul - The Beatles | EMDb">
+<meta property="og:description" content="Rubber Soul • The Beatles • Studio Album (6th)">
+<meta property="og:image" content="https://emdb.pro/beatles-project/album-covers/rubber-soul-cover.jpeg">
+<meta property="og:url" content="https://emdb.pro/beatles-project/rubber-soul.html">
 <meta property="og:type" content="music.album">
 <meta property="og:site_name" content="EMDb">
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Eminem Show - Eminem | EMDb">
-<meta name="twitter:description" content="Every Eminem release — explore, rate, review.">
-<meta name="twitter:image" content="https://emdb.pro/images/album-covers/eminem-show/eminem-show-cover.jpg">
+<meta name="twitter:title" content="Rubber Soul - The Beatles | EMDb">
+<meta name="twitter:description" content="Rubber Soul • The Beatles • Studio Album (6th)">
+<meta name="twitter:image" content="https://emdb.pro/beatles-project/album-covers/rubber-soul-cover.jpeg">
 <link rel="stylesheet" href="../style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 
@@ -203,14 +203,35 @@ body {
 .track-feat { font-size: clamp(12px, 3.5vw, 13px); color: #aaa; margin-top: 2px; }
 .track-length { font-size: clamp(12px, 3.5vw, 13px); color: #999; margin-left: 8px; white-space: nowrap; }
 .arrow { margin-left: 4px; font-size: clamp(10px, 3vw, 11px); color: #777; transition: transform 0.3s ease; }
-.track-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 6px; }
+.track-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 6px; text-transform: capitalize; }
 .track.open .track-details { max-height: 800px; }
 .track.open .arrow { transform: rotate(180deg); }
 .track-note { font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 10px; }
 .total-length { display: flex; justify-content: space-between; padding: clamp(8px, 2.5vw, 12px) 0; border-bottom: 1px solid #333; font-size: clamp(13px, 3.5vw, 14px); color: #aaa; }
 .bonus-btn { margin: 12px 0 8px; padding: clamp(6px, 2.5vw, 8px) clamp(10px, 3vw, 12px); border: 1px solid #444; display: inline-block; cursor: pointer; font-size: clamp(13px, 3.5vw, 14px); }
 .bonus-btn.active { color: #E21C21; border-color: #E21C21; }
-.bonus-tracks { display: none; }
+.bonus-tracks[hidden] { display: none; }
+.bonus-btn { background: transparent; color: #aaa; font-family: inherit; text-align: left; }
+.bonus-tracks .session-tracklist { margin: 0 auto; padding: 0; }
+.session-tracklist .track-number { display: none; }
+.song-extra .fancy-quote { position: relative; padding: 2.6rem 1rem 2.4rem; margin: 0 auto 1rem; max-width: 700px; background: transparent; border-left: none; text-align: left; }
+.song-extra .fancy-quote .quote-mark { position: absolute; left: -20px; top: 32px; font-size: 68px; line-height: 0.9; color: rgb(226, 28, 35); font-family: Georgia, 'Times New Roman', serif; }
+.song-extra .fancy-quote .quote-text { margin: 0; color: #ddd; font-size: 15px; line-height: 1.5; }
+.song-extra .fancy-quote .quote-attrib { position: absolute; right: 12px; bottom: 8px; color: #aaa; font-size: 13px; }
+.song-extra .quote-divider { width: min(700px, calc(100% - 1rem)); height: 1px; margin: 0.25rem auto 0.9rem; background: linear-gradient(90deg, transparent 0%, rgba(226, 28, 35, 0.45) 50%, transparent 100%); }
+.album-quotes { padding: 1.5rem; border: 1px solid #222; border-radius: 6px; background: #151515; box-sizing: border-box; }
+.album-personnel { max-width: 900px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #222; border-radius: 6px; background: #151515; color: #ddd; box-sizing: border-box; }
+.album-personnel .performers-list { display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.album-personnel .performer { display: flex; align-items: center; gap: 7px; width: 100%; max-width: 100%; }
+.album-personnel .performer-avatar { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 50%; object-fit: cover; background: #222; }
+.album-personnel .performer-details { display: flex; flex-direction: column; min-width: 0; }
+.album-personnel .meta-name { color: #ddd; }
+.album-personnel .meta-role { color: #aaa; font-size: 13px; line-height: 1.4; }
+.album-personnel-note { margin: 0.75rem 0 0; color: #999; font-size: 12px; line-height: 1.5; }
+@media (max-width: 480px) {
+  .song-extra .fancy-quote { padding: 1rem 1rem 2rem; max-width: 100%; }
+  .song-extra .fancy-quote .quote-mark { left: -8px; top: 12px; font-size: 40px; }
+}
 
 /* SINGLES SECTION */
 .singles-container {
@@ -724,7 +745,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 <div id="site-header"></div>
 <main>
   <!-- ALBUM COVER + INFO -->
-  <div class="album-container" data-prev="devils-night.html" data-next="8-mile-soundtrack.html" data-charts="../charts/charts-eminem-show.html" data-user-reviews="../user-reviews/eminem-show-user-reviews.html">
+  <div class="album-container" data-charts="/beatles-project/critic-scores/critic-scores-rubber-soul.html" data-user-reviews="#arReviewsSection">
 <a class="permalink" id="pagePermalink" aria-label="Share this page" title="Share this page" href="#" role="button" aria-expanded="false" aria-controls="shareMenu">
   <img src="../images/logos/share_white.png" alt="Share">
 </a>
@@ -735,14 +756,14 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   <button class="share-action" id="copy-share">Copy link</button>
 </div>
 
-    <div class="album-single" id="albumSingleES">
-      <img src="../images/album-covers/eminem-show/eminem-show-cover.jpg" alt="The Eminem Show cover">
+    <div class="album-single" id="albumSingleRS">
+      <img src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
     </div>
     <div class="release-info">
       <div class="album-title">
         <div class="album-header">
           <div class="album-name nav-trigger" id="albumNavToggle" role="button" aria-expanded="false" aria-haspopup="true" tabindex="0">
-            The Eminem Show
+            Rubber Soul
             <div class="nav-popover" id="albumNavPopover" aria-hidden="true">
               <button class="nav-popover-item" id="nextAlbum" aria-label="Next release">
                 <span class="pop-icon">ᐳ</span>
@@ -752,9 +773,9 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
                 <span class="pop-icon">ᐸ</span>
                 <span class="pop-label">Previous release</span>
               </button>
-                <a class="nav-popover-item" id="chartsBtn" href="../charts/charts-eminem-show.html" aria-label="Charts">
+                <a class="nav-popover-item" id="chartsBtn" href="/beatles-project/critic-scores/critic-scores-rubber-soul.html" aria-label="Critic reviews">
                   <span class="pop-icon">≡</span>
-                  <span class="pop-label">Charts</span>
+                  <span class="pop-label">Critic reviews</span>
                 </a>
 
                 
@@ -767,16 +788,17 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
             </div>
           </div>
         </div>
-        <div class="album-artist">Eminem</div>
-        <div class="album-type">Studio Album (4th)</div>
+        <div class="album-artist">The Beatles</div>
+        <div class="album-type">Studio Album (6th)</div>
       </div>
-      <strong>Released:</strong> May 26, 2002<br>
-      <strong>Labels:</strong> Aftermath • Shady • Interscope<br>
-      <strong>Executive Producer:</strong> Dr. Dre<br>
+      <strong>Released:</strong> 3 December, 1965<br>
+      <strong>Labels:</strong> Parlophone • Capitol • EMI<br>
+      <strong>Producer:</strong> George Martin<br>
       <div class="release-details" id="releaseDetails">
-        <strong>Recorded:</strong> 2001 – 2002<br>
-        <strong>Studios:</strong> Encore Studios (Burbank, CA) • Marshall’s House (Detroit, MI) • 54 Sound (Detroit, MI) • Sierra Sounds (Berkeley, CA) • Larrabee Studios (Los Angeles, CA) • Encore Studios (Burbank, CA)<br>
-        <strong>Mastering Engineer:</strong> Brian “Big Bass” Gardner
+        <strong>Engineer:</strong> Norman Smith<br>
+        <strong>Mixed by:</strong> Norman Smith &amp; George Martin<br>
+        <strong>Recorded:</strong> 17 June 1965 &amp; 12 October – 11 November 1965<br>
+        <strong>Studios:</strong> EMI Recording Studios (Abbey Road Studios), London
       </div>
       <div class="toggle-details" id="toggleDetails">Show More</div>
 
@@ -796,11 +818,11 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         </div>
         <div class="rating-block">
           <div class="rating-label">Critic Score</div>
-          <a href="../charts/critic-scores-eminem-show.html" class="critic-score" data-score="76" title="View critic reviews">
-  7.6
+          <a href="/beatles-project/critic-scores/critic-scores-rubber-soul.html" class="critic-score" data-score="99" title="View critic reviews">
+  9.9
 </a>
 
-          <div id="criticReviews">23 Reviews</div>
+          <div id="criticReviews">9 Reviews</div>
 
         </div>
       </div>
@@ -808,282 +830,146 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </div>
 
   <!-- TRACKLIST -->
-    <div class="tracklist">
-
-    <div class="track"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/curtains-up-skit.html">Curtains Up (Skit)</a></div></div><div class="track-length">0:29 <span class="arrow">▼</span></div></div><div class="track-details">Performed by Eminem</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/white-america.html">White America</a></div></div><div class="track-length">5:24 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Co-Produced by Jeff Bass<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/business.html">Business</a></div></div><div class="track-length">4:11 <span class="arrow">▼</span></div></div><div class="track-details">Produced and Mixed by Dr. Dre</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/cleanin-out-my-closet.html">Cleanin’ Out My Closet</a></div></div><div class="track-length">4:57 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem & Jeff Bass<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/square-dance.html">Square Dance</a></div></div><div class="track-length">5:23 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/kiss-skit.html">The Kiss (Skit)</a></div></div><div class="track-length">1:15 <span class="arrow">▼</span></div></div><div class="track-details">Performed by Eminem & Gary Kozlowski</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/soldier.html">Soldier</a></div></div><div class="track-length">3:46 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">8</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/say-goodbye-hollywood.html">Say Goodbye Hollywood</a></div></div><div class="track-length">4:33 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">9</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/drips.html">Drips</a></div><div class="track-feat">feat. Obie Trice</div></div><div class="track-length">4:45 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">10</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/without-me.html">Without Me</a></div></div><div class="track-length">4:50 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Co-Produced by Jeff Bass<br>Additional Production by DJ Head<br>Mixed by Dr. Dre</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">11</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/paul-skit-3.html">Paul Rosenberg (Skit)</a></div></div><div class="track-length">0:22 <span class="arrow">▼</span></div></div><div class="track-details">Performed by Paul Rosenberg</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/sing-for-the-moment.html">Sing For The Moment</a></div></div><div class="track-length">5:39 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Co-Produced by Jeff Bass<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/superman.html">Superman</a></div><div class="track-feat">feat. Dina Rae</div></div><div class="track-length">5:50 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Additional Production by Jeff Bass<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/hailies-song.html">Hailie’s Song</a></div></div><div class="track-length">5:20 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Dr. Dre, Eminem & Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">15</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/steve-berman-skit-3.html">Steve Berman (Skit)</a></div></div><div class="track-length">0:33 <span class="arrow">▼</span></div></div><div class="track-details">Performed by Eminem & Steve Berman</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">16</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/when-the-music-stops.html">When The Music Stops</a></div><div class="track-feat">feat. D12</div></div><div class="track-length">4:29 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Co-Produced by Mr. Porter<br>Mixed by Steve Baughman</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">17</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/say-what-you-say.html">Say What You Say</a></div><div class="track-feat">feat. Dr. Dre</div></div><div class="track-length">5:09 <span class="arrow">▼</span></div></div><div class="track-details">Produced and Mixed by Dr. Dre</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">18</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/till-i-collapse.html">’Till I Collapse</a></div><div class="track-feat">feat. Nate Dogg</div></div><div class="track-length">4:58 <span class="arrow">▼</span></div></div><div class="track-details">Produced by Eminem<br>Mixed by Steve King</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">19</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/my-dads-gone-crazy.html">My Dad’s Gone Crazy</a></div><div class="track-feat">feat. Hailie Jade</div></div><div class="track-length">4:27 <span class="arrow">▼</span></div></div><div class="track-details">Produced and Mixed by Dr. Dre</div></div>
-
-    <div class="track"><div class="track-header"><div class="track-number">20</div><div class="track-title-container"><div class="track-title"><a href="/songs/eminem-show/curtains-close-skit.html">Curtains Close (Skit)</a></div></div><div class="track-length">1:01 <span class="arrow">▼</span></div></div><div class="track-details">Performed by Eminem as Ken Kaniff</div></div>
-    
-    <div class="total-length"><span>Total length</span><span>1 hour, 17 minutes</span></div>
-
-    <div class="bonus-btn" id="bonusToggle">Bonus Tracks</div>
-    <div class="bonus-tracks" id="bonusTracks">
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/stimulate.html">Stimulate</a></div>
+  <section class="tracklist" aria-label="Tracklist">
+    <div class="track" data-video="OfQV-DkQqY0"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/drive-my-car.html">Drive My Car</a></div></div><div class="track-length">2:28 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, electric guitar, bass, piano<br>John Lennon: lead vocal, harmony, tambourine<br>George Harrison: harmony vocals, electric guitar<br>Ringo Starr: drums, cowbell<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="bhDkCGTaYMw"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown)</a></div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: 12-string acoustic guitar, sitar<br>Ringo Starr: bass drum, cymbals, tambourine, claps, thigh slaps<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="RYXS1diAEOI"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/you-wont-see-me.html">You Won't See Me</a></div></div><div class="track-length">3:22 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, bass, piano, claps<br>John Lennon: backing vocal, tambourine<br>George Harrison: backing vocal, electric guitar<br>Ringo Starr: drums, percussion<br>Mal Evans: Hammond organ<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="oHcMZjgiC6Y"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/nowhere-man.html">Nowhere Man</a></div></div><div class="track-length">2:40 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: Lead Vocal, Harmony Vocal, Acoustic Guitar, Lead Electric Guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, lead electric guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="V-Og6Ok-Fdg"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/think-for-yourself.html">Think For Yourself</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, harmony vocal, electric guitar, tambourine<br>John Lennon: harmony vocal, electric guitar, electric piano<br>Paul McCartney: harmony vocal, bass, fuzz bass<br>Ringo Starr: drums, maracas<br>Written by: George Harrison</div></div>
+    <div class="track" data-video="MO41YysYQwM"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/the-word.html">The Word</a></div></div><div class="track-length">2:41 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass, piano<br>George Harrison: harmony vocal, lead electric guitar<br>Ringo Starr: drums, maracas<br>George Martin: harmonium<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="MLCbAD9YRhc"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/michelle.html">Michelle</a></div></div><div class="track-length">2:43 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, acoustic guitar, bass<br>John Lennon: harmony vocal, nylon string acoustic guitar<br>George Harrison: harmony vocal, electric lead guitar, 12-string acoustic guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="GERbW3N-c5I"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/what-goes-on.html">What Goes On</a></div></div><div class="track-length">2:48 <span class="arrow">▼</span></div></div><div class="track-details">Ringo Starr: lead vocal, drums<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: lead electric guitar<br>Written by: Lennon–McCartney–Starkey</div></div>
+    <div class="track" data-video="BFKxJQ5Xpz0"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/girl.html">Girl</a></div></div><div class="track-length">2:30 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar<br>Paul McCartney: backing vocal, bass<br>George Harrison: backing vocal, 12-string acoustic lead guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="JYR9vgVe5Jw"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I'm Looking Through You</a></div></div><div class="track-length">2:26 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, acoustic guitar, bass<br>John Lennon: harmony vocal<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, matchbox percussion, tambourine, Hammond Organ<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="AEeE3-unGHo"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/in-my-life.html">In My Life</a></div></div><div class="track-length">2:27 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, tambourine<br>George Martin: piano<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="Sh8Ps32fRQo"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/wait.html">Wait</a></div></div><div class="track-length">2:14 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar, tambourine<br>Paul McCartney: lead vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, maracas<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="u6_-UL2FTeA"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/if-i-needed-someone.html">If I Needed Someone</a></div></div><div class="track-length">2:21 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, 12-string electric guitar<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>Ringo Starr: drums, tambourine<br>Written by: George Harrison</div></div>
+    <div class="track" data-video="VFBpGOn8rpY"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/run-for-your-life.html">Run For Your Life</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar, electric slide guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, electric lead guitar<br>Ringo Starr: bass drum, tambourine<br>Written by: Lennon–McCartney</div></div>
+    <div class="total-length"><span>Total length</span><span>35 minutes</span></div>
+    <button class="bonus-btn" id="bonusToggle" type="button" aria-expanded="false" aria-controls="bonusTracks">Sessions</button>
+    <div class="bonus-tracks" id="bonusTracks" hidden>
+      <div class="tracklist session-tracklist" aria-label="Sessions tracklist">
+        <div class="track" data-video="lCj0ZyDfFcc"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/wait.html">Wait (Take 3 – Instrumental Backing Track)</a></div></div><div class="track-length">1:11 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="qh_yk6HbnQU"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/run-for-your-life.html">Run For Your Life (Takes 1–5 – Instrumental Backing Track)</a></div></div><div class="track-length">4:10 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="PuJZYI5qomk"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown) (First Version – Take 1)</a></div></div><div class="track-length">2:08 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="PuJZYI5qomk"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown) (Take 1) [with Overdubs]</a></div></div><div class="track-length">1:59 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Anthology 2</em> (1996)</div></div>
+        <div class="track" data-video="gkvP88ALauk"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown) (Second Version – Take 2)</a></div></div><div class="track-length">2:20 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="8TKySZNAwBo"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown) (Third Version – Take 3)</a></div></div><div class="track-length">2:23 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="BcfmutfDOl8"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/drive-my-car.html">Drive My Car (Takes 1 and 2 – Instrumental Backing Track)</a></div></div><div class="track-length">1:43 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="1m1TFIhlCXg"><div class="track-header"><div class="track-number">8</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/day-tripper.html">Day Tripper (Songwriting Work Tape)</a></div></div><div class="track-length">2:20 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="Hrj4Vth3Eu4"><div class="track-header"><div class="track-number">9</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/day-tripper.html">Day Tripper (Take 1 – Instrumental Backing Track)</a></div></div><div class="track-length">2:06 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="CA8-CTt9qpA"><div class="track-header"><div class="track-number">10</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/day-tripper.html">Day Tripper (Takes 2 and 3 – Instrumental Backing Track)</a></div></div><div class="track-length">4:08 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="fBzR4Fi6avI"><div class="track-header"><div class="track-number">11</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/day-tripper.html">Day Tripper</a></div></div><div class="track-length">2:49 <span class="arrow">▼</span></div></div><div class="track-details">Non-album single, later included on <em>Past Masters</em> (1988)</div></div>
+        <div class="track" data-video="gAXKsFboF64"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/if-i-needed-someone.html">If I Needed Someone (Take 1 – Instrumental Backing Track)</a></div></div><div class="track-length">2:52 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="iL1kUOomzoE"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/in-my-life.html">In My Life (Take 1)</a></div></div><div class="track-length">2:41 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Anthology 4</em> (2025) &amp; <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="9wI5NguvrX4"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/in-my-life.html">In My Life (Extract With Unused Organ Solo)</a></div></div><div class="track-length">0:40 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="p9YCoR6V_5k"><div class="track-header"><div class="track-number">15</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/we-can-work-it-out.html">We Can Work It Out (Paul's Demo)</a></div></div><div class="track-length">0:55 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="E7TeTNEaH_E"><div class="track-header"><div class="track-number">16</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/we-can-work-it-out.html">We Can Work It Out (Take 1 – Instrumental Backing Track)</a></div></div><div class="track-length">2:01 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="5vP2MzZQvrg"><div class="track-header"><div class="track-number">17</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/we-can-work-it-out.html">We Can Work It Out</a></div></div><div class="track-length">2:15 <span class="arrow">▼</span></div></div><div class="track-details">Non-album single, later included on <em>Past Masters</em> (1988)</div></div>
+        <div class="track" data-video="UutcmUtSETE"><div class="track-header"><div class="track-number">18</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/nowhere-man.html">Nowhere Man (First Version – Take 2)</a></div></div><div class="track-length">2:27 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Anthology 4</em> (2025) &amp; <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="Z6dV2_4VuFY"><div class="track-header"><div class="track-number">19</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/nowhere-man.html">Nowhere Man (Second Version – Take 5 – Instrumental Backing Track)</a></div></div><div class="track-length">2:55 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="CDiXqjIDNAA"><div class="track-header"><div class="track-number">23</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/michelle.html">Michelle (Guitar Rehearsal)</a></div></div><div class="track-length">1:03 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="Zq0HMLhaQOw"><div class="track-header"><div class="track-number">24</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/michelle.html">Michelle (Take 1)</a></div></div><div class="track-length">3:17 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="WMRmmrmvZYw"><div class="track-header"><div class="track-number">25</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/what-goes-on.html">What Goes On (Take 1 – Instrumental Backing Track)</a></div></div><div class="track-length">3:02 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="9W3G-CmjPtM"><div class="track-header"><div class="track-number">26</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/12-bar-original.html">12-Bar Original</a></div></div><div class="track-length">2:54 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Anthology 2</em> (1996)</div></div>
+        <div class="track" data-video="ziidUSEZm-A"><div class="track-header"><div class="track-number">29</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/think-for-yourself.html">Beatle Talk (Think For Yourself Vocal Overdubs)</a></div></div><div class="track-length">7:43 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="w6DbHDnnkK4"><div class="track-header"><div class="track-number">27</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/the-word.html">The Word (Takes 1 and 2 – Instrumental Backing Track)</a></div></div><div class="track-length">2:29 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="qshFacILfso"><div class="track-header"><div class="track-number">20</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I’m Looking Through You (First Version – Take 1)</a></div></div><div class="track-length">3:15 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026) — A shorter edit featuring a different mix was previously released on <em>Anthology 2</em> (1996)</div></div>
+        <div class="track" data-video="2dgqz8hO9bI"><div class="track-header"><div class="track-number">21</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I’m Looking Through You (Second Version – Take 2)</a></div></div><div class="track-length">1:13 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="P7wy6loDuUg"><div class="track-header"><div class="track-number">22</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I’m Looking Through You (Second Version – Take 3)</a></div></div><div class="track-length">3:23 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="ex-wYoR0cEs"><div class="track-header"><div class="track-number">28</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/girl.html">Girl (Take 2 – Instrumental Backing Track)</a></div></div><div class="track-length">2:50 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
+        <div class="track" data-video="wNA1-t3qras"><div class="track-header"><div class="track-number">30</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/little-girl-johns-demo.html">Little Girl (John's Demo)</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">From <em>Rubber Soul: Special Edition</em> (2026)</div></div>
       </div>
-      <div class="track-length">5:03 <span class="arrow">▼</span></div>
     </div>
-    <div class="track-details">Produced by Eminem<br>Additional Production by Jeff Bass<br>Mixed by Steve King<br><em>Included on The Eminem Show (Expanded Edition) — Taken from the “Cleanin’ Out My Closet” single release</em></div>
-  </div>
+  </section>
 
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/conspiracy-freestyle.html">The Conspiracy Freestyle</a></div>
+  <section class="song-extra album-quotes" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
+    <h3 id="section-quote" style="color:#fff;margin:0 0.5rem 0.5rem 0;"><em>Rubber Soul</em>, Told by The Beatles</h3>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <div class="quote-text">
+      <p style="margin:0 0 0.75rem;">We did a lot of learning together. George Martin had a very great musical knowledge and background, and he could translate for us and suggest a lot of things. He’d come up with amazing technical things, slowing down the piano and things like that. We’d be saying, ‘We want it to go un, un and ee, ee, and he’d say, ‘Well, look, chaps, I thought of this, this afternoon, and last night I was talking to... whoever, and I came up with this!’ And we’d say, ‘Great, great, come on, put it on here!’ He’d also come up with things like, ‘Have you heard an oboe [a woodwind instrument]?' and we’d say, ‘Which one’s that?’ and he’d say, ‘This one’.</p>
+      <p style="margin:0 0 0.75rem;">In ‘In My Life’ there’s an Elizabethan piano solo — we’d do things like that. We’d say, ‘Play it like Bach’, or, ‘Could you put twelve bars in there?’ He helped us to develop a language a little. [...]</p>
+      <p style="margin:0 0 0.75rem;">We were getting better technically and musically . We finally took over the studio. In the early days we had to take what we were given; we had to make it in two hours, and one or three takes was enough and we didn’t know how you could get more bass — we were learning the techniques. Then we got contemporary. I think <em>Rubber Soul</em> was about when it started happening. [...]</p>
+      <p style="margin:0 0 0.75rem;">I always was a record man. I always liked the studio best, once I got the hang of it and the control. I like it because it’s complete control. [...]</p>
+      <p style="margin:0 0 0.75rem;">Everything I, any of us, do is influenced, but it began to take its own form. <em>Rubber Soul</em> was a matter of having all experienced the recording studio; having grown musically as well, but [getting] the knowledge of the place, of the studio. We were more precise about making the album, that's all, and we took over the cover and everything.</p>
+      <p style="margin:0;">It was Paul’s title. It was like ‘Yer Blues’, I suppose, meaning English
+soul, ‘Rubber soul’. Just a pun.</p>
       </div>
-      <div class="track-length">2:50 <span class="arrow">▼</span></div>
+      <footer class="quote-attrib">— John Lennon, <em>The Beatles Anthology</em>, 2000</footer>
+    </blockquote>
+    <div class="quote-divider"></div>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <div class="quote-text">
+      <p style="margin:0 0 0.75rem;">John and I were writing quite well by 1965. For a while we didn’t really have enough home-made material, but we did start to around the time of <em>Rubber Soul</em>.</p>
+      <p style="margin:0 0 0.75rem;">Most of the time we wrote together. We’d go and lock ourselves away and say, ‘OK, what have we got?’ John might have half an idea, something like for ‘In My Life’ and we’d work out the extra melody needed, and the main theme, and by the end of three or four hours we nearly always had it cracked! I can’t remember coming away from one of those sessions not having finished a song.  [...]</p>
+      <p style="margin:0 0 0.75rem;">Nobody ever had any notes written down; we just used to sing a tune and it would come out good. Part of the secret collaboration was that we liked each other. We liked singing at each other. He’d sing something and I’d say, ‘Yeah,’ and trade off on that. He’d say, ‘Nowhere land’, and I’d say, ‘For nobody!’ It was a two-way thing. [...]</p>
+      <p style="margin:0 0 0.75rem;">In October 1965, we started to record the album. Things were changing. The direction was moving away from the poppy stuff like ‘Thank You Girl’, ‘From Me To You’ and ‘She Loves You’. The early material was directly relating to our fans, saying, ‘Please buy this record’, but now we’d come to a point where we thought, ‘We’ve done that’. Now we can branch out into songs that are more surreal, a little more entertaining. And other people were starting to arrive on the scene who were influential. Dylan was influencing us quite heavily at that point. [...]</p>
+      <p style="margin:0 0 0.75rem;">George Martin was very understanding, even though we were going to change style and get more psychedelic or surreal. It never seemed to throw him, even though sometimes it was not quite his taste in music. [...]</p>
+      <p style="margin:0 0 0.75rem;">I think the title <em>Rubber Soul</em> came from a comment an old blues guy had said of [Mick] Jagger. I've heard some out-takes of us doing ‘I’m Down’ and at the front of it I’m chatting on about Mick. I’m saying how I’d just read about an old bloke in the States who said, ‘Mick Jagger, man. Well you know they’re good — but it’s plastic soul! So ’plastic soul’ was the germ of the <em>Rubber Soul</em> idea. [...]</p>
+      <p style="margin:0 0 0.75rem;">The album cover is another example of our branching out: the stretched photo. That was actually one of those little exciting random things that happen. The photographer Robert Freeman had taken some pictures round at John’s house in Weybridge. We had our new gear on — the polo necks — and we were doing straight mug shots; the four of us all posing.</p>
+      <p style="margin:0 0 0.75rem;">Back in London Robert was showing us the slides; he had a piece of cardboard that was the album-cover size and he was projecting the photographs exactly onto it so we could see how it would look as an album cover. We had just chosen the photograph when the card that the picture was projected onto fell backwards a little, elongating the photograph. It was stretched and we went, ’That’s it, <em>Rubber So-o-oul</em>!, hey hey! Can you do it like that?’ And he said, ‘well, yeah. I can print it that way’. And that was it.</p>
+      </div>
+      <footer class="quote-attrib">— Paul McCartney, <em>The Beatles Anthology</em>, 2000</footer>
+    </blockquote>
+    <div class="quote-divider"></div>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <div class="quote-text">
+      <p style="margin:0 0 0.75rem;">I liked the way we got our faces to be longer on the album cover. We lost the ‘little innocents’ tag, the naivety, and  was the first one where we were fully-fledged potheads. [...] Reefers are hard to avoid in The Beatles’ story. All the time, Mal and Neil would sit in Studio No. 2 behind the sound baffles while we were working, rolling them up and smoking. [...]</p>
+      <p style="margin:0 0 0.75rem;">In Studio No. 2 there is a steep staircase that goes up to the control room. Underneath is a cupboard where they used to keep all kinds of different equipment. [...] There were strange tambourines and Moroccan drums and all kinds of little things.</p>
+      <p style="margin:0 0 0.75rem;">The studio itself was full of instruments: pedal harmoniums, tack pianos, a celeste and a Hammond organ. That’s why we used all those different sounds on our records — because they were there. So when we’d get to an overdub we’d look around the cupboard and see if there was something that would fit. [...]</p>
+      <p style="margin:0 0 0.75rem;">Songwriting for me, at the time of <em>Rubber Soul</em>, was a bit frightening because John and Paul had been writing since they were three years old. It was hard to come in suddenly and write songs. They’d had a lot of practice. They’d written most of their bad songs before we’d even got into the recording studio. I had to come from nowhere and start writing, and have something with at least enough quality to put on the record alongside all the wondrous hits. It was very hard. [...]</p>
+      <p style="margin:0 0 0.75rem;"><em>Rubber Soul</em> was my favourite album, even at that time. I think that it was the best one we made; we certainly knew we were making a good album. We did spend a bit more time on it and tried new things.</p>
+      <p style="margin:0 0 0.75rem;">But the most important thing about it was that we were suddenly hearing sounds that we weren’t able to hear before. Also, we were being more influenced by other people’s music and everything was blossoming at that time; including us, because we were still growing.</p>
+      </div>
+      <footer class="quote-attrib">— George Harrison, <em>The Beatles Anthology</em>, 2000</footer>
+    </blockquote>
+    <div class="quote-divider"></div>
+    <blockquote class="fancy-quote">
+      <span class="quote-mark">“</span>
+      <div class="quote-text">
+      <p style="margin:0 0 0.75rem;">By the end of 1965 the touring started to hit everybody. I remember we had a meeting during which we all talked about how the musicianship was going downhill, never mind the boredom of doing it; going away and hitting all those hotels.</p>
+      <p style="margin:0 0 0.75rem;">Bands go on the road nowadays and do a press conference one day and shows for the next four days.<br>But, for The Beatles, it was always the press and those sorts of people: there was so much pressure. From the minute we opened our eyes people were trying to get at us.</p>
+      <p style="margin:0 0 0.75rem;">A lot was changing — our attitudes, our lives — at this time, and the <em>Rubber Soul</em> sessions were the start of the build-up to the end, in a way. We were doing great stuff and it was really a joy in the studio and the results were great, but the time was getting longer and longer, taking up a lot of space, and as it built up, over five or six years, I was getting fed up with the studios, too.</p>
+      <p style="margin:0 0 0.75rem;">I’d just got married in 1965 and was driving up to Abbey Road every day. I think that’s where I started the resentment for the studio. We would go in there and it would be a beautiful day, and we’d come out and days had gone by. [...]</p>
+      <p style="margin:0 0 0.75rem;">Grass was really influential in a lot of our changes, especially with the writers. And because they were writing different material, we were playing differently. We were expanding in all areas of our lives, opening up to a lot of different attitudes. I feel that we [succeeded] on love songs. Now we get to <em>Rubber Soul</em> and begin stretching the writing and the playing a lot more. This was the departure record. A lot of other influences were coming down and going on the record.</p>
+      <p style="margin:0 0 0.75rem;">‘Nowhere Man’ was good. ‘Girl’ was great — weird breathy sounds on it. ‘The Word’, another great track — George Martin on harmonium, Mal ‘Organ’ Evans on Hammond. We were really getting into a lot of different sounds and I think the lyrics were changing, too, with songs like ‘Drive My Car’, ‘Norwegian Wood’, ‘You Won’t See Me’, ‘Nowhere Man’ and, of course, ‘Michelle’.</p>
+      </div>
+      <footer class="quote-attrib">— Ringo Starr, <em>The Beatles Anthology</em>, 2000</footer>
+    </blockquote>
+  </section>
+
+  <section class="album-personnel">
+    <h2 class="section-heading">Personnel</h2>
+    <div class="performers-list">
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name">John Lennon</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Acoustic Guitar, Electric Guitar, Tambourine</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/paul-mccartney.jpg" alt="Paul McCartney"><span class="performer-details"><span class="meta-name">Paul McCartney</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Bass, Fuzz Bass, Electric Guitar, Acoustic Guitar, Piano, Claps</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-harrison.jpg" alt="George Harrison"><span class="performer-details"><span class="meta-name">George Harrison</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, 12-String Acoustic Guitar, 12-String Electric Guitar, Electric Guitar, Sitar, Tambourine</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name">Ringo Starr</span><span class="meta-role">Lead Vocal, Drums, Bass Drum, Cymbals, Cowbell, Maracas, Tambourine, Percussion, Claps, Thigh Slaps, Matchbox Percussion, Hammond Organ</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-martin.jpg" alt="George Martin"><span class="performer-details"><span class="meta-name">George Martin</span><span class="meta-role">Producer; Mixing Engineer; Piano (“In My Life”); Harmonium (“The Word”)</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/norman-smith.jpg" alt="Norman Smith"><span class="performer-details"><span class="meta-name">Norman Smith</span><span class="meta-role">Recording Engineer; Mixing Engineer</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/jerry-boys.jpg" alt="Jerry Boys"><span class="performer-details"><span class="meta-name">Jerry Boys</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/graham-platt.jpg" alt="Graham Platt"><span class="performer-details"><span class="meta-name">Graham Platt</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name">Ken Scott</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mike-stone.jpg" alt="Mike Stone"><span class="performer-details"><span class="meta-name">Mike Stone</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/phil-mcdonald.jpg" alt="Phil McDonald"><span class="performer-details"><span class="meta-name">Phil McDonald</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/richard-lush.jpg" alt="Richard Lush"><span class="performer-details"><span class="meta-name">Richard Lush</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name">Ron Pender</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mal-evans.jpg" alt="Mal Evans"><span class="performer-details"><span class="meta-name">Mal Evans</span><span class="meta-role">Hammond Organ (“You Won’t See Me”)</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/robert-freeman.jpg" alt="Robert Freeman"><span class="performer-details"><span class="meta-name">Robert Freeman</span><span class="meta-role">Photography</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/charles-front.jpg" alt="Charles Front"><span class="performer-details"><span class="meta-name">Charles Front</span><span class="meta-role">Illustration</span></span></div>
     </div>
-    <div class="track-details">Produced by Eminem<br>Mixed by DJ Green Lantern<br><em>Included on The Eminem Show (Expanded Edition) — Taken from the “Business” single release</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/bump-heads.html">Bump Heads</a></div>
-        <div class="track-feat">feat. 50 Cent, Tony Yayo & Lloyd Banks</div>
-      </div>
-      <div class="track-length">4:41 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details">Produced by Eminem<br>Mixed by DJ Green Lantern<br><em>Included on The Eminem Show (Expanded Edition) — Taken from the “Business” single release</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/jimmy-brian-and-mike.html">Jimmy, Brian And Mike</a></div>
-      </div>
-      <div class="track-length">3:21 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details">Produced by Dr. Dre & Mike Elizondo<br>Additional Production by Eminem<br>Mixed by Mike Strange<br><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/freestyle-1-live-tramps-1999.html">Freestyle #1 (Live From Tramps, New York / 1999)</a></div>
-      </div>
-      <div class="track-length">1:17 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/brain-damage-live-tramps-1999.html">Brain Damage (Live From Tramps, New York / 1999)</a></div>
-      </div>
-      <div class="track-length">1:24 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/freestyle-2-live-tramps-1999.html">Freestyle #2 (Live From Tramps, New York / 1999)</a></div>
-      </div>
-      <div class="track-length">0:52 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/just-dont-give-a-fuck-live-tramps-1999.html">Just Don’t Give A Fuck (Live From Tramps, New York / 1999)</a></div>
-      </div>
-      <div class="track-length">3:15 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/way-i-am-live-fuji-2001.html">The Way I Am (Live From Fuji Rock Festival, Japan / 2001)</a></div>
-        <div class="track-feat">feat. Proof</div>
-      </div>
-      <div class="track-length">3:43 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track">
-    <div class="track-header">
-      <div class="track-number"></div>
-      <div class="track-title-container">
-        <div class="track-title"><a href="/songs/eminem-show/real-slim-shady-live-fuji-2001.html">The Real Slim Shady (Live From Fuji Rock Festival, Japan / 2001)</a></div>
-        <div class="track-feat">feat. Proof</div>
-      </div>
-      <div class="track-length">4:45 <span class="arrow">▼</span></div>
-    </div>
-    <div class="track-details"><em>Included on The Eminem Show (Expanded Edition)</em></div>
-  </div>
-
-  <div class="track-note">
-    <em>Additional instrumentals are listed separately on their dedicated page.</em>
-  </div>
-
-    </div>
-
-  <!-- SINGLES SECTION -->
-    <div class="singles-container">
-    <div class="section-heading">Singles</div>
-    <a class="single-section-singles" href="/songs/eminem-show/without-me.html">
-      <img src="../images/album-covers/eminem-show/without-me-cover.jpg" alt="Without Me cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">Without Me</span>
-        <span class="song-date-singles">Released: May 13, 2002</span>
-      </div></a>
-    <a class="single-section-singles" href="/songs/eminem-show/cleanin-out-my-closet.html">
-      <img src="../images/album-covers/eminem-show/cleanin-out-my-closet-cover.jpg" alt="Cleanin’ Out My Closet cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">Cleanin’ Out My Closet</span>
-        <span class="song-date-singles">Released: July 29, 2002</span>
-      </div></a>
-    <a class="single-section-singles" href="/songs/eminem-show/till-i-collapse.html">
-      <img src="../images/album-covers/eminem-show/til-i-collapse-cover.jpg" alt="’Till I Collapse cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">’Till I Collapse <span class="†-promo">†</span></span>
-        <span class="song-date-singles">Released: Circa 2002</span>
-      </div>
-    </a>
-    <a class="single-section-singles" href="/songs/eminem-show/superman.html">
-      <img src="../images/album-covers/eminem-show/superman-cover.jpg" alt="Superman cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">Superman <span class="†-promo">‡</span></span>
-        <span class="song-date-singles">Released: January 21, 2003</span>
-      </div>
-    </a>
-    <a class="single-section-singles" href="/songs/eminem-show/sing-for-the-moment.html">
-      <img src="../images/album-covers/eminem-show/sing-for-the-moment-cover.jpg" alt="Sing For The Moment cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">Sing For The Moment</span>
-        <span class="song-date-singles">Released: February 25, 2003</span>
-      </div></a>
-    <a class="single-section-singles" href="/songs/eminem-show/business.html">
-      <img src="../images/album-covers/eminem-show/business-cover.jpg" alt="Business cover">
-      <div class="single-info-singles">
-        <span class="song-title-singles">Business</span>
-        <span class="song-date-singles">Released: July 14, 2003</span>
-      </div></a>
-    <div class="promo-note promo-legend"><em>† Promotional single. ‡ Radio single; no retail release.</em></div>
-  </div>
-
-  <!-- MUSIC VIDEOS SECTION -->
-  <div class="music-videos-container">
-    <div class="section-heading">Music Videos</div>
-
-    <div class="video-item">
-      <div class="single-section-video" data-video="YVkUvmDQ3HY">
-        <img src="https://img.youtube.com/vi/YVkUvmDQ3HY/hqdefault.jpg" alt="Without Me video thumbnail">
-        <div class="single-info-video">
-          <span class="song-title-video">Without Me</span>
-          <span class="song-date-video">Directed by Joseph Kahn</span>
-        </div>
-      </div>
-      <div class="video-player"></div>
-    </div>
-
-    <div class="video-item">
-      <div class="single-section-video" data-video="RZIzD0ZfTFg">
-        <img src="https://img.youtube.com/vi/RZIzD0ZfTFg/hqdefault.jpg" alt="White America video thumbnail">
-        <div class="single-info-video">
-          <span class="song-title-video">White America</span>
-          <span class="song-date-video">Directed by Guerrilla News Network</span>
-        </div>
-      </div>
-      <div class="video-player"></div>
-    </div>
-
-    <div class="video-item">
-      <div class="single-section-video" data-video="RQ9_TKayu9s">
-        <img src="https://img.youtube.com/vi/RQ9_TKayu9s/hqdefault.jpg" alt="Cleanin’ Out My Closet video thumbnail">
-        <div class="single-info-video">
-          <span class="song-title-video">Cleanin’ Out My Closet</span>
-          <span class="song-date-video">Directed by Dr. Dre & Phillip Atwell</span>
-        </div>
-      </div>
-      <div class="video-player"></div>
-    </div>
-
-    <div class="video-item">
-      <div class="single-section-video" data-video="8kYkciD9VjU">
-        <img src="https://img.youtube.com/vi/8kYkciD9VjU/hqdefault.jpg" alt="Superman video thumbnail">
-        <div class="single-info-video">
-          <span class="song-title-video">Superman</span>
-          <span class="song-date-video">Directed by Paul Hunter</span>
-        </div>
-      </div>
-      <div class="video-player"></div>
-    </div>
-
-    <div class="video-item">
-      <div class="single-section-video" data-video="D4hAVemuQXY">
-        <img src="https://img.youtube.com/vi/D4hAVemuQXY/hqdefault.jpg" alt="Sing For The Moment video thumbnail">
-        <div class="single-info-video">
-          <span class="song-title-video">Sing For The Moment</span>
-          <span class="song-date-video">Directed by Phillip Atwell & Jeff Grippe</span>
-        </div>
-      </div>
-      <div class="video-player"></div>
-    </div>
-  </div>
+    <p class="album-personnel-note"><em>Personnel credits apply to the original 14-track album only and do not include additional session tracks featured on this page.</em></p>
+  </section>
 
   <div class="singles-container playlist-container">
     <div class="section-heading" id="musicPlayerHeading">Music Player</div>
     <button class="player-collapse-btn" id="playerCollapseBtn" type="button" aria-label="Hide player">Hide</button>
     <div class="playlist-panel">
       <div class="video-player open playlist-player">
-        <iframe class="playlist-embed" id="playlistPlayer" src="" title="The Eminem Show now playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe class="playlist-embed" id="playlistPlayer" src="" title="Rubber Soul now playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="now-playing-controls">
         <button class="now-playing-btn" id="nowPrevBtn" type="button" aria-label="Previous song">⏮</button>
@@ -1115,16 +1001,18 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
 <script>
   // COVER CLICK SWITCH
-  const albumUrlsES = [
-    "../images/album-covers/eminem-show/eminem-show-cover.jpg",
-    "../images/album-covers/eminem-show/eminem-show_2-cover.jpg"
+  const albumUrlsRS = [
+    "/beatles-project/album-covers/rubber-soul-cover.jpeg",
+    "/beatles-project/album-covers/rubber-soul-cover-greece.jpg",
+    "/beatles-project/album-covers/rubber-soul-cover-italy.jpg",
+    "/beatles-project/album-covers/rubber-soul-cover-uruguay.jpg"
   ];
-  let currentIndexES = 0;
-  const albumDivES = document.getElementById("albumSingleES");
-  const albumImgES = albumDivES.querySelector("img");
-  albumDivES.addEventListener("click", () => {
-    currentIndexES = (currentIndexES + 1) % albumUrlsES.length;
-    albumImgES.src = albumUrlsES[currentIndexES];
+  let currentIndexRS = 0;
+  const albumDivRS = document.getElementById("albumSingleRS");
+  const albumImgRS = albumDivRS.querySelector("img");
+  albumDivRS.addEventListener("click", () => {
+    currentIndexRS = (currentIndexRS + 1) % albumUrlsRS.length;
+    albumImgRS.src = albumUrlsRS[currentIndexRS];
   });
 
   // TRACKLIST TOGGLE — toggle open class and update arrow glyphs
@@ -1154,8 +1042,9 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   const bonusBtn = document.getElementById('bonusToggle');
   const bonusTracks = document.getElementById('bonusTracks');
   bonusBtn.addEventListener('click', () => {
-      bonusTracks.style.display = bonusTracks.style.display === 'block' ? 'none' : 'block';
-      bonusBtn.classList.toggle('active');
+      bonusTracks.hidden = !bonusTracks.hidden;
+      bonusBtn.setAttribute('aria-expanded', String(!bonusTracks.hidden));
+      bonusBtn.classList.toggle('active', !bonusTracks.hidden);
   });
 
   // Back-to-top button
@@ -1601,9 +1490,7 @@ let ytPlayer = null;
     }
 
     async function loadVideoIds(){
-      const videoOverrides = new Map([
-        ['walk on water', 'FnLgDgWboh8']
-      ]);
+      const videoOverrides = new Map();
 
       const normalizeTrackTitle = (text) => (text || '')
         .toLowerCase()
