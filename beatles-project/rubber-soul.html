@@ -140,6 +140,7 @@ body {
 .album-version-filters button.is-active { color: #eaeaea; border-color: #E21C21; }
 .track[hidden] { display: none; }
 .track { border-bottom: 1px solid #333; padding: clamp(8px, 2.5vw, 12px) 0; cursor: pointer; }
+.tracklist:is([data-version="stereo"], [data-version="mono"], [data-version="us"]) > .side-one-end { border-bottom-width: 2.5px; }
 .track-header { display: flex; align-items: center; gap: clamp(8px, 2.5vw, 12px); }
 .track-number {
   font-size: clamp(13px, 3.5vw, 15px);
@@ -837,7 +838,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </div>
 
   <!-- TRACKLIST -->
-  <section class="tracklist" aria-label="Tracklist">
+  <section class="tracklist" aria-label="Tracklist" data-version="stereo">
     <div class="album-version-filters" role="group" aria-label="Album version">
       <button class="is-active" type="button" data-version="stereo" aria-pressed="true">Stereo</button>
       <button type="button" data-version="mono" aria-pressed="false">Mono</button>
@@ -847,20 +848,20 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     </div>
     <div class="track" data-video="OfQV-DkQqY0"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/drive-my-car.html">Drive My Car</a></div></div><div class="track-length">2:28 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, electric guitar, bass, piano<br>John Lennon: lead vocal, harmony, tambourine<br>George Harrison: harmony vocals, electric guitar<br>Ringo Starr: drums, cowbell<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="bhDkCGTaYMw"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown)</a></div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: 12-string acoustic guitar, sitar<br>Ringo Starr: bass drum, cymbals, tambourine, claps, thigh slaps<br>Written by: Lennon–McCartney</div></div>
-    <div class="track" data-video="RYXS1diAEOI"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/you-wont-see-me.html">You Won't See Me</a></div></div><div class="track-length">3:22 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, bass, piano, claps<br>John Lennon: backing vocal, tambourine<br>George Harrison: backing vocal, electric guitar<br>Ringo Starr: drums, percussion<br>Mal Evans: Hammond organ<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="RYXS1diAEOI"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/you-wont-see-me.html">You Won’t See Me</a></div></div><div class="track-length">3:22 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, bass, piano, claps<br>John Lennon: backing vocal, tambourine<br>George Harrison: backing vocal, electric guitar<br>Ringo Starr: drums, percussion<br>Mal Evans: Hammond organ<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="oHcMZjgiC6Y"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/nowhere-man.html">Nowhere Man</a></div></div><div class="track-length">2:40 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: Lead Vocal, Harmony Vocal, Acoustic Guitar, Lead Electric Guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, lead electric guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="V-Og6Ok-Fdg"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/think-for-yourself.html">Think For Yourself</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, harmony vocal, electric guitar, tambourine<br>John Lennon: harmony vocal, electric guitar, electric piano<br>Paul McCartney: harmony vocal, bass, fuzz bass<br>Ringo Starr: drums, maracas<br>Written by: George Harrison</div></div>
     <div class="track" data-video="MO41YysYQwM"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/the-word.html">The Word</a></div></div><div class="track-length">2:41 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass, piano<br>George Harrison: harmony vocal, lead electric guitar<br>Ringo Starr: drums, maracas<br>George Martin: harmonium<br>Written by: Lennon–McCartney</div></div>
-    <div class="track" data-video="MLCbAD9YRhc"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/michelle.html">Michelle</a></div></div><div class="track-length">2:43 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, acoustic guitar, bass<br>John Lennon: harmony vocal, nylon string acoustic guitar<br>George Harrison: harmony vocal, electric lead guitar, 12-string acoustic guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
+    <div class="track side-one-end" data-video="MLCbAD9YRhc"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/michelle.html">Michelle</a></div></div><div class="track-length">2:43 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, acoustic guitar, bass<br>John Lennon: harmony vocal, nylon string acoustic guitar<br>George Harrison: harmony vocal, electric lead guitar, 12-string acoustic guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="GERbW3N-c5I"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/what-goes-on.html">What Goes On</a></div></div><div class="track-length">2:48 <span class="arrow">▼</span></div></div><div class="track-details">Ringo Starr: lead vocal, drums<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: lead electric guitar<br>Written by: Lennon–McCartney–Starkey</div></div>
     <div class="track" data-video="BFKxJQ5Xpz0"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/girl.html">Girl</a></div></div><div class="track-length">2:30 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar<br>Paul McCartney: backing vocal, bass<br>George Harrison: backing vocal, 12-string acoustic lead guitar<br>Ringo Starr: drums<br>Written by: Lennon–McCartney</div></div>
-    <div class="track" data-video="JYR9vgVe5Jw"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I'm Looking Through You</a></div></div><div class="track-length">2:26 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, acoustic guitar, bass<br>John Lennon: harmony vocal<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, matchbox percussion, tambourine, Hammond Organ<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-video="JYR9vgVe5Jw"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/im-looking-through-you.html">I’m Looking Through You</a></div></div><div class="track-length">2:26 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, acoustic guitar, bass<br>John Lennon: harmony vocal<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, matchbox percussion, tambourine, Hammond Organ<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="AEeE3-unGHo"><div class="track-header"><div class="track-number">4</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/in-my-life.html">In My Life</a></div></div><div class="track-length">2:27 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, tambourine<br>George Martin: piano<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="Sh8Ps32fRQo"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/wait.html">Wait</a></div></div><div class="track-length">2:14 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar, tambourine<br>Paul McCartney: lead vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, maracas<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="u6_-UL2FTeA"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/if-i-needed-someone.html">If I Needed Someone</a></div></div><div class="track-length">2:21 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, 12-string electric guitar<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>Ringo Starr: drums, tambourine<br>Written by: George Harrison</div></div>
     <div class="track" data-video="VFBpGOn8rpY"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/run-for-your-life.html">Run For Your Life</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar, electric slide guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, electric lead guitar<br>Ringo Starr: bass drum, tambourine<br>Written by: Lennon–McCartney</div></div>
-    <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I've Just Seen a Face</div></div><div class="track-length">2:05</div></div></div>
-    <div class="track" data-track="its-only-love" data-video="AdgxfIa9YPw" hidden><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title">It's Only Love</div></div><div class="track-length">1:56</div></div></div>
+    <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I've Just Seen a Face</div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: Lead Vocal, Harmony Vocal, Nylon-String Guitar<br>John Lennon: Acoustic Guitar<br>George Harrison: 12-String Acoustic Guitar<br>Ringo Starr: Snare Drum, Maracas<br>Written by: Lennon-McCartney</div></div>
+    <div class="track" data-track="its-only-love" data-video="AdgxfIa9YPw" hidden><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title">It’s Only Love</div></div><div class="track-length">1:56 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: Lead Vocal, Electric Guitar, 12-String Acoustic Guitar<br>Paul McCartney: Bass<br>George Harrison: Electric Guitar, Acoustic Guitar<br>Ringo Starr: Drums, Tambourine<br>Written by: Lennon-McCartney</div></div>
     <div class="total-length"><span>Total length</span><span>35 minutes</span></div>
     <button class="bonus-btn" id="bonusToggle" type="button" aria-expanded="false" aria-controls="bonusTracks">Sessions</button>
     <div class="bonus-tracks" id="bonusTracks" hidden>
@@ -1325,15 +1326,25 @@ soul, ‘Rubber soul’. Just a pun.</p>
       'the-word', 'michelle', 'its-only-love', 'girl', 'im-looking-through-you',
       'in-my-life', 'wait', 'run-for-your-life'
     ];
+    const monoLengths = {
+      'drive-my-car': '2:32', 'norwegian-wood': '2:08', 'you-wont-see-me': '3:28',
+      'nowhere-man': '2:46', 'think-for-yourself': '2:21', 'the-word': '2:48',
+      'michelle': '2:38', 'what-goes-on': '2:51', 'girl': '2:34',
+      'im-looking-through-you': '2:33', 'in-my-life': '2:29', 'wait': '2:17',
+      'if-i-needed-someone': '2:25', 'run-for-your-life': '2:22'
+    };
     const trackRows = Array.from(document.querySelectorAll('.tracklist .track'));
     const tracks = trackRows.map(row => {
       const link = row.querySelector('.track-title a');
       const isAlbumTrack = row.parentElement === albumTracklist;
       const key = row.dataset.track || (link && link.getAttribute('href').split('/').pop().replace(/\.html$/, ''));
+      const lengthText = isAlbumTrack ? row.querySelector('.track-length').firstChild : null;
       return {
         row,
         key,
         isAlbumTrack,
+        lengthText,
+        originalLength: lengthText ? lengthText.textContent : '',
         title: (row.querySelector('.track-title') || {}).textContent || '',
         videoId: (row.dataset.video || '').trim(),
         stereoVideoId: (row.dataset.video || '').trim()
@@ -1553,6 +1564,7 @@ soul, ‘Rubber soul’. Just a pun.</p>
       const previous = playlist[currentIndex];
       const wasPaused = pausedIndex === currentIndex;
       activeVersion = version;
+      albumTracklist.dataset.version = version;
       const order = version === 'us' ? usOrder : stereoOrder;
       const orderedTracks = order.map(key => albumTracks.find(track => track.key === key));
       albumTracks.forEach(track => {
@@ -1562,10 +1574,12 @@ soul, ‘Rubber soul’. Just a pun.</p>
         track.videoId = version === 'stereo' || track.row.dataset.track
           ? track.stereoVideoId
           : versionVideos[track.key][version];
-        track.row.querySelector('.track-number-text').textContent = String(index % (version === 'us' ? 6 : 7) + 1);
+        track.lengthText.textContent = version === 'mono' ? `${monoLengths[track.key]} ` : track.originalLength;
+        const sideLength = version === 'us' ? 6 : version === 'stereo' || version === 'mono' ? 7 : orderedTracks.length;
+        track.row.querySelector('.track-number-text').textContent = String(index % sideLength + 1);
         albumTracklist.insertBefore(track.row, totalLength);
       });
-      totalLength.hidden = version === 'us';
+      totalLength.lastElementChild.textContent = version === 'us' ? '29 minutes' : version === 'mono' ? '36 minutes' : '35 minutes';
       versionButtons.forEach(button => {
         const selected = button.dataset.version === version;
         button.classList.toggle('is-active', selected);
