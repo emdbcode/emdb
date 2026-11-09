@@ -235,7 +235,7 @@ body {
 .album-personnel .performer-details { display: flex; flex-direction: column; min-width: 0; }
 .album-personnel .meta-name { color: #ddd; }
 .album-personnel .meta-role { color: #aaa; font-size: 13px; line-height: 1.4; }
-.album-personnel-note { margin: 0.75rem 0 0; color: #999; font-size: 12px; line-height: 1.5; }
+.album-personnel-note, .album-mix-note { margin: 0.75rem 0 0; color: #999; font-size: 12px; line-height: 1.5; }
 @media (max-width: 480px) {
   .song-extra .fancy-quote { padding: 1rem 1rem 2rem; max-width: 100%; }
   .song-extra .fancy-quote .quote-mark { left: -8px; top: 12px; font-size: 40px; }
@@ -863,6 +863,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I've Just Seen a Face</div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: Lead Vocal, Harmony Vocal, Nylon-String Guitar<br>John Lennon: Acoustic Guitar<br>George Harrison: 12-String Acoustic Guitar<br>Ringo Starr: Snare Drum, Maracas<br>Written by: Lennon-McCartney</div></div>
     <div class="track" data-track="its-only-love" data-video="AdgxfIa9YPw" hidden><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title">It’s Only Love</div></div><div class="track-length">1:56 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: Lead Vocal, Electric Guitar, 12-String Acoustic Guitar<br>Paul McCartney: Bass<br>George Harrison: Electric Guitar, Acoustic Guitar<br>Ringo Starr: Drums, Tambourine<br>Written by: Lennon-McCartney</div></div>
     <div class="total-length"><span>Total length</span><span>35 minutes</span></div>
+    <p class="album-mix-note" hidden><em></em></p>
     <button class="bonus-btn" id="bonusToggle" type="button" aria-expanded="false" aria-controls="bonusTracks">Sessions</button>
     <div class="bonus-tracks" id="bonusTracks" hidden>
       <div class="tracklist session-tracklist" aria-label="Sessions tracklist">
@@ -967,13 +968,13 @@ soul, ‘Rubber soul’. Just a pun.</p>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name">Ringo Starr</span><span class="meta-role">Lead Vocal, Drums, Bass Drum, Cymbals, Cowbell, Maracas, Tambourine, Percussion, Claps, Thigh Slaps, Matchbox Percussion, Hammond Organ</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-martin.jpg" alt="George Martin"><span class="performer-details"><span class="meta-name">George Martin</span><span class="meta-role">Producer; Mixing Engineer; Piano (“In My Life”); Harmonium (“The Word”)</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/norman-smith.jpg" alt="Norman Smith"><span class="performer-details"><span class="meta-name">Norman Smith</span><span class="meta-role">Recording Engineer; Mixing Engineer</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/graham-platt.jpg" alt="Graham Platt"><span class="performer-details"><span class="meta-name">Graham Platt</span><span class="meta-role">Additional Engineering</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/jerry-boys.jpg" alt="Jerry Boys"><span class="performer-details"><span class="meta-name">Jerry Boys</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/richard-lush.jpg" alt="Richard Lush"><span class="performer-details"><span class="meta-name">Richard Lush</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/phil-mcdonald.jpg" alt="Phil McDonald"><span class="performer-details"><span class="meta-name">Phil McDonald</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name">Ron Pender</span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/graham-platt.jpg" alt="Graham Platt"><span class="performer-details"><span class="meta-name">Graham Platt</span><span class="meta-role">Additional Engineering</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name">Ken Scott</span><span class="meta-role">Additional Engineering</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mike-stone.jpg" alt="Mike Stone"><span class="performer-details"><span class="meta-name">Mike Stone</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/phil-mcdonald.jpg" alt="Phil McDonald"><span class="performer-details"><span class="meta-name">Phil McDonald</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/richard-lush.jpg" alt="Richard Lush"><span class="performer-details"><span class="meta-name">Richard Lush</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name">Ron Pender</span><span class="meta-role">Additional Engineering</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mal-evans.jpg" alt="Mal Evans"><span class="performer-details"><span class="meta-name">Mal Evans</span><span class="meta-role">Hammond Organ (“You Won’t See Me”)</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/robert-freeman.jpg" alt="Robert Freeman"><span class="performer-details"><span class="meta-name">Robert Freeman</span><span class="meta-role">Photography</span></span></div>
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/charles-front.jpg" alt="Charles Front"><span class="performer-details"><span class="meta-name">Charles Front</span><span class="meta-role">Illustration</span></span></div>
@@ -1022,7 +1023,9 @@ soul, ‘Rubber soul’. Just a pun.</p>
     "/beatles-project/album-covers/rubber-soul-cover.jpeg",
     "/beatles-project/album-covers/rubber-soul-cover-greece.jpg",
     "/beatles-project/album-covers/rubber-soul-cover-italy.jpg",
-    "/beatles-project/album-covers/rubber-soul-cover-uruguay.jpg"
+    "/beatles-project/album-covers/rubber-soul-cover-uruguay.jpg",
+    "/beatles-project/album-covers/rubber-soul-us-cover.jpg",
+    "/beatles-project/album-covers/rubber-soul-2026-mix-cover.jpg"
   ];
   let currentIndexRS = 0;
   const albumDivRS = document.getElementById("albumSingleRS");
@@ -1304,6 +1307,7 @@ soul, ‘Rubber soul’. Just a pun.</p>
 
     const albumTracklist = document.querySelector('section.tracklist');
     const totalLength = albumTracklist.querySelector('.total-length');
+    const mixNote = albumTracklist.querySelector('.album-mix-note');
     const versionButtons = Array.from(document.querySelectorAll('.album-version-filters button'));
     const versionVideos = {
       'drive-my-car':       { mono: 'GmFcCszBl8s', us: 'TE11LD5Brg0', 1987: '0USuFscvJVE', 2026: 'WjwuXrlVmyM' },
@@ -1332,6 +1336,12 @@ soul, ‘Rubber soul’. Just a pun.</p>
       'michelle': '2:38', 'what-goes-on': '2:51', 'girl': '2:34',
       'im-looking-through-you': '2:33', 'in-my-life': '2:29', 'wait': '2:17',
       'if-i-needed-someone': '2:25', 'run-for-your-life': '2:22'
+    };
+    const usLengths = {
+      'ive-just-seen-a-face': '2:05', 'norwegian-wood': '2:05', 'you-wont-see-me': '3:22',
+      'think-for-yourself': '2:20', 'the-word': '2:46', 'michelle': '2:44',
+      'its-only-love': '1:56', 'girl': '2:29', 'im-looking-through-you': '2:30',
+      'in-my-life': '2:27', 'wait': '2:14', 'run-for-your-life': '2:21'
     };
     const trackRows = Array.from(document.querySelectorAll('.tracklist .track'));
     const tracks = trackRows.map(row => {
@@ -1574,12 +1584,19 @@ soul, ‘Rubber soul’. Just a pun.</p>
         track.videoId = version === 'stereo' || track.row.dataset.track
           ? track.stereoVideoId
           : versionVideos[track.key][version];
-        track.lengthText.textContent = version === 'mono' ? `${monoLengths[track.key]} ` : track.originalLength;
+        const versionLengths = version === 'mono' ? monoLengths : version === 'us' ? usLengths : null;
+        track.lengthText.textContent = versionLengths ? `${versionLengths[track.key]} ` : track.originalLength;
         const sideLength = version === 'us' ? 6 : version === 'stereo' || version === 'mono' ? 7 : orderedTracks.length;
         track.row.querySelector('.track-number-text').textContent = String(index % sideLength + 1);
         albumTracklist.insertBefore(track.row, totalLength);
       });
       totalLength.lastElementChild.textContent = version === 'us' ? '29 minutes' : version === 'mono' ? '36 minutes' : '35 minutes';
+      const mixCredits = {
+        '1987': 'Remixed by George Martin',
+        '2026': 'Remixed by Giles Martin and Sam Okell'
+      };
+      mixNote.hidden = !mixCredits[version];
+      mixNote.querySelector('em').textContent = mixCredits[version] || '';
       versionButtons.forEach(button => {
         const selected = button.dataset.version === version;
         button.classList.toggle('is-active', selected);
