@@ -17,6 +17,7 @@
 <meta name="twitter:description" content="Rubber Soul • The Beatles • Studio Album (6th)">
 <meta name="twitter:image" content="https://emdb.pro/beatles-project/album-covers/rubber-soul-cover.jpeg">
 <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="/beatles-project/coming-soon.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 
 <style>
@@ -733,6 +734,34 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   }
 }
 /* floating-player-update:end */
+#sectionMenu { display:none; }
+@media (max-width: 767px) {
+  #sectionMenu {
+    display:flex;
+    left:auto;
+    right:0;
+    border-right:0;
+    border-left:1px solid #1f1f24;
+    transform:translateX(100%);
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform 0.26s ease, box-shadow 0.26s ease, visibility 0s linear 0.26s;
+  }
+  #sectionMenu.open {
+    transform:translateX(0);
+    box-shadow:-6px 0 18px rgba(0,0,0,0.35);
+    visibility:visible;
+    pointer-events:auto;
+    transition-delay:0s;
+  }
+  #sectionMenu .menu-close { left:auto; right:18px; }
+  #sectionMenu h2 { margin:0; font-size:inherit; font-weight:normal; }
+  #sectionMenu h2 a { display:block; border-bottom:1px solid #1a1a22; }
+  #sectionMenu a:focus-visible,
+  #sectionMenu button:focus-visible { outline:2px solid #E21C21; outline-offset:2px; }
+  #sectionMenu .section-menu-close.initial-focus { outline:none; }
+  [id^="section-"], #arReviewsSection { scroll-margin-top:80px; }
+}
 </style>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -749,8 +778,18 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   gtag('config', 'G-J923YYWH3R');
 </script>
 </head>
-<body>
+<body id="page-top">
 <div id="site-header"></div>
+<nav class="menu-panel section-menu" id="sectionMenu" aria-label="Page sections" aria-hidden="true" inert>
+  <button type="button" class="menu-close section-menu-close" aria-label="Close section menu">✕</button>
+  <div class="menu-links">
+    <h2><a href="#page-top"><strong>Rubber Soul</strong></a></h2>
+    <a href="#section-tracklist">Tracklist</a>
+    <a href="#section-quote">Told by The Beatles</a>
+    <a href="#section-personnel">Personnel</a>
+    <a href="#arReviewsSection">User Thoughts</a>
+  </div>
+</nav>
 <main>
   <!-- ALBUM COVER + INFO -->
   <div class="album-container" data-charts="/beatles-project/critic-scores/critic-scores-rubber-soul.html" data-user-reviews="#arReviewsSection">
@@ -806,7 +845,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
         <strong>Engineer:</strong> Norman Smith<br>
         <strong>Mixed by:</strong> Norman Smith &amp; George Martin<br>
         <strong>Recorded:</strong> 17 June 1965 &amp; 12 October – 11 November 1965<br>
-        <strong>Studios:</strong> EMI Recording Studios (Abbey Road Studios), London
+        <strong>Studios:</strong> EMI Studios (Abbey Road Studios), London
       </div>
       <div class="toggle-details" id="toggleDetails">Show More</div>
 
@@ -838,7 +877,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </div>
 
   <!-- TRACKLIST -->
-  <section class="tracklist" aria-label="Tracklist" data-version="stereo">
+  <section class="tracklist" id="section-tracklist" aria-label="Tracklist" data-version="stereo">
     <div class="album-version-filters" role="group" aria-label="Album version">
       <button class="is-active" type="button" data-version="stereo" aria-pressed="true">Stereo</button>
       <button type="button" data-version="mono" aria-pressed="false">Mono</button>
@@ -902,7 +941,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   </section>
 
   <section class="song-extra album-quotes" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
-    <h3 id="section-quote" style="color:#fff;margin:0 0.5rem 0.5rem 0;"><em>Rubber Soul</em>, Told by The Beatles</h3>
+    <h3 id="section-quote" style="color:#fff;margin:0 0.5rem 0.5rem 0;">Told by The Beatles</h3>
     <blockquote class="fancy-quote">
       <span class="quote-mark">“</span>
       <div class="quote-text">
@@ -959,7 +998,7 @@ soul, ‘Rubber soul’. Just a pun.</p>
     </blockquote>
   </section>
 
-  <section class="album-personnel">
+  <section class="album-personnel" id="section-personnel">
     <h2 class="section-heading">Personnel</h2>
     <div class="performers-list">
       <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name">John Lennon</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Acoustic Guitar, Electric Guitar, Tambourine</span></span></div>
@@ -1754,8 +1793,10 @@ document.querySelectorAll('.critic-score').forEach(box => {
   else box.classList.add('critic-gold');
 });
 </script>
+<script src="/scripts/song-section-menu.js"></script>
 <script src="../scripts/album-rating.js"></script>
 <script src="../scripts/album-reviews.js"></script>
+<script src="/beatles-project/coming-soon.js"></script>
 <script src="../header.js"></script>
 
 <script>
