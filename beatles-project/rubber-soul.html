@@ -134,6 +134,11 @@ body {
 
 /* TRACKLIST */
 .tracklist { max-width: 900px; margin: 2rem auto; padding: 6px 0; }
+.album-version-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 6px; }
+.album-version-filters button { border: 1px solid #222; background: #111; color: #aaa; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 12px; cursor: pointer; transition: border-color 120ms ease, color 120ms ease; }
+.album-version-filters button:hover, .album-version-filters button:focus-visible { color: #eaeaea; border-color: #444; }
+.album-version-filters button.is-active { color: #eaeaea; border-color: #E21C21; }
+.track[hidden] { display: none; }
 .track { border-bottom: 1px solid #333; padding: clamp(8px, 2.5vw, 12px) 0; cursor: pointer; }
 .track-header { display: flex; align-items: center; gap: clamp(8px, 2.5vw, 12px); }
 .track-number {
@@ -209,6 +214,7 @@ body {
 .track.open .arrow { transform: rotate(180deg); }
 .track-note { font-size: clamp(12px, 3.5vw, 13px); color: #aaa; line-height: 1.6; margin-top: 10px; }
 .total-length { display: flex; justify-content: space-between; padding: clamp(8px, 2.5vw, 12px) 0; border-bottom: 1px solid #333; font-size: clamp(13px, 3.5vw, 14px); color: #aaa; }
+.total-length[hidden] { display: none; }
 .bonus-btn { margin: 12px 0 8px; padding: clamp(6px, 2.5vw, 8px) clamp(10px, 3vw, 12px); border: 1px solid #444; display: inline-block; cursor: pointer; font-size: clamp(13px, 3.5vw, 14px); }
 .bonus-btn.active { color: #E21C21; border-color: #E21C21; }
 .bonus-tracks[hidden] { display: none; }
@@ -832,6 +838,13 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
   <!-- TRACKLIST -->
   <section class="tracklist" aria-label="Tracklist">
+    <div class="album-version-filters" role="group" aria-label="Album version">
+      <button class="is-active" type="button" data-version="stereo" aria-pressed="true">Stereo</button>
+      <button type="button" data-version="mono" aria-pressed="false">Mono</button>
+      <button type="button" data-version="us" aria-pressed="false">US Stereo</button>
+      <button type="button" data-version="1987" aria-pressed="false">1987 Mix</button>
+      <button type="button" data-version="2026" aria-pressed="false">2026 Mix</button>
+    </div>
     <div class="track" data-video="OfQV-DkQqY0"><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/drive-my-car.html">Drive My Car</a></div></div><div class="track-length">2:28 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, electric guitar, bass, piano<br>John Lennon: lead vocal, harmony, tambourine<br>George Harrison: harmony vocals, electric guitar<br>Ringo Starr: drums, cowbell<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="bhDkCGTaYMw"><div class="track-header"><div class="track-number">2</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/norwegian-wood.html">Norwegian Wood (This Bird Has Flown)</a></div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: 12-string acoustic guitar, sitar<br>Ringo Starr: bass drum, cymbals, tambourine, claps, thigh slaps<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="RYXS1diAEOI"><div class="track-header"><div class="track-number">3</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/you-wont-see-me.html">You Won't See Me</a></div></div><div class="track-length">3:22 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: lead vocal, harmony vocal, bass, piano, claps<br>John Lennon: backing vocal, tambourine<br>George Harrison: backing vocal, electric guitar<br>Ringo Starr: drums, percussion<br>Mal Evans: Hammond organ<br>Written by: Lennon–McCartney</div></div>
@@ -846,6 +859,8 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     <div class="track" data-video="Sh8Ps32fRQo"><div class="track-header"><div class="track-number">5</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/wait.html">Wait</a></div></div><div class="track-length">2:14 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar, tambourine<br>Paul McCartney: lead vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, maracas<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="u6_-UL2FTeA"><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/if-i-needed-someone.html">If I Needed Someone</a></div></div><div class="track-length">2:21 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, 12-string electric guitar<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>Ringo Starr: drums, tambourine<br>Written by: George Harrison</div></div>
     <div class="track" data-video="VFBpGOn8rpY"><div class="track-header"><div class="track-number">7</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/run-for-your-life.html">Run For Your Life</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar, electric slide guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, electric lead guitar<br>Ringo Starr: bass drum, tambourine<br>Written by: Lennon–McCartney</div></div>
+    <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I've Just Seen a Face</div></div><div class="track-length">2:05</div></div></div>
+    <div class="track" data-track="its-only-love" data-video="AdgxfIa9YPw" hidden><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title">It's Only Love</div></div><div class="track-length">1:56</div></div></div>
     <div class="total-length"><span>Total length</span><span>35 minutes</span></div>
     <button class="bonus-btn" id="bonusToggle" type="button" aria-expanded="false" aria-controls="bonusTracks">Sessions</button>
     <div class="bonus-tracks" id="bonusTracks" hidden>
@@ -1182,7 +1197,7 @@ soul, ‘Rubber soul’. Just a pun.</p>
     });
   });
 
-  // MUSIC PLAYER — tie tracklist to the player using song pages
+  // MUSIC PLAYER
   (function setupMusicPlayer(){
     const player = document.getElementById('playlistPlayer');
     const nowTitle = document.getElementById('nowPlayingTitle');
@@ -1286,24 +1301,57 @@ soul, ‘Rubber soul’. Just a pun.</p>
       keepFloatingInViewport();
     });
 
+    const albumTracklist = document.querySelector('section.tracklist');
+    const totalLength = albumTracklist.querySelector('.total-length');
+    const versionButtons = Array.from(document.querySelectorAll('.album-version-filters button'));
+    const versionVideos = {
+      'drive-my-car':       { mono: 'GmFcCszBl8s', us: 'TE11LD5Brg0', 1987: '0USuFscvJVE', 2026: 'WjwuXrlVmyM' },
+      'norwegian-wood':     { mono: 'GmQaRQ7K-2w', us: 'tllsZgtELYM', 1987: 'CI_zWIqwQZY', 2026: 'hqDgdRrh9Pk' },
+      'you-wont-see-me':    { mono: 'JlYxzMSwUh8', us: '_HPkTdOfPZQ', 1987: 'vK1XUDtD8bc', 2026: 'H9sWoLOeBmc' },
+      'nowhere-man':        { mono: 'a-CIN9MM1yE', us: '0txB8ljNQUM', 1987: 'fYdIaiTXHuU', 2026: 'rbDKO_vj55I' },
+      'think-for-yourself':  { mono: 'hwY-B-q3ubA', us: 'GxoTavCPkAw', 1987: 'NOexG9qTAOI', 2026: '2poQfpBiJXI' },
+      'the-word':           { mono: 'RiwMUH1ICW0', us: 'w0kPiG7ddqQ', 1987: '9P-SRkGflb4', 2026: '-fEqAoXCwsA' },
+      'michelle':           { mono: '-x7FkSNhLk0', us: 'nZUsEteC1OQ', 1987: 'fu1OPhcDX80', 2026: '_8TTYyfNB2I' },
+      'what-goes-on':       { mono: 'Q4VzWFJclHU', us: 'WAn7hygEf20', 1987: 'uq5M_AEE2i0', 2026: 'JKcJC-rHKHY' },
+      'girl':               { mono: 'mn1KRRV9l48', us: 'iW-fv7YqtIs', 1987: 'Mo_3zHTOE64', 2026: 'mmiSKzlzuI0' },
+      'im-looking-through-you': { mono: '0gDn2PMCmt8', us: 'brREJG5oWhk', 1987: 'T8vyx2YJaHQ', 2026: 'ZLd76SEnOLc' },
+      'in-my-life':         { mono: '6pk5OzT-tiM', us: 'ngzQTxXEcxQ', 1987: 'B0QnusIosCA', 2026: '_HJIndFgLG4' },
+      'wait':               { mono: 'nk2_EwOFdZg', us: '4epRtgAMtUo', 1987: 'apx2kkbAgHA', 2026: '6clQ32XjwVo' },
+      'if-i-needed-someone': { mono: 'rxcTCxPV2ds', us: 'lKBfT2NO52Y', 1987: '4ET4LOXZSns', 2026: '1rfXZCzuCpc' },
+      'run-for-your-life':  { mono: '7mKgH_FUweY', us: 'HrsT2cZDl_g', 1987: '5IreLYwUobw', 2026: 'FPGZiw488aY' }
+    };
+    const usOrder = [
+      'ive-just-seen-a-face', 'norwegian-wood', 'you-wont-see-me', 'think-for-yourself',
+      'the-word', 'michelle', 'its-only-love', 'girl', 'im-looking-through-you',
+      'in-my-life', 'wait', 'run-for-your-life'
+    ];
     const trackRows = Array.from(document.querySelectorAll('.tracklist .track'));
-    const tracks = trackRows.map((row, index) => {
+    const tracks = trackRows.map(row => {
       const link = row.querySelector('.track-title a');
+      const isAlbumTrack = row.parentElement === albumTracklist;
+      const key = row.dataset.track || (link && link.getAttribute('href').split('/').pop().replace(/\.html$/, ''));
       return {
         row,
-        link,
-        index,
+        key,
+        isAlbumTrack,
         title: (row.querySelector('.track-title') || {}).textContent || '',
-        videoId: (row.dataset.video || '').trim()
+        videoId: (row.dataset.video || '').trim(),
+        stereoVideoId: (row.dataset.video || '').trim()
       };
     });
+    const albumTracks = tracks.filter(track => track.isAlbumTrack);
+    const sessionTracks = tracks.filter(track => !track.isAlbumTrack);
+    const stereoOrder = albumTracks.filter(track => !track.row.dataset.track).map(track => track.key);
+    let activeVersion = 'stereo';
 
     let currentIndex = 0;
     let isPlaying = false;
     let playlist = [];
     let pausedIndex = -1;
     let hasPlayedOnce = false;
-let ytPlayer = null;
+    let ytPlayer = null;
+    let ytPlayerReady = false;
+    let pendingVideo = null;
 
     function ensurePlayButtons(){
       tracks.forEach(track => {
@@ -1334,7 +1382,7 @@ let ytPlayer = null;
       tracks.forEach(track => {
         const btn = track.row.querySelector('.track-play-btn');
         if (!btn) return;
-        const isCurrent = current && track.videoId === current.videoId;
+        const isCurrent = current === track;
         const isPausedCurrent = isCurrent && pausedIndex === currentIndex && !isPlaying;
         btn.textContent = isCurrent && isPlaying ? '❚❚' : '▶';
         btn.classList.toggle('playing', isCurrent && isPlaying);
@@ -1349,7 +1397,9 @@ let ytPlayer = null;
     function setVideo(videoId, autoplay){
       if (!videoId) return;
       if (ytPlayer) {
-        if (autoplay) ytPlayer.loadVideoById(videoId);
+        if (!ytPlayerReady) {
+          pendingVideo = { videoId, autoplay };
+        } else if (autoplay) ytPlayer.loadVideoById(videoId);
         else ytPlayer.cueVideoById(videoId);
         return;
       }
@@ -1400,10 +1450,10 @@ let ytPlayer = null;
       if (!current) return;
       isPlaying = false;
       if (hasPlayedOnce) pausedIndex = currentIndex;
-      if (ytPlayer) {
+      if (ytPlayer && ytPlayerReady) {
         ytPlayer.pauseVideo();
       } else {
-        player.src = `https://www.youtube.com/embed/${current.videoId}?enablejsapi=1`;
+        setVideo(current.videoId, false);
       }
       showFloatingPlayer();
       setCollapsed(true);
@@ -1418,10 +1468,10 @@ let ytPlayer = null;
       if (!keepCollapsed) setCollapsed(false);
       closeOpenVideoPlayers();
       pausedIndex = -1;
-      if (ytPlayer) {
+      if (ytPlayer && ytPlayerReady) {
         ytPlayer.playVideo();
       } else {
-        player.src = `https://www.youtube.com/embed/${current.videoId}?autoplay=1&enablejsapi=1`;
+        setVideo(current.videoId, true);
       }
       isPlaying = true;
       hasPlayedOnce = true;
@@ -1434,7 +1484,7 @@ let ytPlayer = null;
         if (!btn) return;
         btn.addEventListener('click', (event) => {
           event.stopPropagation();
-          const idx = playlist.findIndex(item => item.videoId === track.videoId);
+          const idx = playlist.indexOf(track);
           if (idx === -1) return;
           if (idx === currentIndex) {
             if (isPlaying) pauseCurrent();
@@ -1458,6 +1508,14 @@ let ytPlayer = null;
       if (ytPlayer || !window.YT || !window.YT.Player) return;
       ytPlayer = new YT.Player('playlistPlayer', {
         events: {
+          onReady: () => {
+            ytPlayerReady = true;
+            if (pendingVideo) {
+              const { videoId, autoplay } = pendingVideo;
+              pendingVideo = null;
+              setVideo(videoId, autoplay);
+            }
+          },
           onStateChange: (event) => {
             if (event.data === YT.PlayerState.ENDED) {
               if (currentIndex < playlist.length - 1) playAtIndex(currentIndex + 1);
@@ -1490,55 +1548,45 @@ let ytPlayer = null;
       window.onYouTubeIframeAPIReady = initYouTubePlayer;
     }
 
-    async function loadVideoIds(){
-      const videoOverrides = new Map();
-
-      const normalizeTrackTitle = (text) => (text || '')
-        .toLowerCase()
-        .replace(/[’']/g, "'")
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      const fetches = tracks.map(async track => {
-        if (track.videoId) return;
-        if (!track.link || !track.link.getAttribute('href')) return;
-        const overrideVideoId = videoOverrides.get(normalizeTrackTitle(track.title));
-        if (overrideVideoId) {
-          track.videoId = overrideVideoId;
-          return;
-        }
-        try {
-          const response = await fetch(track.link.getAttribute('href'), { credentials: 'same-origin' });
-          if (!response.ok) return;
-          const html = await response.text();
-          const doc = new DOMParser().parseFromString(html, 'text/html');
-          const videoEl = doc.querySelector('.song-video[data-video]') || doc.querySelector('#songVideo[data-video]');
-          const videoId = videoEl ? videoEl.getAttribute('data-video') : '';
-          track.videoId = videoId || '';
-        } catch (err) {
-          track.videoId = '';
-        }
+    function selectVersion(version){
+      if (version === activeVersion && playlist.length) return;
+      const previous = playlist[currentIndex];
+      const wasPaused = pausedIndex === currentIndex;
+      activeVersion = version;
+      const order = version === 'us' ? usOrder : stereoOrder;
+      const orderedTracks = order.map(key => albumTracks.find(track => track.key === key));
+      albumTracks.forEach(track => {
+        track.row.hidden = !order.includes(track.key);
       });
-
-      await Promise.all(fetches);
-      playlist = tracks.filter(track => track.videoId).map(track => ({
-        videoId: track.videoId,
-        title: track.title
-      }));
-
-      if (!playlist.length) {
-        nowTitle.textContent = 'No videos available';
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
-        return;
+      orderedTracks.forEach((track, index) => {
+        track.videoId = version === 'stereo' || track.row.dataset.track
+          ? track.stereoVideoId
+          : versionVideos[track.key][version];
+        track.row.querySelector('.track-number-text').textContent = String(index % (version === 'us' ? 6 : 7) + 1);
+        albumTracklist.insertBefore(track.row, totalLength);
+      });
+      totalLength.hidden = version === 'us';
+      versionButtons.forEach(button => {
+        const selected = button.dataset.version === version;
+        button.classList.toggle('is-active', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+      playlist = [...orderedTracks, ...sessionTracks];
+      const previousIndex = playlist.indexOf(previous);
+      currentIndex = previousIndex === -1 ? 0 : previousIndex;
+      pausedIndex = wasPaused ? currentIndex : -1;
+      if (previous && !previous.isAlbumTrack) {
+        updateUI();
+      } else if (isPlaying) {
+        playAtIndex(currentIndex);
+      } else {
+        setIndex(currentIndex, false);
       }
-
-      setIndex(0, false);
-      loadYouTubeApi();
     }
 
     ensurePlayButtons();
     bindButtons();
+    versionButtons.forEach(button => button.addEventListener('click', () => selectVersion(button.dataset.version)));
     nowTitle.setAttribute('role', 'button');
     nowTitle.setAttribute('tabindex', '0');
     nowTitle.setAttribute('aria-expanded', 'false');
@@ -1593,11 +1641,12 @@ let ytPlayer = null;
       if (!playlist.length) return;
       if (isPlaying) {
         pauseCurrent();
-      } else if (ytPlayer) {
+      } else if (ytPlayer && ytPlayerReady) {
         ytPlayer.pauseVideo();
       }
     };
-    loadVideoIds();
+    selectVersion('stereo');
+    loadYouTubeApi();
   })();
 
   /* Show both vote/review counts when hovering EMDb or Critic blocks */
