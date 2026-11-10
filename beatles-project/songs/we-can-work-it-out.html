@@ -1439,6 +1439,9 @@ body {
   document.addEventListener('collection-player-play', () => {
     document.querySelectorAll('.music-videos-container .video-player.open').forEach(closeMusicVideo);
   });
+  document.addEventListener('song-header-video-play', () => {
+    document.querySelectorAll('.music-videos-container .video-player.open').forEach(closeMusicVideo);
+  });
 
   // MUSIC VIDEO PLAYER — smoother expand/collapse
   document.querySelectorAll('.single-section-video').forEach(row => {

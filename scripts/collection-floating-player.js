@@ -444,6 +444,7 @@
   const tracks = [];
   let currentTrack = null;
   let isPlaying = false;
+  let playbackRequestId = 0;
   let activePointerId = null;
   let dragOffsetX = 0;
   let dragOffsetY = 0;
@@ -999,6 +1000,7 @@
   const openTrack = async (track, autoplay = true) => {
     if (!track || !track.songHref) return;
 
+    const requestId = ++playbackRequestId;
     const button = track.playButton;
     const previousLabel = button ? button.textContent : '';
     if (button) {
@@ -1010,6 +1012,12 @@
     try {
       src = await loadTrackVideoSrc(track);
     } catch (error) {
+      if (requestId !== playbackRequestId) {
+        if (button) button.disabled = false;
+        setPlaybackUi();
+        syncControls();
+        return;
+      }
       if (button) {
         button.disabled = false;
         button.textContent = previousLabel || 'Play';
@@ -1024,6 +1032,12 @@
 
     if (button) {
       button.disabled = false;
+    }
+
+    if (requestId !== playbackRequestId) {
+      setPlaybackUi();
+      syncControls();
+      return;
     }
 
     if (autoplay) document.dispatchEvent(new Event('collection-player-play'));
@@ -1065,9 +1079,18 @@
   };
 
   document.addEventListener('collection-player-pause', () => {
+    playbackRequestId += 1;
     if (isPlaying) pauseCurrentTrack();
     if (currentTrack) setCollapsed(true);
   });
+
+  if (songVideo && songVideoButton) {
+    songVideoButton.addEventListener('click', () => {
+      if (!songVideo.classList.contains('open')) return;
+      document.dispatchEvent(new Event('collection-player-pause'));
+      document.dispatchEvent(new Event('song-header-video-play'));
+    });
+  }
 
   const getNextTrackForAutoplay = () => {
     if (!currentTrack) return null;
