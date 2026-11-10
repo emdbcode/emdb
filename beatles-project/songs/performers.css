@@ -1,0 +1,8 @@
+#section-performers + .performers-list {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#section-performers + .performers-list .role-break {
+  display: none;
+}
