@@ -188,6 +188,11 @@ body {
 
 .song-extra { background-color: #151515; padding: 1.5rem; margin: 1.25rem auto; max-width: 900px; border-radius: 6px; border: 1px solid #222; color: #ddd; }
 .song-samples { background-color: #151515; padding: 1.5rem; margin: 1.25rem auto; max-width: 900px; border-radius: 6px; border: 1px solid #222; color: #ddd; }
+.lyric-sheet-dialog { box-sizing: border-box; width: min(900px, calc(100% - 32px)); max-width: none; max-height: calc(100% - 32px); padding: 12px; border: 1px solid #333; border-radius: 6px; background: #151515; color: #eaeaea; }
+.lyric-sheet-dialog::backdrop { background: rgba(0, 0, 0, 0.8); }
+.lyric-sheet-dialog img { display: block; width: 100%; height: auto; }
+.lyric-sheet-close { display: block; margin: 0 0 12px auto; border: 1px solid #444; border-radius: 4px; background: #222; color: #eaeaea; padding: 6px 12px; font: inherit; cursor: pointer; }
+.lyric-sheet-close:hover, .lyric-sheet-close:focus-visible { border-color: #E21C21; }
 
 /* mobile-only song-meta section (created dynamically) — unboxed on mobile */
 .song-meta-section {
@@ -1041,9 +1046,9 @@ body {
      <div class="song-extra" id="section-facts" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Trivia</h3>
     <ul style="margin:0 0.5rem 0; padding-left:1.1rem; font-size:15px; line-height:1.5;">
-      <li style="margin-bottom:8px;">"The Word" has been cited as the first Beatles song to approach love in more abstract terms, rather than the straightforward boy-meets-girl themes of songs like “She Loves You”.</li>
-      <li style="margin-bottom:8px;">The song’s message was echoed by many artists throughout the remainder of the 1960s, particularly during 1967’s Summer of Love, when the Beatles amplified it by performing “All You Need Is Love” live for a global television audience on <em>Our World</em>. The same message lies at the heart of <em>Yellow Submarine</em>, in which love triumphs over the Blue Meanies.</li>
-      <li>The song’s lyrics were handwritten by Paul, with illustrations added by him and John using watercolour paints and felt-tip pens (featured below in the Lyrics section). In 1966, Yoko Ono asked John to donate a lyric sheet as a 50th-birthday gift for avant-garde composer John Cage. Lennon gave her the decorated sheet for “The Word”, which became part of the John Cage Notations Project Collection, a historical archive of mid-20th-century music manuscripts, sketches and correspondence.</li>
+      <li style="margin-bottom:8px;">"The Word" has been cited as the first Beatles song to approach love in more abstract terms, rather than the straightforward boy-meets-girl themes of songs like “<button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">She Loves You</button>”.</li>
+      <li style="margin-bottom:8px;">The song’s message was echoed by many artists throughout the remainder of the 1960s, particularly during 1967’s Summer of Love, when the Beatles amplified it by performing “<button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">All You Need Is Love</button>” live for a global television audience on <em><button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">Our World</button></em>. The same message lies at the heart of <em><button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">Yellow Submarine</button></em>, in which love triumphs over the Blue Meanies.</li>
+      <li>The song’s lyrics were handwritten by Paul, with illustrations added by him and John using watercolour paints and felt-tip pens (<a href="/beatles-project/images/the-word-lyric-sheet.jpg" id="lyricSheetLink" aria-haspopup="dialog" aria-controls="lyricSheetDialog">see here</a>). In 1966, <button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">Yoko Ono</button> asked <button type="button" class="coming-soon-link" aria-haspopup="dialog" aria-controls="comingSoonDialog">John</button> to donate a lyric sheet as a 50th-birthday gift for avant-garde composer John Cage. Lennon gave her the decorated sheet for “The Word”, which became part of the John Cage Notations Project Collection, a historical archive of mid-20th-century music manuscripts, sketches and correspondence.</li>
     </ul>
   </div>
 
@@ -1846,6 +1851,28 @@ document.querySelectorAll('.critic-score').forEach(box => {
   document.addEventListener('touchcancel', () => { touchStart = null; }, {passive:true});
   window.addEventListener('resize', () => { if (!mobile.matches) closeMenu(false); });
 })();
+</script>
+<dialog class="lyric-sheet-dialog" id="lyricSheetDialog" aria-label="The Word handwritten lyric sheet">
+  <button class="lyric-sheet-close" type="button" aria-label="Close image" autofocus>✕</button>
+  <img src="/beatles-project/images/the-word-lyric-sheet.jpg" alt="The Word handwritten lyric sheet with watercolour and felt-tip illustrations" loading="lazy">
+</dialog>
+<script>
+  const lyricSheetDialog = document.getElementById('lyricSheetDialog');
+  document.getElementById('lyricSheetLink').addEventListener('click', event => {
+    event.preventDefault();
+    lyricSheetDialog.showModal();
+  });
+  lyricSheetDialog.querySelector('.lyric-sheet-close').addEventListener('click', () => lyricSheetDialog.close());
+  lyricSheetDialog.addEventListener('click', event => {
+    const rect = lyricSheetDialog.getBoundingClientRect();
+    if (event.target === lyricSheetDialog &&
+        (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) {
+      lyricSheetDialog.close();
+    }
+  });
+  lyricSheetDialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') lyricSheetDialog.close();
+  });
 </script>
 <script src="/scripts/album-reviews.js"></script>
 <script src="/scripts/song-rating.js"></script>
