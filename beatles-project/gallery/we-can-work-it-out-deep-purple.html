@@ -30,7 +30,10 @@
     <div class="gallery-container" style="max-width:900px;margin:2rem auto;padding:1.5rem;background-color:#222;border-radius:6px;">
         <h1>Exposition / We Can Work It Out - Deep Purple</h1>
         <div style="margin-top:1.5rem;aspect-ratio:16/9;border-radius:6px;overflow:hidden;">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/WnYPxLprY2g" title="We Can Work It Out - Deep Purple" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe id="galleryVideo" width="100%" height="100%" src="https://www.youtube.com/embed/WnYPxLprY2g" title="We Can Work It Out - Deep Purple" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div style="max-width:620px;margin:6px auto 0;">
+            <button id="jumpSample" type="button" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump 2:53</button>
         </div>
     </div>
 </main>
@@ -38,5 +41,14 @@
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
 <script src="/scripts/gallery-enhance.js"></script>
+<script>
+  document.getElementById('jumpSample').addEventListener('click', () => {
+    const iframe = document.getElementById('galleryVideo');
+    const url = new URL(iframe.src);
+    url.searchParams.set('start', '173');
+    url.searchParams.set('autoplay', '1');
+    iframe.src = url.toString();
+  });
+</script>
 </body>
 </html>

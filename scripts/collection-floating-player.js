@@ -1018,6 +1018,7 @@
       button.disabled = false;
     }
 
+    if (autoplay) document.dispatchEvent(new Event('collection-player-play'));
     const videoId = getVideoIdFromSrc(src);
     const frameReadyForApi = playerFrame.src && playerFrame.src !== 'about:blank';
 
@@ -1048,11 +1049,16 @@
 
   const resumeCurrentTrack = () => {
     if (!currentTrack) return;
+    document.dispatchEvent(new Event('collection-player-play'));
     postPlayerCommand('playVideo');
     isPlaying = true;
     setPlaybackUi();
     syncControls();
   };
+
+  document.addEventListener('collection-player-pause', () => {
+    if (isPlaying) pauseCurrentTrack();
+  });
 
   const getNextTrackForAutoplay = () => {
     if (!currentTrack) return null;
