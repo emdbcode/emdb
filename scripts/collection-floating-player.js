@@ -406,6 +406,14 @@
   const nextBtn = document.getElementById('collectionNextBtn');
   if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn) return;
 
+  const songVideo = document.getElementById('songVideo');
+  const songVideoButton = document.getElementById('playBtn');
+  document.addEventListener('collection-player-play', () => {
+    if (songVideo && songVideoButton && songVideo.classList.contains('open')) {
+      songVideoButton.click();
+    }
+  });
+
   const playerPanel = playerSection.querySelector('.playlist-panel');
   const controls = playerSection.querySelector('.now-playing-controls');
   if (!playerPanel || !controls) return;
@@ -1058,6 +1066,7 @@
 
   document.addEventListener('collection-player-pause', () => {
     if (isPlaying) pauseCurrentTrack();
+    if (currentTrack) setCollapsed(true);
   });
 
   const getNextTrackForAutoplay = () => {
