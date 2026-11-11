@@ -1,0 +1,73 @@
+.song-extra .fancy-quote.quote-preview {
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.song-extra .fancy-quote.quote-preview .quote-attrib {
+  position: static;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+.song-extra .fancy-quote.quote-preview.is-collapsed .quote-text {
+  position: relative;
+  max-height: 9em;
+  overflow: hidden;
+}
+
+.song-extra .fancy-quote.quote-preview.is-collapsed .quote-text::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3em;
+  background: linear-gradient(transparent, #151515);
+  pointer-events: none;
+}
+
+.song-extra .quote-preview-toggle {
+  padding: 0;
+  margin-top: 0.5rem;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.song-extra .quote-preview-toggle:hover,
+.song-extra .quote-preview-toggle:focus-visible { color: #E21C21; }
+.song-extra .quote-preview-toggle:focus-visible { outline: 2px solid #E21C21; outline-offset: 3px; }
+
+@media (max-width: 767px) {
+  .song-extra .quote-preview-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .song-extra .fancy-quote.quote-preview:focus-within { outline: 2px solid #E21C21; outline-offset: 3px; }
+}
+
+.song-facts-preview.is-expandable { position: relative; cursor: pointer; }
+.song-facts-content { font-size: 15px; }
+.song-facts-preview.is-collapsed .song-facts-content { position: relative; max-height: 9em; overflow: hidden; }
+.song-facts-preview.is-collapsed .song-facts-content::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3em;
+  background: linear-gradient(transparent, #151515);
+  pointer-events: none;
+}
+.song-facts-toggle { padding: 0; margin-top: 0.5rem; border: 0; background: transparent; color: #aaa; font: 13px Arial, sans-serif; cursor: pointer; }
+.song-facts-toggle:hover, .song-facts-toggle:focus-visible { color: #E21C21; }
+.song-facts-toggle:focus-visible { outline: 2px solid #E21C21; outline-offset: 3px; }
+@media (max-width: 767px) {
+  .song-facts-toggle { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .song-facts-preview:focus-within { outline: 2px solid #E21C21; outline-offset: 3px; }
+}
