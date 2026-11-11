@@ -1,0 +1,15 @@
+.album-name-text {
+  display: inline-block;
+  text-shadow: 0 1px 0 #525252, 0 2px 0 #2a2a2a, 0 3px 0 #2b2b2b, 0 5px 8px #000;
+  transition: transform 120ms ease, text-shadow 120ms ease;
+}
+
+.album-name.nav-trigger:active .album-name-text,
+.album-name.nav-trigger[aria-expanded="true"] .album-name-text {
+  transform: translateY(3px);
+  text-shadow: 0 -1px 1px #000, 0 1px 0 #777;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-name-text { transition: none; }
+}

@@ -6,3 +6,7 @@
 #section-performers + .performers-list .role-break {
   display: none;
 }
+
+#creditsContent .coming-soon-link { color: inherit; text-decoration: none !important; }
+#creditsContent .coming-soon-link:is(:link, :visited) { color: inherit !important; }
+#creditsContent .coming-soon-link:is(:hover, :focus, :focus-visible) { color: #E21C21 !important; }

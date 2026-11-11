@@ -3675,7 +3675,7 @@ function setupSongCreditsNameSearch() {
 
   const linkMetaNames = (root) => {
     root.querySelectorAll('.meta-name').forEach((node) => {
-      if (node.querySelector('.credit-name-search-global')) return;
+      if (node.querySelector('.credit-name-search-global, .coming-soon-link')) return;
       const value = (node.textContent || '').trim();
       if (!shouldLinkName(value, node)) return;
       node.textContent = '';
@@ -3685,7 +3685,7 @@ function setupSongCreditsNameSearch() {
 
   const linkInlineNames = (root) => {
     root.querySelectorAll('.written-by .meta-value, .credit-pair .meta-value').forEach((node) => {
-      if (node.querySelector('.credit-name-search-global')) return;
+      if (node.querySelector('.credit-name-search-global, .coming-soon-link')) return;
       if (node.closest('.released-row')) return;
       if (isCopyrightContext(node)) return;
       const text = (node.textContent || '').trim();
