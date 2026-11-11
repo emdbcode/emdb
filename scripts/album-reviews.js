@@ -422,6 +422,17 @@
   margin: 0;
   font-family: Arial, sans-serif;
 }
+.ar-add-first-review {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ar-add-first-review:hover,
+.ar-add-first-review:focus-visible { color: #E21C21; }
 
 /* ─── Review modals ────────────────────────────────────────────────────── */
 .ar-modal {
@@ -1756,7 +1767,13 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       if (_reviewEntityType === 'song') return;
       const p = document.createElement('p');
       p.className = 'ar-no-reviews';
-      p.textContent = 'No reviews yet. Be the first to add one.';
+      p.append('No reviews yet. ');
+      const addReview = document.createElement('button');
+      addReview.type = 'button';
+      addReview.className = 'ar-add-first-review';
+      addReview.textContent = 'Be the first to add one.';
+      addReview.addEventListener('click', openWriteModal);
+      p.appendChild(addReview);
       section.appendChild(p);
     } else {
       if (_reviewEntityType === 'song') {
