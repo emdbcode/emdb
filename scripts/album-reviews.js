@@ -1460,9 +1460,9 @@
       console.error('Reviews load error:', error);
       _reviews = [];
       _existingReview = null;
-      return;
+      return false;
     }
-    if (!rows || !rows.length) { _reviews = []; _existingReview = null; return; }
+    if (!rows || !rows.length) { _reviews = []; _existingReview = null; return true; }
 
     console.log('[AR-VOTE] loadReviews rows', {
       album_id: _albumId,
@@ -1550,6 +1550,7 @@
       real_score: ((_voteMap[r.id] || {}).likes || 0) - ((_voteMap[r.id] || {}).dislikes || 0),
       user_vote: _userVotes[r.id] || null
     })));
+    return true;
   }
 
   // ── Fetch user's rating for this album ──────────────────────────────────────
@@ -1726,7 +1727,7 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
       const reviewsUrl = albumContainer && albumContainer.dataset
         ? (albumContainer.dataset.userReviews || albumContainer.dataset.reviews || '')
         : '';
-      if (reviewsUrl) {
+      if (reviewsUrl && reviewsUrl !== '#arReviewsSection') {
         viewBtn.addEventListener('click', () => { window.location.href = reviewsUrl; });
       } else {
         viewBtn.addEventListener('click', openAllModal);
@@ -1802,13 +1803,16 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
 
   // ── Wire "Add a Review" button in nav popover ───────────────────────────────
   function wireReviewButton() {
-    const btn = document.getElementById('userReviewsBtn');
-    if (!btn) return;
-    btn.addEventListener('click', async (e) => {
+    const buttons = [document.getElementById('userReviewsBtn'), document.getElementById('sectionReviewBtn')];
+    buttons.filter(Boolean).forEach(btn => btn.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (typeof e.stopImmediatePropagation === 'function') {
         e.stopImmediatePropagation();
+      }
+      if (btn.id === 'sectionReviewBtn') {
+        const closeButton = document.querySelector('#sectionMenu.open .section-menu-close');
+        if (closeButton) closeButton.click();
       }
       const popover = document.getElementById('albumNavPopover');
       const songPopover = document.getElementById('songNavPopover');
@@ -1825,19 +1829,38 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
         if (songToggle) songToggle.setAttribute('aria-expanded', 'false');
       }
       await openWriteModal();
-    }, true);
+    }, true));
   }
 
   // ── Init on album pages ─────────────────────────────────────────────────────
   async function initAlbumPage() {
-    _client = getClient();
-    if (!_client) return;
-
     configureModeFromSection();
+    const showUnavailable = (reason) => {
+      console.error('User Reviews unavailable:', reason);
+      injectStyles();
+      const section = document.getElementById('arReviewsSection');
+      if (!section) return;
+      const heading = document.createElement('h2');
+      heading.className = 'ar-section-title';
+      heading.textContent = _sectionTitle;
+      const message = document.createElement('p');
+      message.textContent = 'User Reviews are currently unavailable for this album.';
+      section.replaceChildren(heading, message);
+    };
+    _client = getClient();
+    if (!_client) {
+      showUnavailable('Review service could not be initialized.');
+      return;
+    }
+
     loadDeletedReviewsCache();
     loadAwardedReviewXpCache();
 
-    const { data: sd } = await _client.auth.getSession();
+    const { data: sd, error: sessionError } = await _client.auth.getSession();
+    if (sessionError) {
+      showUnavailable(sessionError);
+      return;
+    }
     _userId = sd && sd.session ? sd.session.user.id : null;
 
     // Keep _userId in sync if auth state resolves late (e.g. file:// context)
@@ -1846,16 +1869,26 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
     });
 
     const slug = getAlbumSlugFromUrl();
-    if (!slug) return;
+    if (!slug) {
+      showUnavailable('Album slug is missing.');
+      return;
+    }
 
     const album = await fetchAlbumBySlug(slug);
-    if (!album) return;
+    if (!album) {
+      showUnavailable(`Album not found for slug: ${slug}`);
+      return;
+    }
 
     _albumId = album.id;
     _albumTitle = album.title || '';
     _albumCover = album.cover_url || '';
 
-    await Promise.all([loadReviews(), fetchUserAlbumRating()]);
+    const [reviewsLoaded] = await Promise.all([loadReviews(), fetchUserAlbumRating()]);
+    if (!reviewsLoaded) {
+      showUnavailable('Reviews could not be loaded.');
+      return;
+    }
 
     injectStyles();
     renderReviewSection();
@@ -2252,8 +2285,9 @@ ${signedIn ? '' : `<div class="ar-song-signin"><a href="${esc(signInHref)}">Sign
   // ── Auto-init on album pages ────────────────────────────────────────────────
   const _path = window.location.pathname;
   const _href = window.location.href;
-  const _isAlbumPage = /\/releases\/[^/]+\.html/.test(_path) || /releases\/[^/]+\.html/.test(_href);
   const _reviewSection = document.getElementById('arReviewsSection');
+  const _isAlbumPage = (!!_reviewSection && _reviewSection.dataset.reviewInit === 'album')
+    || /\/releases\/[^/]+\.html/.test(_path) || /releases\/[^/]+\.html/.test(_href);
   const _isSongPage = !!_reviewSection && (
     _reviewSection.dataset.reviewInit === 'song'
     || /\/songs\/[^/]+\/[^/]+\.html/.test(_path)

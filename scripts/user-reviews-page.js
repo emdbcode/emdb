@@ -705,7 +705,7 @@ body {
     const albumId = album.id;
     if (releasePath) {
       const albumLabel = esc(album.title || 'Album');
-      const artistLabel = esc(getReviewPageArtistLabel(albumSlug));
+      const artistLabel = esc(root.dataset.artistLabel || getReviewPageArtistLabel(albumSlug));
       const longTitle = isLongReviewTitleSlug(albumSlug);
       const albumLinkClass = 'title-album-link' + (longTitle ? ' title-album-link--reveal' : '');
       title.innerHTML = artistLabel + '<br><a class="' + albumLinkClass + '" href="' + esc(releasePath) + '"><span class="title-album-text">' + albumLabel + '</span></a><br><a href="/user-reviews/index-user-reviews.html">User Reviews</a>';
