@@ -291,7 +291,6 @@ body {
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .album-quotes .fancy-quote:focus-within { outline: 2px solid #E21C21; outline-offset: 3px; }
 }
 
 /* SINGLES SECTION */
@@ -836,7 +835,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   gtag('config', 'G-J923YYWH3R');
 </script>
 </head>
-<body id="page-top">
+<body id="page-top" data-scroll-collapsed-sections>
 <div id="site-header"></div>
 <nav class="menu-panel section-menu" id="sectionMenu" aria-label="Page sections" aria-hidden="true" inert>
   <button type="button" class="menu-close section-menu-close" aria-label="Close section menu">✕</button>
@@ -1884,6 +1883,12 @@ document.querySelectorAll('.critic-score').forEach(box => {
       button.setAttribute('aria-expanded', String(expanded));
       button.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Read full'} quote ${attribution.textContent.trim()}`);
       button.textContent = expanded ? 'Show less' : 'Read full quote';
+      if (!expanded && document.body.hasAttribute('data-scroll-collapsed-sections')) {
+        quote.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      }
     }
 
     button.addEventListener('click', event => {

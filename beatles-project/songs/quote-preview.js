@@ -1,3 +1,11 @@
+const scrollToCollapsedSection = section => {
+  if (!document.body.hasAttribute('data-scroll-collapsed-sections')) return;
+  section.scrollIntoView({
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    block: 'start'
+  });
+};
+
 (function setupSongQuotePreviews() {
   const previews = Array.from(document.querySelectorAll('.song-extra .fancy-quote')).map((quote, index) => {
     const text = quote.querySelector('.quote-text');
@@ -23,6 +31,7 @@
       expanded = !expanded;
       quote.classList.toggle('is-collapsed', !expanded);
       updateButton();
+      if (!expanded) scrollToCollapsedSection(quote);
     }
 
     button.addEventListener('click', event => {
@@ -84,6 +93,7 @@
     if (!expandable) expanded = false;
     section.classList.toggle('is-expandable', expandable);
     section.classList.toggle('is-collapsed', expandable && !expanded);
+    section.classList.toggle('is-expanded', expandable && expanded);
     button.hidden = !expandable;
     button.setAttribute('aria-expanded', String(expanded));
     button.setAttribute('aria-label', expanded ? 'Show fewer song facts' : 'Read all song facts');
@@ -104,6 +114,7 @@
   function toggle() {
     expanded = !expanded;
     updatePreview();
+    if (!expanded) scrollToCollapsedSection(anchor);
   }
 
   button.addEventListener('click', event => {
@@ -112,6 +123,11 @@
   });
   section.addEventListener('click', event => {
     if (button.hidden || event.target.closest('a, button') || window.getSelection().toString()) return;
+    if (
+      expanded &&
+      document.body.hasAttribute('data-mobile-facts-toggle') &&
+      window.matchMedia('(max-width: 767px)').matches
+    ) return;
     toggle();
   });
   updatePreview();

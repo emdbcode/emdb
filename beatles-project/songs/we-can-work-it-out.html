@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="/beatles-project/coming-soon.css">
 <link rel="stylesheet" href="/beatles-project/songs/performers.css?v=credit-placeholders">
 <link rel="stylesheet" href="/beatles-project/songs/song-title.css">
-<link rel="stylesheet" href="/beatles-project/songs/quote-preview.css?v=song-facts">
-<script src="/beatles-project/songs/quote-preview.js?v=song-facts" defer></script>
+<link rel="stylesheet" href="/beatles-project/songs/quote-preview.css?v=focus-within-fix">
+<script src="/beatles-project/songs/quote-preview.js?v=mobile-facts-toggle" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
 
 <style>
@@ -937,7 +937,7 @@ body {
   gtag('config', 'G-J923YYWH3R');
 </script>
 </head>
-<body id="page-top">
+<body id="page-top" data-scroll-collapsed-sections data-mobile-facts-toggle>
 <div id="site-header"></div>
 <nav class="menu-panel section-menu" id="sectionMenu" aria-label="Page sections" aria-hidden="true" inert>
   <button type="button" class="menu-close section-menu-close" aria-label="Close section menu">✕</button>
@@ -1045,6 +1045,20 @@ body {
 
      </div>
 
+     <section class="music-videos-container" id="section-promos">
+    <h3 class="section-heading">Music Video</h3>
+    <div class="video-item">
+      <button type="button" class="single-section-video" data-video="Qyclqo_AV2M" aria-expanded="false" aria-controls="musicVideoPlayer">
+        <img src="https://img.youtube.com/vi/Qyclqo_AV2M/hqdefault.jpg" alt="">
+        <span class="single-info-video">
+          <span class="song-title-video">We Can Work It Out (Official Music Video)</span>
+          <span class="song-date-video">Directed by Joe McGrath</span>
+        </span>
+      </button>
+      <div class="video-player" id="musicVideoPlayer"></div>
+    </div>
+  </section>
+
 
      <div class="song-extra" id="section-facts" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Song Facts</h3>
@@ -1063,20 +1077,6 @@ body {
       <li>The song has been covered by numerous artists, including <a href="/beatles-project/gallery/we-can-work-it-out-deep-purple.html">Deep Purple</a>, <a href="/beatles-project/gallery/we-can-work-it-out-stevie-wonder.html">Stevie Wonder</a>, and <a href="/beatles-project/gallery/we-can-work-it-out-the-four-seasons.html">Four Seasons</a>, whose rendition featured on the soundtrack of the bizarre Beatles-themed documentary <em><a href="/beatles-project/gallery/all-this-and-world-war-ii-trailer.html">All This and World War II</a></em> (1976).</li>
     </ul>
   </div>
-
-  <section class="music-videos-container" id="section-promos">
-    <h3 class="section-heading">Music Video</h3>
-    <div class="video-item">
-      <button type="button" class="single-section-video" data-video="Qyclqo_AV2M" aria-expanded="false" aria-controls="musicVideoPlayer">
-        <img src="https://img.youtube.com/vi/Qyclqo_AV2M/hqdefault.jpg" alt="">
-        <span class="single-info-video">
-          <span class="song-title-video">We Can Work It Out (Official Music Video)</span>
-          <span class="song-date-video">Directed by Joe McGrath</span>
-        </span>
-      </button>
-      <div class="video-player" id="musicVideoPlayer"></div>
-    </div>
-  </section>
 
    <div class="song-extra" id="section-quote" style="max-width:900px;margin:1.25rem auto;color:#ddd;">
     <h3 style="color:#fff;margin:0 0.5rem 0.5rem 0;">Words from Paul McCartney</h3>
