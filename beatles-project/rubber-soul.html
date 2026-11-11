@@ -248,11 +248,50 @@ body {
 .album-personnel .performer-avatar { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 50%; object-fit: cover; background: #222; }
 .album-personnel .performer-details { display: flex; flex-direction: column; min-width: 0; }
 .album-personnel .meta-name { color: #ddd; }
+#section-personnel .coming-soon-link { color: inherit; text-decoration: none !important; }
+#section-personnel .coming-soon-link:is(:link, :visited) { color: inherit !important; text-decoration: none !important; }
+#section-personnel .coming-soon-link:is(:hover, :focus, :focus-visible) { color: #E21C21 !important; text-decoration: none !important; }
 .album-personnel .meta-role { color: #aaa; font-size: 13px; line-height: 1.4; }
 .album-personnel-note, .album-mix-note { margin: 0.75rem 0 0; color: #999; font-size: 12px; line-height: 1.5; }
 @media (max-width: 480px) {
   .song-extra .fancy-quote { padding: 1rem 1rem 2rem; max-width: 100%; }
   .song-extra .fancy-quote .quote-mark { left: -8px; top: 12px; font-size: 40px; }
+}
+.album-quotes .fancy-quote.is-expandable { padding-bottom: 0.5rem; cursor: pointer; }
+.album-quotes .fancy-quote .quote-attrib { position: static; margin-top: 0.5rem; text-align: right; }
+.album-quotes .fancy-quote.is-collapsed .quote-text { position: relative; max-height: 9em; overflow: hidden; }
+.album-quotes .fancy-quote.is-collapsed .quote-text::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3em;
+  background: linear-gradient(transparent, #151515);
+  pointer-events: none;
+}
+.quote-toggle {
+  padding: 0;
+  margin-top: 0.5rem;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.quote-toggle:hover, .quote-toggle:focus-visible { color: #E21C21; }
+.quote-toggle:focus-visible { outline: 2px solid #E21C21; outline-offset: 3px; }
+@media (max-width: 767px) {
+  .album-quotes .quote-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .album-quotes .fancy-quote:focus-within { outline: 2px solid #E21C21; outline-offset: 3px; }
 }
 
 /* SINGLES SECTION */
@@ -1018,22 +1057,22 @@ soul, ‘Rubber soul’. Just a pun.</p>
   <section class="album-personnel" id="section-personnel">
     <h2 class="section-heading">Personnel</h2>
     <div class="performers-list">
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name">John Lennon</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Acoustic Guitar, Electric Guitar, Tambourine</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/paul-mccartney.jpg" alt="Paul McCartney"><span class="performer-details"><span class="meta-name">Paul McCartney</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Bass, Fuzz Bass, Electric Guitar, Acoustic Guitar, Piano, Claps</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-harrison.jpg" alt="George Harrison"><span class="performer-details"><span class="meta-name">George Harrison</span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, 12-String Acoustic Guitar, 12-String Electric Guitar, Electric Guitar, Sitar, Tambourine</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name">Ringo Starr</span><span class="meta-role">Lead Vocal, Drums, Bass Drum, Cymbals, Cowbell, Maracas, Tambourine, Percussion, Claps, Thigh Slaps, Matchbox Percussion, Hammond Organ</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-martin.jpg" alt="George Martin"><span class="performer-details"><span class="meta-name">George Martin</span><span class="meta-role">Producer; Mixing Engineer; Piano (“In My Life”); Harmonium (“The Word”)</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/norman-smith.jpg" alt="Norman Smith"><span class="performer-details"><span class="meta-name">Norman Smith</span><span class="meta-role">Recording Engineer; Mixing Engineer</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/jerry-boys.jpg" alt="Jerry Boys"><span class="performer-details"><span class="meta-name">Jerry Boys</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/richard-lush.jpg" alt="Richard Lush"><span class="performer-details"><span class="meta-name">Richard Lush</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/phil-mcdonald.jpg" alt="Phil McDonald"><span class="performer-details"><span class="meta-name">Phil McDonald</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name">Ron Pender</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/graham-platt.jpg" alt="Graham Platt"><span class="performer-details"><span class="meta-name">Graham Platt</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name">Ken Scott</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mike-stone.jpg" alt="Mike Stone"><span class="performer-details"><span class="meta-name">Mike Stone</span><span class="meta-role">Additional Engineering</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mal-evans.jpg" alt="Mal Evans"><span class="performer-details"><span class="meta-name">Mal Evans</span><span class="meta-role">Hammond Organ (“You Won’t See Me”)</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/robert-freeman.jpg" alt="Robert Freeman"><span class="performer-details"><span class="meta-name">Robert Freeman</span><span class="meta-role">Photography</span></span></div>
-      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/charles-front.jpg" alt="Charles Front"><span class="performer-details"><span class="meta-name">Charles Front</span><span class="meta-role">Illustration</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/john-lennon.jpg" alt="John Lennon"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">John Lennon</button></span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Acoustic Guitar, Electric Guitar, Tambourine</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/paul-mccartney.jpg" alt="Paul McCartney"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Paul McCartney</button></span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, Bass, Fuzz Bass, Electric Guitar, Acoustic Guitar, Piano, Claps</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-harrison.jpg" alt="George Harrison"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">George Harrison</button></span><span class="meta-role">Lead Vocal, Backing Vocal, Harmony Vocal, 12-String Acoustic Guitar, 12-String Electric Guitar, Electric Guitar, Sitar, Tambourine</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ringo-starr.jpg" alt="Ringo Starr"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Ringo Starr</button></span><span class="meta-role">Lead Vocal, Drums, Bass Drum, Cymbals, Cowbell, Maracas, Tambourine, Percussion, Claps, Thigh Slaps, Matchbox Percussion, Hammond Organ</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/george-martin.jpg" alt="George Martin"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">George Martin</button></span><span class="meta-role">Producer; Mixing Engineer; Piano (“In My Life”); Harmonium (“The Word”)</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/norman-smith.jpg" alt="Norman Smith"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Norman Smith</button></span><span class="meta-role">Recording Engineer; Mixing Engineer</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/jerry-boys.jpg" alt="Jerry Boys"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Jerry Boys</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/richard-lush.jpg" alt="Richard Lush"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Richard Lush</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/phil-mcdonald.jpg" alt="Phil McDonald"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Phil McDonald</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ron-pender.jpg" alt="Ron Pender"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Ron Pender</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/graham-platt.jpg" alt="Graham Platt"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Graham Platt</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/ken-scott.jpg" alt="Ken Scott"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Ken Scott</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mike-stone.jpg" alt="Mike Stone"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Mike Stone</button></span><span class="meta-role">Additional Engineering</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/mal-evans.jpg" alt="Mal Evans"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Mal Evans</button></span><span class="meta-role">Hammond Organ (“You Won’t See Me”)</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/robert-freeman.jpg" alt="Robert Freeman"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Robert Freeman</button></span><span class="meta-role">Photography</span></span></div>
+      <div class="performer"><img class="performer-avatar" src="/beatles-project/profiles/charles-front.jpg" alt="Charles Front"><span class="performer-details"><span class="meta-name"><button type="button" class="coming-soon-link">Charles Front</button></span><span class="meta-role">Illustration</span></span></div>
     </div>
     <p class="album-personnel-note"><em>Personnel credits apply to the original 14-track album only and do not include additional session tracks featured on this page.</em></p>
   </section>
@@ -1823,6 +1862,41 @@ document.querySelectorAll('.critic-score').forEach(box => {
 <script src="../scripts/album-reviews.js?v=album-review-first"></script>
 <script src="/beatles-project/coming-soon.js"></script>
 <script src="../header.js"></script>
+
+<script>
+(function setupAlbumQuotes() {
+  document.querySelectorAll('.album-quotes .fancy-quote').forEach((quote, index) => {
+    const text = quote.querySelector('.quote-text');
+    const attribution = quote.querySelector('.quote-attrib');
+    text.id = `album-quote-${index + 1}`;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'quote-toggle';
+    button.setAttribute('aria-controls', text.id);
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', `Read full quote ${attribution.textContent.trim()}`);
+    button.textContent = 'Read full quote';
+    quote.appendChild(button);
+    quote.classList.add('is-expandable', 'is-collapsed');
+
+    function toggleQuote() {
+      const expanded = quote.classList.toggle('is-collapsed') === false;
+      button.setAttribute('aria-expanded', String(expanded));
+      button.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Read full'} quote ${attribution.textContent.trim()}`);
+      button.textContent = expanded ? 'Show less' : 'Read full quote';
+    }
+
+    button.addEventListener('click', event => {
+      event.stopPropagation();
+      toggleQuote();
+    });
+    quote.addEventListener('click', event => {
+      if (event.target.closest('a, button') || window.getSelection().toString()) return;
+      toggleQuote();
+    });
+  });
+})();
+</script>
 
 <script>
 (function setupShareMenu(){
