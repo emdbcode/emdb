@@ -175,6 +175,7 @@
                 font-size: 15px;
                 font-weight: 700;
             }
+            .news-title-mobile { display: none; }
 
                     .slide-rating {
                         display: inline-flex;
@@ -245,6 +246,8 @@
                     --slider-cards: 2.4;
                     --slider-gap: 12px;
                 }
+                .news-title-desktop { display: none; }
+                .news-title-mobile { display: inline; }
             }
             @media (max-width: 480px) {
                 :root {
@@ -806,6 +809,13 @@
                         <button class="slider-arrow slider-arrow--prev" type="button" id="newsPrev" aria-label="Scroll left">‹</button>
                         <button class="slider-arrow slider-arrow--next" type="button" id="newsNext" aria-label="Scroll right">›</button>
                         <div class="slider-track" id="newsTrack">
+                            <article class="slide">
+                                <a href="/news/infinite-ep-surprise-drop-2026.html">
+                                    <img src="/images/album-covers/non-album/infinite-ep-cover.jpg" alt="Infinite EP cover">
+                                    <p class="slide-title"><span class="news-title-desktop">Eminem Surprise Releases Infinite EP for Album’s 30th Anniversary</span><span class="news-title-mobile">Surpise Drop: Infinite EP on Album's 30th Anniversary</span></p>
+                                    <p class="slide-subtitle">November 12, 2026</p>
+                                </a>
+                            </article>
                             <article class="slide">
                                 <a href="/news/idk-eminem-j-dilla.html">
                                     <img src="images/news-images/welcome-cover.jpg" alt="IDK, Eminem, and J Dilla collaboration announcement">
