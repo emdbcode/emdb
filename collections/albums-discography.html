@@ -782,6 +782,17 @@ details:not([open]) > summary.promo-summary:focus {
       </div>
     </article>
 
+    <article class="track-card">
+      <img class="track-thumb" src="../images/album-covers/non-album/infinite-ep.jpg" alt="Infinite EP cover">
+      <div class="track-meta">
+        <h2 class="album-title">Infinite EP</h2>
+        <p class="album-artist">Eminem</p>
+        <p class="album-type">Extended Play</p>
+        <p class="album-label">WEB Entertainment</p>
+        <p class="album-release">November 12, 2026</p>
+      </div>
+    </article>
+
       <p class="footnote"><a href="singles-discography.html">Click here for Eminem’s singles discography.</a></p>
   </section>
 </main>
@@ -795,7 +806,8 @@ details:not([open]) > summary.promo-summary:focus {
   if (!filterButtons.length || !trackCards.length) return;
 
   const releaseAlbumLinks = [
-    { pattern: /\bInfinite\b/i, href: '/releases/infinite.html' },
+    { pattern: /\bInfinite\s+EP\b/i, href: '/releases/infinite-ep.html' },
+    { pattern: /\bInfinite\b(?!\s+EP\b)/i, href: '/releases/infinite.html' },
     { pattern: /\bThe\s+Slim\s+Shady\s+EP\b/i, href: '/releases/slim-shady-ep.html' },
     { pattern: /\bThe\s+Slim\s+Shady\s+LP\b/i, href: '/releases/slim-shady-lp.html' },
     { pattern: /\bThe\s+Marshall\s+Mathers\s+LP\s*2\b/i, href: '/releases/marshall-mathers-lp-2.html' },
