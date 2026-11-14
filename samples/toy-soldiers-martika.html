@@ -23,6 +23,8 @@
       cursor: pointer;
     }
     .sample-title span { display: inline-block; padding-right: 24px; transition: transform 0.3s ease; }
+    .sample-jump-controls { display:flex; gap:8px; align-items:center; margin-top:6px; flex-wrap:wrap; }
+    .sample-jump-btn { background:#E21C21; color:#fff; border:0; padding:4px 6px; border-radius:4px; cursor:pointer; font-size:0.85rem; }
     @media (max-width: 640px) {
       .sample-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
       .sample-details { width: 100%; }
@@ -61,9 +63,9 @@
               <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
                 <iframe id="sampleVideo" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/b3v6dVDXtp0?rel=0&modestbranding=1&enablejsapi=1" title="Toy Soldiers - Martika" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
-              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;margin-top:6px;">
-                <span style="font-size:0.95rem;">@ 0:00 & 4:03</span>
-                <button id="seekSampleBtn" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
+              <div class="sample-jump-controls">
+                <button class="sample-jump-btn" type="button" data-video="sampleVideo" data-seconds="0">Jump to 0:00</button>
+                <button class="sample-jump-btn" type="button" data-video="sampleVideo" data-seconds="243">Jump to 4:03</button>
               </div>
             </div>
             <div class="sample-inline-video">
@@ -71,9 +73,9 @@
               <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:4px;">
                 <iframe id="sampleVideo2" style="width:100%;height:100%;border:0;display:block;" src="https://www.youtube.com/embed/51WW46D2odU?rel=0&modestbranding=1&enablejsapi=1" title="Like Toy Soldiers - Eminem" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
-              <div style="color:#ccc;font-size:0.95rem;display:flex;gap:8px;align-items:center;margin-top:6px;">
-                <span style="font-size:0.95rem;">@ 0:00 & 0:09</span>
-                <button id="seekSampleBtn2" style="background:#E21C21;color:#fff;border:0;padding:4px 6px;border-radius:4px;cursor:pointer;font-size:0.85rem;">Jump</button>
+              <div class="sample-jump-controls">
+                <button class="sample-jump-btn" type="button" data-video="sampleVideo2" data-seconds="0">Jump to 0:00</button>
+                <button class="sample-jump-btn" type="button" data-video="sampleVideo2" data-seconds="9">Jump to 0:09</button>
               </div>
             </div>
           </div>
@@ -113,8 +115,6 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tag, s);
     })();
     document.addEventListener('DOMContentLoaded', function(){
-      var btn1 = document.getElementById('seekSampleBtn');
-      var btn2 = document.getElementById('seekSampleBtn2');
       var revealTitles = document.querySelectorAll('.sample-title[data-reveal="true"]');
       revealTitles.forEach(function(title){
         var t = null;
@@ -133,34 +133,23 @@
           }
         });
       });
-      if(btn1){
-        btn1.addEventListener('click', function(){
-          if(window.YT && samplePlayer1 && typeof samplePlayer1.seekTo === 'function'){
-            samplePlayer1.seekTo(243, true);
-            if(typeof samplePlayer1.playVideo === 'function') samplePlayer1.playVideo();
+      document.querySelectorAll('.sample-jump-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var seconds = Number(btn.dataset.seconds);
+          var videoId = btn.dataset.video;
+          var player = videoId === 'sampleVideo' ? samplePlayer1 : samplePlayer2;
+          if(window.YT && player && typeof player.seekTo === 'function'){
+            player.seekTo(seconds, true);
+            if(typeof player.playVideo === 'function') player.playVideo();
           } else {
-            var iframe = document.getElementById('sampleVideo');
+            var iframe = document.getElementById(videoId);
             if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [243, true] }), '*'); }catch(e){}
+              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [seconds, true] }), '*'); }catch(e){}
             }
           }
-          btn1.blur();
+          btn.blur();
         }, false);
-      }
-      if(btn2){
-        btn2.addEventListener('click', function(){
-          if(window.YT && samplePlayer2 && typeof samplePlayer2.seekTo === 'function'){
-            samplePlayer2.seekTo(9, true);
-            if(typeof samplePlayer2.playVideo === 'function') samplePlayer2.playVideo();
-          } else {
-            var iframe = document.getElementById('sampleVideo2');
-            if(iframe && iframe.contentWindow){
-              try{ iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [9, true] }), '*'); }catch(e){}
-            }
-          }
-          btn2.blur();
-        }, false);
-      }
+      });
     });
   </script>
 </body>
