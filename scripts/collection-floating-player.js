@@ -303,6 +303,7 @@
   top: -29px;
   left: -1px;
   right: -1px;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -312,6 +313,7 @@
   border-radius: 6px 6px 0 0;
   background: #101010;
   cursor: pointer;
+  touch-action: manipulation;
 }
 .player-collapsed-action {
   border: 0;
@@ -1371,9 +1373,13 @@
     const restoreButton = collapsedBar.querySelector('[aria-label="Open full player"]');
     const closeButton = collapsedBar.querySelector('[aria-label="Close player"]');
     restoreButton?.addEventListener('click', () => setCollapsed(false));
-    collapsedBar.addEventListener('click', (event) => {
+    const expandCollapsedBar = (event) => {
       if (closeButton?.contains(event.target)) return;
       setCollapsed(false);
+    };
+    collapsedBar.addEventListener('click', expandCollapsedBar);
+    collapsedBar.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'touch') expandCollapsedBar(event);
     });
     closeButton?.addEventListener('click', () => {
       playbackRequestId += 1;
