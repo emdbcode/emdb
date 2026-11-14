@@ -3,7 +3,8 @@
   window.__emdbCollectionFloatingPlayerInit = true;
 
   const cards = Array.from(document.querySelectorAll('.track-card'));
-  if (!cards.length) return;
+  const isBeatlesSongPage = window.location.pathname.startsWith('/beatles-project/songs/');
+  if (!cards.length && !isBeatlesSongPage) return;
   const inlineRatingsEnabled = true;
   const editableRatingsEnabled = true;
 
@@ -310,6 +311,7 @@
   border-bottom: 0;
   border-radius: 6px 6px 0 0;
   background: #101010;
+  cursor: pointer;
 }
 .player-collapsed-action {
   border: 0;
@@ -326,6 +328,9 @@
 .player-collapsed-action:focus-visible {
   color: #E21C21;
   outline: none;
+}
+#collectionPlayer.beatles-song-player .player-collapsed-bar:hover:not(:has(.player-collapsed-action:last-child:hover)) .player-collapsed-action:first-child {
+  color: #E21C21;
 }
 
 .playlist-container.is-floating {
@@ -442,8 +447,6 @@
   const nextBtn = document.getElementById('collectionNextBtn');
   if (!playerSection || !playerFrame || !playerTitle || !playerHeading || !prevBtn || !nextBtn) return;
 
-  const songVideo = document.getElementById('songVideo');
-  const songVideoButton = document.getElementById('playBtn');
   document.addEventListener('collection-player-play', () => {
     if (songVideo && songVideoButton && songVideo.classList.contains('open')) {
       songVideoButton.click();
@@ -453,8 +456,9 @@
   const playerPanel = playerSection.querySelector('.playlist-panel');
   const controls = playerSection.querySelector('.now-playing-controls');
   if (!playerPanel || !controls) return;
-  const isBeatlesSongPage = window.location.pathname.startsWith('/beatles-project/songs/');
   if (isBeatlesSongPage) playerSection.classList.add('beatles-song-player');
+  const songVideo = document.getElementById('songVideo');
+  const songVideoButton = document.getElementById('playBtn');
 
   let collapseBtn = playerSection.querySelector('.player-collapse-btn');
   if (!collapseBtn) {
@@ -492,6 +496,7 @@
   }
 
   const tracks = [];
+  let headerTrack = null;
   let currentTrack = null;
   let isPlaying = false;
   let playbackRequestId = 0;
@@ -996,7 +1001,7 @@
 
   const setPlaybackUi = () => {
     tracks.forEach((track) => {
-      const isCurrent = currentTrack && track === currentTrack;
+      const isCurrent = currentTrack && track.card === currentTrack.card;
       const button = track.playButton;
 
       track.card.classList.toggle('is-playing', isCurrent && isPlaying);
@@ -1011,6 +1016,12 @@
       }
       button.setAttribute('aria-label', `${button.textContent} ${track.title}`);
     });
+
+    if (songVideoButton && headerTrack) {
+      const isHeaderTrack = currentTrack && currentTrack.card === headerTrack.card;
+      songVideoButton.textContent = isHeaderTrack && isPlaying ? 'Pause' : '▶︎ Play';
+      songVideoButton.setAttribute('aria-expanded', String(Boolean(isHeaderTrack && isPlaying)));
+    }
 
     playerHeading.textContent = isPlaying ? 'Now Playing' : 'Music Player';
     expandBtn.textContent = isPlaying ? '❚❚' : '▶';
@@ -1044,7 +1055,7 @@
       return;
     }
 
-    const currentIndex = visibleTracks.indexOf(currentTrack);
+    const currentIndex = visibleTracks.findIndex((track) => track.card === currentTrack.card);
     prevBtn.disabled = currentIndex <= 0;
     nextBtn.disabled = currentIndex >= visibleTracks.length - 1;
   };
@@ -1103,8 +1114,8 @@
     }
 
     currentTrack = track;
-    playerFrame.title = track.title;
-    playerTitle.textContent = track.title;
+    playerFrame.title = track.playerTitle || track.title;
+    playerTitle.textContent = track.playerTitle || track.title;
     isPlaying = autoplay;
     if (isBeatlesSongPage && (!playerSection.classList.contains('is-floating') || isCollapsed)) {
       setCollapsed(true);
@@ -1151,7 +1162,7 @@
     if (!currentTrack) return null;
 
     const visibleTracks = getVisibleTracks();
-    const visibleIndex = visibleTracks.indexOf(currentTrack);
+    const visibleIndex = visibleTracks.findIndex((track) => track.card === currentTrack.card);
     if (visibleIndex >= 0) {
       return visibleTracks[visibleIndex + 1] || null;
     }
@@ -1274,12 +1285,12 @@
       event.stopPropagation();
       if (!track.songHref) return;
 
-      if (currentTrack === track && isPlaying) {
+      if (currentTrack && currentTrack.card === track.card && isPlaying) {
         pauseCurrentTrack();
         return;
       }
 
-      if (currentTrack === track) {
+      if (currentTrack && currentTrack.card === track.card) {
         resumeCurrentTrack();
         return;
       }
@@ -1294,17 +1305,64 @@
     });
   });
 
+  if (isBeatlesSongPage && songVideo && songVideoButton && songVideo.dataset.video) {
+    const headerVideoId = songVideo.dataset.video.trim();
+    const albumName = document.querySelector('.album-name-text');
+    const albumNav = document.querySelector('.album-name.nav-trigger');
+    const headerTitle = albumName?.textContent?.trim()
+      || Array.from(albumNav?.childNodes || [])
+        .filter((node) => node.nodeType === Node.TEXT_NODE)
+        .map((node) => node.textContent)
+        .join('')
+        .trim()
+      || document.title.split(' | ')[0].replace(/\s+-\s+The Beatles$/, '');
+    const matchingTrack = tracks.find((track) => track.card.dataset.video === headerVideoId);
+    headerTrack = matchingTrack
+      ? {
+          ...matchingTrack,
+          title: headerTitle,
+          playerTitle: matchingTrack.title,
+          src: `https://www.youtube.com/embed/${headerVideoId}`,
+        }
+      : {
+          card: songVideo,
+          title: headerTitle,
+          playerTitle: headerTitle,
+          songHref: window.location.pathname,
+          pathInfo: parseSongPath(window.location.pathname),
+          src: `https://www.youtube.com/embed/${headerVideoId}`,
+          loadingPromise: null,
+          playButton: null,
+          meta: null,
+          ratingRow: null,
+          songId: null,
+        };
+
+    songVideoButton.addEventListener('click', (event) => {
+      if (songVideo.classList.contains('open')) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (currentTrack && currentTrack.card === headerTrack.card && isPlaying) {
+        pauseCurrentTrack();
+      } else {
+        void openTrack(headerTrack, true);
+      }
+    }, true);
+  }
+
   prevBtn.addEventListener('click', () => {
     const visibleTracks = getVisibleTracks();
     if (!visibleTracks.length || !currentTrack) return;
-    const index = Math.max(0, visibleTracks.indexOf(currentTrack) - 1);
+    const currentIndex = visibleTracks.findIndex((track) => track.card === currentTrack.card);
+    const index = Math.max(0, currentIndex - 1);
     void openTrack(visibleTracks[index], true);
   });
 
   nextBtn.addEventListener('click', () => {
     const visibleTracks = getVisibleTracks();
     if (!visibleTracks.length || !currentTrack) return;
-    const index = Math.min(visibleTracks.length - 1, visibleTracks.indexOf(currentTrack) + 1);
+    const currentIndex = visibleTracks.findIndex((track) => track.card === currentTrack.card);
+    const index = Math.min(visibleTracks.length - 1, currentIndex + 1);
     void openTrack(visibleTracks[index], true);
   });
 
@@ -1313,6 +1371,10 @@
     const restoreButton = collapsedBar.querySelector('[aria-label="Open full player"]');
     const closeButton = collapsedBar.querySelector('[aria-label="Close player"]');
     restoreButton?.addEventListener('click', () => setCollapsed(false));
+    collapsedBar.addEventListener('click', (event) => {
+      if (closeButton?.contains(event.target)) return;
+      setCollapsed(false);
+    });
     closeButton?.addEventListener('click', () => {
       playbackRequestId += 1;
       playerFrame.src = 'about:blank';
