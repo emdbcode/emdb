@@ -721,6 +721,25 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   color: #fff;
   outline: none;
 }
+.player-collapsed-bar {
+  display: none;
+}
+.player-collapsed-action {
+  border: 0;
+  background: transparent;
+  color: #cfcfcf;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  padding: 3px 6px;
+}
+.player-collapsed-action:hover,
+.player-collapsed-action:focus-visible {
+  color: #E21C21;
+  outline: none;
+}
 .playlist-container.is-floating {
   display: block;
   position: fixed;
@@ -752,6 +771,24 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 .playlist-container.is-collapsed .player-collapse-btn {
   display: none;
 }
+.playlist-container.is-collapsed .player-collapsed-bar {
+  position: absolute;
+  top: -29px;
+  left: -1px;
+  right: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  border: 1px solid #333;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  background: #101010;
+}
+.playlist-container.is-collapsed {
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+}
 .playlist-container.is-collapsed .now-playing-controls {
   border-top: none;
   padding-top: 0;
@@ -768,6 +805,9 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     transform: translateX(-50%);
     padding: 8px;
     border-radius: 8px;
+  }
+  .playlist-container.is-floating.is-collapsed {
+    border-radius: 0 0 8px 8px;
   }
   .playlist-container.is-floating .section-heading {
     font-size: 15px;
@@ -954,7 +994,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     <div class="track" data-video="Sh8Ps32fRQo"><div class="track-header"><div class="track-number">12</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/wait.html">Wait</a></div></div><div class="track-length">2:14 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, electric guitar, tambourine<br>Paul McCartney: lead vocal, bass<br>George Harrison: electric lead guitar<br>Ringo Starr: drums, maracas<br>Written by: Lennon–McCartney</div></div>
     <div class="track" data-video="u6_-UL2FTeA"><div class="track-header"><div class="track-number">13</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/if-i-needed-someone.html">If I Needed Someone</a></div></div><div class="track-length">2:21 <span class="arrow">▼</span></div></div><div class="track-details">George Harrison: lead vocal, 12-string electric guitar<br>John Lennon: harmony vocal, electric guitar<br>Paul McCartney: harmony vocal, bass<br>Ringo Starr: drums, tambourine<br>Written by: George Harrison</div></div>
     <div class="track" data-video="VFBpGOn8rpY"><div class="track-header"><div class="track-number">14</div><div class="track-title-container"><div class="track-title"><a href="/beatles-project/songs/run-for-your-life.html">Run For Your Life</a></div></div><div class="track-length">2:18 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: lead vocal, acoustic guitar, electric slide guitar<br>Paul McCartney: harmony vocal, bass<br>George Harrison: harmony vocal, electric lead guitar<br>Ringo Starr: bass drum, tambourine<br>Written by: Lennon–McCartney</div></div>
-    <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I've Just Seen a Face</div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: Lead Vocal, Harmony Vocal, Nylon-String Guitar<br>John Lennon: Acoustic Guitar<br>George Harrison: 12-String Acoustic Guitar<br>Ringo Starr: Snare Drum, Maracas<br>Written by: Lennon-McCartney</div></div>
+    <div class="track" data-track="ive-just-seen-a-face" data-video="93AK0S0eu0A" hidden><div class="track-header"><div class="track-number">1</div><div class="track-title-container"><div class="track-title">I’ve Just Seen a Face</div></div><div class="track-length">2:05 <span class="arrow">▼</span></div></div><div class="track-details">Paul McCartney: Lead Vocal, Harmony Vocal, Nylon-String Guitar<br>John Lennon: Acoustic Guitar<br>George Harrison: 12-String Acoustic Guitar<br>Ringo Starr: Snare Drum, Maracas<br>Written by: Lennon-McCartney</div></div>
     <div class="track" data-track="its-only-love" data-video="AdgxfIa9YPw" hidden><div class="track-header"><div class="track-number">6</div><div class="track-title-container"><div class="track-title">It’s Only Love</div></div><div class="track-length">1:56 <span class="arrow">▼</span></div></div><div class="track-details">John Lennon: Lead Vocal, Electric Guitar, 12-String Acoustic Guitar<br>Paul McCartney: Bass<br>George Harrison: Electric Guitar, Acoustic Guitar<br>Ringo Starr: Drums, Tambourine<br>Written by: Lennon-McCartney</div></div>
     <div class="total-length"><span>Total length</span><span>35 minutes</span></div>
     <p class="album-mix-note" hidden><em></em></p>
@@ -1078,6 +1118,10 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   <div class="singles-container playlist-container">
     <div class="section-heading" id="musicPlayerHeading">Music Player</div>
     <button class="player-collapse-btn" id="playerCollapseBtn" type="button" aria-label="Hide player">Hide</button>
+    <div class="player-collapsed-bar" aria-label="Collapsed player controls">
+      <button class="player-collapsed-action" id="playerRestoreBtn" type="button" aria-label="Open full player" aria-expanded="false">o</button>
+      <button class="player-collapsed-action" id="playerCloseBtn" type="button" aria-label="Close player">×</button>
+    </div>
     <div class="playlist-panel">
       <div class="video-player open playlist-player">
         <iframe class="playlist-embed" id="playlistPlayer" src="" title="Rubber Soul now playing" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -1311,10 +1355,12 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     const nextBtn = document.getElementById('nowNextBtn');
     const heading = document.getElementById('musicPlayerHeading');
     const collapseBtn = document.getElementById('playerCollapseBtn');
+    const restoreBtn = document.getElementById('playerRestoreBtn');
+    const closeBtn = document.getElementById('playerCloseBtn');
     const expandBtn = document.getElementById('playerExpandBtn');
     const controls = document.querySelector('.now-playing-controls');
     const playerContainer = document.querySelector('.playlist-container');
-    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading || !playerContainer || !collapseBtn || !expandBtn || !controls) return;
+    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading || !playerContainer || !collapseBtn || !restoreBtn || !closeBtn || !expandBtn || !controls) return;
 
     const showFloatingPlayer = () => {
       if (!playerContainer.classList.contains('is-floating')) {
@@ -1325,6 +1371,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     const setCollapsed = (collapsed) => {
       playerContainer.classList.toggle('is-collapsed', collapsed);
       collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+      restoreBtn.setAttribute('aria-expanded', String(!collapsed));
       nowTitle.setAttribute('aria-expanded', String(!collapsed));
     };
 
@@ -1558,14 +1605,15 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
     function playAtIndex(index, options = {}){
       if (index < 0 || index >= playlist.length) return;
-      const keepCollapsed = options.keepCollapsed === true || playerContainer.classList.contains('is-collapsed');
+      const keepCollapsed = options.keepCollapsed === true
+        || playerContainer.classList.contains('is-collapsed')
+        || !playerContainer.classList.contains('is-floating');
       showFloatingPlayer();
-      if (!keepCollapsed) setCollapsed(false);
+      setCollapsed(keepCollapsed);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       isPlaying = true;
       setIndex(index, true);
-      if (keepCollapsed) setCollapsed(true);
     }
 
     function pauseCurrent(){
@@ -1588,7 +1636,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
       const current = playlist[currentIndex];
       if (!current) return;
       showFloatingPlayer();
-      if (!keepCollapsed) setCollapsed(false);
+      setCollapsed(keepCollapsed);
       closeOpenVideoPlayers();
       pausedIndex = -1;
       if (ytPlayer && ytPlayerReady) {
@@ -1611,7 +1659,10 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
           if (idx === -1) return;
           if (idx === currentIndex) {
             if (isPlaying) pauseCurrent();
-            else resumeCurrent({ keepCollapsed: playerContainer.classList.contains('is-collapsed') });
+            else resumeCurrent({
+              keepCollapsed: playerContainer.classList.contains('is-collapsed')
+                || !playerContainer.classList.contains('is-floating')
+            });
             return;
           }
           playAtIndex(idx);
@@ -1751,6 +1802,22 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
     collapseBtn.addEventListener('click', () => {
       setCollapsed(true);
+    });
+
+    restoreBtn.addEventListener('click', () => {
+      setCollapsed(false);
+    });
+
+    closeBtn.addEventListener('click', () => {
+      pendingVideo = null;
+      if (ytPlayer && ytPlayerReady) ytPlayer.stopVideo();
+      else player.removeAttribute('src');
+      isPlaying = false;
+      pausedIndex = -1;
+      setCollapsed(false);
+      playerContainer.classList.remove('is-floating');
+      resetFloatingPosition();
+      updateUI();
     });
 
     expandBtn.addEventListener('click', () => {
