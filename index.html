@@ -104,6 +104,11 @@
                 background: linear-gradient(135deg, #121212, #0c0c0c);
             }
 
+            #albumsViewport {
+                background: transparent;
+                border-color: transparent;
+            }
+
             .slider-track {
                 display: flex;
                 gap: var(--slider-gap);
@@ -206,15 +211,126 @@
             }
 
             /* Keep Shady Times dates aligned to the bottom across cards */
+            #newsViewport {
+                background: transparent;
+                border-color: transparent;
+            }
+
+            #newsTrack {
+                --slider-cards: 3;
+            }
+
+            #articlesTrack {
+                --slider-cards: 3;
+            }
+
+            #articlesViewport {
+                background: transparent;
+                border-color: transparent;
+            }
+
             #newsTrack .slide a {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
             }
 
+            #articlesTrack .slide a {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            #newsTrack .slide {
+                max-width: 400px;
+                justify-items: stretch;
+                text-align: left;
+                gap: 0;
+                padding: 0;
+                background: transparent;
+                border-color: transparent;
+            }
+
+            #articlesTrack .slide {
+                max-width: 400px;
+                justify-items: stretch;
+                text-align: left;
+                gap: 0;
+                padding: 0;
+                background: transparent;
+                border-color: transparent;
+            }
+
+            #newsTrack .slide img {
+                aspect-ratio: 16 / 9;
+                border-radius: 10px 10px 0 0;
+            }
+
+            #articlesTrack .article-thumb {
+                padding-top: 56.25%;
+                border-radius: 10px 10px 0 0;
+                border: 1px solid var(--slider-border);
+                box-sizing: border-box;
+            }
+
+            #newsTrack .slide-media-placeholder {
+                aspect-ratio: 16 / 9;
+                border: 0;
+                border-radius: 10px 10px 0 0;
+                box-shadow: none;
+            }
+
+            #newsTrack .slide-title {
+                margin: 0;
+                padding: 10px 12px 4px;
+                height: calc(2 * 1.35em + 14px);
+                box-sizing: border-box;
+                line-height: 1.35;
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-bottom: 0;
+            }
+
             #newsTrack .slide-subtitle {
-                margin-top: auto;
+                margin: 0;
+                padding: 0 12px 10px;
+                height: calc(1.35em + 10px);
+                box-sizing: border-box;
+                line-height: 1.35;
                 white-space: nowrap;
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-top: 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            #articlesTrack .article-title {
+                margin: 0;
+                padding: 10px 12px 4px;
+                height: calc(2 * 1.35em + 14px);
+                box-sizing: border-box;
+                overflow: hidden;
+                line-height: 1.35;
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-bottom: 0;
+            }
+
+            #articlesTrack .article-tag {
+                margin: 0;
+                padding: 0 12px 10px;
+                height: calc(1.35em + 10px);
+                box-sizing: border-box;
+                line-height: 1.35;
+                white-space: nowrap;
+                background: #111;
+                border: 1px solid var(--slider-border);
+                border-top: 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            #newsViewport + .articles-cta {
+                margin-top: 0;
             }
 
             .slide--placeholder {
@@ -237,15 +353,21 @@
 
             @media (max-width: 1100px) {
                 :root { --slider-cards: 4; }
+                #newsTrack { --slider-cards: 2.8; }
+                #articlesTrack { --slider-cards: 2.8; }
             }
             @media (max-width: 900px) {
                 :root { --slider-cards: 3; }
+                #newsTrack { --slider-cards: 2.2; }
+                #articlesTrack { --slider-cards: 2.2; }
             }
             @media (max-width: 680px) {
                 :root {
                     --slider-cards: 2.4;
                     --slider-gap: 12px;
                 }
+                #newsTrack { --slider-cards: 1.5; }
+                #articlesTrack { --slider-cards: 1.5; }
                 .news-title-desktop { display: none; }
                 .news-title-mobile { display: inline; }
             }
@@ -254,6 +376,8 @@
                     --slider-cards: 2.2;
                     --slider-gap: 10px;
                 }
+                #newsTrack { --slider-cards: 1.3; }
+                #articlesTrack { --slider-cards: 1.3; }
 
                 #sliderTrack .slide-subtitle {
                     display: none;
@@ -761,48 +885,9 @@
                     </div>
                 </section>
 
-                <section class="articles" aria-label="Latest articles">
-                    <div class="articles-header">
-                        <span class="articles-eyebrow">Latest Articles</span>
-                        <h2 class="articles-title">Marshall Matters</h2>
-                    </div>
-                    <div class="articles-grid">
-                        <article class="article-card">
-                            <a href="/articles/alan-mason-q-and-a.html">
-                                <div class="article-thumb" style="background-image: url('/images/article-images/alan-mason-alt.png');"></div>
-                                <div class="article-meta">
-                                    <p class="article-title">Q&amp;A with <em>Slim Shady LP</em> Mix Engineer Alan Mason</p>
-                                    <p class="article-tag">Interview</p>
-                                </div>
-                            </a>
-                        </article>
-                        <article class="article-card">
-                            <a href="/articles/d12-most-verses.html">
-                                <div class="article-thumb" style="background-image: url('/images/article-images/d12-most-verses.png');"></div>
-                                <div class="article-meta">
-                                    <p class="article-title">Who Had the Most Verses on D12’s <em>Devil’s Night</em> &amp; <em>D12 World</em>?</p>
-                                    <p class="article-tag">Rankings</p>
-                                </div>
-                            </a>
-                        </article>
-                        <article class="article-card">
-                            <a href="/articles/eminem-albums-ranked-by-critics.html">
-                                <div class="article-thumb" style="background-image: url('/images/article-images/albums-ranked-critics.png');"></div>
-                                <div class="article-meta">
-                                    <p class="article-title">Eminem Albums Ranked by Critics</p>
-                                    <p class="article-tag">Rankings</p>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
-                    <div class="articles-cta">
-                        <a href="/articles/articles-index.html" aria-label="View more articles">View more</a>
-                    </div>
-                </section>
-
                 <section class="news" aria-label="News slider">
                     <div class="slider-header">
-                        <span class="slider-eyebrow">Latest News</span>
+                        <span class="slider-eyebrow">Music News</span>
                         <h1 class="slider-title">Shady Times</h1>
                     </div>
                     <div class="slider-viewport" id="newsViewport">
@@ -811,78 +896,78 @@
                         <div class="slider-track" id="newsTrack">
                             <article class="slide">
                                 <a href="/news/infinite-ep-surprise-drop-2026.html">
-                                    <img src="/images/album-covers/non-album/infinite-ep-cover.jpg" alt="Infinite EP cover">
-                                    <p class="slide-title"><span class="news-title-desktop">Eminem Surprise Releases Infinite EP for Album’s 30th Anniversary</span><span class="news-title-mobile">Surpise Drop: Infinite EP on Album's 30th Anniversary</span></p>
+                                    <img src="/images/news-images/infinite-ep-tn.jpg" alt="Infinite EP cover">
+                                    <p class="slide-title"><span class="news-title-desktop">Surprise Drop: Infinite EP Releases on Album’s 30th Anniversary</span><span class="news-title-mobile">Surprise Drop: Infinite EP on Album’s 30th Anniversary</span></p>
                                     <p class="slide-subtitle">November 12, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/idk-eminem-j-dilla.html">
-                                    <img src="images/news-images/welcome-cover.jpg" alt="IDK, Eminem, and J Dilla collaboration announcement">
+                                    <img src="/images/news-images/welcome-tn.jpg" alt="IDK, Eminem, and J Dilla collaboration announcement">
                                     <p class="slide-title"><span class="news-title-desktop">EMINEM × J DILLA: A Collaboration Years in the Making</span><span class="news-title-mobile">EMINEM × J DILLA: A Collab Years in the Making</span></p>
                                     <p class="slide-subtitle">November 12, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/kid-rock-eminem-collab-update.html">
-                                    <img src="images/news-images/kid-rock-half-way-to-jesus-cover.jpg" alt="Kid Rock’s new album cover">
+                                    <img src="/images/news-images/kid-rock-tracklist-tn.jpg" alt="Updated tracklist for Kid Rock’s new album, including “7 Sins” with Lil Wayne and “Heal My Faith” featuring Eminem">
                                     <p class="slide-title">Change of Plans for Kid Rock &amp; Eminem Collaboration</p>
                                     <p class="slide-subtitle">October 15, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/eminem-is-not-on-street-fighter-ost.html">
-                                    <img src="images/news-images/street-fighter-ost.jpg" alt="Street Fighter original motion picture soundtrack cover">
+                                    <img src="/images/news-images/street-fighter-ost-tn.jpg" alt="Street Fighter original motion picture soundtrack cover">
                                     <p class="slide-title">Eminem Steps Back from the Street Fighter Soundtrack</p>
                                     <p class="slide-subtitle">October 13, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/fans-disappointed-with-madara.html">
-                                    <img src="images/album-covers/feat/ez-mil-madara-cover.jpg" alt="Fans Disappointed with New EZ MIL × Eminem Collaboration">
+                                    <img src="/images/news-images/madara-tn.jpg" alt="Fans Disappointed with New EZ MIL × Eminem Collaboration">
                                     <p class="slide-title">Shady Fans Disappointed with New EZ MIL Collaboration</p>
                                     <p class="slide-subtitle">October 9, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/kid-rock-collab-divides-fans.html">
-                                    <img src="images/news-images/kid-rock-collab-2.jpg" alt="Upcoming Kid Rock Collaboration Divides Fans">
+                                    <img src="/images/news-images/kid-rock-collab-tn.jpg" alt="Upcoming Kid Rock Collaboration Divides Fans">
                                     <p class="slide-title">An Upcoming Kid Rock Collaboration Divides Fans</p>
                                     <p class="slide-subtitle">October 3, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/rakim-drops-eminem-and-jay-z-interlude.html">
-                                    <img src="images/album-covers-tn/feat/god-speak-interlude-cover.png" alt="Rakim Drops Eminem &amp; Jay-Z Interlude">
+                                    <img src="/images/news-images/god-speak-interlude-tn.jpg" alt="Rakim Drops Eminem &amp; Jay-Z Interlude">
                                     <p class="slide-title">Rakim Drops New Interlude featuring Eminem &amp; Jay-Z</p>
                                     <p class="slide-subtitle">September 18, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/50-cent-confirms-new-song-with-eminem-tupac.html">
-                                    <img src="images/news-images/50-em-pac.png" alt="50 Cent Confirms New Song with Eminem and Tupac Coming Soon">
+                                    <img src="/images/news-images/50-em-pac-tn.jpg" alt="50 Cent Confirms New Song with Eminem and Tupac Coming Soon">
                                     <p class="slide-title">New Song by 2Pac, Eminem &amp; 50 Cent Coming Soon</p>
                                     <p class="slide-subtitle">July 24, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/jay-z-eminem-yankee-stadium-2026.html">
-                                    <img src="images/news-images/jay-z-eminem-yankee-stadium-2026.jpg" alt="Jay-Z Brings Out Eminem At Yankee Stadium">
+                                    <img src="/images/news-images/jay-z-eminem-yankee-stadium-tn.jpg" alt="Jay-Z Brings Out Eminem At Yankee Stadium">
                                     <p class="slide-title">Eminem Joins Jay-Z on Stage at Yankee Stadium</p>
                                     <p class="slide-subtitle">July 12, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/my-dads-gone-crazy-fathers-day-single.html">
-                                    <img src="images/news-images/my-dads-gone-crazy-single-thumb.jpg" alt="Father's Day the Shady Way">
+                                    <img src="/images/news-images/my-dads-gone-crazy-single-tn.jpg" alt="Father's Day The Shady Way">
                                     <p class="slide-title">Father’s Day The Shady Way – New Vinyl Single Out Now</p>
                                     <p class="slide-subtitle">June 28, 2026</p>
                                 </a>
                             </article>
                             <article class="slide">
                                 <a href="/news/d12-thank-eminem-d12-forever.html">
-                                    <img src="images/news-images/d12-thank-shady.jpg" alt="D12 Thank Eminem Following New Album">
-                                    <p class="slide-title">D12 Thank Eminem Following New Album</p>
+                                    <img src="/images/news-images/d12-thank-shady-tn.jpg" alt="D12 Thank Eminem Following New Album">
+                                    <p class="slide-title">Kuniva & Swift Thank Eminem Following New D12 Album</p>
                                     <p class="slide-subtitle">June 19, 2026</p>
                                 </a>
                             </article>
@@ -893,24 +978,54 @@
                                     <p class="slide-subtitle">&nbsp;</p>
                                 </a>
                             </article>
-                            <article class="slide slide--placeholder">
-                                <a href="#" aria-label="Placeholder news card">
-                                    <div class="slide-media-placeholder" aria-hidden="true" style="background-image: url('/images/news-images/blank-news-emdb.jpg'); background-size: cover; background-position: center;"></div>
-                                    <p class="slide-title">We’re new. More news as it happens</p>
-                                    <p class="slide-subtitle">&nbsp;</p>
+                        </div>
+                    </div>
+                    <div class="articles-cta">
+                        <a href="/news/news-index.html" aria-label="View more news">View more</a>
+                    </div>
+                </section>
+
+                <section class="articles" aria-label="Latest articles">
+                    <div class="articles-header">
+                        <span class="articles-eyebrow">Latest Articles</span>
+                        <h2 class="articles-title">Marshall Matters</h2>
+                    </div>
+                    <div class="slider-viewport" id="articlesViewport">
+                        <button class="slider-arrow slider-arrow--prev" type="button" id="articlesPrev" aria-label="Scroll left">‹</button>
+                        <button class="slider-arrow slider-arrow--next" type="button" id="articlesNext" aria-label="Scroll right">›</button>
+                        <div class="slider-track" id="articlesTrack">
+                            <article class="slide">
+                                <a href="/articles/alan-mason-q-and-a.html">
+                                    <div class="article-thumb" style="background-image: url('/images/article-images/alan-mason.png');"></div>
+                                    <p class="article-title">Q&amp;A with <em>The Slim Shady LP</em> Audio Engineer Alan Mason</p>
+                                    <p class="article-tag">Interview</p>
                                 </a>
                             </article>
-                            <article class="slide slide--placeholder">
-                                <a href="#" aria-label="Placeholder news card">
-                                    <div class="slide-media-placeholder" aria-hidden="true" style="background-image: url('/images/news-images/blank-news-emdb-pro.jpg'); background-size: cover; background-position: center;"></div>
-                                    <p class="slide-title">We’re new. More news as it happens</p>
-                                    <p class="slide-subtitle">&nbsp;</p>
+                            <article class="slide">
+                                <a href="/articles/d12-most-verses.html">
+                                    <div class="article-thumb" style="background-image: url('/images/article-images/d12-most-verses.png');"></div>
+                                    <p class="article-title">Who Had the Most Verses on D12’s <em>Devil’s Night</em> &amp; <em>D12 World</em>?</p>
+                                    <p class="article-tag">Rankings</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="/articles/eminem-albums-ranked-by-critics.html">
+                                    <div class="article-thumb" style="background-image: url('/images/article-images/albums-ranked-critics.png');"></div>
+                                    <p class="article-title">Eminem Albums Ranked by Critics — D12 Included</p>
+                                    <p class="article-tag">Rankings</p>
+                                </a>
+                            </article>
+                            <article class="slide">
+                                <a href="/articles/5-album-theory.html">
+                                    <div class="article-thumb" style="background-image: url('/images/article-images/5-album-theory-small.jpg');"></div>
+                                    <p class="article-title">Can This Theory Predict Eminem’s Next Release?</p>
+                                    <p class="article-tag">Theory</p>
                                 </a>
                             </article>
                         </div>
                     </div>
                     <div class="articles-cta">
-                        <a href="/news/news-index.html" aria-label="View more news">View more</a>
+                        <a href="/articles/articles-index.html" aria-label="View more articles">View more</a>
                     </div>
                 </section>
 
@@ -1136,6 +1251,7 @@
 
         initSlider({ viewportId: 'albumsViewport', trackId: 'sliderTrack', prevId: 'sliderPrev', nextId: 'sliderNext' });
         initSlider({ viewportId: 'newsViewport', trackId: 'newsTrack', prevId: 'newsPrev', nextId: 'newsNext' });
+        initSlider({ viewportId: 'articlesViewport', trackId: 'articlesTrack', prevId: 'articlesPrev', nextId: 'articlesNext' });
         loadFeaturedAlbumScores();
 
         const shareBtn = document.getElementById('homeShareBtn');
