@@ -1000,7 +1000,6 @@ body {
       </div>
       <div class="cover-pagination" id="coverPagination" aria-label="Album cover selection">
         <button type="button" aria-label="Show first cover" aria-pressed="true">•</button>
-        <button type="button" aria-label="Show a middle cover" aria-pressed="false">•</button>
         <button type="button" aria-label="Show last cover" aria-pressed="false">•</button>
       </div>
       <button class="play-btn" id="playBtn" aria-expanded="false" aria-controls="songVideo">▶︎ Play</button>
@@ -1194,7 +1193,7 @@ body {
     const showCover = (index) => {
       currentIndex = index;
       albumImg.src = albumUrls[currentIndex];
-      const selectedDot = currentIndex === 0 ? 0 : currentIndex === albumUrls.length - 1 ? 2 : 1;
+      const selectedDot = currentIndex === 0 ? 0 : coverButtons.length - 1;
       coverButtons.forEach((button, buttonIndex) => {
         button.setAttribute('aria-pressed', String(buttonIndex === selectedDot));
       });
@@ -1204,8 +1203,7 @@ body {
     });
     coverButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
-        if (index === 1 && albumUrls.length < 3) return;
-        showCover(index === 0 ? 0 : index === 2 ? albumUrls.length - 1 : Math.min(1, albumUrls.length - 1));
+        showCover(index === 0 ? 0 : albumUrls.length - 1);
       });
     });
   })();
