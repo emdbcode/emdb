@@ -65,6 +65,17 @@
                 font-weight: 700;
             }
 
+            .slider-title a,
+            .articles-title a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .slider-title a:hover,
+            .articles-title a:hover {
+                color: var(--slider-accent);
+            }
+
             .slider-nav {
                 display: inline-flex;
                 gap: 8px;
@@ -154,8 +165,11 @@
             }
 
             .slide img {
+                display: block;
                 width: 100%;
+                box-sizing: border-box;
                 aspect-ratio: 1 / 1;
+                height: auto;
                 object-fit: cover;
                 border-radius: 10px;
                 background: #0f0f0f;
@@ -193,6 +207,10 @@
                         line-height: 1;
                         color: #fff;
                     }
+
+            #sliderTrack .slide-rating {
+                margin-top: 6px;
+            }
 
                     .slide-rating-star {
                         color: #f5c518;
@@ -371,6 +389,22 @@
                 #articlesTrack { --slider-cards: 1.5; }
                 .news-title-desktop { display: none; }
                 .news-title-mobile { display: inline; }
+
+                #sliderTrack .slide-title,
+                #sliderTrack .slide-rating,
+                #sliderTrack .slide-subtitle {
+                    width: 100%;
+                    text-align: left;
+                }
+
+                #sliderTrack .slide-rating {
+                    justify-content: flex-start;
+                }
+
+                #sliderTrack .slide-rating-value {
+                    color: #b5b5b5;
+                    font-weight: 400;
+                }
             }
             @media (max-width: 480px) {
                 :root {
@@ -380,8 +414,17 @@
                 #newsTrack { --slider-cards: 1.3; }
                 #articlesTrack { --slider-cards: 1.3; }
 
-                #sliderTrack .slide-subtitle {
-                    display: none;
+                #sliderTrack .slide {
+                    min-width: 0;
+                    grid-template-columns: minmax(0, 1fr);
+                    justify-items: stretch;
+                }
+
+                #sliderTrack .slide-title {
+                    white-space: nowrap;
+                    font-size: 11px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .slide-rating {
@@ -516,10 +559,26 @@
                 margin-top: 32px;
             }
 
+            .news,
+            .articles:not(.discogs) {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
             .discogs {
                 margin-top: 32px;
                 padding: 12px 14px 8px;
                 border-top: 1px solid var(--slider-border);
+            }
+
+            @media (max-width: 680px) {
+                .news,
+                .articles,
+                .news + .articles {
+                    margin-top: 20px;
+                    padding-top: 8px;
+                    padding-bottom: 0;
+                }
             }
 
             .articles-header {
@@ -893,7 +952,7 @@
                 <section class="news" aria-label="News slider">
                     <div class="slider-header">
                         <span class="slider-eyebrow">Music News</span>
-                        <h1 class="slider-title">Shady Times</h1>
+                        <h1 class="slider-title"><a href="/news/news-index.html">Shady Times</a></h1>
                     </div>
                     <div class="slider-viewport" id="newsViewport">
                         <button class="slider-arrow slider-arrow--prev" type="button" id="newsPrev" aria-label="Scroll left">‹</button>
@@ -985,15 +1044,12 @@
                             </article>
                         </div>
                     </div>
-                    <div class="articles-cta">
-                        <a href="/news/news-index.html" aria-label="View more news">View more</a>
-                    </div>
                 </section>
 
                 <section class="articles" aria-label="Latest articles">
                     <div class="articles-header">
                         <span class="articles-eyebrow">Latest Articles</span>
-                        <h2 class="articles-title">Marshall Matters</h2>
+                        <h2 class="articles-title"><a href="/articles/articles-index.html">Marshall Matters</a></h2>
                     </div>
                     <div class="slider-viewport" id="articlesViewport">
                         <button class="slider-arrow slider-arrow--prev" type="button" id="articlesPrev" aria-label="Scroll left">‹</button>
@@ -1028,9 +1084,6 @@
                                 </a>
                             </article>
                         </div>
-                    </div>
-                    <div class="articles-cta">
-                        <a href="/articles/articles-index.html" aria-label="View more articles">View more</a>
                     </div>
                 </section>
 
