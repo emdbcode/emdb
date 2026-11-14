@@ -189,6 +189,31 @@
                 box-shadow: none;
             }
 
+            #newsTrack .slide,
+            #articlesTrack .slide {
+                overflow: hidden;
+            }
+
+            #newsTrack .slide img {
+                transition: transform 0.9s ease-out;
+                will-change: transform;
+            }
+
+            #newsTrack .slide:hover img,
+            #newsTrack .slide a:focus-visible img {
+                transform: scale(1.04);
+            }
+
+            #articlesTrack .article-thumb {
+                transition: transform 0.9s ease-out;
+                will-change: transform;
+            }
+
+            #articlesTrack .slide:hover .article-thumb,
+            #articlesTrack .slide a:focus-visible .article-thumb {
+                transform: scale(1.04);
+            }
+
             .slide-title {
                 margin: 4px 0 2px;
                 font-size: 15px;
