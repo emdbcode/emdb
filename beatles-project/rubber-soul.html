@@ -45,6 +45,46 @@ body {
   object-fit: cover;
   display: block;
 }
+.cover-column {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 292px;
+}
+.cover-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  height: 12px;
+  margin: -6px 0 -12px;
+  transform: translateY(5px);
+}
+.cover-column .cover-pagination {
+  transform: translateY(11px);
+}
+.cover-pagination button {
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #777;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.cover-pagination button[aria-pressed="true"] { color: #fff; }
+.cover-pagination button:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: -2px;
+  border-radius: 50%;
+}
 
 /* ALBUM COVER + INFO CONTAINER */
 .album-container {
@@ -58,6 +98,9 @@ body {
   background-color: #222; /* match singles */
   padding: 1.5rem;         /* spacing inside the container */
   border-radius: 6px;      /* rounded corners like singles */
+}
+@media(max-width:767px) {
+  .album-container { gap: 0.75rem; }
 }
 @media(min-width: 768px){
   .album-container {
@@ -905,8 +948,15 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   <button class="share-action" id="copy-share">Copy link</button>
 </div>
 
-    <div class="album-single" id="albumSingleRS">
-      <img src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
+    <div class="cover-column">
+      <div class="album-single" id="albumSingleRS">
+        <img src="/beatles-project/album-covers/rubber-soul-cover.jpeg" alt="Rubber Soul cover">
+      </div>
+      <div class="cover-pagination" id="coverPaginationRS" aria-label="Album cover selection">
+        <button type="button" aria-label="Show first cover" aria-pressed="true">•</button>
+        <button type="button" aria-label="Show a middle cover" aria-pressed="false">•</button>
+        <button type="button" aria-label="Show last cover" aria-pressed="false">•</button>
+      </div>
     </div>
     <div class="release-info">
       <div class="album-title">
@@ -1173,9 +1223,22 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   let currentIndexRS = 0;
   const albumDivRS = document.getElementById("albumSingleRS");
   const albumImgRS = albumDivRS.querySelector("img");
-  albumDivRS.addEventListener("click", () => {
-    currentIndexRS = (currentIndexRS + 1) % albumUrlsRS.length;
+  const coverButtonsRS = Array.from(document.querySelectorAll("#coverPaginationRS button"));
+  const showCoverRS = (index) => {
+    currentIndexRS = index;
     albumImgRS.src = albumUrlsRS[currentIndexRS];
+    const selectedDot = currentIndexRS === 0 ? 0 : currentIndexRS === albumUrlsRS.length - 1 ? 2 : 1;
+    coverButtonsRS.forEach((button, buttonIndex) => {
+      button.setAttribute("aria-pressed", String(buttonIndex === selectedDot));
+    });
+  };
+  albumDivRS.addEventListener("click", () => {
+    showCoverRS((currentIndexRS + 1) % albumUrlsRS.length);
+  });
+  coverButtonsRS.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      showCoverRS(index === 0 ? 0 : index === 2 ? albumUrlsRS.length - 1 : Math.min(1, albumUrlsRS.length - 1));
+    });
   });
 
   // TRACKLIST TOGGLE — toggle open class and update arrow glyphs

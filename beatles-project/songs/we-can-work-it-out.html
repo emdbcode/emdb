@@ -55,6 +55,34 @@ body {
   object-fit: cover;
   display: block;
 }
+.cover-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  height: 12px;
+  margin: -6px 0 -12px;
+  transform: translateY(5px);
+}
+.cover-pagination button {
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #777;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.cover-pagination button[aria-pressed="true"] { color: #fff; }
+.cover-pagination button:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: -2px;
+  border-radius: 50%;
+}
 
 /* inline song video matching cover width */
 .song-video {
@@ -970,6 +998,11 @@ body {
       <div class="album-single" id="songCover">
         <img src="/beatles-project/album-covers/we-can-work-it-out-cover.jpg" alt="We Can Work It Out cover">
       </div>
+      <div class="cover-pagination" id="coverPagination" aria-label="Album cover selection">
+        <button type="button" aria-label="Show first cover" aria-pressed="true">•</button>
+        <button type="button" aria-label="Show a middle cover" aria-pressed="false">•</button>
+        <button type="button" aria-label="Show last cover" aria-pressed="false">•</button>
+      </div>
       <button class="play-btn" id="playBtn" aria-expanded="false" aria-controls="songVideo">▶︎ Play</button>
       <div class="song-video" id="songVideo" data-video="UftE2opwO2E" aria-hidden="true"></div>
       <div class="ratings-container" id="section-ratings" style="margin-top:0px;">
@@ -1189,9 +1222,22 @@ body {
     if (!albumDiv) return;
     const albumImg = albumDiv.querySelector('img');
     if (!albumImg) return;
-    albumDiv.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % albumUrls.length;
+    const coverButtons = Array.from(document.querySelectorAll('#coverPagination button'));
+    const showCover = (index) => {
+      currentIndex = index;
       albumImg.src = albumUrls[currentIndex];
+      const selectedDot = currentIndex === 0 ? 0 : currentIndex === albumUrls.length - 1 ? 2 : 1;
+      coverButtons.forEach((button, buttonIndex) => {
+        button.setAttribute('aria-pressed', String(buttonIndex === selectedDot));
+      });
+    };
+    albumDiv.addEventListener('click', () => {
+      showCover((currentIndex + 1) % albumUrls.length);
+    });
+    coverButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        showCover(index === 0 ? 0 : index === 2 ? albumUrls.length - 1 : Math.min(1, albumUrls.length - 1));
+      });
     });
   })();
 
