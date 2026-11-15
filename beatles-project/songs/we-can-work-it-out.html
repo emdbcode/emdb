@@ -1200,6 +1200,7 @@ body {
 
 <div id="site-footer"></div>
 
+<script src="/beatles-project/cover-swipe.js"></script>
 <script>
   
 
@@ -1223,16 +1224,22 @@ body {
     const albumImg = albumDiv.querySelector('img');
     if (!albumImg) return;
     const coverButtons = Array.from(document.querySelectorAll('#coverPagination button'));
+    const flashCoverIndicator = window.setupBeatlesCoverIndicator(coverButtons);
     const showCover = (index) => {
+      const previousIndex = currentIndex;
       currentIndex = index;
       albumImg.src = albumUrls[currentIndex];
       const selectedDot = currentIndex === 0 ? 0 : currentIndex === albumUrls.length - 1 ? 2 : 1;
       coverButtons.forEach((button, buttonIndex) => {
         button.setAttribute('aria-pressed', String(buttonIndex === selectedDot));
       });
+      flashCoverIndicator(previousIndex, currentIndex, albumUrls.length - 1);
     };
     albumDiv.addEventListener('click', () => {
       showCover((currentIndex + 1) % albumUrls.length);
+    });
+    window.setupBeatlesCoverSwipe(albumDiv, (direction) => {
+      showCover((currentIndex + direction + albumUrls.length) % albumUrls.length);
     });
     coverButtons.forEach((button, index) => {
       button.addEventListener('click', () => {

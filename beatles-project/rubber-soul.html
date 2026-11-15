@@ -1210,6 +1210,7 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
 <div id="site-footer"></div>
 
+<script src="/beatles-project/cover-swipe.js"></script>
 <script>
   // COVER CLICK SWITCH
   const albumUrlsRS = [
@@ -1224,16 +1225,22 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   const albumDivRS = document.getElementById("albumSingleRS");
   const albumImgRS = albumDivRS.querySelector("img");
   const coverButtonsRS = Array.from(document.querySelectorAll("#coverPaginationRS button"));
+  const flashCoverIndicatorRS = window.setupBeatlesCoverIndicator(coverButtonsRS);
   const showCoverRS = (index) => {
+    const previousIndex = currentIndexRS;
     currentIndexRS = index;
     albumImgRS.src = albumUrlsRS[currentIndexRS];
     const selectedDot = currentIndexRS === 0 ? 0 : currentIndexRS === albumUrlsRS.length - 1 ? 2 : 1;
     coverButtonsRS.forEach((button, buttonIndex) => {
       button.setAttribute("aria-pressed", String(buttonIndex === selectedDot));
     });
+    flashCoverIndicatorRS(previousIndex, currentIndexRS, albumUrlsRS.length - 1);
   };
   albumDivRS.addEventListener("click", () => {
     showCoverRS((currentIndexRS + 1) % albumUrlsRS.length);
+  });
+  window.setupBeatlesCoverSwipe(albumDivRS, (direction) => {
+    showCoverRS((currentIndexRS + direction + albumUrlsRS.length) % albumUrlsRS.length);
   });
   coverButtonsRS.forEach((button, index) => {
     button.addEventListener("click", () => {

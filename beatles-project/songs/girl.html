@@ -1175,6 +1175,7 @@ body {
 
 <div id="site-footer"></div>
 
+<script src="/beatles-project/cover-swipe.js"></script>
 <script>
   
 
@@ -1200,6 +1201,9 @@ body {
     };
     albumDiv.addEventListener('click', () => {
       showCover((currentIndex + 1) % albumUrls.length);
+    });
+    window.setupBeatlesCoverSwipe(albumDiv, (direction) => {
+      showCover((currentIndex + direction + albumUrls.length) % albumUrls.length);
     });
     coverButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
