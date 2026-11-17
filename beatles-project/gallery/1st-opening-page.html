@@ -75,9 +75,39 @@
 			text-underline-offset: 3px;
 		}
 
+		.catalog-content a.kickstarter-support,
+		.catalog-content a.kickstarter-support:visited {
+			color: #111;
+			text-decoration: none;
+		}
+
 		.catalog-content a:hover,
 		.catalog-content a:focus-visible {
 			color: #a8121a;
+		}
+
+		.kickstarter-support {
+			display: block;
+			width: fit-content;
+			margin: 2.5rem auto 0;
+			color: #111;
+			text-align: center;
+			text-decoration: none;
+		}
+
+		.kickstarter-support span {
+			display: block;
+			font-size: 15px;
+			font-weight: 600;
+			line-height: 1;
+			margin-bottom: 4px;
+		}
+
+		.kickstarter-support img {
+			display: block;
+			width: min(220px, 60vw);
+			aspect-ratio: 2000 / 240;
+			object-fit: cover;
 		}
 
 		@media (max-width: 600px) {
@@ -117,15 +147,19 @@
 
 			<h2>Timeline</h2>
 			<p>The Beatles Catalog is currently planned for launch between late 2027 and early 2028, subject to the project being fully funded by the end of 2026. The design and features may evolve throughout development, with feedback helping to shape the finished site.</p>
-			<p><a href="https://www.kickstarter.com/projects/beatles-catalog/the-beatles-catalog/community">Help kickstart the project</a></p>
+
+			<h2>Music and Copyright</h2>
+			<p>No music files are hosted or uploaded to The Beatles Catalog. Music is streamed directly from YouTube through a bespoke, custom-coded system developed specifically for the website. Rather than relying on conventional video embeds, the system integrates playback directly into the site's tracklists, creating a more seamless listening experience.</p>
 
 			<h2>Preview the Project</h2>
 			<p>An early preview of The Beatles Catalog is available to explore now, featuring a prototype of the planned album and song pages using <em>Rubber Soul</em> and its tracks as an example.</p>
 			<p><a href="https://emdb.pro/beatles-project/rubber-soul.html">View the <em>Rubber Soul</em> preview</a></p>
 			<p><strong>Please note:</strong> This is a preview of the proposed project, currently hosted on EMDb using a similar design. The final design may change based on feedback. The finished site will be hosted under TheBeatlesCatalog.com.</p>
 
-			<h2>Music and Copyright</h2>
-			<p>No music files are hosted or uploaded to The Beatles Catalog. Music is streamed directly from YouTube through a bespoke, custom-coded system developed specifically for the website. Rather than relying on conventional video embeds, the system integrates playback directly into the site's tracklists, creating a more seamless listening experience.</p>
+			<a class="kickstarter-support" href="https://www.kickstarter.com/projects/beatles-catalog/the-beatles-catalog" aria-label="Support us on Kickstarter">
+				<span>Support us on</span>
+				<img src="/images/logos/kickstarter-logo.png" alt="Kickstarter">
+			</a>
 		</article>
 	</main>
 	<div id="site-footer"></div>

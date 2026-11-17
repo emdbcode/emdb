@@ -877,6 +877,31 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
   }
 }
 /* floating-player-update:end */
+.kickstarter-support {
+  display: block;
+  width: fit-content;
+  margin: 2.5rem auto 2rem;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+.kickstarter-support span {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kickstarter-support img {
+  display: block;
+  width: min(220px, 60vw);
+  aspect-ratio: 2000 / 240;
+  object-fit: cover;
+}
+.kickstarter-support:hover span,
+.kickstarter-support:focus-visible span {
+  color: #E21C21;
+}
 #sectionMenu { display:none; }
 @media (max-width: 767px) {
   #sectionMenu {
@@ -1197,6 +1222,11 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     <h2>User Reviews</h2>
     <p>Loading reviews...</p>
   </div>
+
+  <a class="kickstarter-support" href="https://www.kickstarter.com/projects/beatles-catalog/the-beatles-catalog" aria-label="Support us on Kickstarter">
+    <span>Support us on</span>
+    <img src="/images/logos/kickstarter-logo.png" alt="Kickstarter">
+  </a>
 </main>
 
 <!-- USER RATING POPUP -->
