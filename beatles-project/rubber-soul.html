@@ -1430,10 +1430,11 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
     const collapseBtn = document.getElementById('playerCollapseBtn');
     const restoreBtn = document.getElementById('playerRestoreBtn');
     const closeBtn = document.getElementById('playerCloseBtn');
+    const collapsedBar = document.querySelector('.player-collapsed-bar');
     const expandBtn = document.getElementById('playerExpandBtn');
     const controls = document.querySelector('.now-playing-controls');
     const playerContainer = document.querySelector('.playlist-container');
-    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading || !playerContainer || !collapseBtn || !restoreBtn || !closeBtn || !expandBtn || !controls) return;
+    if (!player || !nowTitle || !prevBtn || !nextBtn || !heading || !playerContainer || !collapseBtn || !restoreBtn || !closeBtn || !collapsedBar || !expandBtn || !controls) return;
 
     const showFloatingPlayer = () => {
       if (!playerContainer.classList.contains('is-floating')) {
@@ -1879,6 +1880,15 @@ a.single-section-singles:focus .song-title-singles { color: #E21C21; }
 
     restoreBtn.addEventListener('click', () => {
       setCollapsed(false);
+    });
+
+    const expandCollapsedBar = (event) => {
+      if (closeBtn.contains(event.target)) return;
+      setCollapsed(false);
+    };
+    collapsedBar.addEventListener('click', expandCollapsedBar);
+    collapsedBar.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'touch') expandCollapsedBar(event);
     });
 
     closeBtn.addEventListener('click', () => {
