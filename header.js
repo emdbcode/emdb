@@ -2582,6 +2582,7 @@ function setupArticleNewsBottomSliders() {
         <button class="slider-arrow slider-arrow--prev" type="button" id="emdbSliderPrev" aria-label="Scroll left">‹</button>
         <button class="slider-arrow slider-arrow--next" type="button" id="emdbSliderNext" aria-label="Scroll right">›</button>
         <div class="slider-track" id="emdbSliderTrack">
+          <article class="slide"><a href="/releases/infinite-ep.html"><img src="/images/album-covers/non-album/infinite-ep.jpg" alt="Infinite EP cover"></a></article>
           <article class="slide"><a href="/releases/stans-soundtrack.html"><img src="/images/album-covers/non-album/stans-cover.jpg" alt="Stan's Soundtrack cover"></a></article>
           <article class="slide"><a href="/releases/death-of-slim-shady.html"><img src="/images/album-covers/death-of-slim-shady/death-of-slim-shady-cover.jpg" alt="The Death of Slim Shady cover"></a></article>
           <article class="slide"><a href="/releases/curtain-call-2.html"><img src="/images/album-covers/curtain-call-2/curtain-call-2-cover.jpg" alt="Curtain Call 2 cover"></a></article>
